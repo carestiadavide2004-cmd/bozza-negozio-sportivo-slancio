@@ -131,6 +131,26 @@ Nessuna foto davvero bella e senza loghi leggibili → disegno SVG sul colore de
   - CREDITI.md: modello, illustrazioni, model-viewer. ISTRUZIONI.md: catalogo aggiornato, borsa e guida, nuova sezione "Foto e 3D dei prodotti (versione per il cliente)" con nomi file, flusso admin futuro e nota Firebase Blaze.
   - Prova automatica (v3d.mjs): 7/7 ok.
 - [ ] Revisione art director (2 giri) e controllo veloce
+
+## Revisione art director – primo giro (schermate 390 / 768 / 1440)
+1. [x] Card esaurita sul telefono: "Chiedi quando arriva" tagliato a metà → testo su due righe, icona nascosta sotto 480 px.
+2. [x] Pagina sport, computer: la scheda categoria è molto più alta della fila di prodotti e lascia un buco sotto le card → scheda più compatta (foto 16:10, descrizione 3 righe) e card prodotto alte uguali, con l'area immagine che cresce.
+3. [x] Pagina Calcio, computer: la barra delle categorie va su due righe → chip più compatti, una riga sola.
+4. [x] Scheda prodotto con misura unica: "Misura: Misura 5" ripetuto → solo "Misura 5" in un riquadro.
+5. [x] Modulo borsa: l'errore della data compare sotto i pulsanti dei giorni → subito sotto il campo.
+6. [x] Visore 3D: il pallone riempie tutto il riquadro → camera più lontana (135%), stesso punto con doppio tocco.
+7. [x] Suggerimenti su schermo largo: il pulsante "Aggiungi" da solo resta a metà riga → allineato a destra.
+8. [x] Card sul telefono: nomi lunghi tagliati a 2 righe → 3 righe.
+9. [x] Borsa: "Svuota" usava la finestra di conferma del browser → conferma nel pannello ("Sicuro? Tocca di nuovo").
+10. [x] Testata della pagina categoria senza descrizione → aggiunta sotto il titolo.
+11. [x] Scheda prodotto su computer: il disegno occupava 420 px → riquadro 16:10, prezzo e taglie visibili subito.
+12. [x] Visore 3D sul telefono: il codice andava a capo → su una riga.
+13. [x] Pagina sport sul telefono: "Scegli il numero" ripetuto sotto ogni card del carosello → nascosto lì, compare solo come errore.
+
+## Revisione – secondo giro (rifinitura)
+- [x] Anteprime su computer: nomi a 3 righe fissi, così immagini e prezzi sono allineati tra le card.
+- [x] Controllate di nuovo: pagina categoria con icona (Pantaloncini, 1440), home 390 con icona borsa, Padel 390, modulo con errori, visore 3D, scheda: niente da correggere.
+- Note: nelle schermate il campo data appare mm/dd/yyyy solo perché il browser di prova è in inglese; su un telefono italiano è gg/mm/aaaa.
 - [ ] Pubblicazione e verifica online
 
 Non ancora (prossimi passi): configuratore maglia nuovo, crea il tuo kit, servizi su prenotazione, noleggio sci, pannello admin.

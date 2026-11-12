@@ -599,7 +599,18 @@ address { font-style: normal; }
 /* ---------- Categorie ---------- */
 .cat-griglia { display: grid; gap: clamp(36px, 6vw, 64px); }
 .catb { scroll-margin-top: calc(var(--hdr-c) + 80px); }
-@media (min-width: 1024px) { .catb { display: grid; grid-template-columns: minmax(300px, 340px) minmax(0, 1fr); gap: 20px; align-items: start; } }
+@media (min-width: 1024px) {
+  .catb { display: grid; grid-template-columns: minmax(300px, 340px) minmax(0, 1fr); gap: 20px; align-items: stretch; }
+  /* scheda categoria più compatta e card prodotto alte uguali: niente buchi */
+  .catb .cat__media { aspect-ratio: 16 / 10; }
+  .catb .cat__desc { display: -webkit-box; -webkit-line-clamp: 3; }
+  .catb .anteprima, .catb .car-prod { height: 100%; }
+  .catb .car-prod { padding-block: 0; }
+  .catb .pc__media { aspect-ratio: auto; flex: 1 1 auto; min-height: 180px; }
+  .catb .pc__corpo { flex: none; }
+  .catb .pc__nome { min-height: 3.75em; }
+  .catb .pc__ill { width: auto; height: min(78%, 190px); max-width: 78%; }
+}
 @media (max-width: 767px) { .cat-griglia:not(.is-tutte) .cat--extra { display: none; } }
 .cat {
   position: relative; display: grid; grid-template-columns: 36% minmax(0, 1fr); align-items: stretch;
@@ -695,7 +706,7 @@ img.pc__ill { width: 100%; height: 100%; object-fit: cover; }
 .pc__3d { position: absolute; right: 8px; top: 8px; padding: .3rem .4rem; font: italic 800 .875rem/1 var(--f-tit); background: var(--c-ink); color: #FFFFFF; border-radius: var(--r1); }
 .pc__corpo { display: flex; flex-direction: column; gap: .3rem; padding: 10px 10px 12px; flex: 1; }
 .pc__cod { margin: 0; font: 600 .6875rem/1 var(--f-testo); letter-spacing: .1em; color: var(--c-a500); font-variant-numeric: tabular-nums; }
-.pc__nome { margin: 0; font: 600 .9375rem/1.25 var(--f-testo); min-height: 2.5em; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.pc__nome { margin: 0; font: 600 .9375rem/1.25 var(--f-testo); min-height: 2.5em; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .pc__nome a { text-decoration: none; }
 .pc__nome a::after { content: ''; position: absolute; inset: 0 0 auto 0; aspect-ratio: 1; }
 @media (hover: hover) { .pc__nome a:hover { text-decoration: underline; text-decoration-color: var(--acc); text-decoration-thickness: 2px; text-underline-offset: 3px; } }
@@ -717,6 +728,10 @@ img.pc__ill { width: 100%; height: 100%; object-fit: cover; }
 .pc__taglia.is-err, .scheda__taglia.is-err { border-color: var(--c-errore); }
 .pc__unica { margin: 0; min-height: 44px; display: flex; align-items: center; font-size: .875rem; font-weight: 600; color: var(--c-a700); border-top: 1px dashed var(--c-linea); }
 .pc__btn { width: 100%; padding-inline: .5rem; letter-spacing: .06em; }
+.pc__btn--wa { white-space: normal; line-height: 1.15; padding-block: .4rem; }
+@media (max-width: 479px) { .pc__btn--wa .ico { display: none; } }
+/* pagina sport: il suggerimento "Scegli il numero" resta solo come errore */
+.anteprima .pc__msg:not(.is-err):not(.is-ok) { display: none; }
 .btn[aria-disabled="true"] { background: var(--c-linea); color: var(--c-a700); }
 .btn[aria-disabled="true"]::before { display: none; }
 .btn.is-fatto { background: var(--c-ok); color: #FFFFFF; }
@@ -747,6 +762,7 @@ img.pc__ill { width: 100%; height: 100%; object-fit: cover; }
 .hc__bimbi { color: var(--c-bimbo); }
 .hc__tit { font: 800 clamp(2.6rem, 11vw, 6.5rem)/.88 var(--f-tit); text-transform: uppercase; letter-spacing: -.01em; margin: .5rem 0 0; max-width: 16ch; overflow-wrap: anywhere; }
 .hc__tit--lungo { font-size: clamp(2.3rem, 9vw, 5.25rem); }
+.hc__desc { margin: .9rem 0 0; max-width: 52ch; color: rgba(255, 255, 255, .88); font-size: 1rem; }
 .hc__nota { margin: .8rem 0 0; color: rgba(255, 255, 255, .85); max-width: 46ch; }
 .tipi--scuro { margin: 1rem 0 0; }
 .tipi--scuro li { background: rgba(255, 255, 255, .1); border-color: rgba(255, 255, 255, .22); color: #FFFFFF; }
@@ -891,6 +907,9 @@ img.pc__ill { width: 100%; height: 100%; object-fit: cover; }
 .scheda__pista::-webkit-scrollbar { display: none; }
 .scheda__foto { flex: 0 0 100%; scroll-snap-align: center; display: grid; place-items: center; aspect-ratio: 4 / 3; overflow: hidden; }
 .scheda__foto .scheda__ill { width: 62%; height: auto; }
+@media (min-width: 1024px) { .scheda__foto { aspect-ratio: 16 / 10; } .scheda__foto .scheda__ill { width: 44%; } }
+.scheda__unica { display: inline-flex; margin: 0; padding: .55rem .8rem; font-weight: 600; background: #FFFFFF; border: 1.5px solid var(--c-ink); border-radius: var(--r1); }
+.link-borsa.is-err { color: var(--c-errore); font-weight: 600; }
 .scheda__foto img { width: 100%; height: 100%; object-fit: cover; cursor: zoom-in; transition: transform .4s var(--ease); }
 .scheda__foto.is-zoom img { transform: scale(2); cursor: zoom-out; }
 .scheda__miniature { display: flex; gap: 6px; padding: 8px var(--gutter); overflow-x: auto; }
@@ -947,7 +966,7 @@ img.pc__ill { width: 100%; height: 100%; object-fit: cover; }
 .ins__msg:empty { display: none; }
 .ins__msg.is-err { color: var(--c-errore); font-weight: 600; }
 .ins__msg.is-ok { color: var(--c-ok); font-weight: 600; }
-@media (min-width: 560px) { .ins { grid-template-columns: 64px minmax(0, 1fr) minmax(0, 220px); } .ins__az { grid-column: auto; } }
+@media (min-width: 560px) { .ins { grid-template-columns: 64px minmax(0, 1fr) minmax(0, 220px); } .ins__az { grid-column: auto; } .ins__az--solo { justify-content: end; } }
 
 .link-borsa { padding: 0; border: 0; background: none; font: inherit; color: var(--c-cobalto); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; min-height: 32px; }
 /* borsa "Prenota e ritira" */
@@ -1167,7 +1186,12 @@ img.bv__ill { width: 100%; height: 100%; object-fit: cover; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
 @media (min-width: 768px) { .hs__tit--lungo { font-size: clamp(3.4rem, 6.4vw, 7rem); max-width: 14ch; hyphens: manual; } }
-@media (min-width: 1200px) { .catbar__lista { flex-wrap: wrap; } }
+/* computer: tutte le categorie su una riga */
+@media (min-width: 1200px) {
+  .catbar__lista { gap: 4px; }
+  .catbar .chip { padding: 0 .6rem; font-size: .6875rem; letter-spacing: .04em; gap: .4rem; }
+  .catbar .chip::before { width: 5px; height: 5px; }
+}
 /* pulsanti hero sul telefono: una riga, niente testo spezzato */
 @media (max-width: 559px) {
   .hs__cta { grid-template-columns: minmax(0, 1fr) auto; }

@@ -633,7 +633,10 @@
   function schedaHtmlTaglie(p) {
     var g = gruppiTaglia(p), tt = tutteTaglie(p);
     if (!tt.length) return '';
-    if (tt.length === 1) return '<div class="scheda__taglie"><div class="scheda__tt"><p>' + escH(nomeTaglia(p)) + ': ' + escH(tt[0]) + '</p></div></div>';
+    if (tt.length === 1) {
+      var unica = tt[0].toLowerCase().indexOf(nomeTaglia(p).toLowerCase()) === 0 ? tt[0] : nomeTaglia(p) + ': ' + tt[0];   // niente "Misura: Misura 5"
+      return '<div class="scheda__taglie"><p class="scheda__unica">' + escH(unica) + '</p></div>';
+    }
     var k = 0;
     var gruppi = g.map(function (x) {
       return (g.length > 1 ? '<p class="chip-taglie__gr">' + (x.linea === 'bambino' ? 'Bambino' : 'Adulto') + '</p>' : '') +
@@ -810,7 +813,7 @@
     var v = escH(bozza[nome] || '');
     var input = tipo === 'textarea' ? '<textarea id="' + id + '" name="' + nome + '" rows="3" maxlength="400"' + (extra || '') + '>' + v + '</textarea>'
       : '<input id="' + id + '" name="' + nome + '" type="' + tipo + '" value="' + v + '"' + (extra || '') + '>';
-    return '<div class="campo"><label for="' + id + '">' + etich + '</label>' + input + (aiuto || '') + '<p class="campo__err" id="' + id + '-err" hidden></p></div>';
+    return '<div class="campo"><label for="' + id + '">' + etich + '</label>' + input + '<p class="campo__err" id="' + id + '-err" hidden></p>' + (aiuto || '') + '</div>';
   }
   function chipGiorni() {
     var o = oggiRoma(), N = B.giorniMassimi || 7, h = '';
@@ -948,7 +951,12 @@
       } else if (t.hasAttribute('data-condividi')) {
         copia(linkBorsa(b), t, 'Link copiato');
       } else if (t.hasAttribute('data-svuota')) {
-        if (window.confirm('Vuoi svuotare la borsa?')) { salvaBorsa([]); disegnaBorsa('h'); }
+        // conferma nel pannello: il primo tocco chiede, il secondo svuota
+        if (t.getAttribute('data-sicuro') === '1') { salvaBorsa([]); disegnaBorsa('h'); }
+        else {
+          t.setAttribute('data-sicuro', '1'); t.textContent = 'Sicuro? Tocca di nuovo per svuotare'; t.classList.add('is-err');
+          setTimeout(function () { if (d.contains(t)) { t.removeAttribute('data-sicuro'); t.textContent = 'Svuota'; t.classList.remove('is-err'); } }, 3500);
+        }
       } else if (t.hasAttribute('data-svuota-fine')) {
         salvaBorsa([]); bozza.note = ''; vista = 'lista'; borsaP.chiudi();
       } else if (t.hasAttribute('data-copia-cod') && ultimo) {
@@ -1208,14 +1216,15 @@
       mv.setAttribute('interaction-prompt', 'none');
       mv.setAttribute('shadow-intensity', '1');
       mv.setAttribute('exposure', '1.05');
-      mv.setAttribute('min-camera-orbit', 'auto auto 40%');
-      mv.setAttribute('max-camera-orbit', 'auto auto 180%');
+      mv.setAttribute('camera-orbit', '0deg 75deg 135%');   // un po' di aria intorno al prodotto
+      mv.setAttribute('min-camera-orbit', 'auto auto 60%');
+      mv.setAttribute('max-camera-orbit', 'auto auto 200%');
       if (!ridotto.matches) { mv.setAttribute('auto-rotate', ''); mv.setAttribute('auto-rotate-delay', '0'); mv.setAttribute('rotation-per-second', '14deg'); }
       // al primo tocco la rotazione automatica si ferma
       var ferma = function () { mv.removeAttribute('auto-rotate'); };
       mv.addEventListener('pointerdown', ferma, { once: true });
       mv.addEventListener('camera-change', function (e) { if (e.detail && e.detail.source === 'user-interaction') ferma(); });
-      mv.addEventListener('dblclick', function () { mv.cameraOrbit = 'auto auto auto'; mv.fieldOfView = 'auto'; mv.jumpCameraToGoal(); });
+      mv.addEventListener('dblclick', function () { mv.cameraOrbit = '0deg 75deg 135%'; mv.fieldOfView = 'auto'; mv.jumpCameraToGoal(); });
       mv.addEventListener('load', function () { stato.hidden = true; });
       mv.addEventListener('error', function () { stato.hidden = false; stato.textContent = 'Il modello 3D non si è caricato. Riprova più tardi.'; });
       scena.appendChild(mv);

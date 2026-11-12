@@ -792,6 +792,7 @@ function paginaCategoria(s, c, i) {
     <nav class="briciole" aria-label="Percorso"><ol><li><a href="${vaiHome(rel)}">Home</a></li><li><a href="${sportUrl(s, rel)}">${esc(s.nome)}</a></li><li aria-current="page">${esc(titolo)}</li></ol></nav>
     <p class="hc__occ" data-hero-a><span class="hc__num">${s.numero}.${num}</span> ${esc(s.nome)} · ${nN(n, 'prodotto', 'prodotti')}${nb ? ` · <span class="hc__bimbi">${nb} anche per bambini</span>` : ''}</p>
     <h1 class="hc__tit${titolo.length > 22 ? ' hc__tit--lungo' : ''}" data-tit-hero>${righe([titolo])}</h1>
+    <p class="hc__desc" data-hero-a>${esc(c.descrizione)}</p>
     ${suRichiesta ? '<p class="hc__nota" data-hero-a>Su richiesta: li ordiniamo per te dopo una prova in negozio.</p>' : ''}
     <ul class="tipi tipi--scuro" aria-label="Tipologie" data-hero-a>${c.tipologie.map(t => `<li>${esc(t)}</li>`).join('')}</ul>
     <div class="hc__az" data-hero-a>
