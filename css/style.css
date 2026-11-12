@@ -935,9 +935,13 @@ img.pc__ill { width: 100%; height: 100%; object-fit: cover; }
 .ins__media { display: grid; place-items: center; width: 64px; height: 64px; background: color-mix(in srgb, var(--acc) 10%, var(--c-gesso)); border-radius: var(--r1); }
 .ins__media svg, .ins__media img { width: 86%; height: auto; }
 .ins__nome { margin: 0; font-weight: 600; font-size: .9375rem; line-height: 1.25; }
-.ins__nome button { padding: 0; border: 0; background: none; font: inherit; color: inherit; text-align: left; cursor: pointer; text-decoration: underline; text-decoration-color: var(--c-linea); text-underline-offset: 3px; }
-.ins__prezzo { margin: .15rem 0 0; font: 800 1.1rem/1 var(--f-tit); }
+.ins__txt { min-width: 0; }
+.ins__nome a { text-decoration: underline; text-decoration-color: var(--c-linea); text-underline-offset: 3px; }
+@media (hover: hover) { .ins__nome a:hover { text-decoration-color: currentColor; } }
+.ins__prezzo { display: flex; align-items: center; gap: .5rem; margin: .25rem 0 0; font: 800 1.1rem/1 var(--f-tit); }
+.ins__bimbo { padding: .2rem .35rem; font: 600 .625rem/1 var(--f-testo); text-transform: uppercase; letter-spacing: .1em; background: var(--c-bimbo); border-radius: var(--r1); }
 .ins__az { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px; }
+.ins__az--solo { grid-template-columns: auto; justify-content: start; }
 .ins__az .btn { padding-inline: .8rem; }
 .ins__msg { grid-column: 1 / -1; margin: 0; font-size: .8125rem; min-height: 0; }
 .ins__msg:empty { display: none; }

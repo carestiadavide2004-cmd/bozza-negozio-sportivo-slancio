@@ -689,6 +689,7 @@
     galleriaAttiva(scheda.corpo);
     aggiornaInsieme();
     if (storico) { history.pushState({ prodotto: cod }, '', '#prodotto-' + cod); schedaStorico = true; }
+    else if (HASH_P.test(location.hash) && location.hash !== '#prodotto-' + cod) history.replaceState(history.state, '', '#prodotto-' + cod);
     if (scheda.el.hidden) scheda.apri(da);
     else { scheda.corpo.scrollTop = 0; scheda.box.focus({ preventScroll: true }); }
   }
@@ -709,7 +710,6 @@
       });
     });
   }
-  var aggiornaInsieme = function () {};          // "Spesso comprati insieme" (blocco 4)
   d.addEventListener('click', function (e) {
     var a = e.target.closest('a[data-apri], a[href^="#prodotto-"]');
     if (!a || e.metaKey || e.ctrlKey || e.shiftKey) return;
@@ -984,7 +984,100 @@
   }
   addEventListener('hashchange', daLinkBorsa);
   daLinkBorsa();
-  var suggerimentiBorsa = function () {};       // "Ti potrebbe servire anche" (blocco 4)
+  /* =====================================================================
+     "SPESSO COMPRATI INSIEME" (scheda) e "TI POTREBBE SERVIRE ANCHE" (borsa)
+     Regole: campo insieme di ogni categoria in config.js ("categoria" o "sport/categoria").
+     ===================================================================== */
+  function catDaRegola(s, k) {
+    var sp = s, slug = k;
+    if (k.indexOf('/') > -1) { var a = k.split('/'); sp = C.sport.filter(function (x) { return x.slug === a[0]; })[0]; slug = a[1]; }
+    return sp ? sp.categorie.filter(function (c) { return c.slug === slug; })[0] : null;
+  }
+  // fonti: [{ p, s, c, bimbo }]  bimbo: true = bambino, false = adulto, null = non si sa
+  function suggerisci(fonti, quanti) {
+    var no = {};
+    leggiBorsa().forEach(function (x) { no[x.c] = 1; });
+    fonti.forEach(function (f) { no[f.p.codice] = 1; });
+    var code = [];
+    fonti.forEach(function (f) {
+      (f.c.insieme || []).forEach(function (k) {
+        var c = catDaRegola(f.s, k); if (!c) return;
+        code.push({ f: f, lista: c.prodotti.filter(function (q) {
+          if (no[q.codice] || q.disponibilita === 'esaurito' || q.illustrazione === f.p.illustrazione) return false;
+          return f.bimbo === true ? q.linea !== 'adulto' : f.bimbo === false ? q.linea !== 'bambino' : true;
+        }) });
+      });
+    });
+    var out = [], visti = {}, preso = true;
+    while (out.length < quanti && preso) {
+      preso = false;
+      code.forEach(function (x) {
+        if (out.length >= quanti) return;
+        var q = x.lista.filter(function (y) { return !visti[y.codice]; })[0];
+        if (q) { visti[q.codice] = 1; out.push({ p: q, bimbo: x.f.bimbo }); preso = true; }
+      });
+    }
+    return out;
+  }
+  function htmlSuggerimenti(lista) {
+    return lista.map(function (x) {
+      var p = x.p, r = PROD[p.codice], tutte = gruppiTaglia(p);
+      var g = tutte.filter(function (y) { return x.bimbo === true ? y.linea !== 'adulto' : x.bimbo === false ? y.linea !== 'bambino' : true; });
+      if (!g.length) g = tutte;
+      var tt = g.reduce(function (a, y) { return a.concat(y.valori); }, []);
+      var opt = function (v) { return '<option>' + escH(v) + '</option>'; };
+      var scelta = tt.length > 1 ? '<label class="sr-only" for="ins-' + p.codice + '">' + escH(nomeTaglia(p)) + ' – ' + escH(p.nome) + '</label><select class="pc__taglia" id="ins-' + p.codice + '" data-ins-taglia><option value="">' + escH(nomeTaglia(p)) + '</option>' +
+        (g.length > 1 ? g.map(function (y) { return '<optgroup label="' + (y.linea === 'bambino' ? 'Bambino' : 'Adulto') + '">' + y.valori.map(opt).join('') + '</optgroup>'; }).join('') : tt.map(opt).join('')) + '</select>' : '';
+      return '<div class="ins" data-ins="' + p.codice + '" data-unica="' + (tt.length === 1 ? escH(tt[0]) : '') + '" style="--acc:' + r.s.accento + '">' +
+        '<div class="ins__media">' + figura(p, 'ins__ill') + '</div>' +
+        '<div class="ins__txt"><p class="ins__nome"><a href="#prodotto-' + p.codice + '">' + escH(p.nome) + '</a></p><p class="ins__prezzo">' + euro(p.prezzo) + (p.linea === 'bambino' ? ' <span class="ins__bimbo">Bambino</span>' : '') + '</p></div>' +
+        '<div class="ins__az' + (scelta ? '' : ' ins__az--solo') + '">' + scelta + '<button class="btn btn--pri btn--sm" type="button" data-ins-agg>' + icona('piu', 'ico ico--s') + 'Aggiungi</button></div>' +
+        '<p class="ins__msg" data-ins-msg aria-live="polite"></p></div>';
+    }).join('');
+  }
+  function aggiornaInsieme() {
+    if (!scheda || !schedaCod) return;
+    var sez = $('[data-insieme]', scheda.corpo); if (!sez) return;
+    var r = PROD[schedaCod], p = r.p, ch = $('[data-chip-taglie] input:checked', scheda.corpo);
+    var bimbo = p.linea === 'bambino' ? true : p.linea === 'adulto' ? false : ch ? tagliaBimbo(p, ch.value) : null;
+    var l = suggerisci([{ p: p, s: r.s, c: r.c, bimbo: bimbo }], 3);
+    sez.hidden = !l.length;
+    $('[data-insieme-lista]', sez).innerHTML = htmlSuggerimenti(l);
+  }
+  function suggerimentiBorsa() {
+    if (!borsaP) return;
+    var sez = $('[data-borsa-ins]', borsaP.corpo); if (!sez) return;
+    var visti = {}, fonti = [];
+    leggiBorsa().slice().reverse().forEach(function (x) {
+      if (visti[x.c]) return; visti[x.c] = 1;
+      var r = PROD[x.c], p = r.p;
+      fonti.push({ p: p, s: r.s, c: r.c, bimbo: p.linea === 'bambino' ? true : p.linea === 'adulto' ? false : x.t ? tagliaBimbo(p, x.t) : null });
+    });
+    var l = suggerisci(fonti, 3);
+    sez.hidden = !l.length;
+    $('[data-insieme-lista]', sez).innerHTML = htmlSuggerimenti(l);
+  }
+  d.addEventListener('change', function (e) {
+    var s = e.target.closest('[data-ins-taglia]'); if (!s) return;
+    s.classList.remove('is-err'); messaggio($('[data-ins-msg]', s.closest('[data-ins]')), '');
+  });
+  d.addEventListener('click', function (e) {
+    var bt = e.target.closest('[data-ins-agg]'); if (!bt) return;
+    var box = bt.closest('[data-ins]'), cod = box.getAttribute('data-ins'), s = $('[data-ins-taglia]', box), msg = $('[data-ins-msg]', box);
+    var t = s ? s.value : box.getAttribute('data-unica');
+    if (s && !t) { s.classList.add('is-err'); messaggio(msg, scegliTxt(PROD[cod].p) + ', poi tocca Aggiungi.', 'err'); s.focus({ preventScroll: true }); return; }
+    var nellaBorsa = !!bt.closest('#borsa');
+    if (!aggiungiBorsa(cod, t)) return;
+    if (nellaBorsa) {
+      // la borsa si ridisegna da sola: porto il focus sulla riga nuova
+      var riga = $('#borsa [data-k="' + (cod + '|' + t).replace(/"/g, '\\"') + '"] .bv__nome a');
+      if (riga) riga.focus({ preventScroll: true });
+      mostraAvviso('Aggiunto: ' + PROD[cod].p.nome + (t ? ' · ' + t : ''));
+    } else {
+      fatto(bt, 'Aggiunto'); messaggio(msg, 'Nella borsa' + (t ? ' · ' + t : ''), 'ok');
+      setTimeout(aggiornaInsieme, 1500);
+    }
+  });
 
   /* ---------------- Mappa solo al clic ---------------- */
   var mappa = $('[data-mappa]');

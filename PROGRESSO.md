@@ -111,7 +111,12 @@ Nessuna foto davvero bella e senza loghi leggibili → disegno SVG sul colore de
   - Privacy: aggiunti i dati della richiesta "Prenota e ritira" e la nota sulla borsa salvata solo nel browser (memoria locale, non profilazione). Nient'altro cambiato.
   - Pannelli: aria-modal, focus intrappolato e restituito, Esc, scorrimento bloccato solo su html (niente salti), velo che non fa scorrere la pagina su iPhone, niente backdrop-filter.
   - Prova automatica (borsa.mjs, 390 e 1440): 18/18 ok.
-- [ ] Blocco 4 – "Spesso comprati insieme"
+- [x] Blocco 4 – "Spesso comprati insieme"
+  - Regole nel campo `insieme` di ogni categoria (config.js), anche verso un altro sport ("sport/categoria").
+  - Scheda: 2–3 prodotti presi a turno dalle categorie collegate; borsa: "Ti potrebbe servire anche" partendo dagli ultimi prodotti aggiunti.
+  - Esclusi: prodotti già nella borsa, esauriti, lo stesso prodotto e lo stesso tipo (es. dal casco propone la maschera). Prodotto bambino (o taglia bambino scelta) → solo prodotti bambino / adulto e bambino, con le sole taglie bambino nel menu; prodotto adulto → niente prodotti solo bambino.
+  - Aggiunta con un tocco dopo aver scelto la taglia; il suggerimento sparisce appena è nella borsa.
+  - Prova automatica (insieme.mjs): 5/5 ok.
 - [ ] Blocco 5 – Guida taglie con calcolatore scarpe
 - [ ] Blocco 6 – "Vedi in 3D" (model-viewer ospitato nel sito)
 - [ ] Revisione art director (2 giri) e controllo veloce
