@@ -778,6 +778,8 @@ function paginaCategoria(s, c, i) {
     ? img(f.file, f.alt, rel, { sizes: '100vw', lazy: false, prio: true, cls: 'hc__img' })
     : `${campo(s.campo, 'hc__campo')}${ico(c.icona, 'ico hc__ico')}`;
   const fasce = fascePrezzo(c.prodotti);
+  // scheda della guida taglie adatta alla categoria (vuota se non serve, es. racchette)
+  const tabG = (() => { for (const p of c.prodotti) { const g = (TAG[p.taglia] || {}).guida; if (g) return g === 'abb-bambino' && p.linea !== 'bambino' ? 'abb-adulto' : g; } return ''; })();
   const altre = s.categorie.filter(x => x !== c).map(x => {
     const k = s.categorie.indexOf(x);
     return `<li><a href="${catUrl(s, x, rel)}"><span class="altre__num">${String(k + 1).padStart(2, '0')}</span><span class="altre__tit">${esc(pulisci(x.titolo))}</span><span class="altre__n">${nN(x.prodotti.length, 'prodotto', 'prodotti')}</span>${ico('freccia', 'ico altre__fr')}</a></li>`;
@@ -794,7 +796,7 @@ function paginaCategoria(s, c, i) {
     <ul class="tipi tipi--scuro" aria-label="Tipologie" data-hero-a>${c.tipologie.map(t => `<li>${esc(t)}</li>`).join('')}</ul>
     <div class="hc__az" data-hero-a>
       <a class="btn btn--acc" href="${wa(msgCategoria(s, c))}" target="_blank" rel="noopener">${ico('chat', 'ico ico--s')}Chiedi disponibilità</a>
-      <a class="btn btn--ghost-l" href="#guida-taglie" data-guida>${ico('righello', 'ico ico--s')}Guida taglie</a>
+      ${tabG ? `<a class="btn btn--ghost-l" href="#guida-taglie" data-guida data-guida-tab="${tabG}">${ico('righello', 'ico ico--s')}Guida taglie</a>` : ''}
     </div>
   </div>
 </section>
@@ -845,7 +847,7 @@ ${c.prodotti.map((p, k) => `<li data-ord="${k}">${cardProdotto(p, rel)}</li>`).j
   <div class="wrap">
     <header class="sez-testa sez-testa--riga">
       <div><p class="occhiello">${s.numero} · ${esc(s.nome)}</p><h2 class="tit-sez" id="tit-altre" data-tit>${righe(['Altre categorie', `di ${nomeSport(s)}`])}</h2></div>
-      <p class="sez-testa__testo">Misure tra due taglie o un regalo per un bambino? <a class="link" href="#guida-taglie" data-guida>Apri la guida taglie</a></p>
+      <p class="sez-testa__testo">Misure tra due taglie o un regalo per un bambino? <a class="link" href="#guida-taglie" data-guida data-guida-tab="${tabG || 'scarpe'}">Apri la guida taglie</a></p>
     </header>
     <ul class="altre__lista">${altre}</ul>
     <p class="altre__az"><a class="btn btn--sec" href="${sportUrl(s, rel)}">Tutto il reparto ${esc(s.nome)} ${ico('freccia', 'ico ico--s')}</a></p>

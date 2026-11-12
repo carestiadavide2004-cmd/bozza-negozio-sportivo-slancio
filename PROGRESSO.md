@@ -117,7 +117,12 @@ Nessuna foto davvero bella e senza loghi leggibili → disegno SVG sul colore de
   - Esclusi: prodotti già nella borsa, esauriti, lo stesso prodotto e lo stesso tipo (es. dal casco propone la maschera). Prodotto bambino (o taglia bambino scelta) → solo prodotti bambino / adulto e bambino, con le sole taglie bambino nel menu; prodotto adulto → niente prodotti solo bambino.
   - Aggiunta con un tocco dopo aver scelto la taglia; il suggerimento sparisce appena è nella borsa.
   - Prova automatica (insieme.mjs): 5/5 ok.
-- [ ] Blocco 5 – Guida taglie con calcolatore scarpe
+- [x] Blocco 5 – Guida taglie con calcolatore scarpe
+  - Pannello "Guida taglie" apribile dalla scheda prodotto, dalle pagine categoria (si apre già sulla scheda giusta: scarpe, guantoni, caschi…) e dalla voce "Guida taglie" nel footer di ogni pagina; anche con #guida-taglie nell'indirizzo.
+  - Schede accessibili (frecce, Home, Fine): Scarpe (adulto + bambino), Abbigliamento adulto, Abbigliamento bambino, Guantoni, Palloni, Caschi. Tabelle e intestazioni da config.js (guidaTaglie).
+  - Calcolatore: lunghezza del piede in cm → numero EU = arrotondamento di 1,5 × (cm + 1,5): 15 cm → 25, 27 cm → 43; fuori da 10–33 cm messaggio d'errore. Istruzioni per misurare, nota per corsa e bambini, tabelle numero/piede 24–35 e 36–47.
+  - Avviso in alto: le misure cambiano da marca a marca e in negozio si prova tutto. Link WhatsApp per i dubbi.
+  - Il pulsante "Guida taglie" compare solo nelle categorie dove serve (non per racchette, palline…).
 - [ ] Blocco 6 – "Vedi in 3D" (model-viewer ospitato nel sito)
 - [ ] Revisione art director (2 giri) e controllo veloce
 - [ ] Pubblicazione e verifica online

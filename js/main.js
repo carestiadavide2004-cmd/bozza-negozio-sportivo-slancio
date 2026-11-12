@@ -640,12 +640,12 @@
         x.valori.map(function (v) { k++; return '<label><input type="radio" name="taglia-scheda" value="' + escH(v) + '"><span>' + escH(v) + '</span></label>'; }).join('');
     }).join('');
     return '<fieldset class="scheda__taglie" style="border:0;padding:0;margin-inline:0;min-width:0"><div class="scheda__tt"><legend style="float:left;padding:0"><p>' + escH(nomeTaglia(p)) + '</p></legend>' +
-      (p.taglia !== 'unica' ? '<a class="link" href="#guida-taglie" data-guida data-guida-tab="' + guidaTabPer(p) + '">' + icona('righello', 'ico ico--s') + 'Guida taglie</a>' : '') +
+      (guidaTabPer(p) ? '<a class="link" href="#guida-taglie" data-guida data-guida-tab="' + guidaTabPer(p) + '">' + icona('righello', 'ico ico--s') + 'Guida taglie</a>' : '') +
       '</div><div class="chip-taglie" data-chip-taglie>' + gruppi + '</div></fieldset>';
   }
   function guidaTabPer(p) {
     var k = (TAG[p.taglia] || {}).guida || '';
-    return k || (/scarp|calz/.test(p.taglia) ? 'scarpe' : /abb/.test(p.taglia) ? (p.linea === 'bambino' ? 'abbBambino' : 'abbAdulto') : '');
+    return k === 'abb-bambino' && p.linea !== 'bambino' ? 'abb-adulto' : k;
   }
   function apriScheda(cod, da, storico) {
     var r = PROD[cod]; if (!r) return;
@@ -1078,6 +1078,92 @@
       setTimeout(aggiornaInsieme, 1500);
     }
   });
+
+  /* =====================================================================
+     GUIDA TAGLIE (pannello con schede + calcolatore scarpe)
+     ===================================================================== */
+  var G = C.guidaTaglie, guidaP;
+  var SCHEDE_G = [
+    { id: 'scarpe', nome: 'Scarpe' },
+    { id: 'abb-adulto', nome: 'Abbigliamento adulto', k: 'abbAdulto' },
+    { id: 'abb-bambino', nome: 'Abbigliamento bambino', k: 'abbBambino' },
+    { id: 'guantoni', nome: 'Guantoni', k: 'guantoni' },
+    { id: 'palloni', nome: 'Palloni', k: 'palloni' },
+    { id: 'caschi', nome: 'Caschi', k: 'caschi' }
+  ];
+  // numero europeo dalla lunghezza del piede (cm): si aggiunge circa 1,5 cm di spazio per le dita
+  var numeroEU = function (cm) { return Math.round(1.5 * (cm + 1.5)); };
+  var cmDaEU = function (n) { return n / 1.5 - 1.5; };
+  var virgola = function (v) { return String(Math.round(v * 10) / 10).replace('.', ','); };
+  function tabellaG(t) {
+    return '<div class="tab-g__scorri"><table class="tab-g"><thead><tr>' + t.colonne.map(function (c) { return '<th scope="col">' + escH(c) + '</th>'; }).join('') + '</tr></thead><tbody>' +
+      t.righe.map(function (r) { return '<tr>' + r.map(function (c, i) { return i ? '<td>' + escH(c) + '</td>' : '<th scope="row">' + escH(c) + '</th>'; }).join('') + '</tr>'; }).join('') + '</tbody></table></div>' +
+      (t.nota ? '<p class="guida__nota">' + escH(t.nota) + '</p>' : '');
+  }
+  function schedaScarpe() {
+    var righe = function (da, a) { var h = ''; for (var n = da; n <= a; n++) h += '<tr><th scope="row">' + n + '</th><td>' + virgola(cmDaEU(n - .5)) + '–' + virgola(cmDaEU(n + .5) - .1) + ' cm</td></tr>'; return h; };
+    return '<div class="calc">' +
+      '<p class="calc__tit">Trova il numero</p>' +
+      '<div class="calc__riga"><div class="campo calc__campo"><label for="g-cm">Lunghezza del piede (cm)</label><input id="g-cm" type="text" inputmode="decimal" autocomplete="off" placeholder="Es. 24,5" aria-describedby="g-ris"></div>' +
+      '<output class="calc__ris" id="g-ris" for="g-cm" aria-live="polite"><span class="calc__n">–</span><span class="calc__t">Scrivi la misura del piede</span></output></div>' +
+      '<p class="calc__nota">Il calcolo aggiunge già circa 1,5 cm di spazio per le dita.</p></div>' +
+      '<h3 class="guida__h">Come misurare il piede</h3><ol class="guida__passi">' + G.scarpe.comeMisurare.map(function (x) { return '<li>' + escH(x) + '</li>'; }).join('') + '</ol>' +
+      '<p class="guida__nota">' + escH(G.scarpe.nota) + '</p>' +
+      '<div class="guida__due"><div><h3 class="guida__h">Bambino</h3><div class="tab-g__scorri"><table class="tab-g"><thead><tr><th scope="col">Numero</th><th scope="col">Piede</th></tr></thead><tbody>' + righe(24, 35) + '</tbody></table></div></div>' +
+      '<div><h3 class="guida__h">Adulto</h3><div class="tab-g__scorri"><table class="tab-g"><thead><tr><th scope="col">Numero</th><th scope="col">Piede</th></tr></thead><tbody>' + righe(36, 47) + '</tbody></table></div></div></div>';
+  }
+  function calcola(v) {
+    var cm = parseFloat(String(v).replace(',', '.'));
+    if (!String(v).trim()) return { n: '–', t: 'Scrivi la misura del piede' };
+    if (isNaN(cm) || cm < 10 || cm > 33) return { n: '!', t: 'Scrivi una misura tra 10 e 33 cm', err: true };
+    var n = numeroEU(cm);
+    return { n: n, t: 'Numero europeo indicativo · ' + (n <= 35 ? 'bambino' : 'adulto') + (n > 47 ? ' (numero grande: chiedici)' : '') };
+  }
+  function creaGuida() {
+    if (guidaP) return;
+    guidaP = Pannello('guida-taglie', { cls: 'pan--largo pan--guida' });
+    guidaP.tit.textContent = 'Guida taglie';
+    guidaP.corpo.innerHTML = '<p class="guida__avviso">' + escH(G.avviso) + '</p>' +
+      '<div class="guida__tabs" role="tablist" aria-label="Tipo di prodotto">' + SCHEDE_G.map(function (s) { return '<button type="button" role="tab" id="gt-' + s.id + '" aria-controls="gp-' + s.id + '" aria-selected="false" tabindex="-1">' + s.nome + '</button>'; }).join('') + '</div>' +
+      SCHEDE_G.map(function (s) { return '<div class="guida__pan" role="tabpanel" id="gp-' + s.id + '" aria-labelledby="gt-' + s.id + '" tabindex="0" hidden>' + (s.k ? tabellaG(G[s.k]) : schedaScarpe()) + '</div>'; }).join('');
+    guidaP.piede.hidden = false;
+    guidaP.piede.innerHTML = '<div class="guida__piede"><p>Tra due misure? Prova in negozio o chiedici.</p><a class="btn btn--sec btn--sm" href="' + waLink('Ciao ' + C.attivita.nome + ', ho un dubbio sulla taglia giusta.') + '" target="_blank" rel="noopener">' + icona('chat', 'ico ico--s') + 'Chiedi su WhatsApp</a></div>';
+    var tabs = $$('[role="tab"]', guidaP.corpo);
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { guidaTab(t.id.slice(3)); });
+      t.addEventListener('keydown', function (e) {
+        var j = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : e.key === 'Home' ? 0 : e.key === 'End' ? tabs.length - 1 : null;
+        if (j === null) return;
+        e.preventDefault(); j = (j + tabs.length) % tabs.length; guidaTab(tabs[j].id.slice(3)); tabs[j].focus();
+      });
+    });
+    var cm = $('#g-cm', guidaP.corpo), ris = $('#g-ris', guidaP.corpo);
+    cm.addEventListener('input', function () {
+      var r = calcola(cm.value);
+      $('.calc__n', ris).textContent = r.n; $('.calc__t', ris).textContent = r.t;
+      ris.classList.toggle('is-err', !!r.err); ris.classList.toggle('is-ok', typeof r.n === 'number');
+      cm.setAttribute('aria-invalid', r.err ? 'true' : 'false');
+    });
+  }
+  function guidaTab(id) {
+    if (!SCHEDE_G.some(function (s) { return s.id === id; })) id = 'scarpe';
+    $$('[role="tab"]', guidaP.corpo).forEach(function (t) {
+      var on = t.id === 'gt-' + id;
+      t.setAttribute('aria-selected', on ? 'true' : 'false'); t.tabIndex = on ? 0 : -1;
+      if (on && t.parentElement.scrollWidth > t.parentElement.clientWidth) t.parentElement.scrollLeft = t.offsetLeft - 16;
+    });
+    $$('[role="tabpanel"]', guidaP.corpo).forEach(function (p) { p.hidden = p.id !== 'gp-' + id; });
+  }
+  function apriGuida(tab, da) {
+    creaGuida(); guidaP.apri(da); guidaTab(tab || 'scarpe');   // prima visibile, poi scorre la scheda attiva in vista
+  }
+  d.addEventListener('click', function (e) {
+    var a = e.target.closest('[data-guida]'); if (!a) return;
+    e.preventDefault();
+    apriGuida(a.getAttribute('data-guida-tab'), a);
+  });
+  if (location.hash === '#guida-taglie') { history.replaceState(null, '', location.pathname + location.search); apriGuida(); }
+  window.SLANCIO.numeroScarpa = numeroEU;
 
   /* ---------------- Mappa solo al clic ---------------- */
   var mappa = $('[data-mappa]');
