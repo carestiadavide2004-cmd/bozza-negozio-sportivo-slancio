@@ -28,6 +28,7 @@ const indirizzoCompleto = `${K.indirizzo}, ${K.cap} ${K.citta} (${K.provincia})`
 const mappaUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(K.mappaRicerca)}`;
 const NOME = A.nome.toUpperCase();
 const nomeSport = s => s.nomeBreve || s.nome;
+const nomeCorto = s => (s.nome.length > 16 && s.nomeBreve) ? s.nomeBreve : s.nome;
 const pulisci = t => t.replace(/\s*\(.*?\)/g, '').trim();
 const msgCategoria = (s, c) => {
   const t = pulisci(c.titolo).toLowerCase();
@@ -160,8 +161,8 @@ ${extraHead}</head>`;
 }
 
 function header(rel, corrente) {
-  const mega = C.sport.map(s => `<li><a class="mega__voce${corrente === s.slug ? ' is-corrente' : ''}" href="${sportUrl(s, rel)}" style="--acc:${s.accento}"${corrente === s.slug ? ' aria-current="page"' : ''}><span class="mega__num">${s.numero}</span>${campo(s.campo, 'mega__campo')}<span class="mega__nome">${esc(s.nome)}</span><span class="mega__cat">${s.categorie.length} categorie</span></a></li>`).join('');
-  const mobile = C.sport.map(s => `<li><a href="${sportUrl(s, rel)}" style="--acc:${s.accento}"${corrente === s.slug ? ' aria-current="page"' : ''}><span class="mm__num">${s.numero}</span><span class="mm__nome">${esc(s.nome)}</span></a></li>`).join('');
+  const mega = C.sport.map(s => `<li><a class="mega__voce${corrente === s.slug ? ' is-corrente' : ''}" href="${sportUrl(s, rel)}" style="--acc:${s.accento}"${corrente === s.slug ? ' aria-current="page"' : ''}><span class="mega__num">${s.numero}</span>${campo(s.campo, 'mega__campo')}<span class="mega__nome">${esc(nomeCorto(s))}</span><span class="mega__cat">${s.categorie.length} categorie</span></a></li>`).join('');
+  const mobile = C.sport.map(s => `<li><a href="${sportUrl(s, rel)}" style="--acc:${s.accento}"${corrente === s.slug ? ' aria-current="page"' : ''}><span class="mm__num">${s.numero}</span><span class="mm__nome">${esc(nomeCorto(s))}</span></a></li>`).join('');
   return `<header class="hdr" data-hdr>
   <div class="hdr__bg" aria-hidden="true"></div>
   <div class="hdr__in wrap">
@@ -218,8 +219,19 @@ function header(rel, corrente) {
 }
 
 function footer(rel) {
-  const sport = C.sport.map(s => `<li><a href="${sportUrl(s, rel)}"><span>${s.numero}</span>${esc(s.nome)}</a></li>`).join('');
-  const orari = ordineGiorni.map(g => `<li><span>${giorni[g].slice(0, 3)}</span><span>${C.orari.settimana[g].length ? C.orari.settimana[g].map(f => `<b>${fasciaTxt([f])}</b>`).join(' ') : 'Chiuso'}</span></li>`).join('');
+  const sport = C.sport.map(s => `<li><a href="${sportUrl(s, rel)}"><span>${s.numero}</span>${esc(nomeCorto(s))}</a></li>`).join('');
+  // giorni consecutivi con lo stesso orario raggruppati (es. "Mar–Sab")
+  const gruppi = [];
+  for (const g of ordineGiorni) {
+    const k = JSON.stringify(C.orari.settimana[g]);
+    const ult = gruppi[gruppi.length - 1];
+    if (ult && ult.k === k) ult.fine = g; else gruppi.push({ k, inizio: g, fine: g });
+  }
+  const orari = gruppi.map(({ inizio, fine }) => {
+    const f = C.orari.settimana[inizio];
+    const nomeG = giorni[inizio].slice(0, 3) + (fine !== inizio ? '–' + giorni[fine].slice(0, 3) : '');
+    return `<li><span>${nomeG}</span><span>${f.length ? f.map(x => `<b>${fasciaTxt([x])}</b>`).join(' ') : 'Chiuso'}</span></li>`;
+  }).join('');
   const social = K.social.map(s => `<li><a href="${s.url}" target="_blank" rel="noopener">${esc(s.nome)}</a></li>`).join('');
   return `<footer class="pie">
   <div class="wrap">

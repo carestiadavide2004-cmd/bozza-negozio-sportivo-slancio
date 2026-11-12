@@ -6,7 +6,7 @@
 - [x] Fase 2 – Blocco B: home (video hero, tessere, perché, configuratore maglia, marchi, negozio, modulo, FAQ)
 - [x] Fase 2 – Blocco C: pagina sport di prova (calcio) – controllata a 390 e 1440
 - [x] Fase 2 – Blocco D: altre 11 pagine sport, privacy, 404 (stesso modello, generate da build.mjs)
-- [ ] Fase 3 – Revisione art director (12+ difetti, 2 giri)
+- [x] Fase 3 – Revisione art director (16 difetti corretti, 2 giri)
 - [ ] Fase 4 – Controllo veloce e pubblicazione
 
 ## Strumenti verificati (Fase 1)
@@ -53,5 +53,24 @@ Nessuna foto davvero bella e senza loghi leggibili → disegno SVG sul colore de
 - Server locale: `python3 -m http.server 8765` nella cartella del sito.
 - Script di controllo (fuori dal sito): ~/.carestia-qa/slancio/shot.mjs, strisce.sh, og.mjs.
 
-## Difetti Fase 3
-(da compilare)
+## Difetti Fase 3 (giro 1 – screenshot 390/768/1440 di home, calcio, padel, sci)
+1. ✅ Briciole di pane con numeri "1. 2. 3." del browser → lista senza numeri.
+2. ✅ Telefono: i pulsanti della hero sport finivano sotto la barra fissa → hero alta 100svh meno la barra.
+3. ✅ Striscia chiara sotto il footer sul telefono (padding del body) → spazio della barra dentro il footer scuro.
+4. ✅ Orari nel footer spezzati a metà ("15:30–" / "19:30") → fasce che non si spezzano e giorni uguali raggruppati ("Mar–Sab").
+5. ✅ Computer: le linee di campo nella hero sport coprivano il soggetto → più trasparenti e spostate.
+6. ✅ "Pugilato e combattimento" nella hero computer andava a capo col trattino → titolo più piccolo per i nomi lunghi.
+7. ✅ Reset delle liste (`ul[class]`) più forte delle classi → annullava il margine del carosello "Altri sport" e della barra categorie. Ora `:where()`.
+8. ✅ Carosello "Altri sport" attaccato al bordo sinistro → allineato alla griglia del sito (conseguenza del punto 7).
+9. ✅ Mega menu: celle di altezza diversa con buchi grigi → celle che si allungano tutte uguali.
+10. ✅ Nomi lunghi a capo in mega menu, menu telefono e footer → nome breve ("Pugilato", "Fitness") dove serve.
+11. ✅ Barra categorie su due righe a 768 e 1440 → una riga che scorre fino a 1200px, chip più compatti.
+12. ✅ Telefono: testo dei pulsanti hero spezzato su due righe → home a colonna, pagina sport con WhatsApp largo + "Dove siamo".
+13. ✅ og.jpg generata senza i font del sito → rigenerata con Barlow Condensed.
+14. ✅ Alt del video non corrispondente (diceva "tramonto") → "Calciatore che colpisce il pallone di sera su erba sintetica".
+
+
+## Fase 3 – giro 2 (rifinitura dopo i nuovi screenshot)
+15. ✅ Schede con icona come blocchi pieni di colore (troppo piatti, l'azzurro sci sembrava slavato) → fondo asfalto scuro, icona e linee di campo nel colore dello sport, filo colorato in basso: coerenti con le foto.
+16. ✅ "Mar–Sab" andava a capo nel footer del telefono → giorno su una riga.
+17. Accettato: la hero padel è un campo vuoto (nessuna foto di gioco senza loghi leggibili in alta risoluzione); funziona come ambiente, il giocatore è nella tessera.
