@@ -36,7 +36,10 @@ const msgCategoria = (s, c) => {
   return `Ciao, cerco ${t}${conSport ? '' : ` (${s.nome.toLowerCase()})`}. Mi dite cosa avete?`;
 };
 const msgSport = s => `Ciao ${A.nome}, ho una domanda sul reparto ${s.nome}.`;
-const sportUrl = (s, rel) => `${rel}sport/${s.slug}/`;
+const sportUrl = (s, rel) => `${rel}sport/${s.slug}/index.html`;
+// link alla home: file esplicito (index.html) così funziona anche aprendo i file dal Mac; sulla home le ancore restano "#..."
+let SU_HOME = false;
+const vaiHome = (rel, hash = "") => SU_HOME ? (hash || "index.html") : `${rel}index.html${hash}`;
 const giorni = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
 const ordineGiorni = [1, 2, 3, 4, 5, 6, 0];
 const fasciaTxt = f => f.map(([a, b]) => `${a.replace(/^0/, '')}–${b.replace(/^0/, '')}`).join(' · ');
@@ -124,20 +127,20 @@ const ico = (k, cls = 'ico') => `<svg class="${cls}" viewBox="0 0 24 24" fill="n
 
 // Marchio: due barre inclinate (lo "slancio") + nome dall'attività
 const marchio = `<svg class="logo__segno" viewBox="0 0 30 24" aria-hidden="true" focusable="false"><path d="M9 1h8L9 23H1z" fill="currentColor"/><path d="M21 1h8l-8 22h-8z" fill="var(--c-cobalto-vivo)"/></svg>`;
-const logo = rel => `<a class="logo" href="${rel || './'}" aria-label="${esc(A.nome)} – pagina principale">${marchio}<span class="logo__nome">${esc(NOME)}</span></a>`;
+const logo = rel => `<a class="logo" href="${vaiHome(rel)}" aria-label="${esc(A.nome)} – pagina principale">${marchio}<span class="logo__nome">${esc(NOME)}</span></a>`;
 
 /* ---------------- titoli a righe ---------------- */
 const righe = arr => arr.map(r => `<span class="m"><span>${esc(r)}</span></span>`).join(' ');
 
 /* ---------------- parti comuni ---------------- */
-function head({ titolo, descrizione, rel, percorso, preload = '', extraHead = '' }) {
+function head({ titolo, descrizione, rel, percorso, preload = '', extraHead = '', base = '' }) {
   const ogImg = S.urlBase + S.ogImmagine;
   const url = S.urlBase + (percorso || '');
   return `<!doctype html>
 <html lang="${S.lingua}">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+${base}<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>${esc(titolo)}</title>
 <meta name="description" content="${esc(descrizione)}">
 ${S.bozza ? '<meta name="robots" content="noindex, nofollow">' : `<link rel="canonical" href="${url}">`}
@@ -177,9 +180,9 @@ function header(rel, corrente) {
           </div>
         </div>
       </div>
-      <a class="hdr__link" href="${rel || './'}#perche">Perché ${esc(A.nome)}</a>
-      <a class="hdr__link" href="${rel || './'}#squadre">Squadre</a>
-      <a class="hdr__link" href="${rel || './'}#negozio">Il negozio</a>
+      <a class="hdr__link" href="${vaiHome(rel, '#perche')}">Perché ${esc(A.nome)}</a>
+      <a class="hdr__link" href="${vaiHome(rel, '#squadre')}">Squadre</a>
+      <a class="hdr__link" href="${vaiHome(rel, '#negozio')}">Il negozio</a>
     </nav>
     <div class="hdr__az">
       <button class="hdr__ico" type="button" data-cerca-apri aria-label="Cerca uno sport o una categoria" aria-haspopup="dialog">${ico('cerca')}</button>
@@ -193,10 +196,10 @@ function header(rel, corrente) {
     <p class="mm__tit">Sport</p>
     <ul class="mm__sport">${mobile}</ul>
     <ul class="mm__link">
-      <li><a href="${rel || './'}#perche">Perché ${esc(A.nome)}</a></li>
-      <li><a href="${rel || './'}#squadre">Squadre e società</a></li>
-      <li><a href="${rel || './'}#negozio">Il negozio</a></li>
-      <li><a href="${rel || './'}#chiedi">Chiedi disponibilità</a></li>
+      <li><a href="${vaiHome(rel, '#perche')}">Perché ${esc(A.nome)}</a></li>
+      <li><a href="${vaiHome(rel, '#squadre')}">Squadre e società</a></li>
+      <li><a href="${vaiHome(rel, '#negozio')}">Il negozio</a></li>
+      <li><a href="${vaiHome(rel, '#chiedi')}">Chiedi disponibilità</a></li>
     </ul>
     <div class="mm__az">
       <a class="btn btn--pri" href="${wa(K.whatsappMessaggio)}" target="_blank" rel="noopener">Chiedi su WhatsApp</a>
@@ -277,7 +280,7 @@ function barraMobile(rel) {
   return `<nav class="barra-m" aria-label="Contatti rapidi">
   <a href="${tel}">${ico('telefono')}<span>Chiama</span></a>
   <a class="barra-m__wa" href="${wa(K.whatsappMessaggio)}" target="_blank" rel="noopener">${ico('chat')}<span>WhatsApp</span></a>
-  <a href="${rel || './'}#negozio">${ico('pin')}<span>Dove siamo</span></a>
+  <a href="${vaiHome(rel, '#negozio')}">${ico('pin')}<span>Dove siamo</span></a>
 </nav>`;
 }
 
@@ -299,8 +302,9 @@ function jsonLd() {
   return `<script type="application/ld+json">${JSON.stringify(d)}</script>\n`;
 }
 
-function pagina({ titolo, descrizione, rel, percorso, classe, stile = '', corpo, preload = '', corrente, extraHead = '', gsap = true }) {
-  return `${head({ titolo, descrizione, rel, percorso, preload, extraHead })}
+function pagina({ titolo, descrizione, rel, percorso, classe, stile = '', corpo, preload = '', corrente, extraHead = '', base = '', gsap = true }) {
+  SU_HOME = classe === 'p-home';
+  return `${head({ titolo, descrizione, rel, percorso, preload, extraHead, base })}
 <body class="${classe}" data-rel="${rel}"${stile ? ` style="${stile}"` : ''}>
 <a class="salta" href="#contenuto">Vai al contenuto</a>
 ${header(rel, corrente)}
@@ -600,13 +604,13 @@ function paginaSport(s) {
   </div>
   ${campo(s.campo, 'hs__campo')}
   <div class="hs__in wrap">
-    <nav class="briciole" aria-label="Percorso"><ol><li><a href="${rel}">Home</a></li><li><a href="${rel}#sport">Sport</a></li><li aria-current="page">${esc(s.nome)}</li></ol></nav>
+    <nav class="briciole" aria-label="Percorso"><ol><li><a href="${vaiHome(rel)}">Home</a></li><li><a href="${vaiHome(rel, '#sport')}">Sport</a></li><li aria-current="page">${esc(s.nome)}</li></ol></nav>
     <p class="hs__num" aria-hidden="true">${s.numero}</p>
     <h1 class="hs__tit${s.nome.length > 16 ? ' hs__tit--lungo' : ''}" data-tit-hero>${righe([s.nome])}</h1>
     <p class="hs__frase" data-hero-a>${esc(s.frase)}</p>
     <div class="hs__cta" data-hero-a>
       <a class="btn btn--acc btn--lg" href="${wa(msgSport(s))}" target="_blank" rel="noopener">${ico('chat', 'ico ico--s')}Chiedi su WhatsApp</a>
-      <a class="btn btn--ghost-l btn--lg" href="${rel}#negozio">${ico('pin', 'ico ico--s')}Dove siamo</a>
+      <a class="btn btn--ghost-l btn--lg" href="${vaiHome(rel, '#negozio')}">${ico('pin', 'ico ico--s')}Dove siamo</a>
     </div>
   </div>
 </section>
@@ -665,7 +669,7 @@ ${altri}
       <div class="fine__az">
         <a class="btn btn--acc btn--lg" href="${wa(msgSport(s))}" target="_blank" rel="noopener">${ico('chat', 'ico ico--s')}Scrivici su WhatsApp</a>
         <a class="btn btn--ghost-l btn--lg" href="${tel}">${ico('telefono', 'ico ico--s')}Chiama</a>
-        <a class="btn btn--ghost-l btn--lg" href="${rel}#negozio">${ico('pin', 'ico ico--s')}Dove siamo</a>
+        <a class="btn btn--ghost-l btn--lg" href="${vaiHome(rel, '#negozio')}">${ico('pin', 'ico ico--s')}Dove siamo</a>
       </div>
     </div>
   </div>
@@ -709,7 +713,7 @@ function privacy() {
   m = m.replace(/<!--[\s\S]*?-->/g, '').replace(/\n\s*\n+/g, '\n');
   m = m.replace('<main id="contenuto" class="section privacy">', '').replace('</main>', '');
   m = m.replace('<h1 class="title">', `${S.bozza ? '<p class="privacy__demo etichetta-esempio">Informativa di esempio per un progetto dimostrativo.</p>\n' : ''}<h1 class="tit-sez privacy__tit">`);
-  m = m.replace(/<a class="btn" href="\.\/">Torna al sito<\/a>/, `<a class="btn btn--pri" href="./">Torna al sito</a>`);
+  m = m.replace(/<a class="btn" href="\.\/">Torna al sito<\/a>/, `<a class="btn btn--pri" href="index.html">Torna al sito</a>`);
   const corpo = `<section class="privacy">${m}</section>`;
   return pagina({
     titolo: `Privacy | ${A.nome}`,
@@ -728,14 +732,15 @@ function pagina404() {
     <p class="p404__num" aria-hidden="true">404</p>
     <h1 class="tit-sez">Fuorigioco.</h1>
     <p>La pagina che cerchi non c'è più o non è mai esistita. Riparti da uno sport:</p>
-    <ul class="p404__sport">${C.sport.map(s => `<li><a class="chip" href="sport/${s.slug}/" style="--acc:${s.accento}">${esc(s.nome)}</a></li>`).join('')}</ul>
-    <p><a class="btn btn--pri" href="./">Torna alla home</a></p>
+    <ul class="p404__sport">${C.sport.map(s => `<li><a class="chip" href="sport/${s.slug}/index.html" style="--acc:${s.accento}">${esc(s.nome)}</a></li>`).join('')}</ul>
+    <p><a class="btn btn--pri" href="index.html">Torna alla home</a></p>
   </div>
 </section>`;
   return pagina({
     titolo: `Pagina non trovata | ${A.nome}`, descrizione: `La pagina che cerchi non esiste. Torna alla home di ${A.nome}.`,
     rel: '', percorso: '404.html', classe: 'p-404', corpo, gsap: false,
-    extraHead: `<base href="${base}">\n`
+    // <base> solo online (su GitHub Pages la 404 si vede a qualsiasi indirizzo); aprendo il file dal Mac non serve
+    base: `<script>if (location.protocol !== 'file:') document.write('<base href="${base}">')</script>\n`
   });
 }
 

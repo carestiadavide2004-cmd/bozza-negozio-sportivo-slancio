@@ -138,7 +138,7 @@
     var norm = function (s) { return String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); };
     var indice = [];
     C.sport.forEach(function (s) {
-      var url = REL + 'sport/' + s.slug + '/';
+      var url = REL + 'sport/' + s.slug + '/index.html';
       indice.push({ tit: s.nome, sotto: s.categorie.length + ' categorie', num: s.numero, acc: s.accento, url: url, testo: norm(s.nome + ' ' + (s.nomeBreve || '')), sport: true });
       s.categorie.forEach(function (c) {
         indice.push({ tit: c.titolo, sotto: s.nome, num: s.numero, acc: s.accento, url: url + '#' + c.slug, testo: norm(c.titolo + ' ' + s.nome + ' ' + c.tipologie.join(' ')) });
@@ -188,7 +188,7 @@
     cerca.addEventListener('click', function (e) {
       if (e.target === cerca) cercaApri(false);
       var a = e.target.closest('a[href]');
-      if (a && a.getAttribute('href').indexOf('#') > -1 && a.pathname === location.pathname) { cercaApri(false); apriCategoria(a.hash.slice(1)); }
+      if (a && a.getAttribute('href').indexOf('#') > -1 && a.pathname.replace(/index\.html$/, '') === location.pathname.replace(/index\.html$/, '')) { cercaApri(false); apriCategoria(a.hash.slice(1)); }
     });
     d.addEventListener('keydown', function (e) {
       if (e.key === '/' && cerca.hidden && !/input|textarea|select/i.test(d.activeElement.tagName)) { e.preventDefault(); cercaApri(true); }
