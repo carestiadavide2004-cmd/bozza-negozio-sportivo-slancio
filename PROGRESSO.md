@@ -153,6 +153,8 @@ Nessuna foto davvero bella e senza loghi leggibili → disegno SVG sul colore de
 - [x] Anteprime su computer: nomi a 3 righe fissi, così immagini e prezzi sono allineati tra le card.
 - [x] Controllate di nuovo: pagina categoria con icona (Pantaloncini, 1440), home 390 con icona borsa, Padel 390, modulo con errori, visore 3D, scheda: niente da correggere.
 - Note: nelle schermate il campo data appare mm/dd/yyyy solo perché il browser di prova è in inglese; su un telefono italiano è gg/mm/aaaa.
-- [ ] Pubblicazione e verifica online
+- [x] Pubblicazione e verifica online (13/11/2026): 200 per sport/calcio/index.html, sport/calcio/scarpe-da-calcio/index.html, il modello .glb e model-viewer.
+  - Peso online sul telefono (compresso da GitHub): Calcio 0,56 MB all'apertura, 0,71 MB scorrendo tutta la pagina; Scarpe da calcio 0,46 MB.
+  - Non fatto: un solo modello 3D (nessun secondo modello CC0 adatto); il 3D non si vede aprendo i file dal Mac (il browser blocca il .glb); configuratore maglia, crea il tuo kit, servizi su prenotazione, noleggio sci e pannello admin rimandati come richiesto.
 
 Non ancora (prossimi passi): configuratore maglia nuovo, crea il tuo kit, servizi su prenotazione, noleggio sci, pannello admin.
