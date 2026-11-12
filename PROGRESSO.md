@@ -83,3 +83,20 @@ Nessuna foto davvero bella e senza loghi leggibili → disegno SVG sul colore de
 - Richieste esterne al caricamento: solo cdnjs (GSAP). Nessun cookie. Nessun nome di negozio reale.
 - Pesi al caricamento (video escluso): home telefono 0,83 MB · calcio telefono 0,86 MB · home computer 0,78 MB · calcio computer 0,91 MB.
 - Video: hero-1920.mp4 2,9 MB · hero-1080x1920.mp4 2,4 MB.
+
+---
+
+# CATALOGO DI ESEMPIO (secondo passo)
+
+## Stato
+- [x] Blocco 0 – Controllo link: tutti i link interni puntano al file (`.../index.html`), anche quelli creati da JS; verificato da file:// e da server (passo precedente, ricontrollato con grep dopo `node build.mjs`). Le pagine nuove usano gli stessi helper (`sportUrl`, `vaiHome`, `catUrl`).
+- [ ] Blocco 1 – Catalogo di esempio in config.js + illustrazioni (assets/img/prodotti.svg)
+- [ ] Blocco 2 – Pagine categoria, anteprime nella pagina sport, scheda prodotto
+- [ ] Blocco 3 – Borsa "Prenota e ritira" con codice, modulo, condivisione, privacy
+- [ ] Blocco 4 – "Spesso comprati insieme"
+- [ ] Blocco 5 – Guida taglie con calcolatore scarpe
+- [ ] Blocco 6 – "Vedi in 3D" (model-viewer ospitato nel sito)
+- [ ] Revisione art director (2 giri) e controllo veloce
+- [ ] Pubblicazione e verifica online
+
+Non ancora (prossimi passi): configuratore maglia nuovo, crea il tuo kit, servizi su prenotazione, noleggio sci, pannello admin.
