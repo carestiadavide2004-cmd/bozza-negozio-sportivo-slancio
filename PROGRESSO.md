@@ -7,7 +7,7 @@
 - [x] Fase 2 – Blocco C: pagina sport di prova (calcio) – controllata a 390 e 1440
 - [x] Fase 2 – Blocco D: altre 11 pagine sport, privacy, 404 (stesso modello, generate da build.mjs)
 - [x] Fase 3 – Revisione art director (16 difetti corretti, 2 giri)
-- [ ] Fase 4 – Controllo veloce e pubblicazione
+- [x] Fase 4 – Controllo veloce e pubblicazione
 
 ## Strumenti verificati (Fase 1)
 - node v26.10.0 ✔ · ffmpeg 9.0.2 con libx264 ✔ · cwebp 1.6.0 (WebP) ✔ · Playwright Chromium in ~/.carestia-qa ✔ · gh collegato a carestiadavide2004-cmd ✔
@@ -74,3 +74,12 @@ Nessuna foto davvero bella e senza loghi leggibili → disegno SVG sul colore de
 15. ✅ Schede con icona come blocchi pieni di colore (troppo piatti, l'azzurro sci sembrava slavato) → fondo asfalto scuro, icona e linee di campo nel colore dello sport, filo colorato in basso: coerenti con le foto.
 16. ✅ "Mar–Sab" andava a capo nel footer del telefono → giorno su una riga.
 17. Accettato: la hero padel è un campo vuoto (nessuna foto di gioco senza loghi leggibili in alta risoluzione); funziona come ambiente, il giocatore è nella tessera.
+
+## Fase 4 – controllo veloce (Chromium, 390 e 1440, ~31 s)
+- 15 pagine aperte senza errori JS, senza immagini rotte, senza scorrimento laterale; noindex ovunque; nessun "{{".
+- 28 link interni: tutti 200 (la 404 usa l'indirizzo base del sito online: verificata dopo la pubblicazione).
+- Badge orari: lunedì solo pomeriggio, pausa pranzo, sabato sera → "riapre lunedì", domenica, festivo 8 dicembre, ora legale: tutti corretti.
+- Menu telefono, ricerca (tastiera, porta alla categoria), accordion, configuratore maglia, modulo (4 errori se vuoto, link WhatsApp giusto), mappa solo al clic, barra fissa: ok.
+- Richieste esterne al caricamento: solo cdnjs (GSAP). Nessun cookie. Nessun nome di negozio reale.
+- Pesi al caricamento (video escluso): home telefono 0,83 MB · calcio telefono 0,86 MB · home computer 0,78 MB · calcio computer 0,91 MB.
+- Video: hero-1920.mp4 2,9 MB · hero-1080x1920.mp4 2,4 MB.
