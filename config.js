@@ -160,6 +160,104 @@
       testoConferma: 'Ti rispondiamo con la disponibilità. Dopo la conferma teniamo da parte i prodotti per 48 ore. Paghi in negozio dicendo il codice.'
     },
 
+    /* ---------- Maglia personalizzata (configuratore 3D in home) ----------
+       modello: file .glb (modello originale del sito, generato da _strumenti/maglia3d.mjs)
+       colori: tavolozza unica per principale, secondario e dettagli (colletto e polsini)
+       squadre: INVENTATE (nomi controllati: nessuna squadra italiana reale con questi nomi);
+                stemma = disegno SVG (viewBox 0 0 100 120), solo forme geometriche */
+    maglia: {
+      modello: 'assets/3d/maglia.glb',
+      anteprima: 'assets/img/maglia-anteprima',    // senza misura: -480.webp e -960.webp
+      maxNome: 14,
+      maxNumero: 5,
+      stemmaMaxMB: 2,
+      quantitaIniziale: 15,
+      iniziale: { squadra: 'maestrale', nome: 'Rossi', numero: '10' },
+      motivi: [
+        { id: 'tinta', nome: 'Tinta unita' },
+        { id: 'strisce', nome: 'Strisce verticali' },
+        { id: 'bande', nome: 'Bande orizzontali' },
+        { id: 'diagonale', nome: 'Fascia diagonale' },
+        { id: 'quarti', nome: 'Quarti' },
+        { id: 'sfumato', nome: 'Sfumato' }
+      ],
+      colori: [
+        { nome: 'Bianco', hex: '#F6F5F1' },
+        { nome: 'Nero', hex: '#15161B' },
+        { nome: 'Cobalto', hex: '#1E46F0' },
+        { nome: 'Blu notte', hex: '#1B2A5B' },
+        { nome: 'Azzurro', hex: '#4FA3E0' },
+        { nome: 'Verde', hex: '#1B7F49' },
+        { nome: 'Giallo', hex: '#FFC21A' },
+        { nome: 'Oro', hex: '#C9A04A' },
+        { nome: 'Arancio', hex: '#F47B20' },
+        { nome: 'Corallo', hex: '#F2603D' },
+        { nome: 'Rosso', hex: '#D62839' },
+        { nome: 'Granata', hex: '#7A1F2B' },
+        { nome: 'Viola', hex: '#5B3FD1' },
+        { nome: 'Ardesia', hex: '#3A4250' }
+      ],
+      squadre: [
+        { id: 'maestrale', nome: 'Maestrale Sporting', sport: 'Calcio', motivo: 'strisce', colori: ['#1B2A5B', '#F6F5F1', '#C9A04A'],
+          stemma: '<path d="M50 5 93 17v42c0 29-19 47-43 56C26 106 7 88 7 59V17Z" fill="#1B2A5B"/><path d="M50 12 86 22v37c0 25-16 40-36 48C30 99 14 84 14 59V22Z" fill="none" stroke="#C9A04A" stroke-width="3"/><path d="M27 46h40M33 60h40M27 74h40" stroke="#F6F5F1" stroke-width="7" stroke-linecap="round"/><path d="M50 20 56 32H44Z" fill="#C9A04A"/>' },
+        { id: 'corallo', nome: 'Atletico Corallo', sport: 'Calcetto', motivo: 'bande', colori: ['#F2603D', '#15161B', '#F6F5F1'],
+          stemma: '<circle cx="50" cy="60" r="45" fill="#15161B"/><circle cx="50" cy="60" r="38" fill="none" stroke="#F2603D" stroke-width="4"/><path d="M50 92V38M50 70 34 54M50 60l16-16M34 54V42M66 44V34M50 80l13-11" stroke="#F2603D" stroke-width="6" stroke-linecap="round" fill="none"/>' },
+        { id: 'vortice', nome: 'Polisportiva Vortice', sport: 'Pallavolo', motivo: 'diagonale', colori: ['#5B3FD1', '#FFC21A', '#15161B'],
+          stemma: '<path d="M50 8 94 33v50L50 110 6 83V33Z" fill="#5B3FD1"/><path d="M50 58 50 24 72 46Z" fill="#FFC21A"/><path d="M50 58 79 75 51 83Z" fill="#FFC21A"/><path d="M50 58 21 75 28 47Z" fill="#FFC21A"/><circle cx="50" cy="59" r="6" fill="#15161B"/>' },
+        { id: 'quarzo', nome: 'Quarzo Atletica', sport: 'Running', motivo: 'quarti', colori: ['#F6F5F1', '#3A4250', '#1E46F0'],
+          stemma: '<path d="M14 8h72v58c0 24-17 38-36 46-19-8-36-22-36-46Z" fill="#3A4250"/><path d="M50 22 70 46 50 96 30 46Z" fill="#F6F5F1"/><path d="M50 22 58 46 50 96Z" fill="#1E46F0"/><path d="M30 46h40" stroke="#3A4250" stroke-width="3"/>' },
+        { id: 'libeccio', nome: 'Libeccio United', sport: 'Basket', motivo: 'tinta', colori: ['#1B7F49', '#F6F5F1', '#F6F5F1'],
+          stemma: '<path d="M10 40a40 40 0 0 1 80 0v26c0 22-18 38-40 47-22-9-40-25-40-47Z" fill="#1B7F49"/><path d="M50 20 57 53 90 60 57 67 50 100 43 67 10 60 43 53Z" fill="#F6F5F1"/><circle cx="50" cy="60" r="7" fill="#1B7F49"/>' },
+        { id: 'sciame', nome: 'Sciame Arancio', sport: 'Ciclismo', motivo: 'sfumato', colori: ['#F47B20', '#15161B', '#15161B'],
+          stemma: '<path d="M50 6 95 32v56L50 114 5 88V32Z" fill="#15161B"/><path d="M50 30 63 38v15L50 61 37 53V38Z" fill="#F47B20"/><path d="M35 56 48 64v15L35 87 22 79V64Z" fill="#F47B20"/><path d="M65 56 78 64v15L65 87 52 79V64Z" fill="#F47B20"/>' }
+      ]
+    },
+
+    /* ---------- Crea il tuo kit (squadre e associazioni) ----------
+       prezzi DI ESEMPIO per atleta; il preventivo definitivo lo fa il negozio */
+    kit: {
+      prefissoCodice: 'KIT',                      // codice richiesta: KIT-XXXX
+      scontoBambiniPercento: 15,                  // i kit bambino costano il 15% in meno
+      personalizzazioni: { nomeNumero: 6, stemma: 3 },   // € per atleta
+      scontiQuantita: [ { da: 15, percento: 5 }, { da: 25, percento: 10 } ],
+      maxAtleti: 120,
+      testoTaglie: 'Le taglie le definiamo insieme in negozio: portate la squadra, proviamo tutto e prendiamo le misure.',
+      sport: [
+        { id: 'calcio', nome: 'Calcio', pacchetti: [
+          { id: 'base', nome: 'Base', prezzo: 39, include: ['Maglia da gara', 'Pantaloncino', 'Calzettoni'] },
+          { id: 'completo', nome: 'Completo', prezzo: 79, include: ['Maglia da gara', 'Pantaloncino', 'Calzettoni', 'Tuta di rappresentanza'] },
+          { id: 'pro', nome: 'Pro', prezzo: 129, include: ['Maglia da gara', 'Pantaloncino', 'Calzettoni', 'Tuta di rappresentanza', 'Giacca antipioggia', 'Borsa squadra'] } ] },
+        { id: 'calcetto', nome: 'Calcetto', pacchetti: [
+          { id: 'base', nome: 'Base', prezzo: 35, include: ['Maglia da gara', 'Pantaloncino', 'Calzettoni'] },
+          { id: 'completo', nome: 'Completo', prezzo: 69, include: ['Maglia da gara', 'Pantaloncino', 'Calzettoni', 'Felpa da riscaldamento'] },
+          { id: 'pro', nome: 'Pro', prezzo: 109, include: ['Maglia da gara', 'Pantaloncino', 'Calzettoni', 'Felpa da riscaldamento', 'Tuta di rappresentanza', 'Borsa squadra'] } ] },
+        { id: 'basket', nome: 'Basket', pacchetti: [
+          { id: 'base', nome: 'Base', prezzo: 45, include: ['Canotta reversibile', 'Pantaloncino'] },
+          { id: 'completo', nome: 'Completo', prezzo: 85, include: ['Canotta reversibile', 'Pantaloncino', 'Maglia da riscaldamento', 'Calze tecniche'] },
+          { id: 'pro', nome: 'Pro', prezzo: 135, include: ['Canotta reversibile', 'Pantaloncino', 'Maglia da riscaldamento', 'Calze tecniche', 'Tuta di rappresentanza', 'Zaino'] } ] },
+        { id: 'pallavolo', nome: 'Pallavolo', pacchetti: [
+          { id: 'base', nome: 'Base', prezzo: 38, include: ['Maglia da gara', 'Pantaloncino'] },
+          { id: 'completo', nome: 'Completo', prezzo: 72, include: ['Maglia da gara', 'Pantaloncino', 'Ginocchiere', 'Felpa'] },
+          { id: 'pro', nome: 'Pro', prezzo: 118, include: ['Maglia da gara', 'Pantaloncino', 'Ginocchiere', 'Felpa', 'Tuta di rappresentanza', 'Borsa squadra'] } ] },
+        { id: 'running', nome: 'Running', pacchetti: [
+          { id: 'base', nome: 'Base', prezzo: 34, include: ['Canotta tecnica', 'Pantaloncino'] },
+          { id: 'completo', nome: 'Completo', prezzo: 74, include: ['Canotta tecnica', 'Pantaloncino', 'Giacca antivento', 'Calze tecniche'] },
+          { id: 'pro', nome: 'Pro', prezzo: 119, include: ['Canotta tecnica', 'Pantaloncino', 'Giacca antivento', 'Calze tecniche', 'Tuta', 'Marsupio porta borraccia'] } ] },
+        { id: 'ciclismo', nome: 'Ciclismo', pacchetti: [
+          { id: 'base', nome: 'Base', prezzo: 79, include: ['Maglia a maniche corte', 'Pantaloncino con bretelle'] },
+          { id: 'completo', nome: 'Completo', prezzo: 139, include: ['Maglia a maniche corte', 'Pantaloncino con bretelle', 'Gilet antivento', 'Guanti estivi'] },
+          { id: 'pro', nome: 'Pro', prezzo: 219, include: ['Maglia a maniche corte', 'Pantaloncino con bretelle', 'Gilet antivento', 'Guanti estivi', 'Giacca invernale', 'Calze tecniche'] } ] },
+        { id: 'pugilato', nome: 'Pugilato', pacchetti: [
+          { id: 'base', nome: 'Base', prezzo: 39, include: ['Canotta', 'Pantaloncino da ring'] },
+          { id: 'completo', nome: 'Completo', prezzo: 89, include: ['Canotta', 'Pantaloncino da ring', 'Felpa con cappuccio', 'Bende'] },
+          { id: 'pro', nome: 'Pro', prezzo: 149, include: ['Canotta', 'Pantaloncino da ring', 'Felpa con cappuccio', 'Bende', 'Tuta di rappresentanza', 'Borsone'] } ] },
+        { id: 'altro', nome: 'Altro sport', pacchetti: [
+          { id: 'base', nome: 'Base', prezzo: 35, include: ['Maglia tecnica', 'Pantaloncino'] },
+          { id: 'completo', nome: 'Completo', prezzo: 70, include: ['Maglia tecnica', 'Pantaloncino', 'Felpa'] },
+          { id: 'pro', nome: 'Pro', prezzo: 115, include: ['Maglia tecnica', 'Pantaloncino', 'Felpa', 'Tuta di rappresentanza', 'Borsa squadra'] } ] }
+      ]
+    },
+
     /* ---------- Guida taglie (informazioni generali) ---------- */
     guidaTaglie: {
       avviso: 'Misure indicative: cambiano da marca a marca. In negozio puoi provare tutto prima di decidere.',
@@ -202,19 +300,7 @@
         { icona: 'taglia', titolo: 'Prova e cambio taglia', testo: 'Scarpe e abbigliamento si provano in negozio. Se la taglia non va, la cambi con lo scontrino.' },
         { icona: 'squadra', titolo: 'Squadre e società', testo: 'Divise, tute di rappresentanza e borse per tutta la rosa, con nome e numero stampati.' },
         { icona: 'ritiro', titolo: 'Ritiro in negozio', testo: 'Scrivici cosa cerchi: se non è disponibile lo ordiniamo e ti avvisiamo quando è pronto.' }
-      ],
-      maglia: {
-        colori: [
-          { nome: 'Cobalto', hex: '#1E46F0', testo: '#FFFFFF' },
-          { nome: 'Nero', hex: '#121318', testo: '#FFFFFF' },
-          { nome: 'Bianco', hex: '#F6F5F1', testo: '#0E0F12' },
-          { nome: 'Rosso', hex: '#D62839', testo: '#FFFFFF' },
-          { nome: 'Giallo', hex: '#FFC21A', testo: '#0E0F12' },
-          { nome: 'Verde', hex: '#1B7F49', testo: '#FFFFFF' }
-        ],
-        nomeIniziale: 'SLANCIO',
-        numeroIniziale: 10
-      }
+      ]
     },
 
     /* ---------- Domande frequenti ---------- */

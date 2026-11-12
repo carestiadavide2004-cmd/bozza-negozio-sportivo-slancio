@@ -43,7 +43,7 @@
         </div>
       </div>
       <a class="hdr__link" href="#perche">Perché Slancio</a>
-      <a class="hdr__link" href="#squadre">Squadre</a>
+      <a class="hdr__link" href="squadre/index.html">Squadre</a>
       <a class="hdr__link" href="#negozio">Il negozio</a>
     </nav>
     <div class="hdr__az">
@@ -60,7 +60,8 @@
     <ul class="mm__sport"><li><a href="sport/calcio/index.html" style="--acc:#22A45D"><span class="mm__num">01</span><span class="mm__nome">Calcio</span></a></li><li><a href="sport/calcetto/index.html" style="--acc:#14B8C8"><span class="mm__num">02</span><span class="mm__nome">Calcetto</span></a></li><li><a href="sport/basket/index.html" style="--acc:#F47B20"><span class="mm__num">03</span><span class="mm__nome">Basket</span></a></li><li><a href="sport/pallavolo/index.html" style="--acc:#FFC21A"><span class="mm__num">04</span><span class="mm__nome">Pallavolo</span></a></li><li><a href="sport/tennis/index.html" style="--acc:#C65B3A"><span class="mm__num">05</span><span class="mm__nome">Tennis</span></a></li><li><a href="sport/padel/index.html" style="--acc:#8C6CF7"><span class="mm__num">06</span><span class="mm__nome">Padel</span></a></li><li><a href="sport/pugilato-e-combattimento/index.html" style="--acc:#E0283E"><span class="mm__num">07</span><span class="mm__nome">Pugilato</span></a></li><li><a href="sport/sci-e-snowboard/index.html" style="--acc:#9ED0F5"><span class="mm__num">08</span><span class="mm__nome">Sci e snowboard</span></a></li><li><a href="sport/nuoto/index.html" style="--acc:#1F9BDB"><span class="mm__num">09</span><span class="mm__nome">Nuoto</span></a></li><li><a href="sport/running/index.html" style="--acc:#FF6B4A"><span class="mm__num">10</span><span class="mm__nome">Running</span></a></li><li><a href="sport/fitness-e-palestra/index.html" style="--acc:#B9C0CC"><span class="mm__num">11</span><span class="mm__nome">Fitness</span></a></li><li><a href="sport/ciclismo/index.html" style="--acc:#F45BA4"><span class="mm__num">12</span><span class="mm__nome">Ciclismo</span></a></li></ul>
     <ul class="mm__link">
       <li><a href="#perche">Perché Slancio</a></li>
-      <li><a href="#squadre">Squadre e società</a></li>
+      <li><a href="squadre/index.html">Squadre e associazioni</a></li>
+      <li><a href="#maglia">Disegna la maglia</a></li>
       <li><a href="#negozio">Il negozio</a></li>
       <li><a href="#chiedi">Chiedi disponibilità</a></li>
     </ul>
@@ -261,50 +262,104 @@
   </div>
 </section>
 
-<section class="sez squadre" id="squadre" aria-labelledby="tit-squadre">
-  <div class="wrap squadre__in">
-    <div class="squadre__testo">
-      <p class="occhiello">Squadre e società</p>
-      <h2 class="tit-sez" id="tit-squadre" data-tit><span class="m"><span>Maglie</span></span> <span class="m"><span>personalizzate</span></span></h2>
-      <p class="squadre__lead">Divise da gara, tute e borse per tutta la rosa. Prova qui nome, numero e colore: poi ti prepariamo il preventivo.</p>
-      <form class="config" data-config novalidate>
-        <div class="config__riga">
-          <div class="campo">
-            <label for="m-nome">Nome sul retro</label>
-            <input id="m-nome" name="nome" type="text" maxlength="12" autocomplete="off" autocapitalize="characters" spellcheck="false" value="SLANCIO" aria-describedby="m-nome-aiuto">
-            <p class="campo__aiuto" id="m-nome-aiuto">Massimo 12 lettere</p>
-          </div>
-          <div class="campo campo--num">
-            <label for="m-num">Numero</label>
-            <input id="m-num" name="numero" type="text" inputmode="numeric" maxlength="2" autocomplete="off" value="10" aria-describedby="m-num-aiuto">
-            <p class="campo__aiuto" id="m-num-aiuto">Da 0 a 99</p>
+<section class="sez cfg" id="maglia" aria-labelledby="tit-maglia" style="--m1:#1B2A5B;--m2:#F6F5F1;--m3:#C9A04A">
+  <svg width="0" height="0" class="sr-only" aria-hidden="true" focusable="false"><linearGradient id="cfg-sf" x1="0" y1="0" x2="0" y2="1"><stop offset=".3" stop-color="var(--m1)"/><stop offset="1" stop-color="var(--m2)"/></linearGradient></svg>
+  <div class="wrap">
+    <header class="sez-testa sez-testa--riga">
+      <div>
+        <p class="occhiello">Maglie personalizzate</p>
+        <h2 class="tit-sez" id="tit-maglia" data-tit><span class="m"><span>Disegna la</span></span> <span class="m"><span>tua maglia</span></span></h2>
+      </div>
+      <p class="sez-testa__testo">Motivo, colori, stemma, nome e numero: la maglia si aggiorna mentre scegli. Girala, poi chiedici il preventivo o portala nel kit della squadra.</p>
+    </header>
+    <div class="cfg__in">
+      <div class="cfg__palco">
+        <div class="cfg__scena" data-cfg-scena role="img" aria-labelledby="cfg-desc">
+          <img class="cfg__poster" src="assets/img/maglia-anteprima-960.webp" srcset="assets/img/maglia-anteprima-480.webp 480w, assets/img/maglia-anteprima-960.webp 960w" sizes="(min-width: 1024px) 46vw, 100vw" width="960" height="960" alt="" loading="lazy" decoding="async">
+          <p class="cfg__stato" data-cfg-stato role="status" hidden></p>
+          <div class="cfg__viste" role="group" aria-label="Vista della maglia">
+            <button type="button" data-vista-m="fronte" aria-pressed="true">Fronte</button><button type="button" data-vista-m="retro" aria-pressed="false">Retro</button>
           </div>
         </div>
-        <fieldset class="colori">
-          <legend>Colore <span data-colore-nome>Cobalto</span></legend>
-          <div class="colori__lista"><label class="colore" style="--c:#1E46F0"><input type="radio" name="colore" value="0" checked><span class="colore__pallino" aria-hidden="true"></span><span class="sr-only">Cobalto</span></label><label class="colore" style="--c:#121318"><input type="radio" name="colore" value="1"><span class="colore__pallino" aria-hidden="true"></span><span class="sr-only">Nero</span></label><label class="colore" style="--c:#F6F5F1"><input type="radio" name="colore" value="2"><span class="colore__pallino" aria-hidden="true"></span><span class="sr-only">Bianco</span></label><label class="colore" style="--c:#D62839"><input type="radio" name="colore" value="3"><span class="colore__pallino" aria-hidden="true"></span><span class="sr-only">Rosso</span></label><label class="colore" style="--c:#FFC21A"><input type="radio" name="colore" value="4"><span class="colore__pallino" aria-hidden="true"></span><span class="sr-only">Giallo</span></label><label class="colore" style="--c:#1B7F49"><input type="radio" name="colore" value="5"><span class="colore__pallino" aria-hidden="true"></span><span class="sr-only">Verde</span></label></div>
+        <p class="sr-only" id="cfg-desc" data-cfg-desc>Anteprima della maglia</p>
+        <div class="cfg__sotto">
+          <span class="etichetta-esempio">Anteprima indicativa</span>
+          <p class="cfg__aiuto" data-cfg-aiuto>Trascina per girarla a 360°.</p>
+        </div>
+      </div>
+      <form class="cfg__pannello" data-cfg novalidate>
+        <fieldset class="cfg__gruppo">
+          <legend class="cfg__leg"><span class="cfg__n">01</span>Parti da una squadra <span class="cfg__nota">Squadre e stemmi inventati</span></legend>
+          <div class="cfg__squadre"><label class="cfg__sq"><input type="radio" name="squadra" value="maestrale" checked><span class="cfg__sq-box"><svg class="cfg__sq-stemma" viewBox="0 0 100 120" aria-hidden="true" focusable="false"><path d="M50 5 93 17v42c0 29-19 47-43 56C26 106 7 88 7 59V17Z" fill="#1B2A5B"/><path d="M50 12 86 22v37c0 25-16 40-36 48C30 99 14 84 14 59V22Z" fill="none" stroke="#C9A04A" stroke-width="3"/><path d="M27 46h40M33 60h40M27 74h40" stroke="#F6F5F1" stroke-width="7" stroke-linecap="round"/><path d="M50 20 56 32H44Z" fill="#C9A04A"/></svg><span class="cfg__sq-nome">Maestrale Sporting</span><span class="cfg__sq-sport">Calcio</span></span></label><label class="cfg__sq"><input type="radio" name="squadra" value="corallo"><span class="cfg__sq-box"><svg class="cfg__sq-stemma" viewBox="0 0 100 120" aria-hidden="true" focusable="false"><circle cx="50" cy="60" r="45" fill="#15161B"/><circle cx="50" cy="60" r="38" fill="none" stroke="#F2603D" stroke-width="4"/><path d="M50 92V38M50 70 34 54M50 60l16-16M34 54V42M66 44V34M50 80l13-11" stroke="#F2603D" stroke-width="6" stroke-linecap="round" fill="none"/></svg><span class="cfg__sq-nome">Atletico Corallo</span><span class="cfg__sq-sport">Calcetto</span></span></label><label class="cfg__sq"><input type="radio" name="squadra" value="vortice"><span class="cfg__sq-box"><svg class="cfg__sq-stemma" viewBox="0 0 100 120" aria-hidden="true" focusable="false"><path d="M50 8 94 33v50L50 110 6 83V33Z" fill="#5B3FD1"/><path d="M50 58 50 24 72 46Z" fill="#FFC21A"/><path d="M50 58 79 75 51 83Z" fill="#FFC21A"/><path d="M50 58 21 75 28 47Z" fill="#FFC21A"/><circle cx="50" cy="59" r="6" fill="#15161B"/></svg><span class="cfg__sq-nome">Polisportiva Vortice</span><span class="cfg__sq-sport">Pallavolo</span></span></label><label class="cfg__sq"><input type="radio" name="squadra" value="quarzo"><span class="cfg__sq-box"><svg class="cfg__sq-stemma" viewBox="0 0 100 120" aria-hidden="true" focusable="false"><path d="M14 8h72v58c0 24-17 38-36 46-19-8-36-22-36-46Z" fill="#3A4250"/><path d="M50 22 70 46 50 96 30 46Z" fill="#F6F5F1"/><path d="M50 22 58 46 50 96Z" fill="#1E46F0"/><path d="M30 46h40" stroke="#3A4250" stroke-width="3"/></svg><span class="cfg__sq-nome">Quarzo Atletica</span><span class="cfg__sq-sport">Running</span></span></label><label class="cfg__sq"><input type="radio" name="squadra" value="libeccio"><span class="cfg__sq-box"><svg class="cfg__sq-stemma" viewBox="0 0 100 120" aria-hidden="true" focusable="false"><path d="M10 40a40 40 0 0 1 80 0v26c0 22-18 38-40 47-22-9-40-25-40-47Z" fill="#1B7F49"/><path d="M50 20 57 53 90 60 57 67 50 100 43 67 10 60 43 53Z" fill="#F6F5F1"/><circle cx="50" cy="60" r="7" fill="#1B7F49"/></svg><span class="cfg__sq-nome">Libeccio United</span><span class="cfg__sq-sport">Basket</span></span></label><label class="cfg__sq"><input type="radio" name="squadra" value="sciame"><span class="cfg__sq-box"><svg class="cfg__sq-stemma" viewBox="0 0 100 120" aria-hidden="true" focusable="false"><path d="M50 6 95 32v56L50 114 5 88V32Z" fill="#15161B"/><path d="M50 30 63 38v15L50 61 37 53V38Z" fill="#F47B20"/><path d="M35 56 48 64v15L35 87 22 79V64Z" fill="#F47B20"/><path d="M65 56 78 64v15L65 87 52 79V64Z" fill="#F47B20"/></svg><span class="cfg__sq-nome">Sciame Arancio</span><span class="cfg__sq-sport">Ciclismo</span></span></label></div>
         </fieldset>
-        <a class="btn btn--pri btn--lg" data-config-wa href="https://wa.me/390000000000?text=Ciao%2C%20vorrei%20un%20preventivo%20per%20maglie%20personalizzate." target="_blank" rel="noopener">Chiedi un preventivo <svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+        <fieldset class="cfg__gruppo">
+          <legend class="cfg__leg"><span class="cfg__n">02</span>Motivo</legend>
+          <div class="cfg__motivi"><label class="cfg__mot"><input type="radio" name="motivo" value="tinta"><span class="cfg__mot-box"><svg class="cfg__mot-ico" viewBox="0 0 34 36" aria-hidden="true" focusable="false"><clipPath id="cfg-c-tinta"><path d="M11 2q6 4 12 0l9 5-3.5 7-3-1.5V34H8.5V12.5l-3 1.5L2 7Z"/></clipPath><g clip-path="url(#cfg-c-tinta)"><rect width="34" height="40" fill="var(--m1)"/><path d="M11 2q6 4 12 0" stroke="var(--m3)" stroke-width="3" fill="none"/></g></svg><span>Tinta unita</span></span></label><label class="cfg__mot"><input type="radio" name="motivo" value="strisce" checked><span class="cfg__mot-box"><svg class="cfg__mot-ico" viewBox="0 0 34 36" aria-hidden="true" focusable="false"><clipPath id="cfg-c-strisce"><path d="M11 2q6 4 12 0l9 5-3.5 7-3-1.5V34H8.5V12.5l-3 1.5L2 7Z"/></clipPath><g clip-path="url(#cfg-c-strisce)"><rect width="34" height="40" fill="var(--m1)"/><path d="M9 0h3.4v40H9zM15.3 0h3.4v40h-3.4zM21.6 0H25v40h-3.4z" fill="var(--m2)"/><path d="M11 2q6 4 12 0" stroke="var(--m3)" stroke-width="3" fill="none"/></g></svg><span>Strisce verticali</span></span></label><label class="cfg__mot"><input type="radio" name="motivo" value="bande"><span class="cfg__mot-box"><svg class="cfg__mot-ico" viewBox="0 0 34 36" aria-hidden="true" focusable="false"><clipPath id="cfg-c-bande"><path d="M11 2q6 4 12 0l9 5-3.5 7-3-1.5V34H8.5V12.5l-3 1.5L2 7Z"/></clipPath><g clip-path="url(#cfg-c-bande)"><rect width="34" height="40" fill="var(--m1)"/><path d="M0 12h40v4H0zM0 21h40v4H0zM0 30h40v4H0z" fill="var(--m2)"/><path d="M11 2q6 4 12 0" stroke="var(--m3)" stroke-width="3" fill="none"/></g></svg><span>Bande orizzontali</span></span></label><label class="cfg__mot"><input type="radio" name="motivo" value="diagonale"><span class="cfg__mot-box"><svg class="cfg__mot-ico" viewBox="0 0 34 36" aria-hidden="true" focusable="false"><clipPath id="cfg-c-diagonale"><path d="M11 2q6 4 12 0l9 5-3.5 7-3-1.5V34H8.5V12.5l-3 1.5L2 7Z"/></clipPath><g clip-path="url(#cfg-c-diagonale)"><rect width="34" height="40" fill="var(--m1)"/><path d="M2 6 10 2 34 34 26 38Z" fill="var(--m2)"/><path d="M11 2q6 4 12 0" stroke="var(--m3)" stroke-width="3" fill="none"/></g></svg><span>Fascia diagonale</span></span></label><label class="cfg__mot"><input type="radio" name="motivo" value="quarti"><span class="cfg__mot-box"><svg class="cfg__mot-ico" viewBox="0 0 34 36" aria-hidden="true" focusable="false"><clipPath id="cfg-c-quarti"><path d="M11 2q6 4 12 0l9 5-3.5 7-3-1.5V34H8.5V12.5l-3 1.5L2 7Z"/></clipPath><g clip-path="url(#cfg-c-quarti)"><rect width="34" height="40" fill="var(--m1)"/><path d="M17 0h20v18H17zM0 18h17v22H0z" fill="var(--m2)"/><path d="M11 2q6 4 12 0" stroke="var(--m3)" stroke-width="3" fill="none"/></g></svg><span>Quarti</span></span></label><label class="cfg__mot"><input type="radio" name="motivo" value="sfumato"><span class="cfg__mot-box"><svg class="cfg__mot-ico" viewBox="0 0 34 36" aria-hidden="true" focusable="false"><clipPath id="cfg-c-sfumato"><path d="M11 2q6 4 12 0l9 5-3.5 7-3-1.5V34H8.5V12.5l-3 1.5L2 7Z"/></clipPath><g clip-path="url(#cfg-c-sfumato)"><rect width="34" height="40" fill="var(--m1)"/><rect width="34" height="40" fill="url(#cfg-sf)"/><path d="M11 2q6 4 12 0" stroke="var(--m3)" stroke-width="3" fill="none"/></g></svg><span>Sfumato</span></span></label></div>
+        </fieldset>
+        <fieldset class="cfg__gruppo">
+          <legend class="cfg__leg"><span class="cfg__n">03</span>Colori</legend>
+          <div class="cfg__ruoli"><label class="cfg__ruolo"><input type="radio" name="ruolo" value="0" checked><span class="cfg__ruolo-box"><span class="cfg__ruolo-pallino" data-ruolo-pallino style="background:#1B2A5B"></span><span class="cfg__ruolo-tit">Principale</span><span class="cfg__ruolo-nome" data-ruolo-nome>Blu notte</span></span></label><label class="cfg__ruolo"><input type="radio" name="ruolo" value="1"><span class="cfg__ruolo-box"><span class="cfg__ruolo-pallino" data-ruolo-pallino style="background:#F6F5F1"></span><span class="cfg__ruolo-tit">Secondario</span><span class="cfg__ruolo-nome" data-ruolo-nome>Bianco</span></span></label><label class="cfg__ruolo"><input type="radio" name="ruolo" value="2"><span class="cfg__ruolo-box"><span class="cfg__ruolo-pallino" data-ruolo-pallino style="background:#C9A04A"></span><span class="cfg__ruolo-tit">Colletto e maniche</span><span class="cfg__ruolo-nome" data-ruolo-nome>Oro</span></span></label></div>
+          <div class="cfg__tav" role="radiogroup" aria-label="Tavolozza"><label class="colore" style="--c:#F6F5F1" title="Bianco"><input type="radio" name="colore" value="#F6F5F1"><span class="colore__pallino" aria-hidden="true"></span><span class="sr-only">Bianco</span></label><label class="colore" style="--c:#15161B" title="Nero"><input type="radio" name="colore" value="#15161B"><span class="colore__pallino" aria-hidden="true"></span><span class="sr-only">Nero</span></label><label class="colore" style="--c:#1E46F0" title="Cobalto"><input type="radio" name="colore" value="#1E46F0"><span class="colore__pallino" aria-hidden="true"></span><span class="sr-only">Cobalto</span></label><label class="colore" style="--c:#1B2A5B" title="Blu notte"><input type="radio" name="colore" value="#1B2A5B" checked><span class="colore__pallino" aria-hidden="true"></span><span class="sr-only">Blu notte</span></label><label class="colore" style="--c:#4FA3E0" title="Azzurro"><input type="radio" name="colore" value="#4FA3E0"><span class="colore__pallino" aria-hidden="true"></span><span class="sr-only">Azzurro</span></label><label class="colore" style="--c:#1B7F49" title="Verde"><input type="radio" name="colore" value="#1B7F49"><span class="colore__pallino" aria-hidden="true"></span><span class="sr-only">Verde</span></label><label class="colore" style="--c:#FFC21A" title="Giallo"><input type="radio" name="colore" value="#FFC21A"><span class="colore__pallino" aria-hidden="true"></span><span class="sr-only">Giallo</span></label><label class="colore" style="--c:#C9A04A" title="Oro"><input type="radio" name="colore" value="#C9A04A"><span class="colore__pallino" aria-hidden="true"></span><span class="sr-only">Oro</span></label><label class="colore" style="--c:#F47B20" title="Arancio"><input type="radio" name="colore" value="#F47B20"><span class="colore__pallino" aria-hidden="true"></span><span class="sr-only">Arancio</span></label><label class="colore" style="--c:#F2603D" title="Corallo"><input type="radio" name="colore" value="#F2603D"><span class="colore__pallino" aria-hidden="true"></span><span class="sr-only">Corallo</span></label><label class="colore" style="--c:#D62839" title="Rosso"><input type="radio" name="colore" value="#D62839"><span class="colore__pallino" aria-hidden="true"></span><span class="sr-only">Rosso</span></label><label class="colore" style="--c:#7A1F2B" title="Granata"><input type="radio" name="colore" value="#7A1F2B"><span class="colore__pallino" aria-hidden="true"></span><span class="sr-only">Granata</span></label><label class="colore" style="--c:#5B3FD1" title="Viola"><input type="radio" name="colore" value="#5B3FD1"><span class="colore__pallino" aria-hidden="true"></span><span class="sr-only">Viola</span></label><label class="colore" style="--c:#3A4250" title="Ardesia"><input type="radio" name="colore" value="#3A4250"><span class="colore__pallino" aria-hidden="true"></span><span class="sr-only">Ardesia</span></label></div>
+        </fieldset>
+        <fieldset class="cfg__gruppo">
+          <legend class="cfg__leg"><span class="cfg__n">04</span>Stemma sul petto</legend>
+          <div class="cfg__stemma">
+            <p class="cfg__stemma-ora" data-stemma-ora><img alt="" width="40" height="48" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" hidden><span data-stemma-txt>Maestrale Sporting</span></p>
+            <div class="cfg__stemma-az">
+              <label class="btn btn--sec btn--sm cfg__carica"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 15V4M7.5 8.5 12 4l4.5 4.5"/><path d="M4 15v5h16v-5"/></svg>Carica il tuo stemma<input class="sr-only" id="m-file" name="stemma-file" type="file" accept=".png,.jpg,.jpeg,.svg,image/png,image/jpeg,image/svg+xml" aria-describedby="m-file-aiuto"></label>
+              <button class="link-borsa link-borsa--grigio" type="button" data-stemma-togli>Senza stemma</button>
+            </div>
+          </div>
+          <p class="campo__aiuto" id="m-file-aiuto">PNG, JPG o SVG, massimo 2 MB. Il file resta nel tuo browser: non viene inviato a nessuno.</p>
+          <p class="campo__err" id="m-file-err" hidden></p>
+        </fieldset>
+        <fieldset class="cfg__gruppo">
+          <legend class="cfg__leg"><span class="cfg__n">05</span>Nome e numero</legend>
+          <div class="cfg__riga">
+            <div class="campo">
+              <label for="m-nome">Nome sul retro</label>
+              <input id="m-nome" name="nome" type="text" maxlength="14" autocomplete="off" autocapitalize="words" spellcheck="false" value="Rossi" aria-describedby="m-nome-aiuto">
+              <p class="campo__err" id="m-nome-err" hidden></p>
+              <p class="campo__aiuto" id="m-nome-aiuto">Fino a 14 caratteri, anche D'Angelo o De Santis</p>
+            </div>
+            <div class="campo campo--num">
+              <label for="m-num">Numero</label>
+              <input id="m-num" name="numero" type="text" inputmode="tel" maxlength="5" autocomplete="off" value="10" aria-describedby="m-num-aiuto">
+              <p class="campo__err" id="m-num-err" hidden></p>
+              <p class="campo__aiuto" id="m-num-aiuto">Anche 1+8</p>
+            </div>
+          </div>
+          <label class="spunta"><input type="checkbox" name="davanti"><span>Numero piccolo anche davanti</span></label>
+        </fieldset>
+        <div class="cfg__fine">
+          <div class="campo campo--q">
+            <label for="m-q">Quantità indicativa</label>
+            <input id="m-q" name="quantita" type="number" inputmode="numeric" min="1" max="999" value="15">
+          </div>
+          <a class="btn btn--pri cfg__wa" data-cfg-wa href="https://wa.me/390000000000?text=Ciao%2C%20vorrei%20un%20preventivo%20per%20una%20maglia%20personalizzata." target="_blank" rel="noopener"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5z"/><path d="M8.5 10h7M8.5 13.5h4.5"/></svg>Chiedi un preventivo per questa maglia</a>
+          <button class="btn btn--sec cfg__kit" type="button" data-cfg-kit>Usala nel kit squadra <svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></button>
+          <p class="cfg__piede">Disegno indicativo: tessuto, font e posizioni finali li vedi in negozio prima di confermare.</p>
+        </div>
       </form>
     </div>
-    <figure class="maglia" data-maglia>
-      <span class="etichetta-esempio maglia__etic">Anteprima indicativa</span>
-      <svg class="maglia__svg" viewBox="0 0 300 340" role="img" aria-labelledby="maglia-desc">
-        <title id="maglia-desc">Anteprima della maglia: SLANCIO, numero 10, colore Cobalto</title>
-        <defs>
-          <linearGradient id="maglia-luce" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".18"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".18"/></linearGradient>
-        </defs>
-        <path class="maglia__corpo" data-maglia-corpo fill="#1E46F0" d="M96 18c14 12 94 12 108 0l58 26 30 74-46 18-14-28v212c0 6-4 10-10 10H78c-6 0-10-4-10-10V108l-14 28L8 118l30-74z"/>
-        <path d="M96 18c14 12 94 12 108 0l58 26 30 74-46 18-14-28v212c0 6-4 10-10 10H78c-6 0-10-4-10-10V108l-14 28L8 118l30-74z" fill="url(#maglia-luce)"/>
-        <path d="M96 18c14 12 94 12 108 0" fill="none" stroke="rgba(0,0,0,.28)" stroke-width="5"/>
-        <path d="M246 136l-14-28M54 136l14-28" fill="none" stroke="rgba(0,0,0,.18)" stroke-width="2"/>
-        <path d="M240 122l44-18M60 122l-44-18" fill="none" data-maglia-filetto stroke="#FFFFFF" stroke-opacity=".55" stroke-width="5"/>
-        <path d="M68 300h164" stroke="rgba(0,0,0,.12)" stroke-width="2"/>
-        <text class="maglia__nome" data-maglia-nome x="150" y="96" text-anchor="middle" fill="#FFFFFF">SLANCIO</text>
-        <text class="maglia__num" data-maglia-num x="150" y="262" text-anchor="middle" fill="#FFFFFF">10</text>
-      </svg>
-      <figcaption class="maglia__dida">Disegno indicativo: colori e font finali si scelgono in negozio.</figcaption>
-    </figure>
+  </div>
+</section>
+
+<section class="fascia-sq" aria-labelledby="tit-fsq">
+  <div class="wrap fascia-sq__in">
+    <div class="fascia-sq__testo">
+      <p class="occhiello">Squadre e associazioni sportive</p>
+      <h2 class="tit-sez" id="tit-fsq" data-tit><span class="m"><span>Crea il kit</span></span> <span class="m"><span>della squadra</span></span></h2>
+      <p class="fascia-sq__lead">Quattro passi: sport, pacchetto, squadra, riepilogo. Ricevi un preventivo indicativo e un codice richiesta; le taglie le proviamo insieme in negozio.</p>
+      <a class="btn btn--pri btn--lg" href="squadre/index.html">Crea il tuo kit <svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+    </div>
+    <div class="fascia-sq__lato">
+      <ol class="fascia-sq__passi">
+        <li><b>01</b>Sport</li><li><b>02</b>Pacchetto</li><li><b>03</b>Squadra</li><li><b>04</b>Riepilogo</li>
+      </ol>
+      <ul class="fascia-sq__sport" aria-label="Sport disponibili"><li>Calcio</li><li>Calcetto</li><li>Basket</li><li>Pallavolo</li><li>Running</li><li>Ciclismo</li><li>Pugilato</li><li>Altro sport</li></ul>
+      <p class="fascia-sq__prezzo">Da <b>34,00 €</b> ad atleta <span class="etichetta-esempio">Prezzi di esempio</span></p>
+    </div>
   </div>
 </section>
 
@@ -430,7 +485,7 @@
         <h2 class="pie__tit">Seguici</h2>
         <ul class="pie__lista"><li><a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a></li><li><a href="https://www.facebook.com/" target="_blank" rel="noopener">Facebook</a></li></ul>
         <h2 class="pie__tit">Info</h2>
-        <ul class="pie__lista"><li><a href="#guida-taglie" data-guida>Guida taglie</a></li><li><a href="privacy.html">Privacy</a></li></ul>
+        <ul class="pie__lista"><li><a href="squadre/index.html">Crea il kit squadra</a></li><li><a href="#maglia">Disegna la maglia</a></li><li><a href="#guida-taglie" data-guida>Guida taglie</a></li><li><a href="privacy.html">Privacy</a></li></ul>
       </div>
     </div>
     <div class="pie__legale">
@@ -449,5 +504,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
 <script src="js/main.js" defer></script>
+<script src="js/maglia.js" defer></script>
 </body>
 </html>

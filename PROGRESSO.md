@@ -157,4 +157,16 @@ Nessuna foto davvero bella e senza loghi leggibili → disegno SVG sul colore de
   - Peso online sul telefono (compresso da GitHub): Calcio 0,56 MB all'apertura, 0,71 MB scorrendo tutta la pagina; Scarpe da calcio 0,46 MB.
   - Non fatto: un solo modello 3D (nessun secondo modello CC0 adatto); il 3D non si vede aprendo i file dal Mac (il browser blocca il .glb); configuratore maglia, crea il tuo kit, servizi su prenotazione, noleggio sci e pannello admin rimandati come richiesto.
 
-Non ancora (prossimi passi): configuratore maglia nuovo, crea il tuo kit, servizi su prenotazione, noleggio sci, pannello admin.
+Non ancora (prossimi passi): pannello admin.
+
+## Maglia 3D e Crea il tuo kit (in corso – 13/11/2026)
+- [x] Modello 3D: nessun modello di maglia CC0 trovato (Poly Haven e ricerca web) → modello ORIGINALE generato da `_strumenti/maglia3d.mjs` (busto, maniche e colletto aperti, interno visibile, pieghe, trama del tessuto in normal map, UV per fronte/retro/maniche/colletto) → `assets/3d/maglia.glb` (967 KB). Nessuna licenza esterna.
+- [x] Font Graduate (SIL OFL) in fonts/ con licenza `graduate-OFL.txt`: lettere accentate, apostrofo, + controllati.
+- [x] 6 squadre inventate (Maestrale Sporting, Atletico Corallo, Polisportiva Vortice, Quarzo Atletica, Libeccio United, Sciame Arancio): ricerca veloce, nessuna squadra italiana reale con questi nomi. Stemmi SVG geometrici in config.
+- [x] config.js: `maglia` (motivi, 14 colori, squadre) e `kit` (8 sport × Base/Completo/Pro, personalizzazioni, sconti quantità da 15 e 25 atleti). Tolto `home.maglia` vecchio.
+- [x] js/maglia.js: texture canvas 2048, 6 motivi, 3 colori, stemma squadra o caricato (PNG/JPG/SVG ≤ 2 MB, resta nel browser), nome ≤ 14 e numero ≤ 5 che si rimpiccioliscono, model-viewer caricato vicino alla sezione, Fronte/Retro, 2,5D di riserva (senza WebGL, errore o file://), link WhatsApp, "Usala nel kit squadra".
+- [x] js/kit.js + pagina squadre/index.html (4 passi, barra, localStorage, preventivo indicativo, codice KIT-XXXX, invio whatsapp/web3forms). Fascia in home, link in menu e footer. main.js espone gli strumenti comuni (window.SLANCIO).
+- [x] Prime schermate 390/1440: il 3D si carica e mostra D'ANGELO e 1+8 sul retro.
+- [ ] DA FARE: anteprima `assets/img/maglia-anteprima-480/960.webp` (ora dà 404: crearla da schermata del 3D con cwebp); privacy.html (stemma solo nel browser, dati referente squadra); CREDITI.md e ISTRUZIONI.md; schermate pagina squadre a ogni passo; revisione art director (≥10 difetti); controllo veloce; commit e push; verifica 200 online.
+- Difetti già notati da correggere: sul telefono i pulsanti Fronte/Retro coprono l'orlo della maglia (abbassare la maglia o alzare la camera); "Senza stemma" troppo grande; conteggio pagine nel log del build (ora 80).
+- [ ] Blocco C (servizi su prenotazione e noleggio sci): non iniziato.

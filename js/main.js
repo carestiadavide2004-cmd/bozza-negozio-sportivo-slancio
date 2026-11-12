@@ -299,36 +299,6 @@
     });
   });
 
-  /* ---------------- Configuratore maglia ---------------- */
-  var cfg = $('[data-config]');
-  if (cfg) {
-    var nomeIn = $('#m-nome', cfg), numIn = $('#m-num', cfg), btnWa = $('[data-config-wa]', cfg);
-    var tNome = $('[data-maglia-nome]'), tNum = $('[data-maglia-num]'), corpo = $('[data-maglia-corpo]'), filetto = $('[data-maglia-filetto]');
-    var titolo = $('#maglia-desc'), nomeColore = $('[data-colore-nome]');
-    var colori = C.home.maglia.colori;
-    function aggiornaMaglia() {
-      var nome = nomeIn.value.toUpperCase().replace(/[^A-ZÀ-ÖØ-Ý' .\-]/g, '').slice(0, 12);
-      if (nomeIn.value !== nome) { var pos = nomeIn.selectionStart; nomeIn.value = nome; try { nomeIn.setSelectionRange(pos, pos); } catch (e) {} }
-      var num = numIn.value.replace(/\D/g, '').slice(0, 2);
-      if (numIn.value !== num) numIn.value = num;
-      var c = colori[+(($('input[name="colore"]:checked', cfg) || {}).value || 0)];
-      tNome.textContent = nome || ' ';
-      if (nome.length > 9) { tNome.setAttribute('textLength', String(Math.min(200, 21 * nome.length))); tNome.setAttribute('lengthAdjust', 'spacingAndGlyphs'); }
-      else { tNome.removeAttribute('textLength'); tNome.removeAttribute('lengthAdjust'); }
-      tNum.textContent = num;
-      corpo.setAttribute('fill', c.hex);
-      [tNome, tNum].forEach(function (t) { t.setAttribute('fill', c.testo); });
-      filetto.setAttribute('stroke', c.testo);
-      nomeColore.textContent = c.nome;
-      titolo.textContent = 'Anteprima della maglia: ' + (nome || 'senza nome') + ', numero ' + (num || '–') + ', colore ' + c.nome;
-      btnWa.href = waLink('Ciao, vorrei un preventivo per maglie personalizzate. Nome sul retro: ' + (nome || '-') + ', numero: ' + (num || '-') + ', colore: ' + c.nome + '. Quante maglie e in che tempi?');
-    }
-    cfg.addEventListener('input', aggiornaMaglia);
-    cfg.addEventListener('change', aggiornaMaglia);
-    cfg.addEventListener('submit', function (e) { e.preventDefault(); });
-    aggiornaMaglia();
-  }
-
   /* ---------------- Modulo "Chiedi disponibilità" ---------------- */
   var mod = $('[data-modulo]');
   if (mod) {
@@ -764,12 +734,7 @@
     note: function () { return ''; }
   };
   // codice SL-XXXX senza 0, O, 1, I
-  function nuovoCodice() {
-    var A = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789', r = new Uint32Array(4), s = '';
-    (window.crypto || window.msCrypto).getRandomValues(r);
-    for (var i = 0; i < 4; i++) s += A[r[i] % A.length];
-    return (B.prefissoCodice || 'SL') + '-' + s;
-  }
+  function nuovoCodice() { return codiceNuovo(B.prefissoCodice || 'SL'); }
   function testoRichiesta(cod, v, b) {
     return 'Ciao ' + C.attivita.nome + ', vorrei verificare la disponibilità (' + B.nome + ').\n' +
       'Codice: ' + cod + '\nNome: ' + v.nome + '\nTelefono: ' + v.telefono + '\nPasso in negozio: ' + dataLunga(v.quando) + '\n\nProdotti:\n' +
@@ -1235,6 +1200,43 @@
     apri3D(b.getAttribute('data-3d'), b);
   });
 
+  /* ---------------- Strumenti comuni (usati da maglia.js, kit.js, prenota.js) ---------------- */
+  // codice richiesta PREFISSO-XXXX senza caratteri ambigui (0, O, 1, I)
+  function codiceNuovo(prefisso) {
+    var A = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789', r = new Uint32Array(4), s = '';
+    (window.crypto || window.msCrypto).getRandomValues(r);
+    for (var i = 0; i < 4; i++) s += A[r[i] % A.length];
+    return prefisso + '-' + s;
+  }
+  var viaWeb3 = function () { return C.modulo.modalita === 'web3forms' && !!C.modulo.web3formsAccessKey; };
+  // invio secondo config: Web3Forms (se c'è la chiave) oppure WhatsApp con il messaggio già scritto
+  function invia(o) {
+    if (viaWeb3()) {
+      fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(Object.assign({ access_key: C.modulo.web3formsAccessKey, subject: o.oggetto, from_name: 'Sito ' + C.attivita.nome, message: o.testo }, o.dati || {})) })
+        .then(function (r) { return r.json(); })
+        .then(function (j) { if (!j.success) throw 0; o.ok(''); })
+        .catch(function () { o.ko('Invio non riuscito. <a href="' + waLink(o.testo) + '" target="_blank" rel="noopener">Manda la richiesta su WhatsApp</a> o chiama il <a href="tel:' + C.contatti.telefonoLink + '">' + C.contatti.telefono + '</a>.'); });
+      return;
+    }
+    var url = waLink(o.testo);
+    window.open(url, '_blank', 'noopener');
+    o.ok(url);
+  }
+  // errore subito sotto il campo (aria-invalid + aria-errormessage)
+  function erroreCampo(c, msg) {
+    var e = d.getElementById(c.id + '-err');
+    c.setAttribute('aria-invalid', msg ? 'true' : 'false');
+    if (msg) c.setAttribute('aria-errormessage', c.id + '-err'); else c.removeAttribute('aria-errormessage');
+    if (e) { e.textContent = msg || ''; e.hidden = !msg; }
+    return !msg;
+  }
+  Object.assign(window.SLANCIO, {
+    $: $, $$: $$, REL: REL, ridotto: ridotto, waLink: waLink, escH: escH, euro: euro, pad: pad, minuti: minuti, ora: ora,
+    GIORNI: GIORNI, MESI: MESI, GG: GG, oggiRoma: oggiRoma, giorno: giorno, piuGiorni: piuGiorni, distanza: distanza, dataLunga: dataLunga, fasceDi: fasceDi,
+    codice: codiceNuovo, invia: invia, viaWeb3: viaWeb3, erroreCampo: erroreCampo, copia: copia, icona: icona, caricaMV: caricaMV, mostraAvviso: mostraAvviso
+  });
+
   /* ---------------- Mappa solo al clic ---------------- */
   var mappa = $('[data-mappa]');
   if (mappa) $('[data-mappa-btn]', mappa).addEventListener('click', function () {
@@ -1321,8 +1323,8 @@
       onEnter: function (b) { gsap.fromTo(b, { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: .9, ease: 'power3.out', stagger: .06, clearProps: 'transform' }); }
     });
 
-    /* Linee di campo grandi e maglia */
-    $$('.fine__campo, .maglia__svg').forEach(function (el) {
+    /* Linee di campo grandi */
+    $$('.fine__campo').forEach(function (el) {
       gsap.fromTo(el, { clipPath: 'inset(0% 0% 100% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.6, ease: 'power2.inOut', scrollTrigger: { trigger: el.parentElement, start: 'top 80%', once: true } });
     });
 

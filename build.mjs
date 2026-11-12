@@ -186,6 +186,7 @@ const ICO = {
   giu: '<path d="m6 9 6 6 6-6"/>',
   chiudi: '<path d="M6 6l12 12M18 6 6 18"/>',
   sx: '<path d="M15 5l-7 7 7 7"/>',
+  carica: '<path d="M12 15V4M7.5 8.5 12 4l4.5 4.5"/><path d="M4 15v5h16v-5"/>',
   dx: '<path d="m9 5 7 7-7 7"/>',
   sacchetto: '<path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/>',
   filtri: '<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>',
@@ -249,7 +250,7 @@ function header(rel, corrente) {
         </div>
       </div>
       <a class="hdr__link" href="${vaiHome(rel, '#perche')}">Perché ${esc(A.nome)}</a>
-      <a class="hdr__link" href="${vaiHome(rel, '#squadre')}">Squadre</a>
+      <a class="hdr__link" href="${rel}squadre/index.html"${corrente === 'squadre' ? ' aria-current="page"' : ''}>Squadre</a>
       <a class="hdr__link" href="${vaiHome(rel, '#negozio')}">Il negozio</a>
     </nav>
     <div class="hdr__az">
@@ -266,7 +267,8 @@ function header(rel, corrente) {
     <ul class="mm__sport">${mobile}</ul>
     <ul class="mm__link">
       <li><a href="${vaiHome(rel, '#perche')}">Perché ${esc(A.nome)}</a></li>
-      <li><a href="${vaiHome(rel, '#squadre')}">Squadre e società</a></li>
+      <li><a href="${rel}squadre/index.html"${corrente === 'squadre' ? ' aria-current="page"' : ''}>Squadre e associazioni</a></li>
+      <li><a href="${vaiHome(rel, '#maglia')}">Disegna la maglia</a></li>
       <li><a href="${vaiHome(rel, '#negozio')}">Il negozio</a></li>
       <li><a href="${vaiHome(rel, '#chiedi')}">Chiedi disponibilità</a></li>
     </ul>
@@ -333,7 +335,7 @@ function footer(rel) {
         <h2 class="pie__tit">Seguici</h2>
         <ul class="pie__lista">${social}</ul>
         <h2 class="pie__tit">Info</h2>
-        <ul class="pie__lista"><li><a href="#guida-taglie" data-guida>Guida taglie</a></li><li><a href="${rel}privacy.html">Privacy</a></li></ul>
+        <ul class="pie__lista"><li><a href="${rel}squadre/index.html">Crea il kit squadra</a></li><li><a href="${vaiHome(rel, '#maglia')}">Disegna la maglia</a></li><li><a href="#guida-taglie" data-guida>Guida taglie</a></li><li><a href="${rel}privacy.html">Privacy</a></li></ul>
       </div>
     </div>
     <div class="pie__legale">
@@ -353,9 +355,9 @@ function barraMobile(rel) {
 </nav>`;
 }
 
-function scripts(rel, { gsap = true } = {}) {
+function scripts(rel, { gsap = true, script = [] } = {}) {
   return `<script src="${rel}config.js" defer></script>
-${gsap ? GSAP.map(([u, h]) => `<script src="${u}" integrity="${h}" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>`).join('\n') + '\n' : ''}<script src="${rel}js/main.js" defer></script>`;
+${gsap ? GSAP.map(([u, h]) => `<script src="${u}" integrity="${h}" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>`).join('\n') + '\n' : ''}<script src="${rel}js/main.js" defer></script>${script.map(s => `\n<script src="${rel}${s}" defer></script>`).join('')}`;
 }
 
 function jsonLd() {
@@ -371,7 +373,7 @@ function jsonLd() {
   return `<script type="application/ld+json">${JSON.stringify(d)}</script>\n`;
 }
 
-function pagina({ titolo, descrizione, rel, percorso, classe, stile = '', corpo, preload = '', corrente, extraHead = '', base = '', gsap = true }) {
+function pagina({ titolo, descrizione, rel, percorso, classe, stile = '', corpo, preload = '', corrente, extraHead = '', base = '', gsap = true, script = [] }) {
   SU_HOME = classe === 'p-home';
   return `${head({ titolo, descrizione, rel, percorso, preload, extraHead, base })}
 <body class="${classe}" data-rel="${rel}"${stile ? ` style="${stile}"` : ''}>
@@ -382,7 +384,7 @@ ${corpo}
 </main>
 ${footer(rel)}
 ${barraMobile(rel)}
-${scripts(rel, { gsap })}
+${scripts(rel, { gsap, script })}
 </body>
 </html>
 `;
@@ -420,6 +422,250 @@ const nastroSport = () => {
 };
 
 /* =====================================================================
+   MAGLIA PERSONALIZZATA (configuratore 3D) e KIT SQUADRE
+   ===================================================================== */
+const MG = C.maglia, KIT = C.kit;
+const stemmaSvg = (q, cls = '') => `<svg class="${cls}" viewBox="0 0 100 120" aria-hidden="true" focusable="false">${q.stemma}</svg>`;
+// icone dei motivi: piccola maglia con i colori correnti (--m1, --m2, --m3 impostati da maglia.js)
+const MOTIVI_ICO = {
+  tinta: '',
+  strisce: '<path d="M9 0h3.4v40H9zM15.3 0h3.4v40h-3.4zM21.6 0H25v40h-3.4z" fill="var(--m2)"/>',
+  bande: '<path d="M0 12h40v4H0zM0 21h40v4H0zM0 30h40v4H0z" fill="var(--m2)"/>',
+  diagonale: '<path d="M2 6 10 2 34 34 26 38Z" fill="var(--m2)"/>',
+  quarti: '<path d="M17 0h20v18H17zM0 18h17v22H0z" fill="var(--m2)"/>',
+  sfumato: '<rect width="34" height="40" fill="url(#cfg-sf)"/>'
+};
+function icoMotivo(id) {
+  return `<svg class="cfg__mot-ico" viewBox="0 0 34 36" aria-hidden="true" focusable="false"><clipPath id="cfg-c-${id}"><path d="M11 2q6 4 12 0l9 5-3.5 7-3-1.5V34H8.5V12.5l-3 1.5L2 7Z"/></clipPath><g clip-path="url(#cfg-c-${id})"><rect width="34" height="40" fill="var(--m1)"/>${MOTIVI_ICO[id]}<path d="M11 2q6 4 12 0" stroke="var(--m3)" stroke-width="3" fill="none"/></g></svg>`;
+}
+function configuratore(rel) {
+  const q0 = MG.squadre.find(q => q.id === MG.iniziale.squadra) || MG.squadre[0];
+  const squadre = MG.squadre.map(q => `<label class="cfg__sq"><input type="radio" name="squadra" value="${q.id}"${q === q0 ? ' checked' : ''}><span class="cfg__sq-box">${stemmaSvg(q, 'cfg__sq-stemma')}<span class="cfg__sq-nome">${esc(q.nome)}</span><span class="cfg__sq-sport">${esc(q.sport)}</span></span></label>`).join('');
+  const motivi = MG.motivi.map(m => `<label class="cfg__mot"><input type="radio" name="motivo" value="${m.id}"${m.id === q0.motivo ? ' checked' : ''}><span class="cfg__mot-box">${icoMotivo(m.id)}<span>${esc(m.nome)}</span></span></label>`).join('');
+  const ruoli = ['Principale', 'Secondario', 'Colletto e maniche'].map((r, i) => `<label class="cfg__ruolo"><input type="radio" name="ruolo" value="${i}"${i ? '' : ' checked'}><span class="cfg__ruolo-box"><span class="cfg__ruolo-pallino" data-ruolo-pallino style="background:${q0.colori[i]}"></span><span class="cfg__ruolo-tit">${r}</span><span class="cfg__ruolo-nome" data-ruolo-nome>${esc((MG.colori.find(c => c.hex === q0.colori[i]) || {}).nome || '')}</span></span></label>`).join('');
+  const colori = MG.colori.map(c => `<label class="colore" style="--c:${c.hex}" title="${esc(c.nome)}"><input type="radio" name="colore" value="${c.hex}"${c.hex === q0.colori[0] ? ' checked' : ''}><span class="colore__pallino" aria-hidden="true"></span><span class="sr-only">${esc(c.nome)}</span></label>`).join('');
+  const ant = MG.anteprima;
+  return `<section class="sez cfg" id="maglia" aria-labelledby="tit-maglia" style="--m1:${q0.colori[0]};--m2:${q0.colori[1]};--m3:${q0.colori[2]}">
+  <svg width="0" height="0" class="sr-only" aria-hidden="true" focusable="false"><linearGradient id="cfg-sf" x1="0" y1="0" x2="0" y2="1"><stop offset=".3" stop-color="var(--m1)"/><stop offset="1" stop-color="var(--m2)"/></linearGradient></svg>
+  <div class="wrap">
+    <header class="sez-testa sez-testa--riga">
+      <div>
+        <p class="occhiello">Maglie personalizzate</p>
+        <h2 class="tit-sez" id="tit-maglia" data-tit>${righe(['Disegna la', 'tua maglia'])}</h2>
+      </div>
+      <p class="sez-testa__testo">Motivo, colori, stemma, nome e numero: la maglia si aggiorna mentre scegli. Girala, poi chiedici il preventivo o portala nel kit della squadra.</p>
+    </header>
+    <div class="cfg__in">
+      <div class="cfg__palco">
+        <div class="cfg__scena" data-cfg-scena role="img" aria-labelledby="cfg-desc">
+          <img class="cfg__poster" src="${rel}${ant}-960.webp" srcset="${rel}${ant}-480.webp 480w, ${rel}${ant}-960.webp 960w" sizes="(min-width: 1024px) 46vw, 100vw" width="960" height="960" alt="" loading="lazy" decoding="async">
+          <p class="cfg__stato" data-cfg-stato role="status" hidden></p>
+          <div class="cfg__viste" role="group" aria-label="Vista della maglia">
+            <button type="button" data-vista-m="fronte" aria-pressed="true">Fronte</button><button type="button" data-vista-m="retro" aria-pressed="false">Retro</button>
+          </div>
+        </div>
+        <p class="sr-only" id="cfg-desc" data-cfg-desc>Anteprima della maglia</p>
+        <div class="cfg__sotto">
+          <span class="etichetta-esempio">Anteprima indicativa</span>
+          <p class="cfg__aiuto" data-cfg-aiuto>Trascina per girarla a 360°.</p>
+        </div>
+      </div>
+      <form class="cfg__pannello" data-cfg novalidate>
+        <fieldset class="cfg__gruppo">
+          <legend class="cfg__leg"><span class="cfg__n">01</span>Parti da una squadra <span class="cfg__nota">Squadre e stemmi inventati</span></legend>
+          <div class="cfg__squadre">${squadre}</div>
+        </fieldset>
+        <fieldset class="cfg__gruppo">
+          <legend class="cfg__leg"><span class="cfg__n">02</span>Motivo</legend>
+          <div class="cfg__motivi">${motivi}</div>
+        </fieldset>
+        <fieldset class="cfg__gruppo">
+          <legend class="cfg__leg"><span class="cfg__n">03</span>Colori</legend>
+          <div class="cfg__ruoli">${ruoli}</div>
+          <div class="cfg__tav" role="radiogroup" aria-label="Tavolozza">${colori}</div>
+        </fieldset>
+        <fieldset class="cfg__gruppo">
+          <legend class="cfg__leg"><span class="cfg__n">04</span>Stemma sul petto</legend>
+          <div class="cfg__stemma">
+            <p class="cfg__stemma-ora" data-stemma-ora><img alt="" width="40" height="48" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" hidden><span data-stemma-txt>${esc(q0.nome)}</span></p>
+            <div class="cfg__stemma-az">
+              <label class="btn btn--sec btn--sm cfg__carica">${ico('carica', 'ico ico--s')}Carica il tuo stemma<input class="sr-only" id="m-file" name="stemma-file" type="file" accept=".png,.jpg,.jpeg,.svg,image/png,image/jpeg,image/svg+xml" aria-describedby="m-file-aiuto"></label>
+              <button class="link-borsa link-borsa--grigio" type="button" data-stemma-togli>Senza stemma</button>
+            </div>
+          </div>
+          <p class="campo__aiuto" id="m-file-aiuto">PNG, JPG o SVG, massimo ${MG.stemmaMaxMB} MB. Il file resta nel tuo browser: non viene inviato a nessuno.</p>
+          <p class="campo__err" id="m-file-err" hidden></p>
+        </fieldset>
+        <fieldset class="cfg__gruppo">
+          <legend class="cfg__leg"><span class="cfg__n">05</span>Nome e numero</legend>
+          <div class="cfg__riga">
+            <div class="campo">
+              <label for="m-nome">Nome sul retro</label>
+              <input id="m-nome" name="nome" type="text" maxlength="${MG.maxNome}" autocomplete="off" autocapitalize="words" spellcheck="false" value="${esc(MG.iniziale.nome)}" aria-describedby="m-nome-aiuto">
+              <p class="campo__err" id="m-nome-err" hidden></p>
+              <p class="campo__aiuto" id="m-nome-aiuto">Fino a ${MG.maxNome} caratteri, anche D'Angelo o De Santis</p>
+            </div>
+            <div class="campo campo--num">
+              <label for="m-num">Numero</label>
+              <input id="m-num" name="numero" type="text" inputmode="tel" maxlength="${MG.maxNumero}" autocomplete="off" value="${esc(MG.iniziale.numero)}" aria-describedby="m-num-aiuto">
+              <p class="campo__err" id="m-num-err" hidden></p>
+              <p class="campo__aiuto" id="m-num-aiuto">Anche 1+8</p>
+            </div>
+          </div>
+          <label class="spunta"><input type="checkbox" name="davanti"><span>Numero piccolo anche davanti</span></label>
+        </fieldset>
+        <div class="cfg__fine">
+          <div class="campo campo--q">
+            <label for="m-q">Quantità indicativa</label>
+            <input id="m-q" name="quantita" type="number" inputmode="numeric" min="1" max="999" value="${MG.quantitaIniziale}">
+          </div>
+          <a class="btn btn--pri cfg__wa" data-cfg-wa href="${wa('Ciao, vorrei un preventivo per una maglia personalizzata.')}" target="_blank" rel="noopener">${ico('chat', 'ico ico--s')}Chiedi un preventivo per questa maglia</a>
+          <button class="btn btn--sec cfg__kit" type="button" data-cfg-kit>Usala nel kit squadra ${ico('freccia', 'ico ico--s')}</button>
+          <p class="cfg__piede">Disegno indicativo: tessuto, font e posizioni finali li vedi in negozio prima di confermare.</p>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>`;
+}
+function fasciaSquadre(rel) {
+  const sport = KIT.sport.map(s => `<li>${esc(s.nome)}</li>`).join('');
+  const min = Math.min(...KIT.sport.map(s => s.pacchetti[0].prezzo));
+  return `<section class="fascia-sq" aria-labelledby="tit-fsq">
+  <div class="wrap fascia-sq__in">
+    <div class="fascia-sq__testo">
+      <p class="occhiello">Squadre e associazioni sportive</p>
+      <h2 class="tit-sez" id="tit-fsq" data-tit>${righe(['Crea il kit', 'della squadra'])}</h2>
+      <p class="fascia-sq__lead">Quattro passi: sport, pacchetto, squadra, riepilogo. Ricevi un preventivo indicativo e un codice richiesta; le taglie le proviamo insieme in negozio.</p>
+      <a class="btn btn--pri btn--lg" href="${rel}squadre/index.html">Crea il tuo kit ${ico('freccia', 'ico ico--s')}</a>
+    </div>
+    <div class="fascia-sq__lato">
+      <ol class="fascia-sq__passi">
+        <li><b>01</b>Sport</li><li><b>02</b>Pacchetto</li><li><b>03</b>Squadra</li><li><b>04</b>Riepilogo</li>
+      </ol>
+      <ul class="fascia-sq__sport" aria-label="Sport disponibili">${sport}</ul>
+      <p class="fascia-sq__prezzo">Da <b>${euro(min)}</b> ad atleta <span class="etichetta-esempio">Prezzi di esempio</span></p>
+    </div>
+  </div>
+</section>`;
+}
+function paginaSquadre() {
+  const rel = '../';
+  const accento = slug => (C.sport.find(s => s.slug === slug || s.slug.startsWith(slug + '-')) || { accento: '#B9C0CC', numero: '··', campo: '' });
+  const sport = KIT.sport.map(s => {
+    const sp = accento(s.id);
+    return `<label class="kit__sport" style="--acc:${sp.accento}"><input type="radio" name="sport" value="${s.id}" required><span class="kit__sport-box"><span class="kit__sport-num">${sp.numero || '··'}</span>${sp.campo ? campo(sp.campo, 'kit__sport-campo') : ''}<span class="kit__sport-nome">${esc(s.nome)}</span><span class="kit__sport-da">da ${euro(s.pacchetti[0].prezzo)}</span></span></label>`;
+  }).join('');
+  const pacchetti = KIT.sport.map(s => `<div class="kit__pacchetti" data-pacchetti="${s.id}" hidden>${s.pacchetti.map((p, i) => {
+    const prima = i ? s.pacchetti[i - 1].include : [];
+    return `<label class="kit__pac${i === 1 ? ' kit__pac--consigliato' : ''}"><input type="radio" name="pacchetto" value="${p.id}"><span class="kit__pac-box">${i === 1 ? '<span class="kit__pac-badge">Il più scelto</span>' : ''}<span class="kit__pac-nome">${esc(p.nome)}</span><span class="kit__pac-prezzo"><b>${euro(p.prezzo)}</b> ad atleta</span><ul class="kit__pac-lista">${p.include.map(x => `<li${prima.includes(x) ? '' : ' class="is-nuovo"'}>${esc(x)}</li>`).join('')}</ul></span></label>`;
+  }).join('')}</div>`).join('');
+  const sconti = KIT.scontiQuantita.map(x => `da ${x.da} atleti −${x.percento}%`).join(', ');
+  const corpo = `
+<section class="hk">
+  <div class="wrap hk__in">
+    <nav class="briciole" aria-label="Percorso"><ol><li><a href="${rel}index.html">Home</a></li><li aria-current="page">Squadre</li></ol></nav>
+    <p class="occhiello">Squadre e associazioni sportive</p>
+    <h1 class="hk__tit">${righe(['Crea il', 'tuo kit'])}</h1>
+    <p class="hk__lead">Scegli sport e pacchetto, raccontaci la squadra: ti diamo subito un preventivo indicativo e un codice richiesta. Poi vi aspettiamo in negozio per le taglie.</p>
+    <ul class="hk__punti">
+      <li>${ico('squadra', 'ico ico--s')}8 sport, 3 pacchetti ciascuno</li>
+      <li>${ico('taglia', 'ico ico--s')}Taglie provate in negozio</li>
+      <li>${ico('maglia', 'ico ico--s')}<a href="${rel}index.html#maglia">Disegna prima la maglia</a></li>
+    </ul>
+  </div>
+</section>
+
+<section class="sez kit" id="kit" aria-labelledby="kit-tit">
+  <div class="wrap">
+    <h2 class="sr-only" id="kit-tit">Crea il tuo kit in 4 passi</h2>
+    <noscript><p class="kit__nojs">Per creare il kit serve JavaScript. Puoi chiederci un preventivo su <a href="${wa('Ciao, vorrei un preventivo per il kit della mia squadra.')}">WhatsApp</a>.</p></noscript>
+    <div class="kit__in" data-kit-box>
+      <div class="kit__testa">
+        <ol class="kit__passi" data-kit-passi>
+          ${['Sport', 'Pacchetto', 'Squadra', 'Riepilogo'].map((t, i) => `<li><button type="button" data-vai="${i + 1}"${i ? ' disabled' : ' aria-current="step"'}><b>0${i + 1}</b><span>${t}</span></button></li>`).join('')}
+        </ol>
+        <div class="kit__barra" role="progressbar" aria-label="Avanzamento" aria-valuemin="1" aria-valuemax="4" aria-valuenow="1" aria-valuetext="Passo 1 di 4: Sport"><span data-kit-barra></span></div>
+      </div>
+      <form class="kit__form" data-kit novalidate>
+        <fieldset class="kit__passo" data-passo="1">
+          <legend class="kit__h" tabindex="-1">Che sport fate?</legend>
+          <div class="kit__sports">${sport}</div>
+          <p class="campo__err" id="kit-sport-err" data-err="sport" hidden></p>
+        </fieldset>
+        <fieldset class="kit__passo" data-passo="2" hidden>
+          <legend class="kit__h" tabindex="-1">Scegli il pacchetto <span class="kit__h-sport" data-kit-sport-nome></span></legend>
+          <p class="kit__intro">Prezzi di esempio per atleta, maglia compresa. I kit bambino costano il ${KIT.scontoBambiniPercento}% in meno.</p>
+          ${pacchetti}
+          <p class="campo__err" id="kit-pac-err" data-err="pacchetto" hidden></p>
+        </fieldset>
+        <fieldset class="kit__passo" data-passo="3" hidden>
+          <legend class="kit__h" tabindex="-1">La vostra squadra</legend>
+          <div class="campo"><label for="k-squadra">Nome della squadra o associazione</label><input id="k-squadra" name="squadra" type="text" maxlength="60" autocomplete="organization"><p class="campo__err" id="k-squadra-err" hidden></p></div>
+          <div class="kit__due">
+            <div class="campo"><label for="k-adulti">Atleti adulti</label><input id="k-adulti" name="adulti" type="number" inputmode="numeric" min="0" max="${KIT.maxAtleti}" value="0"><p class="campo__err" id="k-adulti-err" hidden></p></div>
+            <div class="campo"><label for="k-bambini">Atleti bambini</label><input id="k-bambini" name="bambini" type="number" inputmode="numeric" min="0" max="${KIT.maxAtleti}" value="0" aria-describedby="k-bambini-aiuto"><p class="campo__err" id="k-bambini-err" hidden></p><p class="campo__aiuto" id="k-bambini-aiuto">Fino a 14 anni</p></div>
+          </div>
+          <fieldset class="kit__sn" id="k-nomi" tabindex="-1"><legend>Nomi e numeri sulle maglie <span>+${euro(KIT.personalizzazioni.nomeNumero)} ad atleta</span></legend>
+            <label class="kit__sc"><input type="radio" name="nomi" value="si"><span>Sì</span></label><label class="kit__sc"><input type="radio" name="nomi" value="no"><span>No</span></label>
+            <p class="campo__err" id="k-nomi-err" hidden></p></fieldset>
+          <fieldset class="kit__sn" id="k-stemma" tabindex="-1"><legend>Stemma della squadra <span>+${euro(KIT.personalizzazioni.stemma)} ad atleta</span></legend>
+            <label class="kit__sc"><input type="radio" name="stemma" value="si"><span>Sì</span></label><label class="kit__sc"><input type="radio" name="stemma" value="no"><span>No</span></label>
+            <p class="campo__err" id="k-stemma-err" hidden></p></fieldset>
+          <fieldset class="kit__maglia" id="k-maglia" tabindex="-1"><legend>La maglia</legend>
+            <label class="kit__mo"><input type="radio" name="maglia" value="configuratore" data-maglia-cfg><span class="kit__mo-box"><span class="kit__mo-tit">Quella creata nel configuratore</span><span class="kit__mo-anteprima" data-maglia-ant></span><span class="kit__mo-txt" data-maglia-txt>Non hai ancora creato una maglia.</span></span></label>
+            <label class="kit__mo"><input type="radio" name="maglia" value="negozio"><span class="kit__mo-box"><span class="kit__mo-tit">La scegliamo insieme in negozio</span><span class="kit__mo-txt">Ti mostriamo modelli, tessuti e colori dal vivo.</span></span></label>
+            <a class="link-borsa kit__mo-link" href="${rel}index.html#maglia" data-maglia-link>Crea o modifica la maglia</a>
+            <p class="campo__err" id="k-maglia-err" hidden></p>
+          </fieldset>
+          <p class="kit__taglie">${ico('taglia', 'ico ico--s')}${esc(KIT.testoTaglie)}</p>
+        </fieldset>
+        <fieldset class="kit__passo" data-passo="4" hidden>
+          <legend class="kit__h" tabindex="-1">Riepilogo e preventivo indicativo</legend>
+          <div class="kit__riep" data-kit-riep></div>
+          <p class="etichetta-esempio kit__etic">Prezzi di esempio: il preventivo definitivo lo fa il negozio</p>
+          <h3 class="kit__h3">Chi è il referente?</h3>
+          <div class="kit__due">
+            <div class="campo"><label for="k-ref">Referente</label><input id="k-ref" name="referente" type="text" maxlength="60" autocomplete="name"><p class="campo__err" id="k-ref-err" hidden></p></div>
+            <div class="campo"><label for="k-tel">Telefono</label><input id="k-tel" name="telefono" type="tel" inputmode="tel" maxlength="30" autocomplete="tel"><p class="campo__err" id="k-tel-err" hidden></p></div>
+          </div>
+          <div class="campo"><label for="k-email">Email (facoltativa)</label><input id="k-email" name="email" type="email" maxlength="80" autocomplete="email"><p class="campo__err" id="k-email-err" hidden></p></div>
+          <div class="campo"><label for="k-note">Note (facoltative)</label><textarea id="k-note" name="note" rows="3" maxlength="500" placeholder="Es. ci servono per l'inizio del campionato a settembre"></textarea></div>
+          <p class="form__privacy">I dati inviati servono solo per rispondere alla tua richiesta. <a href="${rel}privacy.html">Leggi l'informativa privacy</a></p>
+        </fieldset>
+        <div class="kit__fatto" data-kit-fatto hidden></div>
+        <div class="kit__nav" data-kit-nav>
+          <button class="btn btn--sec" type="button" data-indietro hidden>${ico('sx', 'ico ico--s')}Indietro</button>
+          <p class="kit__tot" data-kit-tot hidden></p>
+          <button class="btn btn--pri" type="submit" data-avanti>Avanti ${ico('dx', 'ico ico--s')}</button>
+        </div>
+        <p class="kit__esito" data-kit-esito role="status"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="sez sez--scura kit-come" aria-labelledby="tit-come">
+  <div class="wrap">
+    <header class="sez-testa sez-testa--riga">
+      <div><p class="occhiello">Dopo la richiesta</p><h2 class="tit-sez" id="tit-come" data-tit>${righe(['Come', 'funziona'])}</h2></div>
+      <p class="sez-testa__testo">Sconti quantità di esempio: ${esc(sconti)}.</p>
+    </header>
+    <ol class="kit-come__passi">
+      <li><b>01</b><h3>Vi richiamiamo</h3><p>Con il codice KIT controlliamo la richiesta e vi mandiamo il preventivo definitivo.</p></li>
+      <li><b>02</b><h3>Prova taglie</h3><p>Portate la squadra in negozio, o i genitori per i più piccoli: proviamo tutto e segniamo le taglie.</p></li>
+      <li><b>03</b><h3>Stampa e consegna</h3><p>Nomi, numeri e stemma li stampiamo noi. Vi avvisiamo quando il kit è pronto da ritirare.</p></li>
+    </ol>
+  </div>
+</section>`;
+  return pagina({
+    titolo: `Crea il tuo kit – squadre e associazioni sportive a ${A.citta} | ${A.nome}`,
+    descrizione: `Kit per squadre e associazioni sportive da ${A.nome}, ${A.citta}: scegli sport e pacchetto, ricevi un preventivo indicativo e un codice richiesta.`,
+    rel, percorso: 'squadre/', classe: 'p-squadre', corpo, corrente: 'squadre', script: ['js/maglia.js', 'js/kit.js']
+  });
+}
+
+/* =====================================================================
    HOME
    ===================================================================== */
 function home() {
@@ -429,11 +675,9 @@ function home() {
   const punti = H.punti.map((p, i) => `<li class="punto" data-a style="--i:${i}"><span class="punto__ico">${ico(p.icona)}</span><h3 class="punto__tit">${esc(p.titolo)}</h3><p>${esc(p.testo)}</p></li>`).join('');
   const numeri = H.numeriEsempio.map(n => `<li class="numero"><span class="numero__val"><span data-conta="${n.valore}">${n.valore}</span>${n.suffisso ? `<span class="numero__suf">${esc(n.suffisso)}</span>` : ''}</span><span class="numero__etic">${esc(n.etichetta)}</span></li>`).join('');
   const marchi = C.marchi.map(m => `<span class="nastro__voce">${esc(m)}</span>`).join('<span class="nastro__sep" aria-hidden="true">·</span>');
-  const colori = H.maglia.colori.map((c, i) => `<label class="colore" style="--c:${c.hex}"><input type="radio" name="colore" value="${i}"${i === 0 ? ' checked' : ''}><span class="colore__pallino" aria-hidden="true"></span><span class="sr-only">${esc(c.nome)}</span></label>`).join('');
   const orari = ordineGiorni.map(g => `<tr data-giorno="${g}"><th scope="row">${giorni[g]}</th><td>${C.orari.settimana[g].length ? fasciaTxt(C.orari.settimana[g]) : 'Chiuso'}</td></tr>`).join('');
   const opzioni = C.sport.map(s => `<option value="${esc(s.nome)}">${esc(s.nome)}</option>`).join('');
   const w3 = C.modulo.modalita === 'web3forms';
-  const c0 = H.maglia.colori[0];
 
   const preload = `<link rel="preload" as="image" href="${V.poster}-m-720.webp" imagesrcset="${V.poster}-m-720.webp 720w, ${V.poster}-m-1080.webp 1080w" imagesizes="100vw" media="(max-width: 767px) and (orientation: portrait)" fetchpriority="high">
 <link rel="preload" as="image" href="${V.poster}-1280.webp" imagesrcset="${V.poster}-1280.webp 1280w, ${V.poster}-1920.webp 1920w" imagesizes="100vw" media="(min-width: 768px), (orientation: landscape)" fetchpriority="high">
@@ -497,52 +741,9 @@ ${tessere}
   </div>
 </section>
 
-<section class="sez squadre" id="squadre" aria-labelledby="tit-squadre">
-  <div class="wrap squadre__in">
-    <div class="squadre__testo">
-      <p class="occhiello">Squadre e società</p>
-      <h2 class="tit-sez" id="tit-squadre" data-tit>${righe(['Maglie', 'personalizzate'])}</h2>
-      <p class="squadre__lead">Divise da gara, tute e borse per tutta la rosa. Prova qui nome, numero e colore: poi ti prepariamo il preventivo.</p>
-      <form class="config" data-config novalidate>
-        <div class="config__riga">
-          <div class="campo">
-            <label for="m-nome">Nome sul retro</label>
-            <input id="m-nome" name="nome" type="text" maxlength="12" autocomplete="off" autocapitalize="characters" spellcheck="false" value="${esc(H.maglia.nomeIniziale)}" aria-describedby="m-nome-aiuto">
-            <p class="campo__aiuto" id="m-nome-aiuto">Massimo 12 lettere</p>
-          </div>
-          <div class="campo campo--num">
-            <label for="m-num">Numero</label>
-            <input id="m-num" name="numero" type="text" inputmode="numeric" maxlength="2" autocomplete="off" value="${H.maglia.numeroIniziale}" aria-describedby="m-num-aiuto">
-            <p class="campo__aiuto" id="m-num-aiuto">Da 0 a 99</p>
-          </div>
-        </div>
-        <fieldset class="colori">
-          <legend>Colore <span data-colore-nome>${esc(c0.nome)}</span></legend>
-          <div class="colori__lista">${colori}</div>
-        </fieldset>
-        <a class="btn btn--pri btn--lg" data-config-wa href="${wa('Ciao, vorrei un preventivo per maglie personalizzate.')}" target="_blank" rel="noopener">Chiedi un preventivo ${ico('freccia', 'ico ico--s')}</a>
-      </form>
-    </div>
-    <figure class="maglia" data-maglia>
-      <span class="etichetta-esempio maglia__etic">Anteprima indicativa</span>
-      <svg class="maglia__svg" viewBox="0 0 300 340" role="img" aria-labelledby="maglia-desc">
-        <title id="maglia-desc">Anteprima della maglia: ${esc(H.maglia.nomeIniziale)}, numero ${H.maglia.numeroIniziale}, colore ${esc(c0.nome)}</title>
-        <defs>
-          <linearGradient id="maglia-luce" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".18"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".18"/></linearGradient>
-        </defs>
-        <path class="maglia__corpo" data-maglia-corpo fill="${c0.hex}" d="M96 18c14 12 94 12 108 0l58 26 30 74-46 18-14-28v212c0 6-4 10-10 10H78c-6 0-10-4-10-10V108l-14 28L8 118l30-74z"/>
-        <path d="M96 18c14 12 94 12 108 0l58 26 30 74-46 18-14-28v212c0 6-4 10-10 10H78c-6 0-10-4-10-10V108l-14 28L8 118l30-74z" fill="url(#maglia-luce)"/>
-        <path d="M96 18c14 12 94 12 108 0" fill="none" stroke="rgba(0,0,0,.28)" stroke-width="5"/>
-        <path d="M246 136l-14-28M54 136l14-28" fill="none" stroke="rgba(0,0,0,.18)" stroke-width="2"/>
-        <path d="M240 122l44-18M60 122l-44-18" fill="none" data-maglia-filetto stroke="${c0.testo}" stroke-opacity=".55" stroke-width="5"/>
-        <path d="M68 300h164" stroke="rgba(0,0,0,.12)" stroke-width="2"/>
-        <text class="maglia__nome" data-maglia-nome x="150" y="96" text-anchor="middle" fill="${c0.testo}">${esc(H.maglia.nomeIniziale)}</text>
-        <text class="maglia__num" data-maglia-num x="150" y="262" text-anchor="middle" fill="${c0.testo}">${H.maglia.numeroIniziale}</text>
-      </svg>
-      <figcaption class="maglia__dida">Disegno indicativo: colori e font finali si scelgono in negozio.</figcaption>
-    </figure>
-  </div>
-</section>
+${configuratore(rel)}
+
+${fasciaSquadre(rel)}
 
 <section class="marchi" aria-labelledby="tit-marchi">
   <div class="wrap marchi__testa"><h2 class="occhiello" id="tit-marchi">Marchi trattati (esempio)</h2></div>
@@ -626,7 +827,7 @@ ${tessere}
   return pagina({
     titolo: `${A.nome} – ${A.tipo} a ${A.citta}`,
     descrizione: `${A.descrizione} Chiedi disponibilità su WhatsApp.`,
-    rel, percorso: '', classe: 'p-home', corpo, preload, extraHead: jsonLd()
+    rel, percorso: '', classe: 'p-home', corpo, preload, extraHead: jsonLd(), script: ['js/maglia.js']
   });
 }
 
@@ -962,6 +1163,7 @@ for (const s of C.sport) {
   for (const d of readdirSync(`sport/${s.slug}`, { withFileTypes: true })) if (d.isDirectory() && !s.categorie.some(c => c.slug === d.name)) rmSync(join('sport', s.slug, d.name), { recursive: true });
   s.categorie.forEach((c, i) => { scrivi(`sport/${s.slug}/${c.slug}/index.html`, paginaCategoria(s, c, i)); nPagCat++; });
 }
+scrivi('squadre/index.html', paginaSquadre());
 scrivi('privacy.html', privacy());
 scrivi('404.html', pagina404());
 scrivi('assets/favicon.svg', favicon());
@@ -970,7 +1172,7 @@ if (S.bozza) {
   for (const f of ['sitemap.xml', 'robots.txt']) if (existsSync(f)) rmSync(f);
 } else {
   const oggi = new Date().toISOString().slice(0, 10);
-  const urls = ['', ...C.sport.flatMap(s => [`sport/${s.slug}/`, ...s.categorie.map(c => `sport/${s.slug}/${c.slug}/`)]), 'privacy.html'];
+  const urls = ['', 'squadre/', ...C.sport.flatMap(s => [`sport/${s.slug}/`, ...s.categorie.map(c => `sport/${s.slug}/${c.slug}/`)]), 'privacy.html'];
   scrivi('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(u => `  <url><loc>${S.urlBase}${u}</loc><lastmod>${oggi}</lastmod></url>`).join('\n')}\n</urlset>\n`);
   scrivi('robots.txt', `User-agent: *\nAllow: /\nSitemap: ${S.urlBase}sitemap.xml\n`);
 }
