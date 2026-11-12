@@ -46,7 +46,8 @@
       <a class="hdr__link" href="../../index.html#negozio">Il negozio</a>
     </nav>
     <div class="hdr__az">
-      <button class="hdr__ico" type="button" data-cerca-apri aria-label="Cerca uno sport o una categoria" aria-haspopup="dialog"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg></button>
+      <button class="hdr__ico" type="button" data-cerca-apri aria-label="Cerca uno sport, una categoria o un prodotto" aria-haspopup="dialog"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg></button>
+      <button class="hdr__ico hdr__borsa" type="button" data-borsa-apri aria-haspopup="dialog" aria-label="Apri la borsa (Prenota e ritira)"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg><span class="hdr__conta" data-borsa-conta hidden>0</span></button>
       <a class="btn btn--pri btn--sm hdr__wa" href="https://wa.me/390000000000?text=Ciao%20Slancio%2C%20vorrei%20un'informazione." target="_blank" rel="noopener"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5z"/><path d="M8.5 10h7M8.5 13.5h4.5"/></svg>Chiedi su WhatsApp</a>
       <button class="hdr__ico hdr__burger" type="button" aria-expanded="false" aria-controls="menu-m" aria-label="Apri il menu" data-menu-btn><span></span><span></span></button>
     </div>
@@ -72,8 +73,8 @@
   <div class="cerca__box wrap">
     <div class="cerca__riga">
       <svg class="ico cerca__lente" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
-      <label class="sr-only" for="cerca-campo">Cerca uno sport o una categoria</label>
-      <input id="cerca-campo" class="cerca__campo" type="search" placeholder="Cerca: scarpe da calcio, racchette, occhialini…" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="cerca-risultati" aria-autocomplete="list">
+      <label class="sr-only" for="cerca-campo">Cerca uno sport, una categoria o un prodotto</label>
+      <input id="cerca-campo" class="cerca__campo" type="search" placeholder="Cerca: scarpe da calcio, guantoni bambino, CAL-SCA-01…" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="cerca-risultati" aria-autocomplete="list">
       <button class="hdr__ico cerca__chiudi" type="button" data-cerca-chiudi aria-label="Chiudi la ricerca"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
     </div>
     <ul class="cerca__ris" id="cerca-risultati" role="listbox" aria-label="Risultati"></ul>
@@ -115,97 +116,484 @@
         <p class="occhiello">01 · Calcio · 8 categorie</p>
         <h2 class="tit-sez" id="tit-cat" data-tit><span class="m"><span>Cosa trovi</span></span> <span class="m"><span>in negozio</span></span></h2>
       </div>
-      <p class="sez-testa__testo">Non vendiamo online: scegli la categoria, chiedi su WhatsApp cosa c'è e passa a provarlo con noi.</p>
+      <div class="sez-testa__testo">
+        <p>Non vendiamo online: metti nella borsa quello che ti serve, ti confermiamo la disponibilità e lo ritiri in negozio.</p>
+        <p class="etichetta-esempio">Prodotti, prezzi e disponibilità di esempio</p>
+      </div>
     </header>
     <div class="cat-griglia" data-cat-griglia>
-<article class="cat" id="scarpe-da-calcio" data-cat>
-  <div class="cat__media" data-foto><img src="../../assets/img/calcio-scarpe-da-calcio-960.webp" srcset="../../assets/img/calcio-scarpe-da-calcio-480.webp 480w, ../../assets/img/calcio-scarpe-da-calcio-960.webp 960w, ../../assets/img/calcio-scarpe-da-calcio-1440.webp 1440w" sizes="(min-width: 1200px) 400px, (min-width: 768px) 45vw, 40vw" width="1440" height="1080" alt="Scarpe da calcio con tacchetti sull'erba sintetica" loading="lazy" decoding="async"></div>
-  <div class="cat__corpo">
-    <p class="cat__num">01</p>
-    <h3 class="cat__tit">Scarpe da calcio</h3>
-    <p class="cat__desc">La suola si sceglie in base al terreno su cui giochi. Ti aiutiamo a capire quale fondo frequenti di più.</p>
-    <ul class="tipi" aria-label="Tipologie"><li>FG – erba naturale</li><li>AG – erba sintetica</li><li>SG – terreno morbido</li><li>TF – sintetico corto</li><li>MG – multiterreno</li><li class="tipi__piu" aria-hidden="true">+2</li></ul>
-    <a class="btn btn--acc btn--sm cat__btn" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20scarpe%20da%20calcio.%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5z"/><path d="M8.5 10h7M8.5 13.5h4.5"/></svg>Chiedi disponibilità</a>
+<section class="catb" id="scarpe-da-calcio" data-cat aria-labelledby="cat-scarpe-da-calcio">
+  <article class="cat">
+    <a class="cat__media" href="../../sport/calcio/scarpe-da-calcio/index.html" tabindex="-1" aria-hidden="true" data-foto><img src="../../assets/img/calcio-scarpe-da-calcio-960.webp" srcset="../../assets/img/calcio-scarpe-da-calcio-480.webp 480w, ../../assets/img/calcio-scarpe-da-calcio-960.webp 960w, ../../assets/img/calcio-scarpe-da-calcio-1440.webp 1440w" sizes="(min-width: 1024px) 340px, 40vw" width="1440" height="1080" alt="Scarpe da calcio con tacchetti sull'erba sintetica" loading="lazy" decoding="async"></a>
+    <div class="cat__corpo">
+      <p class="cat__num">01</p>
+      <h3 class="cat__tit" id="cat-scarpe-da-calcio"><a href="../../sport/calcio/scarpe-da-calcio/index.html">Scarpe da calcio</a></h3>
+      <p class="cat__desc">La suola si sceglie in base al terreno su cui giochi. Ti aiutiamo a capire quale fondo frequenti di più.</p>
+      <ul class="tipi" aria-label="Tipologie"><li>FG – erba naturale</li><li>AG – erba sintetica</li><li>SG – terreno morbido</li><li>TF – sintetico corto</li><li>MG – multiterreno</li><li class="tipi__piu" aria-hidden="true">+2</li></ul>
+      <p class="cat__conta">5 prodotti · <span class="cat__bimbi">2 anche per bambini</span></p>
+      <div class="cat__az">
+        <a class="btn btn--acc btn--sm" href="../../sport/calcio/scarpe-da-calcio/index.html">Vedi tutti (5) <svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+        <a class="link cat__wa" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20scarpe%20da%20calcio.%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener">Chiedi disponibilità</a>
+      </div>
+    </div>
+  </article>
+  <div class="anteprima">
+    <ul class="car-prod" aria-label="Anteprima Scarpe da calcio"><li><article class="pc" data-prod="CAL-SCA-01" data-linea="adulto" data-prezzo="69.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-CAL-SCA-01" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#1E46F0" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#scarpa-tacchetti"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">CAL-SCA-01</p>
+    <h4 class="pc__nome"><a href="#prodotto-CAL-SCA-01" data-apri>Scarpa da calcio per erba naturale (FG)</a></h4>
+    <p class="pc__prezzo">69,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-CAL-SCA-01">Numero – Scarpa da calcio per erba naturale (FG)</label><select class="pc__taglia" id="t-CAL-SCA-01" data-taglia><option value="">Numero</option><option>36</option><option>37</option><option>38</option><option>39</option><option>40</option><option>41</option><option>42</option><option>43</option><option>44</option><option>45</option><option>46</option><option>47</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli il numero</p>
   </div>
-  <ul class="prodotti"><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Scarpa da calcio per erba naturale (FG)</p><p class="prod__prezzo">69,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Scarpa da calcio per erba sintetica (AG)</p><p class="prod__prezzo">89,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Scarpa da calcio per terreni morbidi (SG)</p><p class="prod__prezzo">149,90 €</p><p class="prod__disp prod__disp--su-ordinazione">Su ordinazione</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Scarpa da calcio bambino multiterreno (MG)</p><p class="prod__prezzo">34,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Scarpa da calcio bambino a strappo (TF)</p><p class="prod__prezzo">29,90 €</p><p class="prod__disp prod__disp--esaurito">Esaurito</p></li></ul>
-</article>
-<article class="cat" id="maglie-e-divise" data-cat>
-  <div class="cat__media" data-foto><img src="../../assets/img/calcio-maglie-e-divise-960.webp" srcset="../../assets/img/calcio-maglie-e-divise-480.webp 480w, ../../assets/img/calcio-maglie-e-divise-960.webp 960w, ../../assets/img/calcio-maglie-e-divise-1440.webp 1440w" sizes="(min-width: 1200px) 400px, (min-width: 768px) 45vw, 40vw" width="1440" height="1080" alt="Maglie da calcio appese con il numero sul retro" loading="lazy" decoding="async"></div>
-  <div class="cat__corpo">
-    <p class="cat__num">02</p>
-    <h3 class="cat__tit">Maglie e divise</h3>
-    <p class="cat__desc">Maglie da gara e da allenamento, per un giocatore o per tutta la rosa, con nome e numero stampati.</p>
-    <ul class="tipi" aria-label="Tipologie"><li>Maniche corte</li><li>Maniche lunghe</li><li>Kit gara completi</li><li>Divise da allenamento</li><li>Stampa nome e numero</li><li class="tipi__piu" aria-hidden="true">+2</li></ul>
-    <a class="btn btn--acc btn--sm cat__btn" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20maglie%20e%20divise%20(calcio).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5z"/><path d="M8.5 10h7M8.5 13.5h4.5"/></svg>Chiedi disponibilità</a>
+</article></li><li><article class="pc" data-prod="CAL-SCA-02" data-linea="adulto" data-prezzo="89.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-CAL-SCA-02" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#0E0F12" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#scarpa-tacchetti"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">CAL-SCA-02</p>
+    <h4 class="pc__nome"><a href="#prodotto-CAL-SCA-02" data-apri>Scarpa da calcio per erba sintetica (AG)</a></h4>
+    <p class="pc__prezzo">89,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-CAL-SCA-02">Numero – Scarpa da calcio per erba sintetica (AG)</label><select class="pc__taglia" id="t-CAL-SCA-02" data-taglia><option value="">Numero</option><option>36</option><option>37</option><option>38</option><option>39</option><option>40</option><option>41</option><option>42</option><option>43</option><option>44</option><option>45</option><option>46</option><option>47</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli il numero</p>
   </div>
-  <ul class="prodotti"><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Maglia da gara a maniche corte</p><p class="prod__prezzo">19,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Maglia da gara a maniche lunghe</p><p class="prod__prezzo">24,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Kit gara bambino (maglia e pantaloncino)</p><p class="prod__prezzo">29,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Maglia da allenamento</p><p class="prod__prezzo">14,90 €</p><p class="prod__disp prod__disp--su-ordinazione">Su ordinazione</p></li></ul>
-</article>
-<article class="cat" id="pantaloncini-e-calzettoni" data-cat>
-  <div class="cat__media cat__media--ico" aria-hidden="true"><svg class="cat__campo" viewBox="0 0 200 300" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke" aria-hidden="true" focusable="false"><rect x="12" y="12" width="176" height="276"/><path d="M12 150h176"/><circle cx="100" cy="150" r="26"/><circle cx="100" cy="150" r="1.5"/><path d="M52 12v44h96V12M78 12v16h44V12M82 56a22 22 0 0 0 36 0"/><path d="M52 288v-44h96v44M78 288v-16h44v16M82 244a22 22 0 0 1 36 0"/><path d="M12 20a8 8 0 0 0 8-8M180 12a8 8 0 0 0 8 8M12 280a8 8 0 0 1 8 8M180 288a8 8 0 0 1 8-8"/></svg><svg class="ico cat__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 3h6v9l3.2 3.2a2.8 2.8 0 0 1-4 4L9 14V3z"/><path d="M9 7h6"/></svg></div>
-  <div class="cat__corpo">
-    <p class="cat__num">03</p>
-    <h3 class="cat__tit">Pantaloncini e calzettoni</h3>
-    <p class="cat__desc">Pantaloncini da gara, calzettoni nei colori sociali e calze con inserti antiscivolo.</p>
-    <ul class="tipi" aria-label="Tipologie"><li>Pantaloncini da gara</li><li>Calzettoni</li><li>Calze antiscivolo</li><li>Sottopantaloncini</li><li class="tipi__piu" aria-hidden="true">+1</li></ul>
-    <a class="btn btn--acc btn--sm cat__btn" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20pantaloncini%20e%20calzettoni%20(calcio).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5z"/><path d="M8.5 10h7M8.5 13.5h4.5"/></svg>Chiedi disponibilità</a>
+</article></li><li><article class="pc" data-prod="CAL-SCA-03" data-linea="adulto" data-prezzo="149.9" data-disp="su-ordinazione">
+  <a class="pc__media" href="#prodotto-CAL-SCA-03" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#D62839" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#scarpa-tacchetti"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">CAL-SCA-03</p>
+    <h4 class="pc__nome"><a href="#prodotto-CAL-SCA-03" data-apri>Scarpa da calcio per terreni morbidi (SG)</a></h4>
+    <p class="pc__prezzo">149,90 €</p>
+    <p class="disp disp--su-ordinazione">Su ordinazione</p>
+    <div class="pc__az"><label class="sr-only" for="t-CAL-SCA-03">Numero – Scarpa da calcio per terreni morbidi (SG)</label><select class="pc__taglia" id="t-CAL-SCA-03" data-taglia><option value="">Numero</option><option>36</option><option>37</option><option>38</option><option>39</option><option>40</option><option>41</option><option>42</option><option>43</option><option>44</option><option>45</option><option>46</option><option>47</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli il numero</p>
   </div>
-  <ul class="prodotti"><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Pantaloncino da gara</p><p class="prod__prezzo">12,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Calzettoni da calcio</p><p class="prod__prezzo">8,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Calzettoni da calcio bambino</p><p class="prod__prezzo">6,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Calze antiscivolo</p><p class="prod__prezzo">14,90 €</p><p class="prod__disp prod__disp--su-ordinazione">Su ordinazione</p></li></ul>
-</article>
-<article class="cat" id="tute-e-felpe" data-cat>
-  <div class="cat__media" data-foto><img src="../../assets/img/calcio-tute-e-felpe-960.webp" srcset="../../assets/img/calcio-tute-e-felpe-480.webp 480w, ../../assets/img/calcio-tute-e-felpe-960.webp 960w, ../../assets/img/calcio-tute-e-felpe-1440.webp 1440w" sizes="(min-width: 1200px) 400px, (min-width: 768px) 45vw, 40vw" width="1440" height="1080" alt="Allenatore in tuta sportiva a bordo campo" loading="lazy" decoding="async"></div>
-  <div class="cat__corpo">
-    <p class="cat__num">04</p>
-    <h3 class="cat__tit">Tute e felpe</h3>
-    <p class="cat__desc">Tute di rappresentanza e da allenamento, felpe e giacche per le serate fredde a bordo campo.</p>
-    <ul class="tipi" aria-label="Tipologie"><li>Tute di rappresentanza</li><li>Tute da allenamento</li><li>Felpe con zip</li><li>Giacche antipioggia</li><li class="tipi__piu" aria-hidden="true">+1</li></ul>
-    <a class="btn btn--acc btn--sm cat__btn" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20tute%20e%20felpe%20(calcio).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5z"/><path d="M8.5 10h7M8.5 13.5h4.5"/></svg>Chiedi disponibilità</a>
+</article></li><li><article class="pc" data-prod="CAL-SCA-04" data-linea="bambino" data-prezzo="34.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-CAL-SCA-04" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#1F9BDB" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#scarpa-tacchetti"/></svg><span class="bimbo">Bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">CAL-SCA-04</p>
+    <h4 class="pc__nome"><a href="#prodotto-CAL-SCA-04" data-apri>Scarpa da calcio bambino multiterreno (MG)</a></h4>
+    <p class="pc__prezzo">34,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-CAL-SCA-04">Numero – Scarpa da calcio bambino multiterreno (MG)</label><select class="pc__taglia" id="t-CAL-SCA-04" data-taglia><option value="">Numero</option><option>24</option><option>25</option><option>26</option><option>27</option><option>28</option><option>29</option><option>30</option><option>31</option><option>32</option><option>33</option><option>34</option><option>35</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli il numero</p>
   </div>
-  <ul class="prodotti"><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Tuta di rappresentanza</p><p class="prod__prezzo">49,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Felpa con cappuccio da allenamento</p><p class="prod__prezzo">34,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Giacca antipioggia</p><p class="prod__prezzo">39,90 €</p><p class="prod__disp prod__disp--su-ordinazione">Su ordinazione</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Tuta da allenamento bambino</p><p class="prod__prezzo">34,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li></ul>
-</article>
-<article class="cat" id="portieri" data-cat>
-  <div class="cat__media" data-foto><img src="../../assets/img/calcio-portieri-960.webp" srcset="../../assets/img/calcio-portieri-480.webp 480w, ../../assets/img/calcio-portieri-960.webp 960w, ../../assets/img/calcio-portieri-1440.webp 1440w" sizes="(min-width: 1200px) 400px, (min-width: 768px) 45vw, 40vw" width="1440" height="1080" alt="Portiere in tuffo con i guanti verso il pallone" loading="lazy" decoding="async"></div>
-  <div class="cat__corpo">
-    <p class="cat__num">05</p>
-    <h3 class="cat__tit">Portieri</h3>
-    <p class="cat__desc">Guanti con tagli diversi e divise imbottite. La presa cambia molto da un taglio all'altro: provali.</p>
-    <ul class="tipi" aria-label="Tipologie"><li>Taglio negativo</li><li>Taglio piatto</li><li>Taglio roll finger</li><li>Divise imbottite</li><li class="tipi__piu" aria-hidden="true">+1</li></ul>
-    <a class="btn btn--acc btn--sm cat__btn" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20portieri%20(calcio).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5z"/><path d="M8.5 10h7M8.5 13.5h4.5"/></svg>Chiedi disponibilità</a>
+</article></li><li class="car-prod__altro"><a href="../../sport/calcio/scarpe-da-calcio/index.html"><span>Vedi tutti</span><b>5</b><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></li></ul>
   </div>
-  <ul class="prodotti"><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Guanti da portiere taglio negativo</p><p class="prod__prezzo">49,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Guanti da portiere taglio piatto</p><p class="prod__prezzo">29,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Guanti da portiere bambino con stecche</p><p class="prod__prezzo">24,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Maglia da portiere imbottita</p><p class="prod__prezzo">34,90 €</p><p class="prod__disp prod__disp--su-ordinazione">Su ordinazione</p></li></ul>
-</article>
-<article class="cat cat--extra" id="parastinchi-e-protezioni" data-cat>
-  <div class="cat__media cat__media--ico" aria-hidden="true"><svg class="cat__campo" viewBox="0 0 200 300" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke" aria-hidden="true" focusable="false"><rect x="12" y="12" width="176" height="276"/><path d="M12 150h176"/><circle cx="100" cy="150" r="26"/><circle cx="100" cy="150" r="1.5"/><path d="M52 12v44h96V12M78 12v16h44V12M82 56a22 22 0 0 0 36 0"/><path d="M52 288v-44h96v44M78 288v-16h44v16M82 244a22 22 0 0 1 36 0"/><path d="M12 20a8 8 0 0 0 8-8M180 12a8 8 0 0 0 8 8M12 280a8 8 0 0 1 8 8M180 288a8 8 0 0 1 8-8"/></svg><svg class="ico cat__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 3h8l1.2 4v7.5a5.2 5.2 0 0 1-10.4 0V7z"/><path d="M9.5 9h5M9.5 12.5h5"/></svg></div>
-  <div class="cat__corpo">
-    <p class="cat__num">06</p>
-    <h3 class="cat__tit">Parastinchi e protezioni</h3>
-    <p class="cat__desc">Parastinchi in più misure, con o senza protezione per la caviglia, e i fermaparastinchi.</p>
-    <ul class="tipi" aria-label="Tipologie"><li>Parastinchi a fodero</li><li>Con cavigliera</li><li>Fermaparastinchi</li><li>Misure junior</li><li class="tipi__piu" aria-hidden="true">+1</li></ul>
-    <a class="btn btn--acc btn--sm cat__btn" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20parastinchi%20e%20protezioni%20(calcio).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5z"/><path d="M8.5 10h7M8.5 13.5h4.5"/></svg>Chiedi disponibilità</a>
+</section>
+<section class="catb" id="maglie-e-divise" data-cat aria-labelledby="cat-maglie-e-divise">
+  <article class="cat">
+    <a class="cat__media" href="../../sport/calcio/maglie-e-divise/index.html" tabindex="-1" aria-hidden="true" data-foto><img src="../../assets/img/calcio-maglie-e-divise-960.webp" srcset="../../assets/img/calcio-maglie-e-divise-480.webp 480w, ../../assets/img/calcio-maglie-e-divise-960.webp 960w, ../../assets/img/calcio-maglie-e-divise-1440.webp 1440w" sizes="(min-width: 1024px) 340px, 40vw" width="1440" height="1080" alt="Maglie da calcio appese con il numero sul retro" loading="lazy" decoding="async"></a>
+    <div class="cat__corpo">
+      <p class="cat__num">02</p>
+      <h3 class="cat__tit" id="cat-maglie-e-divise"><a href="../../sport/calcio/maglie-e-divise/index.html">Maglie e divise</a></h3>
+      <p class="cat__desc">Maglie da gara e da allenamento, per un giocatore o per tutta la rosa, con nome e numero stampati.</p>
+      <ul class="tipi" aria-label="Tipologie"><li>Maniche corte</li><li>Maniche lunghe</li><li>Kit gara completi</li><li>Divise da allenamento</li><li>Stampa nome e numero</li><li class="tipi__piu" aria-hidden="true">+2</li></ul>
+      <p class="cat__conta">4 prodotti · <span class="cat__bimbi">3 anche per bambini</span></p>
+      <div class="cat__az">
+        <a class="btn btn--acc btn--sm" href="../../sport/calcio/maglie-e-divise/index.html">Vedi tutti (4) <svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+        <a class="link cat__wa" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20maglie%20e%20divise%20(calcio).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener">Chiedi disponibilità</a>
+      </div>
+    </div>
+  </article>
+  <div class="anteprima">
+    <ul class="car-prod" aria-label="Anteprima Maglie e divise"><li><article class="pc" data-prod="CAL-MAG-01" data-linea="entrambe" data-prezzo="19.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-CAL-MAG-01" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#1E46F0" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#maglia"/></svg><span class="bimbo bimbo--anche">Anche bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">CAL-MAG-01</p>
+    <h4 class="pc__nome"><a href="#prodotto-CAL-MAG-01" data-apri>Maglia da gara a maniche corte</a></h4>
+    <p class="pc__prezzo">19,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-CAL-MAG-01">Taglia – Maglia da gara a maniche corte</label><select class="pc__taglia" id="t-CAL-MAG-01" data-taglia><option value="">Taglia</option><optgroup label="Bambino"><option>4 anni (104 cm)</option><option>6 anni (116 cm)</option><option>8 anni (128 cm)</option><option>10 anni (140 cm)</option><option>12 anni (152 cm)</option><option>14 anni (164 cm)</option></optgroup><optgroup label="Adulto"><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></optgroup></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la taglia</p>
   </div>
-  <ul class="prodotti"><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Parastinchi a fodero</p><p class="prod__prezzo">14,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Parastinchi bambino con cavigliera</p><p class="prod__prezzo">12,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Parastinchi in carbonio</p><p class="prod__prezzo">39,90 €</p><p class="prod__disp prod__disp--su-ordinazione">Su ordinazione</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Fermaparastinchi elastici (coppia)</p><p class="prod__prezzo">4,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li></ul>
-</article>
-<article class="cat cat--extra" id="palloni" data-cat>
-  <div class="cat__media" data-foto><img src="../../assets/img/calcio-palloni-960.webp" srcset="../../assets/img/calcio-palloni-480.webp 480w, ../../assets/img/calcio-palloni-960.webp 960w, ../../assets/img/calcio-palloni-1440.webp 1440w" sizes="(min-width: 1200px) 400px, (min-width: 768px) 45vw, 40vw" width="1440" height="1080" alt="Palloni da calcio sull'erba davanti a una porta" loading="lazy" decoding="async"></div>
-  <div class="cat__corpo">
-    <p class="cat__num">07</p>
-    <h3 class="cat__tit">Palloni</h3>
-    <p class="cat__desc">Palloni da gara e da allenamento nelle misure per bambini, ragazzi e adulti.</p>
-    <ul class="tipi" aria-label="Tipologie"><li>Misura 3</li><li>Misura 4</li><li>Misura 5</li><li>Da gara</li><li>Da allenamento</li><li class="tipi__piu" aria-hidden="true">+2</li></ul>
-    <a class="btn btn--acc btn--sm cat__btn" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20palloni%20(calcio).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5z"/><path d="M8.5 10h7M8.5 13.5h4.5"/></svg>Chiedi disponibilità</a>
+</article></li><li><article class="pc" data-prod="CAL-MAG-02" data-linea="adulto" data-prezzo="24.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-CAL-MAG-02" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#0E0F12" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#maglia-lunga"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">CAL-MAG-02</p>
+    <h4 class="pc__nome"><a href="#prodotto-CAL-MAG-02" data-apri>Maglia da gara a maniche lunghe</a></h4>
+    <p class="pc__prezzo">24,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-CAL-MAG-02">Taglia – Maglia da gara a maniche lunghe</label><select class="pc__taglia" id="t-CAL-MAG-02" data-taglia><option value="">Taglia</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la taglia</p>
   </div>
-  <ul class="prodotti"><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Pallone da calcio da allenamento</p><p class="prod__prezzo">19,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Pallone da calcio da gara</p><p class="prod__prezzo">39,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Pallone in cuoio cucito a mano</p><p class="prod__prezzo">59,90 €</p><p class="prod__disp prod__disp--su-ordinazione">Su ordinazione</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Pallone da calcio bambino</p><p class="prod__prezzo">14,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li></ul>
-</article>
-<article class="cat cat--extra" id="borse-e-zaini" data-cat>
-  <div class="cat__media cat__media--ico" aria-hidden="true"><svg class="cat__campo" viewBox="0 0 200 300" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke" aria-hidden="true" focusable="false"><rect x="12" y="12" width="176" height="276"/><path d="M12 150h176"/><circle cx="100" cy="150" r="26"/><circle cx="100" cy="150" r="1.5"/><path d="M52 12v44h96V12M78 12v16h44V12M82 56a22 22 0 0 0 36 0"/><path d="M52 288v-44h96v44M78 288v-16h44v16M82 244a22 22 0 0 1 36 0"/><path d="M12 20a8 8 0 0 0 8-8M180 12a8 8 0 0 0 8 8M12 280a8 8 0 0 1 8 8M180 288a8 8 0 0 1 8-8"/></svg><svg class="ico cat__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="9" width="18" height="11" rx="2"/><path d="M8.5 9V6.5h7V9M3 13.5h18"/></svg></div>
-  <div class="cat__corpo">
-    <p class="cat__num">08</p>
-    <h3 class="cat__tit">Borse e zaini</h3>
-    <p class="cat__desc">Borsoni, zaini con scomparto per le scarpe e sacche leggere per l'allenamento.</p>
-    <ul class="tipi" aria-label="Tipologie"><li>Borsoni</li><li>Zaini con scomparto scarpe</li><li>Sacche</li><li>Borracce</li><li class="tipi__piu" aria-hidden="true">+1</li></ul>
-    <a class="btn btn--acc btn--sm cat__btn" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20borse%20e%20zaini%20(calcio).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5z"/><path d="M8.5 10h7M8.5 13.5h4.5"/></svg>Chiedi disponibilità</a>
+</article></li><li><article class="pc" data-prod="CAL-MAG-03" data-linea="bambino" data-prezzo="29.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-CAL-MAG-03" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#D62839" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#maglia"/></svg><span class="bimbo">Bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">CAL-MAG-03</p>
+    <h4 class="pc__nome"><a href="#prodotto-CAL-MAG-03" data-apri>Kit gara bambino (maglia e pantaloncino)</a></h4>
+    <p class="pc__prezzo">29,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-CAL-MAG-03">Taglia – Kit gara bambino (maglia e pantaloncino)</label><select class="pc__taglia" id="t-CAL-MAG-03" data-taglia><option value="">Taglia</option><option>4 anni (104 cm)</option><option>6 anni (116 cm)</option><option>8 anni (128 cm)</option><option>10 anni (140 cm)</option><option>12 anni (152 cm)</option><option>14 anni (164 cm)</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la taglia</p>
   </div>
-  <ul class="prodotti"><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Borsone da squadra 60 litri</p><p class="prod__prezzo">34,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Zaino con scomparto scarpe</p><p class="prod__prezzo">29,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Sacca leggera con coulisse</p><p class="prod__prezzo">9,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Borraccia 750 ml</p><p class="prod__prezzo">9,90 €</p><p class="prod__disp prod__disp--esaurito">Esaurito</p></li></ul>
-</article>
+</article></li><li><article class="pc" data-prod="CAL-MAG-04" data-linea="entrambe" data-prezzo="14.9" data-disp="su-ordinazione">
+  <a class="pc__media" href="#prodotto-CAL-MAG-04" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#FFC21A" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#maglia"/></svg><span class="bimbo bimbo--anche">Anche bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">CAL-MAG-04</p>
+    <h4 class="pc__nome"><a href="#prodotto-CAL-MAG-04" data-apri>Maglia da allenamento</a></h4>
+    <p class="pc__prezzo">14,90 €</p>
+    <p class="disp disp--su-ordinazione">Su ordinazione</p>
+    <div class="pc__az"><label class="sr-only" for="t-CAL-MAG-04">Taglia – Maglia da allenamento</label><select class="pc__taglia" id="t-CAL-MAG-04" data-taglia><option value="">Taglia</option><optgroup label="Bambino"><option>4 anni (104 cm)</option><option>6 anni (116 cm)</option><option>8 anni (128 cm)</option><option>10 anni (140 cm)</option><option>12 anni (152 cm)</option><option>14 anni (164 cm)</option></optgroup><optgroup label="Adulto"><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></optgroup></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la taglia</p>
+  </div>
+</article></li></ul>
+  </div>
+</section>
+<section class="catb" id="pantaloncini-e-calzettoni" data-cat aria-labelledby="cat-pantaloncini-e-calzettoni">
+  <article class="cat">
+    <a class="cat__media cat__media--ico" href="../../sport/calcio/pantaloncini-e-calzettoni/index.html" tabindex="-1" aria-hidden="true"><svg class="cat__campo" viewBox="0 0 200 300" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke" aria-hidden="true" focusable="false"><rect x="12" y="12" width="176" height="276"/><path d="M12 150h176"/><circle cx="100" cy="150" r="26"/><circle cx="100" cy="150" r="1.5"/><path d="M52 12v44h96V12M78 12v16h44V12M82 56a22 22 0 0 0 36 0"/><path d="M52 288v-44h96v44M78 288v-16h44v16M82 244a22 22 0 0 1 36 0"/><path d="M12 20a8 8 0 0 0 8-8M180 12a8 8 0 0 0 8 8M12 280a8 8 0 0 1 8 8M180 288a8 8 0 0 1 8-8"/></svg><svg class="ico cat__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 3h6v9l3.2 3.2a2.8 2.8 0 0 1-4 4L9 14V3z"/><path d="M9 7h6"/></svg></a>
+    <div class="cat__corpo">
+      <p class="cat__num">03</p>
+      <h3 class="cat__tit" id="cat-pantaloncini-e-calzettoni"><a href="../../sport/calcio/pantaloncini-e-calzettoni/index.html">Pantaloncini e calzettoni</a></h3>
+      <p class="cat__desc">Pantaloncini da gara, calzettoni nei colori sociali e calze con inserti antiscivolo.</p>
+      <ul class="tipi" aria-label="Tipologie"><li>Pantaloncini da gara</li><li>Calzettoni</li><li>Calze antiscivolo</li><li>Sottopantaloncini</li><li class="tipi__piu" aria-hidden="true">+1</li></ul>
+      <p class="cat__conta">4 prodotti · <span class="cat__bimbi">2 anche per bambini</span></p>
+      <div class="cat__az">
+        <a class="btn btn--acc btn--sm" href="../../sport/calcio/pantaloncini-e-calzettoni/index.html">Vedi tutti (4) <svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+        <a class="link cat__wa" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20pantaloncini%20e%20calzettoni%20(calcio).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener">Chiedi disponibilità</a>
+      </div>
+    </div>
+  </article>
+  <div class="anteprima">
+    <ul class="car-prod" aria-label="Anteprima Pantaloncini e calzettoni"><li><article class="pc" data-prod="CAL-PAN-01" data-linea="entrambe" data-prezzo="12.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-CAL-PAN-01" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#0E0F12" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#pantaloncino"/></svg><span class="bimbo bimbo--anche">Anche bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">CAL-PAN-01</p>
+    <h4 class="pc__nome"><a href="#prodotto-CAL-PAN-01" data-apri>Pantaloncino da gara</a></h4>
+    <p class="pc__prezzo">12,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-CAL-PAN-01">Taglia – Pantaloncino da gara</label><select class="pc__taglia" id="t-CAL-PAN-01" data-taglia><option value="">Taglia</option><optgroup label="Bambino"><option>4 anni (104 cm)</option><option>6 anni (116 cm)</option><option>8 anni (128 cm)</option><option>10 anni (140 cm)</option><option>12 anni (152 cm)</option><option>14 anni (164 cm)</option></optgroup><optgroup label="Adulto"><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></optgroup></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la taglia</p>
+  </div>
+</article></li><li><article class="pc" data-prod="CAL-PAN-02" data-linea="adulto" data-prezzo="8.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-CAL-PAN-02" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#1E46F0" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#calzettone"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">CAL-PAN-02</p>
+    <h4 class="pc__nome"><a href="#prodotto-CAL-PAN-02" data-apri>Calzettoni da calcio</a></h4>
+    <p class="pc__prezzo">8,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-CAL-PAN-02">Misura – Calzettoni da calcio</label><select class="pc__taglia" id="t-CAL-PAN-02" data-taglia><option value="">Misura</option><option>35–38</option><option>39–42</option><option>43–46</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la misura</p>
+  </div>
+</article></li><li><article class="pc" data-prod="CAL-PAN-03" data-linea="bambino" data-prezzo="6.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-CAL-PAN-03" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#D62839" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#calzettone"/></svg><span class="bimbo">Bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">CAL-PAN-03</p>
+    <h4 class="pc__nome"><a href="#prodotto-CAL-PAN-03" data-apri>Calzettoni da calcio bambino</a></h4>
+    <p class="pc__prezzo">6,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-CAL-PAN-03">Misura – Calzettoni da calcio bambino</label><select class="pc__taglia" id="t-CAL-PAN-03" data-taglia><option value="">Misura</option><option>27–30</option><option>31–34</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la misura</p>
+  </div>
+</article></li><li><article class="pc" data-prod="CAL-PAN-04" data-linea="adulto" data-prezzo="14.9" data-disp="su-ordinazione">
+  <a class="pc__media" href="#prodotto-CAL-PAN-04" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#F4F2ED" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#calza"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">CAL-PAN-04</p>
+    <h4 class="pc__nome"><a href="#prodotto-CAL-PAN-04" data-apri>Calze antiscivolo</a></h4>
+    <p class="pc__prezzo">14,90 €</p>
+    <p class="disp disp--su-ordinazione">Su ordinazione</p>
+    <div class="pc__az"><label class="sr-only" for="t-CAL-PAN-04">Misura – Calze antiscivolo</label><select class="pc__taglia" id="t-CAL-PAN-04" data-taglia><option value="">Misura</option><option>35–38</option><option>39–42</option><option>43–46</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la misura</p>
+  </div>
+</article></li></ul>
+  </div>
+</section>
+<section class="catb" id="tute-e-felpe" data-cat aria-labelledby="cat-tute-e-felpe">
+  <article class="cat">
+    <a class="cat__media" href="../../sport/calcio/tute-e-felpe/index.html" tabindex="-1" aria-hidden="true" data-foto><img src="../../assets/img/calcio-tute-e-felpe-960.webp" srcset="../../assets/img/calcio-tute-e-felpe-480.webp 480w, ../../assets/img/calcio-tute-e-felpe-960.webp 960w, ../../assets/img/calcio-tute-e-felpe-1440.webp 1440w" sizes="(min-width: 1024px) 340px, 40vw" width="1440" height="1080" alt="Allenatore in tuta sportiva a bordo campo" loading="lazy" decoding="async"></a>
+    <div class="cat__corpo">
+      <p class="cat__num">04</p>
+      <h3 class="cat__tit" id="cat-tute-e-felpe"><a href="../../sport/calcio/tute-e-felpe/index.html">Tute e felpe</a></h3>
+      <p class="cat__desc">Tute di rappresentanza e da allenamento, felpe e giacche per le serate fredde a bordo campo.</p>
+      <ul class="tipi" aria-label="Tipologie"><li>Tute di rappresentanza</li><li>Tute da allenamento</li><li>Felpe con zip</li><li>Giacche antipioggia</li><li class="tipi__piu" aria-hidden="true">+1</li></ul>
+      <p class="cat__conta">4 prodotti · <span class="cat__bimbi">2 anche per bambini</span></p>
+      <div class="cat__az">
+        <a class="btn btn--acc btn--sm" href="../../sport/calcio/tute-e-felpe/index.html">Vedi tutti (4) <svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+        <a class="link cat__wa" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20tute%20e%20felpe%20(calcio).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener">Chiedi disponibilità</a>
+      </div>
+    </div>
+  </article>
+  <div class="anteprima">
+    <ul class="car-prod" aria-label="Anteprima Tute e felpe"><li><article class="pc" data-prod="CAL-TUT-01" data-linea="entrambe" data-prezzo="49.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-CAL-TUT-01" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#1B2A4A" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#giacca-tuta"/></svg><span class="bimbo bimbo--anche">Anche bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">CAL-TUT-01</p>
+    <h4 class="pc__nome"><a href="#prodotto-CAL-TUT-01" data-apri>Tuta di rappresentanza</a></h4>
+    <p class="pc__prezzo">49,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-CAL-TUT-01">Taglia – Tuta di rappresentanza</label><select class="pc__taglia" id="t-CAL-TUT-01" data-taglia><option value="">Taglia</option><optgroup label="Bambino"><option>4 anni (104 cm)</option><option>6 anni (116 cm)</option><option>8 anni (128 cm)</option><option>10 anni (140 cm)</option><option>12 anni (152 cm)</option><option>14 anni (164 cm)</option></optgroup><optgroup label="Adulto"><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></optgroup></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la taglia</p>
+  </div>
+</article></li><li><article class="pc" data-prod="CAL-TUT-02" data-linea="adulto" data-prezzo="34.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-CAL-TUT-02" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#0E0F12" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#felpa"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">CAL-TUT-02</p>
+    <h4 class="pc__nome"><a href="#prodotto-CAL-TUT-02" data-apri>Felpa con cappuccio da allenamento</a></h4>
+    <p class="pc__prezzo">34,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-CAL-TUT-02">Taglia – Felpa con cappuccio da allenamento</label><select class="pc__taglia" id="t-CAL-TUT-02" data-taglia><option value="">Taglia</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la taglia</p>
+  </div>
+</article></li><li><article class="pc" data-prod="CAL-TUT-03" data-linea="adulto" data-prezzo="39.9" data-disp="su-ordinazione">
+  <a class="pc__media" href="#prodotto-CAL-TUT-03" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#D62839" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#giacca-tuta"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">CAL-TUT-03</p>
+    <h4 class="pc__nome"><a href="#prodotto-CAL-TUT-03" data-apri>Giacca antipioggia</a></h4>
+    <p class="pc__prezzo">39,90 €</p>
+    <p class="disp disp--su-ordinazione">Su ordinazione</p>
+    <div class="pc__az"><label class="sr-only" for="t-CAL-TUT-03">Taglia – Giacca antipioggia</label><select class="pc__taglia" id="t-CAL-TUT-03" data-taglia><option value="">Taglia</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la taglia</p>
+  </div>
+</article></li><li><article class="pc" data-prod="CAL-TUT-04" data-linea="bambino" data-prezzo="34.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-CAL-TUT-04" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#1F9BDB" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#giacca-tuta"/></svg><span class="bimbo">Bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">CAL-TUT-04</p>
+    <h4 class="pc__nome"><a href="#prodotto-CAL-TUT-04" data-apri>Tuta da allenamento bambino</a></h4>
+    <p class="pc__prezzo">34,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-CAL-TUT-04">Taglia – Tuta da allenamento bambino</label><select class="pc__taglia" id="t-CAL-TUT-04" data-taglia><option value="">Taglia</option><option>4 anni (104 cm)</option><option>6 anni (116 cm)</option><option>8 anni (128 cm)</option><option>10 anni (140 cm)</option><option>12 anni (152 cm)</option><option>14 anni (164 cm)</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la taglia</p>
+  </div>
+</article></li></ul>
+  </div>
+</section>
+<section class="catb" id="portieri" data-cat aria-labelledby="cat-portieri">
+  <article class="cat">
+    <a class="cat__media" href="../../sport/calcio/portieri/index.html" tabindex="-1" aria-hidden="true" data-foto><img src="../../assets/img/calcio-portieri-960.webp" srcset="../../assets/img/calcio-portieri-480.webp 480w, ../../assets/img/calcio-portieri-960.webp 960w, ../../assets/img/calcio-portieri-1440.webp 1440w" sizes="(min-width: 1024px) 340px, 40vw" width="1440" height="1080" alt="Portiere in tuffo con i guanti verso il pallone" loading="lazy" decoding="async"></a>
+    <div class="cat__corpo">
+      <p class="cat__num">05</p>
+      <h3 class="cat__tit" id="cat-portieri"><a href="../../sport/calcio/portieri/index.html">Portieri</a></h3>
+      <p class="cat__desc">Guanti con tagli diversi e divise imbottite. La presa cambia molto da un taglio all'altro: provali.</p>
+      <ul class="tipi" aria-label="Tipologie"><li>Taglio negativo</li><li>Taglio piatto</li><li>Taglio roll finger</li><li>Divise imbottite</li><li class="tipi__piu" aria-hidden="true">+1</li></ul>
+      <p class="cat__conta">4 prodotti · <span class="cat__bimbi">2 anche per bambini</span></p>
+      <div class="cat__az">
+        <a class="btn btn--acc btn--sm" href="../../sport/calcio/portieri/index.html">Vedi tutti (4) <svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+        <a class="link cat__wa" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20portieri%20(calcio).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener">Chiedi disponibilità</a>
+      </div>
+    </div>
+  </article>
+  <div class="anteprima">
+    <ul class="car-prod" aria-label="Anteprima Portieri"><li><article class="pc" data-prod="CAL-POR-01" data-linea="adulto" data-prezzo="49.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-CAL-POR-01" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#FFC21A" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#guanto-portiere"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">CAL-POR-01</p>
+    <h4 class="pc__nome"><a href="#prodotto-CAL-POR-01" data-apri>Guanti da portiere taglio negativo</a></h4>
+    <p class="pc__prezzo">49,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-CAL-POR-01">Misura – Guanti da portiere taglio negativo</label><select class="pc__taglia" id="t-CAL-POR-01" data-taglia><option value="">Misura</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la misura</p>
+  </div>
+</article></li><li><article class="pc" data-prod="CAL-POR-02" data-linea="adulto" data-prezzo="29.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-CAL-POR-02" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#0E0F12" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#guanto-portiere"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">CAL-POR-02</p>
+    <h4 class="pc__nome"><a href="#prodotto-CAL-POR-02" data-apri>Guanti da portiere taglio piatto</a></h4>
+    <p class="pc__prezzo">29,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-CAL-POR-02">Misura – Guanti da portiere taglio piatto</label><select class="pc__taglia" id="t-CAL-POR-02" data-taglia><option value="">Misura</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la misura</p>
+  </div>
+</article></li><li><article class="pc" data-prod="CAL-POR-03" data-linea="bambino" data-prezzo="24.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-CAL-POR-03" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#22A45D" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#guanto-portiere"/></svg><span class="bimbo">Bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">CAL-POR-03</p>
+    <h4 class="pc__nome"><a href="#prodotto-CAL-POR-03" data-apri>Guanti da portiere bambino con stecche</a></h4>
+    <p class="pc__prezzo">24,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-CAL-POR-03">Misura – Guanti da portiere bambino con stecche</label><select class="pc__taglia" id="t-CAL-POR-03" data-taglia><option value="">Misura</option><option>4</option><option>5</option><option>6</option><option>7</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la misura</p>
+  </div>
+</article></li><li><article class="pc" data-prod="CAL-POR-04" data-linea="entrambe" data-prezzo="34.9" data-disp="su-ordinazione">
+  <a class="pc__media" href="#prodotto-CAL-POR-04" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#8C6CF7" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#maglia-lunga"/></svg><span class="bimbo bimbo--anche">Anche bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">CAL-POR-04</p>
+    <h4 class="pc__nome"><a href="#prodotto-CAL-POR-04" data-apri>Maglia da portiere imbottita</a></h4>
+    <p class="pc__prezzo">34,90 €</p>
+    <p class="disp disp--su-ordinazione">Su ordinazione</p>
+    <div class="pc__az"><label class="sr-only" for="t-CAL-POR-04">Taglia – Maglia da portiere imbottita</label><select class="pc__taglia" id="t-CAL-POR-04" data-taglia><option value="">Taglia</option><optgroup label="Bambino"><option>4 anni (104 cm)</option><option>6 anni (116 cm)</option><option>8 anni (128 cm)</option><option>10 anni (140 cm)</option><option>12 anni (152 cm)</option><option>14 anni (164 cm)</option></optgroup><optgroup label="Adulto"><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></optgroup></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la taglia</p>
+  </div>
+</article></li></ul>
+  </div>
+</section>
+<section class="catb cat--extra" id="parastinchi-e-protezioni" data-cat aria-labelledby="cat-parastinchi-e-protezioni">
+  <article class="cat">
+    <a class="cat__media cat__media--ico" href="../../sport/calcio/parastinchi-e-protezioni/index.html" tabindex="-1" aria-hidden="true"><svg class="cat__campo" viewBox="0 0 200 300" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke" aria-hidden="true" focusable="false"><rect x="12" y="12" width="176" height="276"/><path d="M12 150h176"/><circle cx="100" cy="150" r="26"/><circle cx="100" cy="150" r="1.5"/><path d="M52 12v44h96V12M78 12v16h44V12M82 56a22 22 0 0 0 36 0"/><path d="M52 288v-44h96v44M78 288v-16h44v16M82 244a22 22 0 0 1 36 0"/><path d="M12 20a8 8 0 0 0 8-8M180 12a8 8 0 0 0 8 8M12 280a8 8 0 0 1 8 8M180 288a8 8 0 0 1 8-8"/></svg><svg class="ico cat__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 3h8l1.2 4v7.5a5.2 5.2 0 0 1-10.4 0V7z"/><path d="M9.5 9h5M9.5 12.5h5"/></svg></a>
+    <div class="cat__corpo">
+      <p class="cat__num">06</p>
+      <h3 class="cat__tit" id="cat-parastinchi-e-protezioni"><a href="../../sport/calcio/parastinchi-e-protezioni/index.html">Parastinchi e protezioni</a></h3>
+      <p class="cat__desc">Parastinchi in più misure, con o senza protezione per la caviglia, e i fermaparastinchi.</p>
+      <ul class="tipi" aria-label="Tipologie"><li>Parastinchi a fodero</li><li>Con cavigliera</li><li>Fermaparastinchi</li><li>Misure junior</li><li class="tipi__piu" aria-hidden="true">+1</li></ul>
+      <p class="cat__conta">4 prodotti · <span class="cat__bimbi">2 anche per bambini</span></p>
+      <div class="cat__az">
+        <a class="btn btn--acc btn--sm" href="../../sport/calcio/parastinchi-e-protezioni/index.html">Vedi tutti (4) <svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+        <a class="link cat__wa" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20parastinchi%20e%20protezioni%20(calcio).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener">Chiedi disponibilità</a>
+      </div>
+    </div>
+  </article>
+  <div class="anteprima">
+    <ul class="car-prod" aria-label="Anteprima Parastinchi e protezioni"><li><article class="pc" data-prod="CAL-PAR-01" data-linea="adulto" data-prezzo="14.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-CAL-PAR-01" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#F4F2ED" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#parastinchi"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">CAL-PAR-01</p>
+    <h4 class="pc__nome"><a href="#prodotto-CAL-PAR-01" data-apri>Parastinchi a fodero</a></h4>
+    <p class="pc__prezzo">14,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-CAL-PAR-01">Misura – Parastinchi a fodero</label><select class="pc__taglia" id="t-CAL-PAR-01" data-taglia><option value="">Misura</option><option>XS (fino a 140 cm)</option><option>S (140–160 cm)</option><option>M (160–170 cm)</option><option>L (170–185 cm)</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la misura</p>
+  </div>
+</article></li><li><article class="pc" data-prod="CAL-PAR-02" data-linea="bambino" data-prezzo="12.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-CAL-PAR-02" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#1F9BDB" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#parastinchi"/></svg><span class="bimbo">Bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">CAL-PAR-02</p>
+    <h4 class="pc__nome"><a href="#prodotto-CAL-PAR-02" data-apri>Parastinchi bambino con cavigliera</a></h4>
+    <p class="pc__prezzo">12,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-CAL-PAR-02">Misura – Parastinchi bambino con cavigliera</label><select class="pc__taglia" id="t-CAL-PAR-02" data-taglia><option value="">Misura</option><option>XS (fino a 140 cm)</option><option>S (140–160 cm)</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la misura</p>
+  </div>
+</article></li><li><article class="pc" data-prod="CAL-PAR-03" data-linea="adulto" data-prezzo="39.9" data-disp="su-ordinazione">
+  <a class="pc__media" href="#prodotto-CAL-PAR-03" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#0E0F12" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#parastinchi"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">CAL-PAR-03</p>
+    <h4 class="pc__nome"><a href="#prodotto-CAL-PAR-03" data-apri>Parastinchi in carbonio</a></h4>
+    <p class="pc__prezzo">39,90 €</p>
+    <p class="disp disp--su-ordinazione">Su ordinazione</p>
+    <div class="pc__az"><label class="sr-only" for="t-CAL-PAR-03">Misura – Parastinchi in carbonio</label><select class="pc__taglia" id="t-CAL-PAR-03" data-taglia><option value="">Misura</option><option>XS (fino a 140 cm)</option><option>S (140–160 cm)</option><option>M (160–170 cm)</option><option>L (170–185 cm)</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la misura</p>
+  </div>
+</article></li><li><article class="pc" data-prod="CAL-PAR-04" data-linea="entrambe" data-prezzo="4.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-CAL-PAR-04" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#1E46F0" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#fascia"/></svg><span class="bimbo bimbo--anche">Anche bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">CAL-PAR-04</p>
+    <h4 class="pc__nome"><a href="#prodotto-CAL-PAR-04" data-apri>Fermaparastinchi elastici (coppia)</a></h4>
+    <p class="pc__prezzo">4,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><p class="pc__unica">Taglia unica</p><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
+  </div>
+</article></li></ul>
+  </div>
+</section>
+<section class="catb cat--extra" id="palloni" data-cat aria-labelledby="cat-palloni">
+  <article class="cat">
+    <a class="cat__media" href="../../sport/calcio/palloni/index.html" tabindex="-1" aria-hidden="true" data-foto><img src="../../assets/img/calcio-palloni-960.webp" srcset="../../assets/img/calcio-palloni-480.webp 480w, ../../assets/img/calcio-palloni-960.webp 960w, ../../assets/img/calcio-palloni-1440.webp 1440w" sizes="(min-width: 1024px) 340px, 40vw" width="1440" height="1080" alt="Palloni da calcio sull'erba davanti a una porta" loading="lazy" decoding="async"></a>
+    <div class="cat__corpo">
+      <p class="cat__num">07</p>
+      <h3 class="cat__tit" id="cat-palloni"><a href="../../sport/calcio/palloni/index.html">Palloni</a></h3>
+      <p class="cat__desc">Palloni da gara e da allenamento nelle misure per bambini, ragazzi e adulti.</p>
+      <ul class="tipi" aria-label="Tipologie"><li>Misura 3</li><li>Misura 4</li><li>Misura 5</li><li>Da gara</li><li>Da allenamento</li><li class="tipi__piu" aria-hidden="true">+2</li></ul>
+      <p class="cat__conta">4 prodotti · <span class="cat__bimbi">2 anche per bambini</span></p>
+      <div class="cat__az">
+        <a class="btn btn--acc btn--sm" href="../../sport/calcio/palloni/index.html">Vedi tutti (4) <svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+        <a class="link cat__wa" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20palloni%20(calcio).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener">Chiedi disponibilità</a>
+      </div>
+    </div>
+  </article>
+  <div class="anteprima">
+    <ul class="car-prod" aria-label="Anteprima Palloni"><li><article class="pc" data-prod="CAL-PAL-01" data-linea="entrambe" data-prezzo="19.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-CAL-PAL-01" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#F4F2ED" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#pallone-calcio"/></svg><span class="bimbo bimbo--anche">Anche bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">CAL-PAL-01</p>
+    <h4 class="pc__nome"><a href="#prodotto-CAL-PAL-01" data-apri>Pallone da calcio da allenamento</a></h4>
+    <p class="pc__prezzo">19,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-CAL-PAL-01">Misura – Pallone da calcio da allenamento</label><select class="pc__taglia" id="t-CAL-PAL-01" data-taglia><option value="">Misura</option><option>Misura 3</option><option>Misura 4</option><option>Misura 5</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la misura</p>
+  </div>
+</article></li><li><article class="pc" data-prod="CAL-PAL-02" data-linea="adulto" data-prezzo="39.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-CAL-PAL-02" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#FFC21A" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#pallone-calcio"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">CAL-PAL-02</p>
+    <h4 class="pc__nome"><a href="#prodotto-CAL-PAL-02" data-apri>Pallone da calcio da gara</a></h4>
+    <p class="pc__prezzo">39,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><p class="pc__unica">Misura 5</p><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
+  </div>
+</article></li><li><article class="pc" data-prod="CAL-PAL-03" data-linea="adulto" data-prezzo="59.9" data-disp="su-ordinazione">
+  <a class="pc__media" href="#prodotto-CAL-PAL-03" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#B98A5E" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#pallone-calcio"/></svg><span class="pc__3d">3D</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">CAL-PAL-03</p>
+    <h4 class="pc__nome"><a href="#prodotto-CAL-PAL-03" data-apri>Pallone in cuoio cucito a mano</a></h4>
+    <p class="pc__prezzo">59,90 €</p>
+    <p class="disp disp--su-ordinazione">Su ordinazione</p>
+    <div class="pc__az"><p class="pc__unica">Misura 5</p><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
+  </div>
+</article></li><li><article class="pc" data-prod="CAL-PAL-04" data-linea="bambino" data-prezzo="14.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-CAL-PAL-04" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#22A45D" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#pallone-calcio"/></svg><span class="bimbo">Bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">CAL-PAL-04</p>
+    <h4 class="pc__nome"><a href="#prodotto-CAL-PAL-04" data-apri>Pallone da calcio bambino</a></h4>
+    <p class="pc__prezzo">14,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><p class="pc__unica">Misura 3</p><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
+  </div>
+</article></li></ul>
+  </div>
+</section>
+<section class="catb cat--extra" id="borse-e-zaini" data-cat aria-labelledby="cat-borse-e-zaini">
+  <article class="cat">
+    <a class="cat__media cat__media--ico" href="../../sport/calcio/borse-e-zaini/index.html" tabindex="-1" aria-hidden="true"><svg class="cat__campo" viewBox="0 0 200 300" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke" aria-hidden="true" focusable="false"><rect x="12" y="12" width="176" height="276"/><path d="M12 150h176"/><circle cx="100" cy="150" r="26"/><circle cx="100" cy="150" r="1.5"/><path d="M52 12v44h96V12M78 12v16h44V12M82 56a22 22 0 0 0 36 0"/><path d="M52 288v-44h96v44M78 288v-16h44v16M82 244a22 22 0 0 1 36 0"/><path d="M12 20a8 8 0 0 0 8-8M180 12a8 8 0 0 0 8 8M12 280a8 8 0 0 1 8 8M180 288a8 8 0 0 1 8-8"/></svg><svg class="ico cat__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="9" width="18" height="11" rx="2"/><path d="M8.5 9V6.5h7V9M3 13.5h18"/></svg></a>
+    <div class="cat__corpo">
+      <p class="cat__num">08</p>
+      <h3 class="cat__tit" id="cat-borse-e-zaini"><a href="../../sport/calcio/borse-e-zaini/index.html">Borse e zaini</a></h3>
+      <p class="cat__desc">Borsoni, zaini con scomparto per le scarpe e sacche leggere per l'allenamento.</p>
+      <ul class="tipi" aria-label="Tipologie"><li>Borsoni</li><li>Zaini con scomparto scarpe</li><li>Sacche</li><li>Borracce</li><li class="tipi__piu" aria-hidden="true">+1</li></ul>
+      <p class="cat__conta">4 prodotti · <span class="cat__bimbi">4 anche per bambini</span></p>
+      <div class="cat__az">
+        <a class="btn btn--acc btn--sm" href="../../sport/calcio/borse-e-zaini/index.html">Vedi tutti (4) <svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+        <a class="link cat__wa" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20borse%20e%20zaini%20(calcio).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener">Chiedi disponibilità</a>
+      </div>
+    </div>
+  </article>
+  <div class="anteprima">
+    <ul class="car-prod" aria-label="Anteprima Borse e zaini"><li><article class="pc" data-prod="CAL-BOR-01" data-linea="entrambe" data-prezzo="34.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-CAL-BOR-01" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#0E0F12" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#borsa"/></svg><span class="bimbo bimbo--anche">Anche bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">CAL-BOR-01</p>
+    <h4 class="pc__nome"><a href="#prodotto-CAL-BOR-01" data-apri>Borsone da squadra 60 litri</a></h4>
+    <p class="pc__prezzo">34,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><p class="pc__unica">Taglia unica</p><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
+  </div>
+</article></li><li><article class="pc" data-prod="CAL-BOR-02" data-linea="entrambe" data-prezzo="29.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-CAL-BOR-02" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#1E46F0" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#zaino"/></svg><span class="bimbo bimbo--anche">Anche bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">CAL-BOR-02</p>
+    <h4 class="pc__nome"><a href="#prodotto-CAL-BOR-02" data-apri>Zaino con scomparto scarpe</a></h4>
+    <p class="pc__prezzo">29,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><p class="pc__unica">Taglia unica</p><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
+  </div>
+</article></li><li><article class="pc" data-prod="CAL-BOR-03" data-linea="entrambe" data-prezzo="9.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-CAL-BOR-03" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#D62839" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#sacca"/></svg><span class="bimbo bimbo--anche">Anche bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">CAL-BOR-03</p>
+    <h4 class="pc__nome"><a href="#prodotto-CAL-BOR-03" data-apri>Sacca leggera con coulisse</a></h4>
+    <p class="pc__prezzo">9,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><p class="pc__unica">Taglia unica</p><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
+  </div>
+</article></li><li><article class="pc is-esaurito" data-prod="CAL-BOR-04" data-linea="entrambe" data-prezzo="9.9" data-disp="esaurito">
+  <a class="pc__media" href="#prodotto-CAL-BOR-04" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#22A45D" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#borraccia"/></svg><span class="bimbo bimbo--anche">Anche bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">CAL-BOR-04</p>
+    <h4 class="pc__nome"><a href="#prodotto-CAL-BOR-04" data-apri>Borraccia 750 ml</a></h4>
+    <p class="pc__prezzo">9,90 €</p>
+    <p class="disp disp--esaurito">Esaurito</p>
+    <div class="pc__az"><a class="btn btn--sec btn--sm pc__btn pc__btn--wa" href="https://wa.me/390000000000?text=Ciao%20Slancio%2C%20il%20prodotto%20CAL-BOR-04%20(Borraccia%20750%20ml)%20risulta%20esaurito%3A%20mi%20avvisate%20quando%20arriva%3F" target="_blank" rel="noopener"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5z"/><path d="M8.5 10h7M8.5 13.5h4.5"/></svg>Chiedi quando arriva</a></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
+  </div>
+</article></li></ul>
+  </div>
+</section>
     </div>
     <div class="vedi-tutti vedi-tutti--cat"><button class="btn btn--sec" type="button" data-vedi-cat aria-expanded="false">Vedi tutte le 8 categorie</button></div>
   </div>
@@ -398,7 +786,7 @@
         <h2 class="pie__tit">Seguici</h2>
         <ul class="pie__lista"><li><a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a></li><li><a href="https://www.facebook.com/" target="_blank" rel="noopener">Facebook</a></li></ul>
         <h2 class="pie__tit">Info</h2>
-        <ul class="pie__lista"><li><a href="../../privacy.html">Privacy</a></li></ul>
+        <ul class="pie__lista"><li><a href="#guida-taglie" data-guida>Guida taglie</a></li><li><a href="../../privacy.html">Privacy</a></li></ul>
       </div>
     </div>
     <div class="pie__legale">

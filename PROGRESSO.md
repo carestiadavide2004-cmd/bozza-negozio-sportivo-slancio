@@ -95,7 +95,13 @@ Nessuna foto davvero bella e senza loghi leggibili → disegno SVG sul colore de
   - Categoria "su richiesta" (Scarponi e attrezzi) con 2 prodotti; almeno 1 prodotto bambino in scarpe, abbigliamento, palloni, protezioni, caschi, costumi.
   - Regole "insieme" per ogni categoria; testi della borsa e guida taglie in config.
   - Sprite di 66 illustrazioni originali (50 KB) generato da _strumenti/illustrazioni.mjs; colore = currentColor. Da file:// i browser bloccano <use> verso file esterni → copia js/prodotti-svg.js caricata solo in quel caso.
-- [ ] Blocco 2 – Pagine categoria, anteprime nella pagina sport, scheda prodotto
+- [x] Blocco 2 – Pagine categoria, anteprime nella pagina sport, scheda prodotto
+  - 64 pagine `sport/<sport>/<categoria>/index.html` (build.mjs → paginaCategoria): testata compatta con foto (o icona), briciole, tipologie, "Chiedi disponibilità" e "Guida taglie"; barra filtri sticky (Tutti/Adulto/Bambino, solo disponibili in negozio, fasce di prezzo calcolate per categoria, ordinamento); sul telefono i filtri sono un foglio dal basso con "Mostra N prodotti".
+  - Card prodotto già nell'HTML (codice, nome, prezzo, disponibilità, taglia in <select>, "Aggiungi" disattivato finché non scegli la taglia con messaggio chiaro; esaurito → "Chiedi quando arriva" su WhatsApp). Griglia 2 colonne telefono, 3 tablet, 4 computer.
+  - Pagina sport: ogni categoria porta alla sua pagina + carosello nativo (scroll-snap) di 4 prodotti e "Vedi tutti (N)".
+  - Scheda prodotto (pannello a destra / foglio dal basso): galleria con scorrimento, miniature e zoom se ci sono più foto, taglie a pulsanti, guida taglie, "Vedi in 3D" se c'è modello3d, hash #prodotto-CODICE condivisibile (anche da altre pagine e dalla ricerca), Esc, focus intrappolato e restituito.
+  - Ricerca: ora trova anche i prodotti (nome o codice) e porta alle pagine categoria.
+  - Corretti durante il blocco: overflow:hidden sul body rompeva la barra sticky (ora solo su html); il foglio filtri finiva sotto la barra in basso (z-index della barra sticky); "1 prodotti"; avvisi GSAP su pagine senza hero sport.
 - [ ] Blocco 3 – Borsa "Prenota e ritira" con codice, modulo, condivisione, privacy
 - [ ] Blocco 4 – "Spesso comprati insieme"
 - [ ] Blocco 5 – Guida taglie con calcolatore scarpe

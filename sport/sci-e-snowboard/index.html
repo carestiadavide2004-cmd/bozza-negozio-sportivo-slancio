@@ -46,7 +46,8 @@
       <a class="hdr__link" href="../../index.html#negozio">Il negozio</a>
     </nav>
     <div class="hdr__az">
-      <button class="hdr__ico" type="button" data-cerca-apri aria-label="Cerca uno sport o una categoria" aria-haspopup="dialog"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg></button>
+      <button class="hdr__ico" type="button" data-cerca-apri aria-label="Cerca uno sport, una categoria o un prodotto" aria-haspopup="dialog"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg></button>
+      <button class="hdr__ico hdr__borsa" type="button" data-borsa-apri aria-haspopup="dialog" aria-label="Apri la borsa (Prenota e ritira)"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg><span class="hdr__conta" data-borsa-conta hidden>0</span></button>
       <a class="btn btn--pri btn--sm hdr__wa" href="https://wa.me/390000000000?text=Ciao%20Slancio%2C%20vorrei%20un'informazione." target="_blank" rel="noopener"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5z"/><path d="M8.5 10h7M8.5 13.5h4.5"/></svg>Chiedi su WhatsApp</a>
       <button class="hdr__ico hdr__burger" type="button" aria-expanded="false" aria-controls="menu-m" aria-label="Apri il menu" data-menu-btn><span></span><span></span></button>
     </div>
@@ -72,8 +73,8 @@
   <div class="cerca__box wrap">
     <div class="cerca__riga">
       <svg class="ico cerca__lente" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
-      <label class="sr-only" for="cerca-campo">Cerca uno sport o una categoria</label>
-      <input id="cerca-campo" class="cerca__campo" type="search" placeholder="Cerca: scarpe da calcio, racchette, occhialini…" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="cerca-risultati" aria-autocomplete="list">
+      <label class="sr-only" for="cerca-campo">Cerca uno sport, una categoria o un prodotto</label>
+      <input id="cerca-campo" class="cerca__campo" type="search" placeholder="Cerca: scarpe da calcio, guantoni bambino, CAL-SCA-01…" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="cerca-risultati" aria-autocomplete="list">
       <button class="hdr__ico cerca__chiudi" type="button" data-cerca-chiudi aria-label="Chiudi la ricerca"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
     </div>
     <ul class="cerca__ris" id="cerca-risultati" role="listbox" aria-label="Risultati"></ul>
@@ -115,64 +116,287 @@
         <p class="occhiello">08 · Sci e snowboard · 5 categorie</p>
         <h2 class="tit-sez" id="tit-cat" data-tit><span class="m"><span>Cosa trovi</span></span> <span class="m"><span>in negozio</span></span></h2>
       </div>
-      <p class="sez-testa__testo">Non vendiamo online: scegli la categoria, chiedi su WhatsApp cosa c'è e passa a provarlo con noi.</p>
+      <div class="sez-testa__testo">
+        <p>Non vendiamo online: metti nella borsa quello che ti serve, ti confermiamo la disponibilità e lo ritiri in negozio.</p>
+        <p class="etichetta-esempio">Prodotti, prezzi e disponibilità di esempio</p>
+      </div>
     </header>
     <div class="cat-griglia" data-cat-griglia>
-<article class="cat" id="giacche-e-pantaloni" data-cat>
-  <div class="cat__media" data-foto><img src="../../assets/img/sci-e-snowboard-giacche-e-pantaloni-960.webp" srcset="../../assets/img/sci-e-snowboard-giacche-e-pantaloni-480.webp 480w, ../../assets/img/sci-e-snowboard-giacche-e-pantaloni-960.webp 960w, ../../assets/img/sci-e-snowboard-giacche-e-pantaloni-1440.webp 1440w" sizes="(min-width: 1200px) 400px, (min-width: 768px) 45vw, 40vw" width="1440" height="1080" alt="Sciatore con giacca e casco davanti alle montagne" loading="lazy" decoding="async"></div>
-  <div class="cat__corpo">
-    <p class="cat__num">01</p>
-    <h3 class="cat__tit">Giacche e pantaloni</h3>
-    <p class="cat__desc">Giacche imbottite o a guscio e pantaloni impermeabili, anche con bretelle per i bambini.</p>
-    <ul class="tipi" aria-label="Tipologie"><li>Giacche imbottite</li><li>Gusci</li><li>Pantaloni</li><li>Tute intere bambino</li><li class="tipi__piu" aria-hidden="true">+1</li></ul>
-    <a class="btn btn--acc btn--sm cat__btn" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20giacche%20e%20pantaloni%20(sci%20e%20snowboard).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5z"/><path d="M8.5 10h7M8.5 13.5h4.5"/></svg>Chiedi disponibilità</a>
+<section class="catb" id="giacche-e-pantaloni" data-cat aria-labelledby="cat-giacche-e-pantaloni">
+  <article class="cat">
+    <a class="cat__media" href="../../sport/sci-e-snowboard/giacche-e-pantaloni/index.html" tabindex="-1" aria-hidden="true" data-foto><img src="../../assets/img/sci-e-snowboard-giacche-e-pantaloni-960.webp" srcset="../../assets/img/sci-e-snowboard-giacche-e-pantaloni-480.webp 480w, ../../assets/img/sci-e-snowboard-giacche-e-pantaloni-960.webp 960w, ../../assets/img/sci-e-snowboard-giacche-e-pantaloni-1440.webp 1440w" sizes="(min-width: 1024px) 340px, 40vw" width="1440" height="1080" alt="Sciatore con giacca e casco davanti alle montagne" loading="lazy" decoding="async"></a>
+    <div class="cat__corpo">
+      <p class="cat__num">01</p>
+      <h3 class="cat__tit" id="cat-giacche-e-pantaloni"><a href="../../sport/sci-e-snowboard/giacche-e-pantaloni/index.html">Giacche e pantaloni</a></h3>
+      <p class="cat__desc">Giacche imbottite o a guscio e pantaloni impermeabili, anche con bretelle per i bambini.</p>
+      <ul class="tipi" aria-label="Tipologie"><li>Giacche imbottite</li><li>Gusci</li><li>Pantaloni</li><li>Tute intere bambino</li><li class="tipi__piu" aria-hidden="true">+1</li></ul>
+      <p class="cat__conta">5 prodotti · <span class="cat__bimbi">2 anche per bambini</span></p>
+      <div class="cat__az">
+        <a class="btn btn--acc btn--sm" href="../../sport/sci-e-snowboard/giacche-e-pantaloni/index.html">Vedi tutti (5) <svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+        <a class="link cat__wa" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20giacche%20e%20pantaloni%20(sci%20e%20snowboard).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener">Chiedi disponibilità</a>
+      </div>
+    </div>
+  </article>
+  <div class="anteprima">
+    <ul class="car-prod" aria-label="Anteprima Giacche e pantaloni"><li><article class="pc" data-prod="SCI-GIA-01" data-linea="adulto" data-prezzo="129.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-SCI-GIA-01" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#D62839" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#giacca-sci"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">SCI-GIA-01</p>
+    <h4 class="pc__nome"><a href="#prodotto-SCI-GIA-01" data-apri>Giacca da sci imbottita</a></h4>
+    <p class="pc__prezzo">129,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-SCI-GIA-01">Taglia – Giacca da sci imbottita</label><select class="pc__taglia" id="t-SCI-GIA-01" data-taglia><option value="">Taglia</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la taglia</p>
   </div>
-  <ul class="prodotti"><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Giacca da sci imbottita</p><p class="prod__prezzo">129,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Pantalone da sci</p><p class="prod__prezzo">89,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Giacca da sci bambino</p><p class="prod__prezzo">74,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Salopette da sci bambino</p><p class="prod__prezzo">59,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Guscio impermeabile</p><p class="prod__prezzo">179,90 €</p><p class="prod__disp prod__disp--su-ordinazione">Su ordinazione</p></li></ul>
-</article>
-<article class="cat" id="strati-termici" data-cat>
-  <div class="cat__media cat__media--ico" aria-hidden="true"><svg class="cat__campo" viewBox="0 0 200 300" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke" aria-hidden="true" focusable="false"><path d="M8 40L192 300"/><path d="M8 70L170 300" opacity=".45"/><path d="M60 30c90 30-70 80 30 110s-80 80 40 150" stroke-dasharray="4 5"/><path d="M95 60v-16l12 5-12 5M58 112v-16l12 5-12 5M120 168v-16l12 5-12 5M70 222v-16l12 5-12 5M140 274v-16l12 5-12 5"/></svg><svg class="ico cat__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="6" y="4" width="12" height="4" rx="1"/><rect x="5" y="10" width="14" height="4" rx="1"/><rect x="4" y="16" width="16" height="4" rx="1"/></svg></div>
-  <div class="cat__corpo">
-    <p class="cat__num">02</p>
-    <h3 class="cat__tit">Strati termici</h3>
-    <p class="cat__desc">Primo strato a contatto con la pelle e secondo strato in pile: la base del vestirsi a strati.</p>
-    <ul class="tipi" aria-label="Tipologie"><li>Primo strato</li><li>Pile</li><li>Lana merino</li><li>Sintetico</li><li class="tipi__piu" aria-hidden="true">+1</li></ul>
-    <a class="btn btn--acc btn--sm cat__btn" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20strati%20termici%20(sci%20e%20snowboard).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5z"/><path d="M8.5 10h7M8.5 13.5h4.5"/></svg>Chiedi disponibilità</a>
+</article></li><li><article class="pc" data-prod="SCI-GIA-02" data-linea="adulto" data-prezzo="89.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-SCI-GIA-02" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#0E0F12" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#pantalone"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">SCI-GIA-02</p>
+    <h4 class="pc__nome"><a href="#prodotto-SCI-GIA-02" data-apri>Pantalone da sci</a></h4>
+    <p class="pc__prezzo">89,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-SCI-GIA-02">Taglia – Pantalone da sci</label><select class="pc__taglia" id="t-SCI-GIA-02" data-taglia><option value="">Taglia</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la taglia</p>
   </div>
-  <ul class="prodotti"><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Maglia termica primo strato</p><p class="prod__prezzo">34,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Maglia in lana merino</p><p class="prod__prezzo">69,90 €</p><p class="prod__disp prod__disp--su-ordinazione">Su ordinazione</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Pile secondo strato</p><p class="prod__prezzo">39,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Completo termico bambino</p><p class="prod__prezzo">29,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li></ul>
-</article>
-<article class="cat" id="caschi-e-maschere" data-cat>
-  <div class="cat__media" data-foto><img src="../../assets/img/sci-e-snowboard-caschi-e-maschere-960.webp" srcset="../../assets/img/sci-e-snowboard-caschi-e-maschere-480.webp 480w, ../../assets/img/sci-e-snowboard-caschi-e-maschere-960.webp 960w, ../../assets/img/sci-e-snowboard-caschi-e-maschere-1440.webp 1440w" sizes="(min-width: 1200px) 400px, (min-width: 768px) 45vw, 40vw" width="1440" height="1080" alt="Sciatore con casco e maschera a specchio" loading="lazy" decoding="async"></div>
-  <div class="cat__corpo">
-    <p class="cat__num">03</p>
-    <h3 class="cat__tit">Caschi e maschere</h3>
-    <p class="cat__desc">Caschi regolabili e maschere con lenti per sole o poca luce, anche da indossare sopra gli occhiali.</p>
-    <ul class="tipi" aria-label="Tipologie"><li>Caschi</li><li>Maschere</li><li>Lenti per poca luce</li><li>Sopra gli occhiali (OTG)</li><li class="tipi__piu" aria-hidden="true">+1</li></ul>
-    <a class="btn btn--acc btn--sm cat__btn" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20caschi%20e%20maschere%20(sci%20e%20snowboard).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5z"/><path d="M8.5 10h7M8.5 13.5h4.5"/></svg>Chiedi disponibilità</a>
+</article></li><li><article class="pc" data-prod="SCI-GIA-03" data-linea="bambino" data-prezzo="74.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-SCI-GIA-03" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#FFC21A" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#giacca-sci"/></svg><span class="bimbo">Bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">SCI-GIA-03</p>
+    <h4 class="pc__nome"><a href="#prodotto-SCI-GIA-03" data-apri>Giacca da sci bambino</a></h4>
+    <p class="pc__prezzo">74,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-SCI-GIA-03">Taglia – Giacca da sci bambino</label><select class="pc__taglia" id="t-SCI-GIA-03" data-taglia><option value="">Taglia</option><option>4 anni (104 cm)</option><option>6 anni (116 cm)</option><option>8 anni (128 cm)</option><option>10 anni (140 cm)</option><option>12 anni (152 cm)</option><option>14 anni (164 cm)</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la taglia</p>
   </div>
-  <ul class="prodotti"><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Casco da sci regolabile</p><p class="prod__prezzo">79,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Casco da sci bambino</p><p class="prod__prezzo">44,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Maschera da sci con lente a specchio</p><p class="prod__prezzo">69,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Maschera da sci per poca luce</p><p class="prod__prezzo">59,90 €</p><p class="prod__disp prod__disp--su-ordinazione">Su ordinazione</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Maschera da sci bambino</p><p class="prod__prezzo">29,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li></ul>
-</article>
-<article class="cat" id="guanti-e-accessori" data-cat>
-  <div class="cat__media cat__media--ico" aria-hidden="true"><svg class="cat__campo" viewBox="0 0 200 300" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke" aria-hidden="true" focusable="false"><path d="M8 40L192 300"/><path d="M8 70L170 300" opacity=".45"/><path d="M60 30c90 30-70 80 30 110s-80 80 40 150" stroke-dasharray="4 5"/><path d="M95 60v-16l12 5-12 5M58 112v-16l12 5-12 5M120 168v-16l12 5-12 5M70 222v-16l12 5-12 5M140 274v-16l12 5-12 5"/></svg><svg class="ico cat__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 21v-5l-3.2-4.3a1.6 1.6 0 0 1 2.6-1.9L9 11.5V5.2a1.5 1.5 0 0 1 3 0V10V4a1.5 1.5 0 0 1 3 0v6V5.5a1.5 1.5 0 0 1 3 0V14c0 3.5-1.5 5.5-3 7z"/></svg></div>
-  <div class="cat__corpo">
-    <p class="cat__num">04</p>
-    <h3 class="cat__tit">Guanti e accessori</h3>
-    <p class="cat__desc">Guanti e moffole, scaldacollo, sottocasco e calze da sci alte.</p>
-    <ul class="tipi" aria-label="Tipologie"><li>Guanti</li><li>Moffole</li><li>Scaldacollo</li><li>Calze da sci</li><li class="tipi__piu" aria-hidden="true">+1</li></ul>
-    <a class="btn btn--acc btn--sm cat__btn" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20guanti%20e%20accessori%20(sci%20e%20snowboard).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5z"/><path d="M8.5 10h7M8.5 13.5h4.5"/></svg>Chiedi disponibilità</a>
+</article></li><li><article class="pc" data-prod="SCI-GIA-04" data-linea="bambino" data-prezzo="59.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-SCI-GIA-04" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#1F9BDB" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#pantalone"/></svg><span class="bimbo">Bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">SCI-GIA-04</p>
+    <h4 class="pc__nome"><a href="#prodotto-SCI-GIA-04" data-apri>Salopette da sci bambino</a></h4>
+    <p class="pc__prezzo">59,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-SCI-GIA-04">Taglia – Salopette da sci bambino</label><select class="pc__taglia" id="t-SCI-GIA-04" data-taglia><option value="">Taglia</option><option>4 anni (104 cm)</option><option>6 anni (116 cm)</option><option>8 anni (128 cm)</option><option>10 anni (140 cm)</option><option>12 anni (152 cm)</option><option>14 anni (164 cm)</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la taglia</p>
   </div>
-  <ul class="prodotti"><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Guanti da sci</p><p class="prod__prezzo">34,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Moffole bambino</p><p class="prod__prezzo">19,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Scaldacollo in pile</p><p class="prod__prezzo">12,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Calze da sci (coppia)</p><p class="prod__prezzo">16,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Calze da sci bambino</p><p class="prod__prezzo">11,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li></ul>
-</article>
-<article class="cat" id="scarponi-e-attrezzi" data-cat>
-  <div class="cat__media" data-foto><img src="../../assets/img/sci-e-snowboard-scarponi-e-attrezzi-960.webp" srcset="../../assets/img/sci-e-snowboard-scarponi-e-attrezzi-480.webp 480w, ../../assets/img/sci-e-snowboard-scarponi-e-attrezzi-960.webp 960w, ../../assets/img/sci-e-snowboard-scarponi-e-attrezzi-1440.webp 1440w" sizes="(min-width: 1200px) 400px, (min-width: 768px) 45vw, 40vw" width="1440" height="1080" alt="Sci e bastoncini piantati nella neve" loading="lazy" decoding="async"></div>
-  <div class="cat__corpo">
-    <p class="cat__num">05</p>
-    <h3 class="cat__tit">Scarponi e attrezzi (su richiesta)</h3>
-    <p class="cat__desc">Scarponi, sci, tavole e attacchi li ordiniamo su richiesta. Passa in negozio per la misura del piede.</p>
-    <ul class="tipi" aria-label="Tipologie"><li>Scarponi</li><li>Sci</li><li>Tavole snowboard</li><li>Attacchi</li><li>Bastoncini</li><li class="tipi__piu" aria-hidden="true">+2</li></ul>
-    <a class="btn btn--acc btn--sm cat__btn" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20scarponi%20e%20attrezzi%20(sci%20e%20snowboard).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5z"/><path d="M8.5 10h7M8.5 13.5h4.5"/></svg>Chiedi disponibilità</a>
+</article></li><li class="car-prod__altro"><a href="../../sport/sci-e-snowboard/giacche-e-pantaloni/index.html"><span>Vedi tutti</span><b>5</b><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></li></ul>
   </div>
-  <ul class="prodotti"><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Scarponi da sci su ordinazione</p><p class="prod__prezzo">249,90 €</p><p class="prod__disp prod__disp--su-ordinazione">Su ordinazione</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Sci da pista con attacchi su ordinazione</p><p class="prod__prezzo">399,90 €</p><p class="prod__disp prod__disp--su-ordinazione">Su ordinazione</p></li></ul>
-</article>
+</section>
+<section class="catb" id="strati-termici" data-cat aria-labelledby="cat-strati-termici">
+  <article class="cat">
+    <a class="cat__media cat__media--ico" href="../../sport/sci-e-snowboard/strati-termici/index.html" tabindex="-1" aria-hidden="true"><svg class="cat__campo" viewBox="0 0 200 300" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke" aria-hidden="true" focusable="false"><path d="M8 40L192 300"/><path d="M8 70L170 300" opacity=".45"/><path d="M60 30c90 30-70 80 30 110s-80 80 40 150" stroke-dasharray="4 5"/><path d="M95 60v-16l12 5-12 5M58 112v-16l12 5-12 5M120 168v-16l12 5-12 5M70 222v-16l12 5-12 5M140 274v-16l12 5-12 5"/></svg><svg class="ico cat__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="6" y="4" width="12" height="4" rx="1"/><rect x="5" y="10" width="14" height="4" rx="1"/><rect x="4" y="16" width="16" height="4" rx="1"/></svg></a>
+    <div class="cat__corpo">
+      <p class="cat__num">02</p>
+      <h3 class="cat__tit" id="cat-strati-termici"><a href="../../sport/sci-e-snowboard/strati-termici/index.html">Strati termici</a></h3>
+      <p class="cat__desc">Primo strato a contatto con la pelle e secondo strato in pile: la base del vestirsi a strati.</p>
+      <ul class="tipi" aria-label="Tipologie"><li>Primo strato</li><li>Pile</li><li>Lana merino</li><li>Sintetico</li><li class="tipi__piu" aria-hidden="true">+1</li></ul>
+      <p class="cat__conta">4 prodotti · <span class="cat__bimbi">1 anche per bambini</span></p>
+      <div class="cat__az">
+        <a class="btn btn--acc btn--sm" href="../../sport/sci-e-snowboard/strati-termici/index.html">Vedi tutti (4) <svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+        <a class="link cat__wa" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20strati%20termici%20(sci%20e%20snowboard).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener">Chiedi disponibilità</a>
+      </div>
+    </div>
+  </article>
+  <div class="anteprima">
+    <ul class="car-prod" aria-label="Anteprima Strati termici"><li><article class="pc" data-prod="SCI-STR-01" data-linea="adulto" data-prezzo="34.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-SCI-STR-01" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#0E0F12" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#maglia-lunga"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">SCI-STR-01</p>
+    <h4 class="pc__nome"><a href="#prodotto-SCI-STR-01" data-apri>Maglia termica primo strato</a></h4>
+    <p class="pc__prezzo">34,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-SCI-STR-01">Taglia – Maglia termica primo strato</label><select class="pc__taglia" id="t-SCI-STR-01" data-taglia><option value="">Taglia</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la taglia</p>
+  </div>
+</article></li><li><article class="pc" data-prod="SCI-STR-02" data-linea="adulto" data-prezzo="69.9" data-disp="su-ordinazione">
+  <a class="pc__media" href="#prodotto-SCI-STR-02" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#5C626C" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#maglia-lunga"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">SCI-STR-02</p>
+    <h4 class="pc__nome"><a href="#prodotto-SCI-STR-02" data-apri>Maglia in lana merino</a></h4>
+    <p class="pc__prezzo">69,90 €</p>
+    <p class="disp disp--su-ordinazione">Su ordinazione</p>
+    <div class="pc__az"><label class="sr-only" for="t-SCI-STR-02">Taglia – Maglia in lana merino</label><select class="pc__taglia" id="t-SCI-STR-02" data-taglia><option value="">Taglia</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la taglia</p>
+  </div>
+</article></li><li><article class="pc" data-prod="SCI-STR-03" data-linea="adulto" data-prezzo="39.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-SCI-STR-03" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#FF6B4A" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#giacca-tuta"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">SCI-STR-03</p>
+    <h4 class="pc__nome"><a href="#prodotto-SCI-STR-03" data-apri>Pile secondo strato</a></h4>
+    <p class="pc__prezzo">39,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-SCI-STR-03">Taglia – Pile secondo strato</label><select class="pc__taglia" id="t-SCI-STR-03" data-taglia><option value="">Taglia</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la taglia</p>
+  </div>
+</article></li><li><article class="pc" data-prod="SCI-STR-04" data-linea="bambino" data-prezzo="29.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-SCI-STR-04" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#1E46F0" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#maglia-lunga"/></svg><span class="bimbo">Bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">SCI-STR-04</p>
+    <h4 class="pc__nome"><a href="#prodotto-SCI-STR-04" data-apri>Completo termico bambino</a></h4>
+    <p class="pc__prezzo">29,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-SCI-STR-04">Taglia – Completo termico bambino</label><select class="pc__taglia" id="t-SCI-STR-04" data-taglia><option value="">Taglia</option><option>4 anni (104 cm)</option><option>6 anni (116 cm)</option><option>8 anni (128 cm)</option><option>10 anni (140 cm)</option><option>12 anni (152 cm)</option><option>14 anni (164 cm)</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la taglia</p>
+  </div>
+</article></li></ul>
+  </div>
+</section>
+<section class="catb" id="caschi-e-maschere" data-cat aria-labelledby="cat-caschi-e-maschere">
+  <article class="cat">
+    <a class="cat__media" href="../../sport/sci-e-snowboard/caschi-e-maschere/index.html" tabindex="-1" aria-hidden="true" data-foto><img src="../../assets/img/sci-e-snowboard-caschi-e-maschere-960.webp" srcset="../../assets/img/sci-e-snowboard-caschi-e-maschere-480.webp 480w, ../../assets/img/sci-e-snowboard-caschi-e-maschere-960.webp 960w, ../../assets/img/sci-e-snowboard-caschi-e-maschere-1440.webp 1440w" sizes="(min-width: 1024px) 340px, 40vw" width="1440" height="1080" alt="Sciatore con casco e maschera a specchio" loading="lazy" decoding="async"></a>
+    <div class="cat__corpo">
+      <p class="cat__num">03</p>
+      <h3 class="cat__tit" id="cat-caschi-e-maschere"><a href="../../sport/sci-e-snowboard/caschi-e-maschere/index.html">Caschi e maschere</a></h3>
+      <p class="cat__desc">Caschi regolabili e maschere con lenti per sole o poca luce, anche da indossare sopra gli occhiali.</p>
+      <ul class="tipi" aria-label="Tipologie"><li>Caschi</li><li>Maschere</li><li>Lenti per poca luce</li><li>Sopra gli occhiali (OTG)</li><li class="tipi__piu" aria-hidden="true">+1</li></ul>
+      <p class="cat__conta">5 prodotti · <span class="cat__bimbi">2 anche per bambini</span></p>
+      <div class="cat__az">
+        <a class="btn btn--acc btn--sm" href="../../sport/sci-e-snowboard/caschi-e-maschere/index.html">Vedi tutti (5) <svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+        <a class="link cat__wa" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20caschi%20e%20maschere%20(sci%20e%20snowboard).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener">Chiedi disponibilità</a>
+      </div>
+    </div>
+  </article>
+  <div class="anteprima">
+    <ul class="car-prod" aria-label="Anteprima Caschi e maschere"><li><article class="pc" data-prod="SCI-CAS-01" data-linea="adulto" data-prezzo="79.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-SCI-CAS-01" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#F4F2ED" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#casco-sci"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">SCI-CAS-01</p>
+    <h4 class="pc__nome"><a href="#prodotto-SCI-CAS-01" data-apri>Casco da sci regolabile</a></h4>
+    <p class="pc__prezzo">79,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-SCI-CAS-01">Taglia – Casco da sci regolabile</label><select class="pc__taglia" id="t-SCI-CAS-01" data-taglia><option value="">Taglia</option><option>S (52–55 cm)</option><option>M (55–58 cm)</option><option>L (58–61 cm)</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la taglia</p>
+  </div>
+</article></li><li><article class="pc" data-prod="SCI-CAS-02" data-linea="bambino" data-prezzo="44.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-SCI-CAS-02" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#FFC21A" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#casco-sci"/></svg><span class="bimbo">Bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">SCI-CAS-02</p>
+    <h4 class="pc__nome"><a href="#prodotto-SCI-CAS-02" data-apri>Casco da sci bambino</a></h4>
+    <p class="pc__prezzo">44,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-SCI-CAS-02">Taglia – Casco da sci bambino</label><select class="pc__taglia" id="t-SCI-CAS-02" data-taglia><option value="">Taglia</option><option>XS (48–52 cm)</option><option>S (52–55 cm)</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la taglia</p>
+  </div>
+</article></li><li><article class="pc" data-prod="SCI-CAS-03" data-linea="adulto" data-prezzo="69.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-SCI-CAS-03" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#1E46F0" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#maschera-sci"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">SCI-CAS-03</p>
+    <h4 class="pc__nome"><a href="#prodotto-SCI-CAS-03" data-apri>Maschera da sci con lente a specchio</a></h4>
+    <p class="pc__prezzo">69,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><p class="pc__unica">Taglia unica</p><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
+  </div>
+</article></li><li><article class="pc" data-prod="SCI-CAS-04" data-linea="adulto" data-prezzo="59.9" data-disp="su-ordinazione">
+  <a class="pc__media" href="#prodotto-SCI-CAS-04" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#FFC21A" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#maschera-sci"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">SCI-CAS-04</p>
+    <h4 class="pc__nome"><a href="#prodotto-SCI-CAS-04" data-apri>Maschera da sci per poca luce</a></h4>
+    <p class="pc__prezzo">59,90 €</p>
+    <p class="disp disp--su-ordinazione">Su ordinazione</p>
+    <div class="pc__az"><p class="pc__unica">Taglia unica</p><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
+  </div>
+</article></li><li class="car-prod__altro"><a href="../../sport/sci-e-snowboard/caschi-e-maschere/index.html"><span>Vedi tutti</span><b>5</b><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></li></ul>
+  </div>
+</section>
+<section class="catb" id="guanti-e-accessori" data-cat aria-labelledby="cat-guanti-e-accessori">
+  <article class="cat">
+    <a class="cat__media cat__media--ico" href="../../sport/sci-e-snowboard/guanti-e-accessori/index.html" tabindex="-1" aria-hidden="true"><svg class="cat__campo" viewBox="0 0 200 300" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke" aria-hidden="true" focusable="false"><path d="M8 40L192 300"/><path d="M8 70L170 300" opacity=".45"/><path d="M60 30c90 30-70 80 30 110s-80 80 40 150" stroke-dasharray="4 5"/><path d="M95 60v-16l12 5-12 5M58 112v-16l12 5-12 5M120 168v-16l12 5-12 5M70 222v-16l12 5-12 5M140 274v-16l12 5-12 5"/></svg><svg class="ico cat__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 21v-5l-3.2-4.3a1.6 1.6 0 0 1 2.6-1.9L9 11.5V5.2a1.5 1.5 0 0 1 3 0V10V4a1.5 1.5 0 0 1 3 0v6V5.5a1.5 1.5 0 0 1 3 0V14c0 3.5-1.5 5.5-3 7z"/></svg></a>
+    <div class="cat__corpo">
+      <p class="cat__num">04</p>
+      <h3 class="cat__tit" id="cat-guanti-e-accessori"><a href="../../sport/sci-e-snowboard/guanti-e-accessori/index.html">Guanti e accessori</a></h3>
+      <p class="cat__desc">Guanti e moffole, scaldacollo, sottocasco e calze da sci alte.</p>
+      <ul class="tipi" aria-label="Tipologie"><li>Guanti</li><li>Moffole</li><li>Scaldacollo</li><li>Calze da sci</li><li class="tipi__piu" aria-hidden="true">+1</li></ul>
+      <p class="cat__conta">5 prodotti · <span class="cat__bimbi">3 anche per bambini</span></p>
+      <div class="cat__az">
+        <a class="btn btn--acc btn--sm" href="../../sport/sci-e-snowboard/guanti-e-accessori/index.html">Vedi tutti (5) <svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+        <a class="link cat__wa" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20guanti%20e%20accessori%20(sci%20e%20snowboard).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener">Chiedi disponibilità</a>
+      </div>
+    </div>
+  </article>
+  <div class="anteprima">
+    <ul class="car-prod" aria-label="Anteprima Guanti e accessori"><li><article class="pc" data-prod="SCI-GUA-01" data-linea="adulto" data-prezzo="34.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-SCI-GUA-01" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#0E0F12" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#guanti"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">SCI-GUA-01</p>
+    <h4 class="pc__nome"><a href="#prodotto-SCI-GUA-01" data-apri>Guanti da sci</a></h4>
+    <p class="pc__prezzo">34,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-SCI-GUA-01">Taglia – Guanti da sci</label><select class="pc__taglia" id="t-SCI-GUA-01" data-taglia><option value="">Taglia</option><option>S</option><option>M</option><option>L</option><option>XL</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la taglia</p>
+  </div>
+</article></li><li><article class="pc" data-prod="SCI-GUA-02" data-linea="bambino" data-prezzo="19.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-SCI-GUA-02" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#D62839" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#guanti"/></svg><span class="bimbo">Bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">SCI-GUA-02</p>
+    <h4 class="pc__nome"><a href="#prodotto-SCI-GUA-02" data-apri>Moffole bambino</a></h4>
+    <p class="pc__prezzo">19,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-SCI-GUA-02">Taglia – Moffole bambino</label><select class="pc__taglia" id="t-SCI-GUA-02" data-taglia><option value="">Taglia</option><option>4–6 anni</option><option>6–8 anni</option><option>8–10 anni</option><option>10–12 anni</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la taglia</p>
+  </div>
+</article></li><li><article class="pc" data-prod="SCI-GUA-03" data-linea="entrambe" data-prezzo="12.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-SCI-GUA-03" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#1B2A4A" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#fascia"/></svg><span class="bimbo bimbo--anche">Anche bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">SCI-GUA-03</p>
+    <h4 class="pc__nome"><a href="#prodotto-SCI-GUA-03" data-apri>Scaldacollo in pile</a></h4>
+    <p class="pc__prezzo">12,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><p class="pc__unica">Taglia unica</p><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
+  </div>
+</article></li><li><article class="pc" data-prod="SCI-GUA-04" data-linea="adulto" data-prezzo="16.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-SCI-GUA-04" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#1E46F0" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#calzettone"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">SCI-GUA-04</p>
+    <h4 class="pc__nome"><a href="#prodotto-SCI-GUA-04" data-apri>Calze da sci (coppia)</a></h4>
+    <p class="pc__prezzo">16,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-SCI-GUA-04">Misura – Calze da sci (coppia)</label><select class="pc__taglia" id="t-SCI-GUA-04" data-taglia><option value="">Misura</option><option>35–38</option><option>39–42</option><option>43–46</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la misura</p>
+  </div>
+</article></li><li class="car-prod__altro"><a href="../../sport/sci-e-snowboard/guanti-e-accessori/index.html"><span>Vedi tutti</span><b>5</b><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></li></ul>
+  </div>
+</section>
+<section class="catb" id="scarponi-e-attrezzi" data-cat aria-labelledby="cat-scarponi-e-attrezzi">
+  <article class="cat">
+    <a class="cat__media" href="../../sport/sci-e-snowboard/scarponi-e-attrezzi/index.html" tabindex="-1" aria-hidden="true" data-foto><img src="../../assets/img/sci-e-snowboard-scarponi-e-attrezzi-960.webp" srcset="../../assets/img/sci-e-snowboard-scarponi-e-attrezzi-480.webp 480w, ../../assets/img/sci-e-snowboard-scarponi-e-attrezzi-960.webp 960w, ../../assets/img/sci-e-snowboard-scarponi-e-attrezzi-1440.webp 1440w" sizes="(min-width: 1024px) 340px, 40vw" width="1440" height="1080" alt="Sci e bastoncini piantati nella neve" loading="lazy" decoding="async"></a>
+    <div class="cat__corpo">
+      <p class="cat__num">05</p>
+      <h3 class="cat__tit" id="cat-scarponi-e-attrezzi"><a href="../../sport/sci-e-snowboard/scarponi-e-attrezzi/index.html">Scarponi e attrezzi (su richiesta)</a></h3>
+      <p class="cat__desc">Scarponi, sci, tavole e attacchi li ordiniamo su richiesta. Passa in negozio per la misura del piede.</p>
+      <ul class="tipi" aria-label="Tipologie"><li>Scarponi</li><li>Sci</li><li>Tavole snowboard</li><li>Attacchi</li><li>Bastoncini</li><li class="tipi__piu" aria-hidden="true">+2</li></ul>
+      <p class="cat__conta">2 prodotti</p>
+      <div class="cat__az">
+        <a class="btn btn--acc btn--sm" href="../../sport/sci-e-snowboard/scarponi-e-attrezzi/index.html">Vedi tutti (2) <svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+        <a class="link cat__wa" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20scarponi%20e%20attrezzi%20(sci%20e%20snowboard).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener">Chiedi disponibilità</a>
+      </div>
+    </div>
+  </article>
+  <div class="anteprima">
+    <ul class="car-prod" aria-label="Anteprima Scarponi e attrezzi"><li><article class="pc" data-prod="SCI-SCA-01" data-linea="adulto" data-prezzo="249.9" data-disp="su-ordinazione">
+  <a class="pc__media" href="#prodotto-SCI-SCA-01" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#0E0F12" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#scarpone-sci"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">SCI-SCA-01</p>
+    <h4 class="pc__nome"><a href="#prodotto-SCI-SCA-01" data-apri>Scarponi da sci su ordinazione</a></h4>
+    <p class="pc__prezzo">249,90 €</p>
+    <p class="disp disp--su-ordinazione">Su ordinazione</p>
+    <div class="pc__az"><label class="sr-only" for="t-SCI-SCA-01">Mondopoint – Scarponi da sci su ordinazione</label><select class="pc__taglia" id="t-SCI-SCA-01" data-taglia><option value="">Mondopoint</option><option>24.5</option><option>25.5</option><option>26.5</option><option>27.5</option><option>28.5</option><option>29.5</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la misura</p>
+  </div>
+</article></li><li><article class="pc" data-prod="SCI-SCA-02" data-linea="adulto" data-prezzo="399.9" data-disp="su-ordinazione">
+  <a class="pc__media" href="#prodotto-SCI-SCA-02" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#D62839" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#sci"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">SCI-SCA-02</p>
+    <h4 class="pc__nome"><a href="#prodotto-SCI-SCA-02" data-apri>Sci da pista con attacchi su ordinazione</a></h4>
+    <p class="pc__prezzo">399,90 €</p>
+    <p class="disp disp--su-ordinazione">Su ordinazione</p>
+    <div class="pc__az"><label class="sr-only" for="t-SCI-SCA-02">Lunghezza – Sci da pista con attacchi su ordinazione</label><select class="pc__taglia" id="t-SCI-SCA-02" data-taglia><option value="">Lunghezza</option><option>150 cm</option><option>160 cm</option><option>170 cm</option><option>180 cm</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la lunghezza</p>
+  </div>
+</article></li></ul>
+  </div>
+</section>
     </div>
     
   </div>
@@ -365,7 +589,7 @@
         <h2 class="pie__tit">Seguici</h2>
         <ul class="pie__lista"><li><a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a></li><li><a href="https://www.facebook.com/" target="_blank" rel="noopener">Facebook</a></li></ul>
         <h2 class="pie__tit">Info</h2>
-        <ul class="pie__lista"><li><a href="../../privacy.html">Privacy</a></li></ul>
+        <ul class="pie__lista"><li><a href="#guida-taglie" data-guida>Guida taglie</a></li><li><a href="../../privacy.html">Privacy</a></li></ul>
       </div>
     </div>
     <div class="pie__legale">

@@ -46,7 +46,8 @@
       <a class="hdr__link" href="../../index.html#negozio">Il negozio</a>
     </nav>
     <div class="hdr__az">
-      <button class="hdr__ico" type="button" data-cerca-apri aria-label="Cerca uno sport o una categoria" aria-haspopup="dialog"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg></button>
+      <button class="hdr__ico" type="button" data-cerca-apri aria-label="Cerca uno sport, una categoria o un prodotto" aria-haspopup="dialog"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg></button>
+      <button class="hdr__ico hdr__borsa" type="button" data-borsa-apri aria-haspopup="dialog" aria-label="Apri la borsa (Prenota e ritira)"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg><span class="hdr__conta" data-borsa-conta hidden>0</span></button>
       <a class="btn btn--pri btn--sm hdr__wa" href="https://wa.me/390000000000?text=Ciao%20Slancio%2C%20vorrei%20un'informazione." target="_blank" rel="noopener"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5z"/><path d="M8.5 10h7M8.5 13.5h4.5"/></svg>Chiedi su WhatsApp</a>
       <button class="hdr__ico hdr__burger" type="button" aria-expanded="false" aria-controls="menu-m" aria-label="Apri il menu" data-menu-btn><span></span><span></span></button>
     </div>
@@ -72,8 +73,8 @@
   <div class="cerca__box wrap">
     <div class="cerca__riga">
       <svg class="ico cerca__lente" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
-      <label class="sr-only" for="cerca-campo">Cerca uno sport o una categoria</label>
-      <input id="cerca-campo" class="cerca__campo" type="search" placeholder="Cerca: scarpe da calcio, racchette, occhialini…" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="cerca-risultati" aria-autocomplete="list">
+      <label class="sr-only" for="cerca-campo">Cerca uno sport, una categoria o un prodotto</label>
+      <input id="cerca-campo" class="cerca__campo" type="search" placeholder="Cerca: scarpe da calcio, guantoni bambino, CAL-SCA-01…" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="cerca-risultati" aria-autocomplete="list">
       <button class="hdr__ico cerca__chiudi" type="button" data-cerca-chiudi aria-label="Chiudi la ricerca"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
     </div>
     <ul class="cerca__ris" id="cerca-risultati" role="listbox" aria-label="Risultati"></ul>
@@ -115,75 +116,366 @@
         <p class="occhiello">06 · Padel · 6 categorie</p>
         <h2 class="tit-sez" id="tit-cat" data-tit><span class="m"><span>Cosa trovi</span></span> <span class="m"><span>in negozio</span></span></h2>
       </div>
-      <p class="sez-testa__testo">Non vendiamo online: scegli la categoria, chiedi su WhatsApp cosa c'è e passa a provarlo con noi.</p>
+      <div class="sez-testa__testo">
+        <p>Non vendiamo online: metti nella borsa quello che ti serve, ti confermiamo la disponibilità e lo ritiri in negozio.</p>
+        <p class="etichetta-esempio">Prodotti, prezzi e disponibilità di esempio</p>
+      </div>
     </header>
     <div class="cat-griglia" data-cat-griglia>
-<article class="cat" id="racchette" data-cat>
-  <div class="cat__media" data-foto><img src="../../assets/img/padel-racchette-960.webp" srcset="../../assets/img/padel-racchette-480.webp 480w, ../../assets/img/padel-racchette-960.webp 960w, ../../assets/img/padel-racchette-1440.webp 1440w" sizes="(min-width: 1200px) 400px, (min-width: 768px) 45vw, 40vw" width="1440" height="1080" alt="Racchetta da padel e pallina sul campo blu" loading="lazy" decoding="async"></div>
-  <div class="cat__corpo">
-    <p class="cat__num">01</p>
-    <h3 class="cat__tit">Racchette</h3>
-    <p class="cat__desc">La forma della racchetta cambia il gioco: più controllo, più equilibrio o più potenza.</p>
-    <ul class="tipi" aria-label="Tipologie"><li>Rotonda – controllo</li><li>Goccia – equilibrio</li><li>Diamante – potenza</li><li>Junior</li><li class="tipi__piu" aria-hidden="true">+1</li></ul>
-    <a class="btn btn--acc btn--sm cat__btn" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20racchette%20(padel).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5z"/><path d="M8.5 10h7M8.5 13.5h4.5"/></svg>Chiedi disponibilità</a>
+<section class="catb" id="racchette" data-cat aria-labelledby="cat-racchette">
+  <article class="cat">
+    <a class="cat__media" href="../../sport/padel/racchette/index.html" tabindex="-1" aria-hidden="true" data-foto><img src="../../assets/img/padel-racchette-960.webp" srcset="../../assets/img/padel-racchette-480.webp 480w, ../../assets/img/padel-racchette-960.webp 960w, ../../assets/img/padel-racchette-1440.webp 1440w" sizes="(min-width: 1024px) 340px, 40vw" width="1440" height="1080" alt="Racchetta da padel e pallina sul campo blu" loading="lazy" decoding="async"></a>
+    <div class="cat__corpo">
+      <p class="cat__num">01</p>
+      <h3 class="cat__tit" id="cat-racchette"><a href="../../sport/padel/racchette/index.html">Racchette</a></h3>
+      <p class="cat__desc">La forma della racchetta cambia il gioco: più controllo, più equilibrio o più potenza.</p>
+      <ul class="tipi" aria-label="Tipologie"><li>Rotonda – controllo</li><li>Goccia – equilibrio</li><li>Diamante – potenza</li><li>Junior</li><li class="tipi__piu" aria-hidden="true">+1</li></ul>
+      <p class="cat__conta">4 prodotti · <span class="cat__bimbi">1 anche per bambini</span></p>
+      <div class="cat__az">
+        <a class="btn btn--acc btn--sm" href="../../sport/padel/racchette/index.html">Vedi tutti (4) <svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+        <a class="link cat__wa" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20racchette%20(padel).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener">Chiedi disponibilità</a>
+      </div>
+    </div>
+  </article>
+  <div class="anteprima">
+    <ul class="car-prod" aria-label="Anteprima Racchette"><li><article class="pc" data-prod="PAD-RAC-01" data-linea="adulto" data-prezzo="79.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-PAD-RAC-01" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#1E46F0" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#racchetta-padel"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">PAD-RAC-01</p>
+    <h4 class="pc__nome"><a href="#prodotto-PAD-RAC-01" data-apri>Racchetta da padel rotonda (controllo)</a></h4>
+    <p class="pc__prezzo">79,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
   </div>
-  <ul class="prodotti"><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Racchetta da padel rotonda (controllo)</p><p class="prod__prezzo">79,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Racchetta da padel a goccia (equilibrio)</p><p class="prod__prezzo">129,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Racchetta da padel a diamante (potenza)</p><p class="prod__prezzo">199,90 €</p><p class="prod__disp prod__disp--su-ordinazione">Su ordinazione</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Racchetta da padel junior</p><p class="prod__prezzo">49,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li></ul>
-</article>
-<article class="cat" id="scarpe" data-cat>
-  <div class="cat__media cat__media--ico" aria-hidden="true"><svg class="cat__campo" viewBox="0 0 200 300" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke" aria-hidden="true" focusable="false"><rect x="35" y="20" width="130" height="260"/><path d="M28 150h144" stroke-width="2.5"/><path d="M35 60h130M35 240h130M100 60v180"/><path d="M29 14h142M29 286h142M29 14v40M171 14v40M29 286v-40M171 286v-40" stroke-width="2.5"/></svg><svg class="ico cat__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 17h18v2.5H3zM3 17V8.5l4 1.2 2.6-2.7h2.2l2 3.6 4.7 1.7A2.5 2.5 0 0 1 21 14.6V17"/><path d="M9.5 10l1 1M11.5 9l1 1"/></svg></div>
-  <div class="cat__corpo">
-    <p class="cat__num">02</p>
-    <h3 class="cat__tit">Scarpe</h3>
-    <p class="cat__desc">Suole pensate per l'erba sintetica con sabbia, per spostamenti laterali rapidi.</p>
-    <ul class="tipi" aria-label="Tipologie"><li>Suola a spina di pesce</li><li>Suola mista</li><li>Rinforzo laterale</li></ul>
-    <a class="btn btn--acc btn--sm cat__btn" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20scarpe%20(padel).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5z"/><path d="M8.5 10h7M8.5 13.5h4.5"/></svg>Chiedi disponibilità</a>
+</article></li><li><article class="pc" data-prod="PAD-RAC-02" data-linea="adulto" data-prezzo="129.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-PAD-RAC-02" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#0E0F12" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#racchetta-padel"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">PAD-RAC-02</p>
+    <h4 class="pc__nome"><a href="#prodotto-PAD-RAC-02" data-apri>Racchetta da padel a goccia (equilibrio)</a></h4>
+    <p class="pc__prezzo">129,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
   </div>
-  <ul class="prodotti"><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Scarpa da padel con suola a spina di pesce</p><p class="prod__prezzo">69,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Scarpa da padel con suola mista</p><p class="prod__prezzo">89,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Scarpa da padel bambino</p><p class="prod__prezzo">39,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Scarpa da padel alta gamma</p><p class="prod__prezzo">129,90 €</p><p class="prod__disp prod__disp--su-ordinazione">Su ordinazione</p></li></ul>
-</article>
-<article class="cat" id="abbigliamento" data-cat>
-  <div class="cat__media" data-foto><img src="../../assets/img/padel-abbigliamento-960.webp" srcset="../../assets/img/padel-abbigliamento-480.webp 480w, ../../assets/img/padel-abbigliamento-960.webp 960w, ../../assets/img/padel-abbigliamento-1440.webp 1440w" sizes="(min-width: 1200px) 400px, (min-width: 768px) 45vw, 40vw" width="1440" height="1080" alt="Giocatrice di padel in un campo coperto" loading="lazy" decoding="async"></div>
-  <div class="cat__corpo">
-    <p class="cat__num">03</p>
-    <h3 class="cat__tit">Abbigliamento</h3>
-    <p class="cat__desc">T-shirt e polo traspiranti, shorts, gonne e felpe leggere per le partite serali.</p>
-    <ul class="tipi" aria-label="Tipologie"><li>T-shirt e polo</li><li>Shorts e gonne</li><li>Felpe leggere</li></ul>
-    <a class="btn btn--acc btn--sm cat__btn" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20abbigliamento%20(padel).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5z"/><path d="M8.5 10h7M8.5 13.5h4.5"/></svg>Chiedi disponibilità</a>
+</article></li><li><article class="pc" data-prod="PAD-RAC-03" data-linea="adulto" data-prezzo="199.9" data-disp="su-ordinazione">
+  <a class="pc__media" href="#prodotto-PAD-RAC-03" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#D62839" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#racchetta-padel"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">PAD-RAC-03</p>
+    <h4 class="pc__nome"><a href="#prodotto-PAD-RAC-03" data-apri>Racchetta da padel a diamante (potenza)</a></h4>
+    <p class="pc__prezzo">199,90 €</p>
+    <p class="disp disp--su-ordinazione">Su ordinazione</p>
+    <div class="pc__az"><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
   </div>
-  <ul class="prodotti"><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">T-shirt tecnica</p><p class="prod__prezzo">24,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Shorts da padel</p><p class="prod__prezzo">29,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Gonna da padel con pantaloncino</p><p class="prod__prezzo">32,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Felpa leggera con zip</p><p class="prod__prezzo">44,90 €</p><p class="prod__disp prod__disp--esaurito">Esaurito</p></li></ul>
-</article>
-<article class="cat" id="palline" data-cat>
-  <div class="cat__media cat__media--ico" aria-hidden="true"><svg class="cat__campo" viewBox="0 0 200 300" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke" aria-hidden="true" focusable="false"><rect x="35" y="20" width="130" height="260"/><path d="M28 150h144" stroke-width="2.5"/><path d="M35 60h130M35 240h130M100 60v180"/><path d="M29 14h142M29 286h142M29 14v40M171 14v40M29 286v-40M171 286v-40" stroke-width="2.5"/></svg><svg class="ico cat__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M5 5.5c3 3 3 10 0 13M19 5.5c-3 3-3 10 0 13"/></svg></div>
-  <div class="cat__corpo">
-    <p class="cat__num">04</p>
-    <h3 class="cat__tit">Palline</h3>
-    <p class="cat__desc">Palline specifiche per il padel, con pressione leggermente più bassa di quelle da tennis.</p>
-    <ul class="tipi" aria-label="Tipologie"><li>Tubi da 3</li><li>Confezioni multiple</li><li>Per allenamento</li></ul>
-    <a class="btn btn--acc btn--sm cat__btn" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20palline%20(padel).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5z"/><path d="M8.5 10h7M8.5 13.5h4.5"/></svg>Chiedi disponibilità</a>
+</article></li><li><article class="pc" data-prod="PAD-RAC-04" data-linea="bambino" data-prezzo="49.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-PAD-RAC-04" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#FF6B4A" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#racchetta-padel"/></svg><span class="bimbo">Bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">PAD-RAC-04</p>
+    <h4 class="pc__nome"><a href="#prodotto-PAD-RAC-04" data-apri>Racchetta da padel junior</a></h4>
+    <p class="pc__prezzo">49,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
   </div>
-  <ul class="prodotti"><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Palline da padel (tubo da 3)</p><p class="prod__prezzo">6,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Palline da padel di fascia alta (tubo da 3)</p><p class="prod__prezzo">8,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Palline da padel per allenamento (sacco da 60)</p><p class="prod__prezzo">79,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Palline da padel (scatola da 24 tubi)</p><p class="prod__prezzo">149,90 €</p><p class="prod__disp prod__disp--su-ordinazione">Su ordinazione</p></li></ul>
-</article>
-<article class="cat" id="borse-e-paletteros" data-cat>
-  <div class="cat__media cat__media--ico" aria-hidden="true"><svg class="cat__campo" viewBox="0 0 200 300" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke" aria-hidden="true" focusable="false"><rect x="35" y="20" width="130" height="260"/><path d="M28 150h144" stroke-width="2.5"/><path d="M35 60h130M35 240h130M100 60v180"/><path d="M29 14h142M29 286h142M29 14v40M171 14v40M29 286v-40M171 286v-40" stroke-width="2.5"/></svg><svg class="ico cat__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="9" width="18" height="11" rx="2"/><path d="M8.5 9V6.5h7V9M3 13.5h18"/></svg></div>
-  <div class="cat__corpo">
-    <p class="cat__num">05</p>
-    <h3 class="cat__tit">Borse e paletteros</h3>
-    <p class="cat__desc">Paletteros con scomparto per due racchette, zaini e borse termiche per le giornate calde.</p>
-    <ul class="tipi" aria-label="Tipologie"><li>Paletteros</li><li>Zaini porta racchetta</li><li>Borse termiche</li></ul>
-    <a class="btn btn--acc btn--sm cat__btn" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20borse%20e%20paletteros%20(padel).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5z"/><path d="M8.5 10h7M8.5 13.5h4.5"/></svg>Chiedi disponibilità</a>
+</article></li></ul>
   </div>
-  <ul class="prodotti"><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Paletero con scomparto termico</p><p class="prod__prezzo">59,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Zaino porta racchetta</p><p class="prod__prezzo">39,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Borsa termica da padel</p><p class="prod__prezzo">49,90 €</p><p class="prod__disp prod__disp--su-ordinazione">Su ordinazione</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Custodia singola per racchetta</p><p class="prod__prezzo">14,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li></ul>
-</article>
-<article class="cat cat--extra" id="accessori" data-cat>
-  <div class="cat__media cat__media--ico" aria-hidden="true"><svg class="cat__campo" viewBox="0 0 200 300" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke" aria-hidden="true" focusable="false"><rect x="35" y="20" width="130" height="260"/><path d="M28 150h144" stroke-width="2.5"/><path d="M35 60h130M35 240h130M100 60v180"/><path d="M29 14h142M29 286h142M29 14v40M171 14v40M29 286v-40M171 286v-40" stroke-width="2.5"/></svg><svg class="ico cat__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 3h8v18H8z"/><path d="m8 6 8 3M8 11l8 3M8 16l8 3"/></svg></div>
-  <div class="cat__corpo">
-    <p class="cat__num">06</p>
-    <h3 class="cat__tit">Accessori</h3>
-    <p class="cat__desc">Overgrip, protezioni per il telaio, polsini e lacci da polso.</p>
-    <ul class="tipi" aria-label="Tipologie"><li>Overgrip</li><li>Protezioni telaio</li><li>Polsini</li><li>Lacci da polso</li><li class="tipi__piu" aria-hidden="true">+1</li></ul>
-    <a class="btn btn--acc btn--sm cat__btn" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20accessori%20(padel).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5z"/><path d="M8.5 10h7M8.5 13.5h4.5"/></svg>Chiedi disponibilità</a>
+</section>
+<section class="catb" id="scarpe" data-cat aria-labelledby="cat-scarpe">
+  <article class="cat">
+    <a class="cat__media cat__media--ico" href="../../sport/padel/scarpe/index.html" tabindex="-1" aria-hidden="true"><svg class="cat__campo" viewBox="0 0 200 300" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke" aria-hidden="true" focusable="false"><rect x="35" y="20" width="130" height="260"/><path d="M28 150h144" stroke-width="2.5"/><path d="M35 60h130M35 240h130M100 60v180"/><path d="M29 14h142M29 286h142M29 14v40M171 14v40M29 286v-40M171 286v-40" stroke-width="2.5"/></svg><svg class="ico cat__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 17h18v2.5H3zM3 17V8.5l4 1.2 2.6-2.7h2.2l2 3.6 4.7 1.7A2.5 2.5 0 0 1 21 14.6V17"/><path d="M9.5 10l1 1M11.5 9l1 1"/></svg></a>
+    <div class="cat__corpo">
+      <p class="cat__num">02</p>
+      <h3 class="cat__tit" id="cat-scarpe"><a href="../../sport/padel/scarpe/index.html">Scarpe</a></h3>
+      <p class="cat__desc">Suole pensate per l'erba sintetica con sabbia, per spostamenti laterali rapidi.</p>
+      <ul class="tipi" aria-label="Tipologie"><li>Suola a spina di pesce</li><li>Suola mista</li><li>Rinforzo laterale</li></ul>
+      <p class="cat__conta">4 prodotti · <span class="cat__bimbi">1 anche per bambini</span></p>
+      <div class="cat__az">
+        <a class="btn btn--acc btn--sm" href="../../sport/padel/scarpe/index.html">Vedi tutti (4) <svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+        <a class="link cat__wa" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20scarpe%20(padel).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener">Chiedi disponibilità</a>
+      </div>
+    </div>
+  </article>
+  <div class="anteprima">
+    <ul class="car-prod" aria-label="Anteprima Scarpe"><li><article class="pc" data-prod="PAD-SCA-01" data-linea="adulto" data-prezzo="69.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-PAD-SCA-01" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#F4F2ED" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#scarpa-campo"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">PAD-SCA-01</p>
+    <h4 class="pc__nome"><a href="#prodotto-PAD-SCA-01" data-apri>Scarpa da padel con suola a spina di pesce</a></h4>
+    <p class="pc__prezzo">69,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-PAD-SCA-01">Numero – Scarpa da padel con suola a spina di pesce</label><select class="pc__taglia" id="t-PAD-SCA-01" data-taglia><option value="">Numero</option><option>36</option><option>37</option><option>38</option><option>39</option><option>40</option><option>41</option><option>42</option><option>43</option><option>44</option><option>45</option><option>46</option><option>47</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli il numero</p>
   </div>
-  <ul class="prodotti"><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Overgrip (confezione da 3)</p><p class="prod__prezzo">8,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Nastro protezione telaio</p><p class="prod__prezzo">7,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Polsini in spugna (coppia)</p><p class="prod__prezzo">6,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Laccio da polso di ricambio</p><p class="prod__prezzo">3,90 €</p><p class="prod__disp prod__disp--esaurito">Esaurito</p></li></ul>
-</article>
+</article></li><li><article class="pc" data-prod="PAD-SCA-02" data-linea="adulto" data-prezzo="89.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-PAD-SCA-02" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#0E0F12" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#scarpa-campo"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">PAD-SCA-02</p>
+    <h4 class="pc__nome"><a href="#prodotto-PAD-SCA-02" data-apri>Scarpa da padel con suola mista</a></h4>
+    <p class="pc__prezzo">89,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-PAD-SCA-02">Numero – Scarpa da padel con suola mista</label><select class="pc__taglia" id="t-PAD-SCA-02" data-taglia><option value="">Numero</option><option>36</option><option>37</option><option>38</option><option>39</option><option>40</option><option>41</option><option>42</option><option>43</option><option>44</option><option>45</option><option>46</option><option>47</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli il numero</p>
+  </div>
+</article></li><li><article class="pc" data-prod="PAD-SCA-03" data-linea="bambino" data-prezzo="39.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-PAD-SCA-03" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#1E46F0" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#scarpa-campo"/></svg><span class="bimbo">Bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">PAD-SCA-03</p>
+    <h4 class="pc__nome"><a href="#prodotto-PAD-SCA-03" data-apri>Scarpa da padel bambino</a></h4>
+    <p class="pc__prezzo">39,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-PAD-SCA-03">Numero – Scarpa da padel bambino</label><select class="pc__taglia" id="t-PAD-SCA-03" data-taglia><option value="">Numero</option><option>24</option><option>25</option><option>26</option><option>27</option><option>28</option><option>29</option><option>30</option><option>31</option><option>32</option><option>33</option><option>34</option><option>35</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli il numero</p>
+  </div>
+</article></li><li><article class="pc" data-prod="PAD-SCA-04" data-linea="adulto" data-prezzo="129.9" data-disp="su-ordinazione">
+  <a class="pc__media" href="#prodotto-PAD-SCA-04" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#D62839" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#scarpa-campo"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">PAD-SCA-04</p>
+    <h4 class="pc__nome"><a href="#prodotto-PAD-SCA-04" data-apri>Scarpa da padel alta gamma</a></h4>
+    <p class="pc__prezzo">129,90 €</p>
+    <p class="disp disp--su-ordinazione">Su ordinazione</p>
+    <div class="pc__az"><label class="sr-only" for="t-PAD-SCA-04">Numero – Scarpa da padel alta gamma</label><select class="pc__taglia" id="t-PAD-SCA-04" data-taglia><option value="">Numero</option><option>36</option><option>37</option><option>38</option><option>39</option><option>40</option><option>41</option><option>42</option><option>43</option><option>44</option><option>45</option><option>46</option><option>47</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli il numero</p>
+  </div>
+</article></li></ul>
+  </div>
+</section>
+<section class="catb" id="abbigliamento" data-cat aria-labelledby="cat-abbigliamento">
+  <article class="cat">
+    <a class="cat__media" href="../../sport/padel/abbigliamento/index.html" tabindex="-1" aria-hidden="true" data-foto><img src="../../assets/img/padel-abbigliamento-960.webp" srcset="../../assets/img/padel-abbigliamento-480.webp 480w, ../../assets/img/padel-abbigliamento-960.webp 960w, ../../assets/img/padel-abbigliamento-1440.webp 1440w" sizes="(min-width: 1024px) 340px, 40vw" width="1440" height="1080" alt="Giocatrice di padel in un campo coperto" loading="lazy" decoding="async"></a>
+    <div class="cat__corpo">
+      <p class="cat__num">03</p>
+      <h3 class="cat__tit" id="cat-abbigliamento"><a href="../../sport/padel/abbigliamento/index.html">Abbigliamento</a></h3>
+      <p class="cat__desc">T-shirt e polo traspiranti, shorts, gonne e felpe leggere per le partite serali.</p>
+      <ul class="tipi" aria-label="Tipologie"><li>T-shirt e polo</li><li>Shorts e gonne</li><li>Felpe leggere</li></ul>
+      <p class="cat__conta">4 prodotti · <span class="cat__bimbi">1 anche per bambini</span></p>
+      <div class="cat__az">
+        <a class="btn btn--acc btn--sm" href="../../sport/padel/abbigliamento/index.html">Vedi tutti (4) <svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+        <a class="link cat__wa" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20abbigliamento%20(padel).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener">Chiedi disponibilità</a>
+      </div>
+    </div>
+  </article>
+  <div class="anteprima">
+    <ul class="car-prod" aria-label="Anteprima Abbigliamento"><li><article class="pc" data-prod="PAD-ABB-01" data-linea="entrambe" data-prezzo="24.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-PAD-ABB-01" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#8C6CF7" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#maglia"/></svg><span class="bimbo bimbo--anche">Anche bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">PAD-ABB-01</p>
+    <h4 class="pc__nome"><a href="#prodotto-PAD-ABB-01" data-apri>T-shirt tecnica</a></h4>
+    <p class="pc__prezzo">24,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-PAD-ABB-01">Taglia – T-shirt tecnica</label><select class="pc__taglia" id="t-PAD-ABB-01" data-taglia><option value="">Taglia</option><optgroup label="Bambino"><option>4 anni (104 cm)</option><option>6 anni (116 cm)</option><option>8 anni (128 cm)</option><option>10 anni (140 cm)</option><option>12 anni (152 cm)</option><option>14 anni (164 cm)</option></optgroup><optgroup label="Adulto"><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></optgroup></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la taglia</p>
+  </div>
+</article></li><li><article class="pc" data-prod="PAD-ABB-02" data-linea="adulto" data-prezzo="29.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-PAD-ABB-02" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#0E0F12" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#pantaloncino"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">PAD-ABB-02</p>
+    <h4 class="pc__nome"><a href="#prodotto-PAD-ABB-02" data-apri>Shorts da padel</a></h4>
+    <p class="pc__prezzo">29,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-PAD-ABB-02">Taglia – Shorts da padel</label><select class="pc__taglia" id="t-PAD-ABB-02" data-taglia><option value="">Taglia</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la taglia</p>
+  </div>
+</article></li><li><article class="pc" data-prod="PAD-ABB-03" data-linea="adulto" data-prezzo="32.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-PAD-ABB-03" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#F4F2ED" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#gonna"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">PAD-ABB-03</p>
+    <h4 class="pc__nome"><a href="#prodotto-PAD-ABB-03" data-apri>Gonna da padel con pantaloncino</a></h4>
+    <p class="pc__prezzo">32,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-PAD-ABB-03">Taglia – Gonna da padel con pantaloncino</label><select class="pc__taglia" id="t-PAD-ABB-03" data-taglia><option value="">Taglia</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la taglia</p>
+  </div>
+</article></li><li><article class="pc is-esaurito" data-prod="PAD-ABB-04" data-linea="adulto" data-prezzo="44.9" data-disp="esaurito">
+  <a class="pc__media" href="#prodotto-PAD-ABB-04" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#1B2A4A" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#giacca-tuta"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">PAD-ABB-04</p>
+    <h4 class="pc__nome"><a href="#prodotto-PAD-ABB-04" data-apri>Felpa leggera con zip</a></h4>
+    <p class="pc__prezzo">44,90 €</p>
+    <p class="disp disp--esaurito">Esaurito</p>
+    <div class="pc__az"><a class="btn btn--sec btn--sm pc__btn pc__btn--wa" href="https://wa.me/390000000000?text=Ciao%20Slancio%2C%20il%20prodotto%20PAD-ABB-04%20(Felpa%20leggera%20con%20zip)%20risulta%20esaurito%3A%20mi%20avvisate%20quando%20arriva%3F" target="_blank" rel="noopener"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5z"/><path d="M8.5 10h7M8.5 13.5h4.5"/></svg>Chiedi quando arriva</a></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
+  </div>
+</article></li></ul>
+  </div>
+</section>
+<section class="catb" id="palline" data-cat aria-labelledby="cat-palline">
+  <article class="cat">
+    <a class="cat__media cat__media--ico" href="../../sport/padel/palline/index.html" tabindex="-1" aria-hidden="true"><svg class="cat__campo" viewBox="0 0 200 300" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke" aria-hidden="true" focusable="false"><rect x="35" y="20" width="130" height="260"/><path d="M28 150h144" stroke-width="2.5"/><path d="M35 60h130M35 240h130M100 60v180"/><path d="M29 14h142M29 286h142M29 14v40M171 14v40M29 286v-40M171 286v-40" stroke-width="2.5"/></svg><svg class="ico cat__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M5 5.5c3 3 3 10 0 13M19 5.5c-3 3-3 10 0 13"/></svg></a>
+    <div class="cat__corpo">
+      <p class="cat__num">04</p>
+      <h3 class="cat__tit" id="cat-palline"><a href="../../sport/padel/palline/index.html">Palline</a></h3>
+      <p class="cat__desc">Palline specifiche per il padel, con pressione leggermente più bassa di quelle da tennis.</p>
+      <ul class="tipi" aria-label="Tipologie"><li>Tubi da 3</li><li>Confezioni multiple</li><li>Per allenamento</li></ul>
+      <p class="cat__conta">4 prodotti · <span class="cat__bimbi">1 anche per bambini</span></p>
+      <div class="cat__az">
+        <a class="btn btn--acc btn--sm" href="../../sport/padel/palline/index.html">Vedi tutti (4) <svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+        <a class="link cat__wa" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20palline%20(padel).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener">Chiedi disponibilità</a>
+      </div>
+    </div>
+  </article>
+  <div class="anteprima">
+    <ul class="car-prod" aria-label="Anteprima Palline"><li><article class="pc" data-prod="PAD-PAL-01" data-linea="entrambe" data-prezzo="6.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-PAD-PAL-01" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#D9DD4E" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#palline"/></svg><span class="bimbo bimbo--anche">Anche bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">PAD-PAL-01</p>
+    <h4 class="pc__nome"><a href="#prodotto-PAD-PAL-01" data-apri>Palline da padel (tubo da 3)</a></h4>
+    <p class="pc__prezzo">6,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
+  </div>
+</article></li><li><article class="pc" data-prod="PAD-PAL-02" data-linea="adulto" data-prezzo="8.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-PAD-PAL-02" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#D9DD4E" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#palline"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">PAD-PAL-02</p>
+    <h4 class="pc__nome"><a href="#prodotto-PAD-PAL-02" data-apri>Palline da padel di fascia alta (tubo da 3)</a></h4>
+    <p class="pc__prezzo">8,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
+  </div>
+</article></li><li><article class="pc" data-prod="PAD-PAL-03" data-linea="adulto" data-prezzo="79.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-PAD-PAL-03" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#D9DD4E" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#palline"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">PAD-PAL-03</p>
+    <h4 class="pc__nome"><a href="#prodotto-PAD-PAL-03" data-apri>Palline da padel per allenamento (sacco da 60)</a></h4>
+    <p class="pc__prezzo">79,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
+  </div>
+</article></li><li><article class="pc" data-prod="PAD-PAL-04" data-linea="adulto" data-prezzo="149.9" data-disp="su-ordinazione">
+  <a class="pc__media" href="#prodotto-PAD-PAL-04" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#D9DD4E" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#palline"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">PAD-PAL-04</p>
+    <h4 class="pc__nome"><a href="#prodotto-PAD-PAL-04" data-apri>Palline da padel (scatola da 24 tubi)</a></h4>
+    <p class="pc__prezzo">149,90 €</p>
+    <p class="disp disp--su-ordinazione">Su ordinazione</p>
+    <div class="pc__az"><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
+  </div>
+</article></li></ul>
+  </div>
+</section>
+<section class="catb" id="borse-e-paletteros" data-cat aria-labelledby="cat-borse-e-paletteros">
+  <article class="cat">
+    <a class="cat__media cat__media--ico" href="../../sport/padel/borse-e-paletteros/index.html" tabindex="-1" aria-hidden="true"><svg class="cat__campo" viewBox="0 0 200 300" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke" aria-hidden="true" focusable="false"><rect x="35" y="20" width="130" height="260"/><path d="M28 150h144" stroke-width="2.5"/><path d="M35 60h130M35 240h130M100 60v180"/><path d="M29 14h142M29 286h142M29 14v40M171 14v40M29 286v-40M171 286v-40" stroke-width="2.5"/></svg><svg class="ico cat__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="9" width="18" height="11" rx="2"/><path d="M8.5 9V6.5h7V9M3 13.5h18"/></svg></a>
+    <div class="cat__corpo">
+      <p class="cat__num">05</p>
+      <h3 class="cat__tit" id="cat-borse-e-paletteros"><a href="../../sport/padel/borse-e-paletteros/index.html">Borse e paletteros</a></h3>
+      <p class="cat__desc">Paletteros con scomparto per due racchette, zaini e borse termiche per le giornate calde.</p>
+      <ul class="tipi" aria-label="Tipologie"><li>Paletteros</li><li>Zaini porta racchetta</li><li>Borse termiche</li></ul>
+      <p class="cat__conta">4 prodotti · <span class="cat__bimbi">2 anche per bambini</span></p>
+      <div class="cat__az">
+        <a class="btn btn--acc btn--sm" href="../../sport/padel/borse-e-paletteros/index.html">Vedi tutti (4) <svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+        <a class="link cat__wa" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20borse%20e%20paletteros%20(padel).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener">Chiedi disponibilità</a>
+      </div>
+    </div>
+  </article>
+  <div class="anteprima">
+    <ul class="car-prod" aria-label="Anteprima Borse e paletteros"><li><article class="pc" data-prod="PAD-BOR-01" data-linea="adulto" data-prezzo="59.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-PAD-BOR-01" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#0E0F12" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#borsa-racchette"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">PAD-BOR-01</p>
+    <h4 class="pc__nome"><a href="#prodotto-PAD-BOR-01" data-apri>Paletero con scomparto termico</a></h4>
+    <p class="pc__prezzo">59,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><p class="pc__unica">Taglia unica</p><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
+  </div>
+</article></li><li><article class="pc" data-prod="PAD-BOR-02" data-linea="entrambe" data-prezzo="39.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-PAD-BOR-02" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#8C6CF7" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#zaino"/></svg><span class="bimbo bimbo--anche">Anche bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">PAD-BOR-02</p>
+    <h4 class="pc__nome"><a href="#prodotto-PAD-BOR-02" data-apri>Zaino porta racchetta</a></h4>
+    <p class="pc__prezzo">39,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><p class="pc__unica">Taglia unica</p><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
+  </div>
+</article></li><li><article class="pc" data-prod="PAD-BOR-03" data-linea="adulto" data-prezzo="49.9" data-disp="su-ordinazione">
+  <a class="pc__media" href="#prodotto-PAD-BOR-03" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#F4F2ED" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#borsa"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">PAD-BOR-03</p>
+    <h4 class="pc__nome"><a href="#prodotto-PAD-BOR-03" data-apri>Borsa termica da padel</a></h4>
+    <p class="pc__prezzo">49,90 €</p>
+    <p class="disp disp--su-ordinazione">Su ordinazione</p>
+    <div class="pc__az"><p class="pc__unica">Taglia unica</p><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
+  </div>
+</article></li><li><article class="pc" data-prod="PAD-BOR-04" data-linea="entrambe" data-prezzo="14.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-PAD-BOR-04" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#1E46F0" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#borsa-racchette"/></svg><span class="bimbo bimbo--anche">Anche bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">PAD-BOR-04</p>
+    <h4 class="pc__nome"><a href="#prodotto-PAD-BOR-04" data-apri>Custodia singola per racchetta</a></h4>
+    <p class="pc__prezzo">14,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><p class="pc__unica">Taglia unica</p><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
+  </div>
+</article></li></ul>
+  </div>
+</section>
+<section class="catb cat--extra" id="accessori" data-cat aria-labelledby="cat-accessori">
+  <article class="cat">
+    <a class="cat__media cat__media--ico" href="../../sport/padel/accessori/index.html" tabindex="-1" aria-hidden="true"><svg class="cat__campo" viewBox="0 0 200 300" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke" aria-hidden="true" focusable="false"><rect x="35" y="20" width="130" height="260"/><path d="M28 150h144" stroke-width="2.5"/><path d="M35 60h130M35 240h130M100 60v180"/><path d="M29 14h142M29 286h142M29 14v40M171 14v40M29 286v-40M171 286v-40" stroke-width="2.5"/></svg><svg class="ico cat__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 3h8v18H8z"/><path d="m8 6 8 3M8 11l8 3M8 16l8 3"/></svg></a>
+    <div class="cat__corpo">
+      <p class="cat__num">06</p>
+      <h3 class="cat__tit" id="cat-accessori"><a href="../../sport/padel/accessori/index.html">Accessori</a></h3>
+      <p class="cat__desc">Overgrip, protezioni per il telaio, polsini e lacci da polso.</p>
+      <ul class="tipi" aria-label="Tipologie"><li>Overgrip</li><li>Protezioni telaio</li><li>Polsini</li><li>Lacci da polso</li><li class="tipi__piu" aria-hidden="true">+1</li></ul>
+      <p class="cat__conta">4 prodotti · <span class="cat__bimbi">4 anche per bambini</span></p>
+      <div class="cat__az">
+        <a class="btn btn--acc btn--sm" href="../../sport/padel/accessori/index.html">Vedi tutti (4) <svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+        <a class="link cat__wa" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20accessori%20(padel).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener">Chiedi disponibilità</a>
+      </div>
+    </div>
+  </article>
+  <div class="anteprima">
+    <ul class="car-prod" aria-label="Anteprima Accessori"><li><article class="pc" data-prod="PAD-ACC-01" data-linea="entrambe" data-prezzo="8.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-PAD-ACC-01" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#F4F2ED" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#grip"/></svg><span class="bimbo bimbo--anche">Anche bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">PAD-ACC-01</p>
+    <h4 class="pc__nome"><a href="#prodotto-PAD-ACC-01" data-apri>Overgrip (confezione da 3)</a></h4>
+    <p class="pc__prezzo">8,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
+  </div>
+</article></li><li><article class="pc" data-prod="PAD-ACC-02" data-linea="entrambe" data-prezzo="7.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-PAD-ACC-02" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#0E0F12" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#grip"/></svg><span class="bimbo bimbo--anche">Anche bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">PAD-ACC-02</p>
+    <h4 class="pc__nome"><a href="#prodotto-PAD-ACC-02" data-apri>Nastro protezione telaio</a></h4>
+    <p class="pc__prezzo">7,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
+  </div>
+</article></li><li><article class="pc" data-prod="PAD-ACC-03" data-linea="entrambe" data-prezzo="6.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-PAD-ACC-03" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#0E0F12" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#fascia"/></svg><span class="bimbo bimbo--anche">Anche bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">PAD-ACC-03</p>
+    <h4 class="pc__nome"><a href="#prodotto-PAD-ACC-03" data-apri>Polsini in spugna (coppia)</a></h4>
+    <p class="pc__prezzo">6,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><p class="pc__unica">Taglia unica</p><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
+  </div>
+</article></li><li><article class="pc is-esaurito" data-prod="PAD-ACC-04" data-linea="entrambe" data-prezzo="3.9" data-disp="esaurito">
+  <a class="pc__media" href="#prodotto-PAD-ACC-04" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#D62839" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#corda"/></svg><span class="bimbo bimbo--anche">Anche bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">PAD-ACC-04</p>
+    <h4 class="pc__nome"><a href="#prodotto-PAD-ACC-04" data-apri>Laccio da polso di ricambio</a></h4>
+    <p class="pc__prezzo">3,90 €</p>
+    <p class="disp disp--esaurito">Esaurito</p>
+    <div class="pc__az"><a class="btn btn--sec btn--sm pc__btn pc__btn--wa" href="https://wa.me/390000000000?text=Ciao%20Slancio%2C%20il%20prodotto%20PAD-ACC-04%20(Laccio%20da%20polso%20di%20ricambio)%20risulta%20esaurito%3A%20mi%20avvisate%20quando%20arriva%3F" target="_blank" rel="noopener"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5z"/><path d="M8.5 10h7M8.5 13.5h4.5"/></svg>Chiedi quando arriva</a></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
+  </div>
+</article></li></ul>
+  </div>
+</section>
     </div>
     <div class="vedi-tutti vedi-tutti--cat"><button class="btn btn--sec" type="button" data-vedi-cat aria-expanded="false">Vedi tutte le 6 categorie</button></div>
   </div>
@@ -376,7 +668,7 @@
         <h2 class="pie__tit">Seguici</h2>
         <ul class="pie__lista"><li><a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a></li><li><a href="https://www.facebook.com/" target="_blank" rel="noopener">Facebook</a></li></ul>
         <h2 class="pie__tit">Info</h2>
-        <ul class="pie__lista"><li><a href="../../privacy.html">Privacy</a></li></ul>
+        <ul class="pie__lista"><li><a href="#guida-taglie" data-guida>Guida taglie</a></li><li><a href="../../privacy.html">Privacy</a></li></ul>
       </div>
     </div>
     <div class="pie__legale">

@@ -46,7 +46,8 @@
       <a class="hdr__link" href="../../index.html#negozio">Il negozio</a>
     </nav>
     <div class="hdr__az">
-      <button class="hdr__ico" type="button" data-cerca-apri aria-label="Cerca uno sport o una categoria" aria-haspopup="dialog"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg></button>
+      <button class="hdr__ico" type="button" data-cerca-apri aria-label="Cerca uno sport, una categoria o un prodotto" aria-haspopup="dialog"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg></button>
+      <button class="hdr__ico hdr__borsa" type="button" data-borsa-apri aria-haspopup="dialog" aria-label="Apri la borsa (Prenota e ritira)"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg><span class="hdr__conta" data-borsa-conta hidden>0</span></button>
       <a class="btn btn--pri btn--sm hdr__wa" href="https://wa.me/390000000000?text=Ciao%20Slancio%2C%20vorrei%20un'informazione." target="_blank" rel="noopener"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5z"/><path d="M8.5 10h7M8.5 13.5h4.5"/></svg>Chiedi su WhatsApp</a>
       <button class="hdr__ico hdr__burger" type="button" aria-expanded="false" aria-controls="menu-m" aria-label="Apri il menu" data-menu-btn><span></span><span></span></button>
     </div>
@@ -72,8 +73,8 @@
   <div class="cerca__box wrap">
     <div class="cerca__riga">
       <svg class="ico cerca__lente" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
-      <label class="sr-only" for="cerca-campo">Cerca uno sport o una categoria</label>
-      <input id="cerca-campo" class="cerca__campo" type="search" placeholder="Cerca: scarpe da calcio, racchette, occhialini…" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="cerca-risultati" aria-autocomplete="list">
+      <label class="sr-only" for="cerca-campo">Cerca uno sport, una categoria o un prodotto</label>
+      <input id="cerca-campo" class="cerca__campo" type="search" placeholder="Cerca: scarpe da calcio, guantoni bambino, CAL-SCA-01…" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="cerca-risultati" aria-autocomplete="list">
       <button class="hdr__ico cerca__chiudi" type="button" data-cerca-chiudi aria-label="Chiudi la ricerca"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
     </div>
     <ul class="cerca__ris" id="cerca-risultati" role="listbox" aria-label="Risultati"></ul>
@@ -115,64 +116,307 @@
         <p class="occhiello">09 · Nuoto · 5 categorie</p>
         <h2 class="tit-sez" id="tit-cat" data-tit><span class="m"><span>Cosa trovi</span></span> <span class="m"><span>in negozio</span></span></h2>
       </div>
-      <p class="sez-testa__testo">Non vendiamo online: scegli la categoria, chiedi su WhatsApp cosa c'è e passa a provarlo con noi.</p>
+      <div class="sez-testa__testo">
+        <p>Non vendiamo online: metti nella borsa quello che ti serve, ti confermiamo la disponibilità e lo ritiri in negozio.</p>
+        <p class="etichetta-esempio">Prodotti, prezzi e disponibilità di esempio</p>
+      </div>
     </header>
     <div class="cat-griglia" data-cat-griglia>
-<article class="cat" id="costumi" data-cat>
-  <div class="cat__media cat__media--ico" aria-hidden="true"><svg class="cat__campo" viewBox="0 0 200 300" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke" aria-hidden="true" focusable="false"><rect x="20" y="20" width="160" height="260"/><path d="M40 20v260M60 20v260M80 20v260M100 20v260M120 20v260M140 20v260M160 20v260" stroke-dasharray="2 4"/><path d="M50 40v220M70 40v220M90 40v220M110 40v220M130 40v220M150 40v220" opacity=".35"/><path d="M44 260h12M64 260h12M84 260h12M104 260h12M124 260h12M144 260h12"/><path d="M20 55h160M20 245h160" stroke-dasharray="6 6"/></svg><svg class="ico cat__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 3h2l3 5 3-5h2v6l-1 4 2 8h-4l-2-4-2 4H6l2-8-1-4z"/></svg></div>
-  <div class="cat__corpo">
-    <p class="cat__num">01</p>
-    <h3 class="cat__tit">Costumi</h3>
-    <p class="cat__desc">Costumi da allenamento in tessuti resistenti al cloro, costumi da gara e modelli per bambini.</p>
-    <ul class="tipi" aria-label="Tipologie"><li>Da allenamento</li><li>Resistenti al cloro</li><li>Da gara</li><li>Bambini</li><li class="tipi__piu" aria-hidden="true">+1</li></ul>
-    <a class="btn btn--acc btn--sm cat__btn" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20costumi%20(nuoto).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5z"/><path d="M8.5 10h7M8.5 13.5h4.5"/></svg>Chiedi disponibilità</a>
+<section class="catb" id="costumi" data-cat aria-labelledby="cat-costumi">
+  <article class="cat">
+    <a class="cat__media cat__media--ico" href="../../sport/nuoto/costumi/index.html" tabindex="-1" aria-hidden="true"><svg class="cat__campo" viewBox="0 0 200 300" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke" aria-hidden="true" focusable="false"><rect x="20" y="20" width="160" height="260"/><path d="M40 20v260M60 20v260M80 20v260M100 20v260M120 20v260M140 20v260M160 20v260" stroke-dasharray="2 4"/><path d="M50 40v220M70 40v220M90 40v220M110 40v220M130 40v220M150 40v220" opacity=".35"/><path d="M44 260h12M64 260h12M84 260h12M104 260h12M124 260h12M144 260h12"/><path d="M20 55h160M20 245h160" stroke-dasharray="6 6"/></svg><svg class="ico cat__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 3h2l3 5 3-5h2v6l-1 4 2 8h-4l-2-4-2 4H6l2-8-1-4z"/></svg></a>
+    <div class="cat__corpo">
+      <p class="cat__num">01</p>
+      <h3 class="cat__tit" id="cat-costumi"><a href="../../sport/nuoto/costumi/index.html">Costumi</a></h3>
+      <p class="cat__desc">Costumi da allenamento in tessuti resistenti al cloro, costumi da gara e modelli per bambini.</p>
+      <ul class="tipi" aria-label="Tipologie"><li>Da allenamento</li><li>Resistenti al cloro</li><li>Da gara</li><li>Bambini</li><li class="tipi__piu" aria-hidden="true">+1</li></ul>
+      <p class="cat__conta">5 prodotti · <span class="cat__bimbi">2 anche per bambini</span></p>
+      <div class="cat__az">
+        <a class="btn btn--acc btn--sm" href="../../sport/nuoto/costumi/index.html">Vedi tutti (5) <svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+        <a class="link cat__wa" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20costumi%20(nuoto).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener">Chiedi disponibilità</a>
+      </div>
+    </div>
+  </article>
+  <div class="anteprima">
+    <ul class="car-prod" aria-label="Anteprima Costumi"><li><article class="pc" data-prod="NUO-COS-01" data-linea="adulto" data-prezzo="34.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-NUO-COS-01" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#1E46F0" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#costume"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">NUO-COS-01</p>
+    <h4 class="pc__nome"><a href="#prodotto-NUO-COS-01" data-apri>Costume intero da allenamento</a></h4>
+    <p class="pc__prezzo">34,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-NUO-COS-01">Taglia – Costume intero da allenamento</label><select class="pc__taglia" id="t-NUO-COS-01" data-taglia><option value="">Taglia</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la taglia</p>
   </div>
-  <ul class="prodotti"><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Costume intero da allenamento</p><p class="prod__prezzo">34,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Costume a boxer da allenamento</p><p class="prod__prezzo">24,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Costume intero bambina</p><p class="prod__prezzo">19,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Boxer da nuoto bambino</p><p class="prod__prezzo">16,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Costume da gara</p><p class="prod__prezzo">89,90 €</p><p class="prod__disp prod__disp--su-ordinazione">Su ordinazione</p></li></ul>
-</article>
-<article class="cat" id="occhialini-e-cuffie" data-cat>
-  <div class="cat__media" data-foto><img src="../../assets/img/nuoto-occhialini-e-cuffie-960.webp" srcset="../../assets/img/nuoto-occhialini-e-cuffie-480.webp 480w, ../../assets/img/nuoto-occhialini-e-cuffie-960.webp 960w, ../../assets/img/nuoto-occhialini-e-cuffie-1440.webp 1440w" sizes="(min-width: 1200px) 400px, (min-width: 768px) 45vw, 40vw" width="1440" height="1080" alt="Nuotatore con cuffia e occhialini a bordo vasca" loading="lazy" decoding="async"></div>
-  <div class="cat__corpo">
-    <p class="cat__num">02</p>
-    <h3 class="cat__tit">Occhialini e cuffie</h3>
-    <p class="cat__desc">Occhialini con lenti chiare, fumé o a specchio, cuffie in silicone e in tessuto.</p>
-    <ul class="tipi" aria-label="Tipologie"><li>Lenti chiare</li><li>Lenti fumé</li><li>Lenti a specchio</li><li>Cuffie in silicone</li><li>Cuffie in tessuto</li><li class="tipi__piu" aria-hidden="true">+2</li></ul>
-    <a class="btn btn--acc btn--sm cat__btn" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20occhialini%20e%20cuffie%20(nuoto).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5z"/><path d="M8.5 10h7M8.5 13.5h4.5"/></svg>Chiedi disponibilità</a>
+</article></li><li><article class="pc" data-prod="NUO-COS-02" data-linea="adulto" data-prezzo="24.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-NUO-COS-02" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#0E0F12" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#pantaloncino"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">NUO-COS-02</p>
+    <h4 class="pc__nome"><a href="#prodotto-NUO-COS-02" data-apri>Costume a boxer da allenamento</a></h4>
+    <p class="pc__prezzo">24,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-NUO-COS-02">Taglia – Costume a boxer da allenamento</label><select class="pc__taglia" id="t-NUO-COS-02" data-taglia><option value="">Taglia</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la taglia</p>
   </div>
-  <ul class="prodotti"><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Occhialini con lenti chiare</p><p class="prod__prezzo">14,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Occhialini con lenti a specchio</p><p class="prod__prezzo">24,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Occhialini bambino</p><p class="prod__prezzo">9,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Cuffia in silicone</p><p class="prod__prezzo">9,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Cuffia in tessuto bambino</p><p class="prod__prezzo">6,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li></ul>
-</article>
-<article class="cat" id="accappatoi-e-teli" data-cat>
-  <div class="cat__media cat__media--ico" aria-hidden="true"><svg class="cat__campo" viewBox="0 0 200 300" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke" aria-hidden="true" focusable="false"><rect x="20" y="20" width="160" height="260"/><path d="M40 20v260M60 20v260M80 20v260M100 20v260M120 20v260M140 20v260M160 20v260" stroke-dasharray="2 4"/><path d="M50 40v220M70 40v220M90 40v220M110 40v220M130 40v220M150 40v220" opacity=".35"/><path d="M44 260h12M64 260h12M84 260h12M104 260h12M124 260h12M144 260h12"/><path d="M20 55h160M20 245h160" stroke-dasharray="6 6"/></svg><svg class="ico cat__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 3h12v18H6z"/><path d="M6 7h12M9 21v-4h6v4"/></svg></div>
-  <div class="cat__corpo">
-    <p class="cat__num">03</p>
-    <h3 class="cat__tit">Accappatoi e teli</h3>
-    <p class="cat__desc">Accappatoi in microfibra leggeri e veloci da asciugare, in spugna, teli e ponchi per bambini.</p>
-    <ul class="tipi" aria-label="Tipologie"><li>Microfibra</li><li>Spugna</li><li>Teli</li><li>Ponchi bambino</li><li class="tipi__piu" aria-hidden="true">+1</li></ul>
-    <a class="btn btn--acc btn--sm cat__btn" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20accappatoi%20e%20teli%20(nuoto).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5z"/><path d="M8.5 10h7M8.5 13.5h4.5"/></svg>Chiedi disponibilità</a>
+</article></li><li><article class="pc" data-prod="NUO-COS-03" data-linea="bambino" data-prezzo="19.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-NUO-COS-03" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#F45BA4" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#costume"/></svg><span class="bimbo">Bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">NUO-COS-03</p>
+    <h4 class="pc__nome"><a href="#prodotto-NUO-COS-03" data-apri>Costume intero bambina</a></h4>
+    <p class="pc__prezzo">19,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-NUO-COS-03">Taglia – Costume intero bambina</label><select class="pc__taglia" id="t-NUO-COS-03" data-taglia><option value="">Taglia</option><option>4 anni (104 cm)</option><option>6 anni (116 cm)</option><option>8 anni (128 cm)</option><option>10 anni (140 cm)</option><option>12 anni (152 cm)</option><option>14 anni (164 cm)</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la taglia</p>
   </div>
-  <ul class="prodotti"><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Accappatoio in microfibra</p><p class="prod__prezzo">34,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Accappatoio in spugna</p><p class="prod__prezzo">39,90 €</p><p class="prod__disp prod__disp--su-ordinazione">Su ordinazione</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Poncho con cappuccio bambino</p><p class="prod__prezzo">24,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Telo in microfibra 80 × 160 cm</p><p class="prod__prezzo">19,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li></ul>
-</article>
-<article class="cat" id="accessori-e-attrezzi" data-cat>
-  <div class="cat__media cat__media--ico" aria-hidden="true"><svg class="cat__campo" viewBox="0 0 200 300" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke" aria-hidden="true" focusable="false"><rect x="20" y="20" width="160" height="260"/><path d="M40 20v260M60 20v260M80 20v260M100 20v260M120 20v260M140 20v260M160 20v260" stroke-dasharray="2 4"/><path d="M50 40v220M70 40v220M90 40v220M110 40v220M130 40v220M150 40v220" opacity=".35"/><path d="M44 260h12M64 260h12M84 260h12M104 260h12M124 260h12M144 260h12"/><path d="M20 55h160M20 245h160" stroke-dasharray="6 6"/></svg><svg class="ico cat__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 4h12a2 2 0 0 1 2 2v12a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V6a2 2 0 0 1 2-2z"/><path d="M9 8h6"/></svg></div>
-  <div class="cat__corpo">
-    <p class="cat__num">04</p>
-    <h3 class="cat__tit">Accessori e attrezzi</h3>
-    <p class="cat__desc">Tavolette, pull buoy, pinne corte, palette e tappanaso per allenamenti più vari.</p>
-    <ul class="tipi" aria-label="Tipologie"><li>Tavolette</li><li>Pull buoy</li><li>Pinne corte</li><li>Palette</li><li>Tappanaso</li><li class="tipi__piu" aria-hidden="true">+2</li></ul>
-    <a class="btn btn--acc btn--sm cat__btn" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20accessori%20e%20attrezzi%20(nuoto).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5z"/><path d="M8.5 10h7M8.5 13.5h4.5"/></svg>Chiedi disponibilità</a>
+</article></li><li><article class="pc" data-prod="NUO-COS-04" data-linea="bambino" data-prezzo="16.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-NUO-COS-04" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#FFC21A" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#pantaloncino"/></svg><span class="bimbo">Bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">NUO-COS-04</p>
+    <h4 class="pc__nome"><a href="#prodotto-NUO-COS-04" data-apri>Boxer da nuoto bambino</a></h4>
+    <p class="pc__prezzo">16,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-NUO-COS-04">Taglia – Boxer da nuoto bambino</label><select class="pc__taglia" id="t-NUO-COS-04" data-taglia><option value="">Taglia</option><option>4 anni (104 cm)</option><option>6 anni (116 cm)</option><option>8 anni (128 cm)</option><option>10 anni (140 cm)</option><option>12 anni (152 cm)</option><option>14 anni (164 cm)</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la taglia</p>
   </div>
-  <ul class="prodotti"><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Tavoletta</p><p class="prod__prezzo">9,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Pull buoy</p><p class="prod__prezzo">9,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Pinne corte da allenamento</p><p class="prod__prezzo">29,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Palette per le mani</p><p class="prod__prezzo">14,90 €</p><p class="prod__disp prod__disp--su-ordinazione">Su ordinazione</p></li></ul>
-</article>
-<article class="cat" id="zaini-e-borse" data-cat>
-  <div class="cat__media cat__media--ico" aria-hidden="true"><svg class="cat__campo" viewBox="0 0 200 300" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke" aria-hidden="true" focusable="false"><rect x="20" y="20" width="160" height="260"/><path d="M40 20v260M60 20v260M80 20v260M100 20v260M120 20v260M140 20v260M160 20v260" stroke-dasharray="2 4"/><path d="M50 40v220M70 40v220M90 40v220M110 40v220M130 40v220M150 40v220" opacity=".35"/><path d="M44 260h12M64 260h12M84 260h12M104 260h12M124 260h12M144 260h12"/><path d="M20 55h160M20 245h160" stroke-dasharray="6 6"/></svg><svg class="ico cat__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="9" width="18" height="11" rx="2"/><path d="M8.5 9V6.5h7V9M3 13.5h18"/></svg></div>
-  <div class="cat__corpo">
-    <p class="cat__num">05</p>
-    <h3 class="cat__tit">Zaini e borse</h3>
-    <p class="cat__desc">Zaini con tasca separata per il bagnato, sacche a rete per gli attrezzi.</p>
-    <ul class="tipi" aria-label="Tipologie"><li>Zaini con tasca bagnato</li><li>Sacche a rete</li><li>Borse impermeabili</li></ul>
-    <a class="btn btn--acc btn--sm cat__btn" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20zaini%20e%20borse%20(nuoto).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5z"/><path d="M8.5 10h7M8.5 13.5h4.5"/></svg>Chiedi disponibilità</a>
+</article></li><li class="car-prod__altro"><a href="../../sport/nuoto/costumi/index.html"><span>Vedi tutti</span><b>5</b><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></li></ul>
   </div>
-  <ul class="prodotti"><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Zaino da piscina con tasca per il bagnato</p><p class="prod__prezzo">29,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Sacca in rete per attrezzi</p><p class="prod__prezzo">12,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Borsa impermeabile</p><p class="prod__prezzo">24,90 €</p><p class="prod__disp prod__disp--in-negozio">Disponibile in negozio</p></li><li class="prod"><p class="prod__marchio"></p><p class="prod__nome">Zainetto bambino</p><p class="prod__prezzo">19,90 €</p><p class="prod__disp prod__disp--esaurito">Esaurito</p></li></ul>
-</article>
+</section>
+<section class="catb" id="occhialini-e-cuffie" data-cat aria-labelledby="cat-occhialini-e-cuffie">
+  <article class="cat">
+    <a class="cat__media" href="../../sport/nuoto/occhialini-e-cuffie/index.html" tabindex="-1" aria-hidden="true" data-foto><img src="../../assets/img/nuoto-occhialini-e-cuffie-960.webp" srcset="../../assets/img/nuoto-occhialini-e-cuffie-480.webp 480w, ../../assets/img/nuoto-occhialini-e-cuffie-960.webp 960w, ../../assets/img/nuoto-occhialini-e-cuffie-1440.webp 1440w" sizes="(min-width: 1024px) 340px, 40vw" width="1440" height="1080" alt="Nuotatore con cuffia e occhialini a bordo vasca" loading="lazy" decoding="async"></a>
+    <div class="cat__corpo">
+      <p class="cat__num">02</p>
+      <h3 class="cat__tit" id="cat-occhialini-e-cuffie"><a href="../../sport/nuoto/occhialini-e-cuffie/index.html">Occhialini e cuffie</a></h3>
+      <p class="cat__desc">Occhialini con lenti chiare, fumé o a specchio, cuffie in silicone e in tessuto.</p>
+      <ul class="tipi" aria-label="Tipologie"><li>Lenti chiare</li><li>Lenti fumé</li><li>Lenti a specchio</li><li>Cuffie in silicone</li><li>Cuffie in tessuto</li><li class="tipi__piu" aria-hidden="true">+2</li></ul>
+      <p class="cat__conta">5 prodotti · <span class="cat__bimbi">4 anche per bambini</span></p>
+      <div class="cat__az">
+        <a class="btn btn--acc btn--sm" href="../../sport/nuoto/occhialini-e-cuffie/index.html">Vedi tutti (5) <svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+        <a class="link cat__wa" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20occhialini%20e%20cuffie%20(nuoto).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener">Chiedi disponibilità</a>
+      </div>
+    </div>
+  </article>
+  <div class="anteprima">
+    <ul class="car-prod" aria-label="Anteprima Occhialini e cuffie"><li><article class="pc" data-prod="NUO-OCC-01" data-linea="entrambe" data-prezzo="14.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-NUO-OCC-01" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#1F9BDB" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#occhialini"/></svg><span class="bimbo bimbo--anche">Anche bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">NUO-OCC-01</p>
+    <h4 class="pc__nome"><a href="#prodotto-NUO-OCC-01" data-apri>Occhialini con lenti chiare</a></h4>
+    <p class="pc__prezzo">14,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><p class="pc__unica">Taglia unica</p><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
+  </div>
+</article></li><li><article class="pc" data-prod="NUO-OCC-02" data-linea="adulto" data-prezzo="24.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-NUO-OCC-02" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#1E46F0" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#occhialini"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">NUO-OCC-02</p>
+    <h4 class="pc__nome"><a href="#prodotto-NUO-OCC-02" data-apri>Occhialini con lenti a specchio</a></h4>
+    <p class="pc__prezzo">24,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><p class="pc__unica">Taglia unica</p><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
+  </div>
+</article></li><li><article class="pc" data-prod="NUO-OCC-03" data-linea="bambino" data-prezzo="9.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-NUO-OCC-03" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#F45BA4" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#occhialini"/></svg><span class="bimbo">Bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">NUO-OCC-03</p>
+    <h4 class="pc__nome"><a href="#prodotto-NUO-OCC-03" data-apri>Occhialini bambino</a></h4>
+    <p class="pc__prezzo">9,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><p class="pc__unica">Taglia unica</p><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
+  </div>
+</article></li><li><article class="pc" data-prod="NUO-OCC-04" data-linea="entrambe" data-prezzo="9.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-NUO-OCC-04" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#0E0F12" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#cuffia"/></svg><span class="bimbo bimbo--anche">Anche bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">NUO-OCC-04</p>
+    <h4 class="pc__nome"><a href="#prodotto-NUO-OCC-04" data-apri>Cuffia in silicone</a></h4>
+    <p class="pc__prezzo">9,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><p class="pc__unica">Taglia unica</p><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
+  </div>
+</article></li><li class="car-prod__altro"><a href="../../sport/nuoto/occhialini-e-cuffie/index.html"><span>Vedi tutti</span><b>5</b><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></li></ul>
+  </div>
+</section>
+<section class="catb" id="accappatoi-e-teli" data-cat aria-labelledby="cat-accappatoi-e-teli">
+  <article class="cat">
+    <a class="cat__media cat__media--ico" href="../../sport/nuoto/accappatoi-e-teli/index.html" tabindex="-1" aria-hidden="true"><svg class="cat__campo" viewBox="0 0 200 300" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke" aria-hidden="true" focusable="false"><rect x="20" y="20" width="160" height="260"/><path d="M40 20v260M60 20v260M80 20v260M100 20v260M120 20v260M140 20v260M160 20v260" stroke-dasharray="2 4"/><path d="M50 40v220M70 40v220M90 40v220M110 40v220M130 40v220M150 40v220" opacity=".35"/><path d="M44 260h12M64 260h12M84 260h12M104 260h12M124 260h12M144 260h12"/><path d="M20 55h160M20 245h160" stroke-dasharray="6 6"/></svg><svg class="ico cat__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 3h12v18H6z"/><path d="M6 7h12M9 21v-4h6v4"/></svg></a>
+    <div class="cat__corpo">
+      <p class="cat__num">03</p>
+      <h3 class="cat__tit" id="cat-accappatoi-e-teli"><a href="../../sport/nuoto/accappatoi-e-teli/index.html">Accappatoi e teli</a></h3>
+      <p class="cat__desc">Accappatoi in microfibra leggeri e veloci da asciugare, in spugna, teli e ponchi per bambini.</p>
+      <ul class="tipi" aria-label="Tipologie"><li>Microfibra</li><li>Spugna</li><li>Teli</li><li>Ponchi bambino</li><li class="tipi__piu" aria-hidden="true">+1</li></ul>
+      <p class="cat__conta">4 prodotti · <span class="cat__bimbi">2 anche per bambini</span></p>
+      <div class="cat__az">
+        <a class="btn btn--acc btn--sm" href="../../sport/nuoto/accappatoi-e-teli/index.html">Vedi tutti (4) <svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+        <a class="link cat__wa" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20accappatoi%20e%20teli%20(nuoto).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener">Chiedi disponibilità</a>
+      </div>
+    </div>
+  </article>
+  <div class="anteprima">
+    <ul class="car-prod" aria-label="Anteprima Accappatoi e teli"><li><article class="pc" data-prod="NUO-ACP-01" data-linea="adulto" data-prezzo="34.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-NUO-ACP-01" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#1E46F0" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#accappatoio"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">NUO-ACP-01</p>
+    <h4 class="pc__nome"><a href="#prodotto-NUO-ACP-01" data-apri>Accappatoio in microfibra</a></h4>
+    <p class="pc__prezzo">34,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-NUO-ACP-01">Taglia – Accappatoio in microfibra</label><select class="pc__taglia" id="t-NUO-ACP-01" data-taglia><option value="">Taglia</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la taglia</p>
+  </div>
+</article></li><li><article class="pc" data-prod="NUO-ACP-02" data-linea="adulto" data-prezzo="39.9" data-disp="su-ordinazione">
+  <a class="pc__media" href="#prodotto-NUO-ACP-02" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#F4F2ED" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#accappatoio"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">NUO-ACP-02</p>
+    <h4 class="pc__nome"><a href="#prodotto-NUO-ACP-02" data-apri>Accappatoio in spugna</a></h4>
+    <p class="pc__prezzo">39,90 €</p>
+    <p class="disp disp--su-ordinazione">Su ordinazione</p>
+    <div class="pc__az"><label class="sr-only" for="t-NUO-ACP-02">Taglia – Accappatoio in spugna</label><select class="pc__taglia" id="t-NUO-ACP-02" data-taglia><option value="">Taglia</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la taglia</p>
+  </div>
+</article></li><li><article class="pc" data-prod="NUO-ACP-03" data-linea="bambino" data-prezzo="24.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-NUO-ACP-03" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#FFC21A" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#accappatoio"/></svg><span class="bimbo">Bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">NUO-ACP-03</p>
+    <h4 class="pc__nome"><a href="#prodotto-NUO-ACP-03" data-apri>Poncho con cappuccio bambino</a></h4>
+    <p class="pc__prezzo">24,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-NUO-ACP-03">Taglia – Poncho con cappuccio bambino</label><select class="pc__taglia" id="t-NUO-ACP-03" data-taglia><option value="">Taglia</option><option>4 anni (104 cm)</option><option>6 anni (116 cm)</option><option>8 anni (128 cm)</option><option>10 anni (140 cm)</option><option>12 anni (152 cm)</option><option>14 anni (164 cm)</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la taglia</p>
+  </div>
+</article></li><li><article class="pc" data-prod="NUO-ACP-04" data-linea="entrambe" data-prezzo="19.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-NUO-ACP-04" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#1F9BDB" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#telo"/></svg><span class="bimbo bimbo--anche">Anche bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">NUO-ACP-04</p>
+    <h4 class="pc__nome"><a href="#prodotto-NUO-ACP-04" data-apri>Telo in microfibra 80 × 160 cm</a></h4>
+    <p class="pc__prezzo">19,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><p class="pc__unica">Taglia unica</p><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
+  </div>
+</article></li></ul>
+  </div>
+</section>
+<section class="catb" id="accessori-e-attrezzi" data-cat aria-labelledby="cat-accessori-e-attrezzi">
+  <article class="cat">
+    <a class="cat__media cat__media--ico" href="../../sport/nuoto/accessori-e-attrezzi/index.html" tabindex="-1" aria-hidden="true"><svg class="cat__campo" viewBox="0 0 200 300" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke" aria-hidden="true" focusable="false"><rect x="20" y="20" width="160" height="260"/><path d="M40 20v260M60 20v260M80 20v260M100 20v260M120 20v260M140 20v260M160 20v260" stroke-dasharray="2 4"/><path d="M50 40v220M70 40v220M90 40v220M110 40v220M130 40v220M150 40v220" opacity=".35"/><path d="M44 260h12M64 260h12M84 260h12M104 260h12M124 260h12M144 260h12"/><path d="M20 55h160M20 245h160" stroke-dasharray="6 6"/></svg><svg class="ico cat__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 4h12a2 2 0 0 1 2 2v12a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V6a2 2 0 0 1 2-2z"/><path d="M9 8h6"/></svg></a>
+    <div class="cat__corpo">
+      <p class="cat__num">04</p>
+      <h3 class="cat__tit" id="cat-accessori-e-attrezzi"><a href="../../sport/nuoto/accessori-e-attrezzi/index.html">Accessori e attrezzi</a></h3>
+      <p class="cat__desc">Tavolette, pull buoy, pinne corte, palette e tappanaso per allenamenti più vari.</p>
+      <ul class="tipi" aria-label="Tipologie"><li>Tavolette</li><li>Pull buoy</li><li>Pinne corte</li><li>Palette</li><li>Tappanaso</li><li class="tipi__piu" aria-hidden="true">+2</li></ul>
+      <p class="cat__conta">4 prodotti · <span class="cat__bimbi">3 anche per bambini</span></p>
+      <div class="cat__az">
+        <a class="btn btn--acc btn--sm" href="../../sport/nuoto/accessori-e-attrezzi/index.html">Vedi tutti (4) <svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+        <a class="link cat__wa" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20accessori%20e%20attrezzi%20(nuoto).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener">Chiedi disponibilità</a>
+      </div>
+    </div>
+  </article>
+  <div class="anteprima">
+    <ul class="car-prod" aria-label="Anteprima Accessori e attrezzi"><li><article class="pc" data-prod="NUO-ATT-01" data-linea="entrambe" data-prezzo="9.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-NUO-ATT-01" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#1E46F0" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#tavoletta"/></svg><span class="bimbo bimbo--anche">Anche bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">NUO-ATT-01</p>
+    <h4 class="pc__nome"><a href="#prodotto-NUO-ATT-01" data-apri>Tavoletta</a></h4>
+    <p class="pc__prezzo">9,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><p class="pc__unica">Taglia unica</p><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
+  </div>
+</article></li><li><article class="pc" data-prod="NUO-ATT-02" data-linea="entrambe" data-prezzo="9.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-NUO-ATT-02" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#FFC21A" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#pullbuoy"/></svg><span class="bimbo bimbo--anche">Anche bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">NUO-ATT-02</p>
+    <h4 class="pc__nome"><a href="#prodotto-NUO-ATT-02" data-apri>Pull buoy</a></h4>
+    <p class="pc__prezzo">9,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><p class="pc__unica">Taglia unica</p><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
+  </div>
+</article></li><li><article class="pc" data-prod="NUO-ATT-03" data-linea="entrambe" data-prezzo="29.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-NUO-ATT-03" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#FFC21A" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#pinne"/></svg><span class="bimbo bimbo--anche">Anche bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">NUO-ATT-03</p>
+    <h4 class="pc__nome"><a href="#prodotto-NUO-ATT-03" data-apri>Pinne corte da allenamento</a></h4>
+    <p class="pc__prezzo">29,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><label class="sr-only" for="t-NUO-ATT-03">Misura – Pinne corte da allenamento</label><select class="pc__taglia" id="t-NUO-ATT-03" data-taglia><option value="">Misura</option><option>35–36</option><option>37–38</option><option>39–40</option><option>41–42</option><option>43–44</option><option>45–46</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la misura</p>
+  </div>
+</article></li><li><article class="pc" data-prod="NUO-ATT-04" data-linea="adulto" data-prezzo="14.9" data-disp="su-ordinazione">
+  <a class="pc__media" href="#prodotto-NUO-ATT-04" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#1F9BDB" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#palette"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">NUO-ATT-04</p>
+    <h4 class="pc__nome"><a href="#prodotto-NUO-ATT-04" data-apri>Palette per le mani</a></h4>
+    <p class="pc__prezzo">14,90 €</p>
+    <p class="disp disp--su-ordinazione">Su ordinazione</p>
+    <div class="pc__az"><label class="sr-only" for="t-NUO-ATT-04">Misura – Palette per le mani</label><select class="pc__taglia" id="t-NUO-ATT-04" data-taglia><option value="">Misura</option><option>S</option><option>M</option><option>L</option></select><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi aria-disabled="true"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite">Scegli la misura</p>
+  </div>
+</article></li></ul>
+  </div>
+</section>
+<section class="catb" id="zaini-e-borse" data-cat aria-labelledby="cat-zaini-e-borse">
+  <article class="cat">
+    <a class="cat__media cat__media--ico" href="../../sport/nuoto/zaini-e-borse/index.html" tabindex="-1" aria-hidden="true"><svg class="cat__campo" viewBox="0 0 200 300" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke" aria-hidden="true" focusable="false"><rect x="20" y="20" width="160" height="260"/><path d="M40 20v260M60 20v260M80 20v260M100 20v260M120 20v260M140 20v260M160 20v260" stroke-dasharray="2 4"/><path d="M50 40v220M70 40v220M90 40v220M110 40v220M130 40v220M150 40v220" opacity=".35"/><path d="M44 260h12M64 260h12M84 260h12M104 260h12M124 260h12M144 260h12"/><path d="M20 55h160M20 245h160" stroke-dasharray="6 6"/></svg><svg class="ico cat__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="9" width="18" height="11" rx="2"/><path d="M8.5 9V6.5h7V9M3 13.5h18"/></svg></a>
+    <div class="cat__corpo">
+      <p class="cat__num">05</p>
+      <h3 class="cat__tit" id="cat-zaini-e-borse"><a href="../../sport/nuoto/zaini-e-borse/index.html">Zaini e borse</a></h3>
+      <p class="cat__desc">Zaini con tasca separata per il bagnato, sacche a rete per gli attrezzi.</p>
+      <ul class="tipi" aria-label="Tipologie"><li>Zaini con tasca bagnato</li><li>Sacche a rete</li><li>Borse impermeabili</li></ul>
+      <p class="cat__conta">4 prodotti · <span class="cat__bimbi">3 anche per bambini</span></p>
+      <div class="cat__az">
+        <a class="btn btn--acc btn--sm" href="../../sport/nuoto/zaini-e-borse/index.html">Vedi tutti (4) <svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+        <a class="link cat__wa" href="https://wa.me/390000000000?text=Ciao%2C%20cerco%20zaini%20e%20borse%20(nuoto).%20Mi%20dite%20cosa%20avete%3F" target="_blank" rel="noopener">Chiedi disponibilità</a>
+      </div>
+    </div>
+  </article>
+  <div class="anteprima">
+    <ul class="car-prod" aria-label="Anteprima Zaini e borse"><li><article class="pc" data-prod="NUO-ZAI-01" data-linea="entrambe" data-prezzo="29.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-NUO-ZAI-01" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#1E46F0" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#zaino"/></svg><span class="bimbo bimbo--anche">Anche bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">NUO-ZAI-01</p>
+    <h4 class="pc__nome"><a href="#prodotto-NUO-ZAI-01" data-apri>Zaino da piscina con tasca per il bagnato</a></h4>
+    <p class="pc__prezzo">29,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><p class="pc__unica">Taglia unica</p><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
+  </div>
+</article></li><li><article class="pc" data-prod="NUO-ZAI-02" data-linea="entrambe" data-prezzo="12.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-NUO-ZAI-02" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#0E0F12" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#sacca"/></svg><span class="bimbo bimbo--anche">Anche bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">NUO-ZAI-02</p>
+    <h4 class="pc__nome"><a href="#prodotto-NUO-ZAI-02" data-apri>Sacca in rete per attrezzi</a></h4>
+    <p class="pc__prezzo">12,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><p class="pc__unica">Taglia unica</p><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
+  </div>
+</article></li><li><article class="pc" data-prod="NUO-ZAI-03" data-linea="adulto" data-prezzo="24.9" data-disp="in-negozio">
+  <a class="pc__media" href="#prodotto-NUO-ZAI-03" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#1F9BDB" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#borsa"/></svg></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">NUO-ZAI-03</p>
+    <h4 class="pc__nome"><a href="#prodotto-NUO-ZAI-03" data-apri>Borsa impermeabile</a></h4>
+    <p class="pc__prezzo">24,90 €</p>
+    <p class="disp disp--in-negozio">Disponibile in negozio</p>
+    <div class="pc__az"><p class="pc__unica">Taglia unica</p><button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg>Aggiungi</button></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
+  </div>
+</article></li><li><article class="pc is-esaurito" data-prod="NUO-ZAI-04" data-linea="bambino" data-prezzo="19.9" data-disp="esaurito">
+  <a class="pc__media" href="#prodotto-NUO-ZAI-04" data-apri tabindex="-1" aria-hidden="true"><svg class="pc__ill" viewBox="0 0 160 160" style="color:#F45BA4" aria-hidden="true" focusable="false"><use href="../../assets/img/prodotti.svg#zaino"/></svg><span class="bimbo">Bambino</span></a>
+  <div class="pc__corpo">
+    <p class="pc__cod">NUO-ZAI-04</p>
+    <h4 class="pc__nome"><a href="#prodotto-NUO-ZAI-04" data-apri>Zainetto bambino</a></h4>
+    <p class="pc__prezzo">19,90 €</p>
+    <p class="disp disp--esaurito">Esaurito</p>
+    <div class="pc__az"><a class="btn btn--sec btn--sm pc__btn pc__btn--wa" href="https://wa.me/390000000000?text=Ciao%20Slancio%2C%20il%20prodotto%20NUO-ZAI-04%20(Zainetto%20bambino)%20risulta%20esaurito%3A%20mi%20avvisate%20quando%20arriva%3F" target="_blank" rel="noopener"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5z"/><path d="M8.5 10h7M8.5 13.5h4.5"/></svg>Chiedi quando arriva</a></div>
+    <p class="pc__msg" data-msg aria-live="polite"></p>
+  </div>
+</article></li></ul>
+  </div>
+</section>
     </div>
     
   </div>
@@ -365,7 +609,7 @@
         <h2 class="pie__tit">Seguici</h2>
         <ul class="pie__lista"><li><a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a></li><li><a href="https://www.facebook.com/" target="_blank" rel="noopener">Facebook</a></li></ul>
         <h2 class="pie__tit">Info</h2>
-        <ul class="pie__lista"><li><a href="../../privacy.html">Privacy</a></li></ul>
+        <ul class="pie__lista"><li><a href="#guida-taglie" data-guida>Guida taglie</a></li><li><a href="../../privacy.html">Privacy</a></li></ul>
       </div>
     </div>
     <div class="pie__legale">

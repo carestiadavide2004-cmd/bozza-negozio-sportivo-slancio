@@ -12,6 +12,7 @@ const ROOT = dirname(fileURLToPath(import.meta.url));
 process.chdir(ROOT);
 const require = createRequire(import.meta.url);
 const C = require('./config.js');
+const { ILLUSTRAZIONI } = await import('./_strumenti/illustrazioni.mjs');   // rigenera assets/img/prodotti.svg
 const IMG = existsSync('assets/img/immagini.json') ? JSON.parse(readFileSync('assets/img/immagini.json', 'utf8')) : {};
 const A = C.attivita, K = C.contatti, L = C.legale, S = C.sito;
 
@@ -40,8 +41,72 @@ const sportUrl = (s, rel) => `${rel}sport/${s.slug}/index.html`;
 // link alla home: file esplicito (index.html) così funziona anche aprendo i file dal Mac; sulla home le ancore restano "#..."
 let SU_HOME = false;
 const vaiHome = (rel, hash = "") => SU_HOME ? (hash || "index.html") : `${rel}index.html${hash}`;
+const catUrl = (s, c, rel) => `${rel}sport/${s.slug}/${c.slug}/index.html`;
 const giorni = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
 const ordineGiorni = [1, 2, 3, 4, 5, 6, 0];
+
+/* ---------------- catalogo ---------------- */
+const CAT = C.catalogo, TAG = CAT.taglie;
+const euro = n => Number(n).toLocaleString('it-IT', { style: 'currency', currency: 'EUR' });
+const dispSlug = d => d.replace(/\s+/g, '-');
+const nN = (n, uno, piu) => `${n} ${n === 1 ? uno : piu}`;
+// misure di un prodotto, divise per linea: [{ linea, valori }]
+function gruppiTaglia(p) {
+  const t = TAG[p.taglia] || TAG.nessuna;
+  if (p.misure) return [{ linea: p.linea === 'entrambe' ? (t.linea || 'entrambe') : p.linea, valori: p.misure }];
+  const g = t.gruppi ? t.gruppi.map(x => typeof x === 'string' ? { linea: TAG[x].linea, valori: TAG[x].valori } : x) : [{ linea: t.linea || p.linea, valori: t.valori }];
+  return g.filter(x => x.valori.length);
+}
+const nTaglie = p => gruppiTaglia(p).reduce((a, x) => a + x.valori.length, 0);
+const ARTICOLO = { Numero: 'il numero', Taglia: 'la taglia', Misura: 'la misura', Peso: 'il peso', Lunghezza: 'la lunghezza', Impugnatura: "l'impugnatura", Diametro: 'il diametro', Mondopoint: 'la misura' };
+const nomeTaglia = p => (TAG[p.taglia] || {}).nome || 'Taglia';
+const msgArrivo = (p, s) => `Ciao ${A.nome}, il prodotto ${p.codice} (${p.nome}) risulta esaurito: mi avvisate quando arriva?`;
+const SPRITE = rel => `${rel}assets/img/prodotti.svg`;
+function illustrazione(p, rel, cls = 'pc__ill', lazy = true) {
+  if (p.foto && p.foto.length) return `<img class="${cls}" src="${rel}${p.foto[0]}" alt="${esc(p.nome)}" width="480" height="480"${lazy ? ' loading="lazy"' : ''} decoding="async">`;
+  return `<svg class="${cls}" viewBox="0 0 160 160" style="color:${p.colore}" aria-hidden="true" focusable="false"><use href="${SPRITE(rel)}#${p.illustrazione}"/></svg>`;
+}
+const badgeLinea = p => p.linea === 'bambino' ? '<span class="bimbo">Bambino</span>' : p.linea === 'entrambe' ? '<span class="bimbo bimbo--anche">Anche bambino</span>' : '';
+function sceltaTaglia(p, id) {
+  const g = gruppiTaglia(p), n = nTaglie(p);
+  if (!n) return '';
+  if (n === 1) return `<p class="pc__unica">${esc(g[0].valori[0])}</p>`;
+  const opt = v => `<option>${esc(v)}</option>`;
+  const corpo = g.length > 1 ? g.map(x => `<optgroup label="${x.linea === 'bambino' ? 'Bambino' : 'Adulto'}">${x.valori.map(opt).join('')}</optgroup>`).join('') : g[0].valori.map(opt).join('');
+  return `<label class="sr-only" for="${id}">${esc(nomeTaglia(p))} – ${esc(p.nome)}</label><select class="pc__taglia" id="${id}" data-taglia><option value="">${esc(nomeTaglia(p))}</option>${corpo}</select>`;
+}
+// card prodotto: nell'HTML generato (filtri e borsa aggiunti da main.js)
+function cardProdotto(p, rel, hTag = 'h3') {
+  const esaurito = p.disponibilita === 'esaurito', n = nTaglie(p);
+  const href = `#prodotto-${p.codice}`;
+  const az = esaurito
+    ? `<a class="btn btn--sec btn--sm pc__btn pc__btn--wa" href="${wa(msgArrivo(p))}" target="_blank" rel="noopener">${ico('chat', 'ico ico--s')}Chiedi quando arriva</a>`
+    : `${sceltaTaglia(p, 't-' + p.codice)}<button class="btn btn--pri btn--sm pc__btn" type="button" data-aggiungi${n > 1 ? ' aria-disabled="true"' : ''}>${ico('sacchetto', 'ico ico--s')}Aggiungi</button>`;
+  const msg = esaurito ? '' : n > 1 ? `Scegli ${ARTICOLO[nomeTaglia(p)] || 'la taglia'}` : '';
+  return `<article class="pc${esaurito ? ' is-esaurito' : ''}" data-prod="${p.codice}" data-linea="${p.linea}" data-prezzo="${p.prezzo}" data-disp="${dispSlug(p.disponibilita)}">
+  <a class="pc__media" href="${href}" data-apri tabindex="-1" aria-hidden="true">${illustrazione(p, rel)}${badgeLinea(p)}${p.modello3d ? '<span class="pc__3d">3D</span>' : ''}</a>
+  <div class="pc__corpo">
+    <p class="pc__cod">${p.codice}</p>
+    <${hTag} class="pc__nome"><a href="${href}" data-apri>${esc(p.nome)}</a></${hTag}>
+    <p class="pc__prezzo">${euro(p.prezzo)}</p>
+    <p class="disp disp--${dispSlug(p.disponibilita)}">${esc(CAT.disponibilita[p.disponibilita])}</p>
+    <div class="pc__az">${az}</div>
+    <p class="pc__msg" data-msg aria-live="polite">${msg}</p>
+  </div>
+</article>`;
+}
+// fasce di prezzo della categoria (circa un terzo dei prodotti per fascia)
+function fascePrezzo(prodotti) {
+  const pr = prodotti.map(p => p.prezzo).sort((a, b) => a - b);
+  if (pr.length < 3) return [];
+  const tondo = v => v < 20 ? Math.ceil(v / 5) * 5 : v < 100 ? Math.ceil(v / 10) * 10 : Math.ceil(v / 50) * 50;
+  const t1 = tondo(pr[Math.ceil(pr.length / 3) - 1]), t2 = tondo(pr[Math.ceil(pr.length * 2 / 3) - 1]);
+  const f = [{ a: 0, b: t1, t: `Fino a ${t1} €` }];
+  if (t2 > t1) f.push({ a: t1, b: t2, t: `${t1}–${t2} €` });
+  const ult = Math.max(t1, t2);
+  f.push({ a: ult, b: 99999, t: `Oltre ${ult} €` });
+  return f.filter(x => pr.some(v => v > x.a && v <= x.b));
+}
 const fasciaTxt = f => f.map(([a, b]) => `${a.replace(/^0/, '')}–${b.replace(/^0/, '')}`).join(' · ');
 
 /* ---------------- immagini ---------------- */
@@ -121,7 +186,10 @@ const ICO = {
   giu: '<path d="m6 9 6 6 6-6"/>',
   chiudi: '<path d="M6 6l12 12M18 6 6 18"/>',
   sx: '<path d="M15 5l-7 7 7 7"/>',
-  dx: '<path d="m9 5 7 7-7 7"/>'
+  dx: '<path d="m9 5 7 7-7 7"/>',
+  sacchetto: '<path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/>',
+  filtri: '<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>',
+  righello: '<path d="M3 15 15 3l6 6L9 21z"/><path d="m7 11 2 2M10 8l2 2M13 5l2 2"/>'
 };
 const ico = (k, cls = 'ico') => `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${ICO[k] || ICO.borsa}</svg>`;
 
@@ -185,7 +253,8 @@ function header(rel, corrente) {
       <a class="hdr__link" href="${vaiHome(rel, '#negozio')}">Il negozio</a>
     </nav>
     <div class="hdr__az">
-      <button class="hdr__ico" type="button" data-cerca-apri aria-label="Cerca uno sport o una categoria" aria-haspopup="dialog">${ico('cerca')}</button>
+      <button class="hdr__ico" type="button" data-cerca-apri aria-label="Cerca uno sport, una categoria o un prodotto" aria-haspopup="dialog">${ico('cerca')}</button>
+      <button class="hdr__ico hdr__borsa" type="button" data-borsa-apri aria-haspopup="dialog" aria-label="Apri la borsa (${esc(C.borsa.nome)})">${ico('sacchetto')}<span class="hdr__conta" data-borsa-conta hidden>0</span></button>
       <a class="btn btn--pri btn--sm hdr__wa" href="${wa(K.whatsappMessaggio)}" target="_blank" rel="noopener">${ico('chat', 'ico ico--s')}Chiedi su WhatsApp</a>
       <button class="hdr__ico hdr__burger" type="button" aria-expanded="false" aria-controls="menu-m" aria-label="Apri il menu" data-menu-btn><span></span><span></span></button>
     </div>
@@ -211,8 +280,8 @@ function header(rel, corrente) {
   <div class="cerca__box wrap">
     <div class="cerca__riga">
       ${ico('cerca', 'ico cerca__lente')}
-      <label class="sr-only" for="cerca-campo">Cerca uno sport o una categoria</label>
-      <input id="cerca-campo" class="cerca__campo" type="search" placeholder="Cerca: scarpe da calcio, racchette, occhialini…" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="cerca-risultati" aria-autocomplete="list">
+      <label class="sr-only" for="cerca-campo">Cerca uno sport, una categoria o un prodotto</label>
+      <input id="cerca-campo" class="cerca__campo" type="search" placeholder="Cerca: scarpe da calcio, guantoni bambino, CAL-SCA-01…" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="cerca-risultati" aria-autocomplete="list">
       <button class="hdr__ico cerca__chiudi" type="button" data-cerca-chiudi aria-label="Chiudi la ricerca">${ico('chiudi')}</button>
     </div>
     <ul class="cerca__ris" id="cerca-risultati" role="listbox" aria-label="Risultati"></ul>
@@ -264,7 +333,7 @@ function footer(rel) {
         <h2 class="pie__tit">Seguici</h2>
         <ul class="pie__lista">${social}</ul>
         <h2 class="pie__tit">Info</h2>
-        <ul class="pie__lista"><li><a href="${rel}privacy.html">Privacy</a></li></ul>
+        <ul class="pie__lista"><li><a href="#guida-taglie" data-guida>Guida taglie</a></li><li><a href="${rel}privacy.html">Privacy</a></li></ul>
       </div>
     </div>
     <div class="pie__legale">
@@ -576,23 +645,31 @@ function paginaSport(s) {
       ${img(h.file, h.alt, rel, { sizes: '100vw', lazy: false, prio: true, cls: 'hs__img', stile: `object-position:${h.posizione || '50% 50%'}` })}
     </picture>` : '';
   const chips = s.categorie.map(c => `<li><a class="chip" href="#${c.slug}" data-chip>${esc(pulisci(c.titolo))}</a></li>`).join('');
-  const prezzo = p => C.catalogo.mostraPrezzi && p.prezzo != null ? `<p class="prod__prezzo">${Number(p.prezzo).toLocaleString('it-IT', { style: 'currency', currency: 'EUR' })}</p>` : '';
   const cats = s.categorie.map((c, i) => {
+    const url = catUrl(s, c, rel), n = c.prodotti.length, nb = c.prodotti.filter(p => p.linea !== 'adulto').length;
     const media = c.foto && IMG[c.foto.file]
-      ? `<div class="cat__media" data-foto>${img(c.foto.file, c.foto.alt, rel, { sizes: '(min-width: 1200px) 400px, (min-width: 768px) 45vw, 40vw' })}</div>`
-      : `<div class="cat__media cat__media--ico" aria-hidden="true">${campo(s.campo, 'cat__campo')}${ico(c.icona, 'ico cat__ico')}</div>`;
-    const prodotti = (c.prodotti || []).length ? `<ul class="prodotti">${c.prodotti.map(p => `<li class="prod">${p.immagine ? `<img src="${rel}${p.immagine}" alt="${esc(p.nome)}" width="480" height="480" loading="lazy" decoding="async">` : ''}<p class="prod__marchio">${esc(p.marchio || '')}</p><p class="prod__nome">${esc(p.nome)}</p>${prezzo(p)}${p.disponibilita ? `<p class="prod__disp prod__disp--${esc(p.disponibilita.replace(/\s+/g, '-'))}">${esc(C.catalogo.disponibilita[p.disponibilita] || p.disponibilita)}</p>` : ''}</li>`).join('')}</ul>` : '';
-    return `<article class="cat${i >= 5 ? ' cat--extra' : ''}" id="${c.slug}" data-cat>
-  ${media}
-  <div class="cat__corpo">
-    <p class="cat__num">${String(i + 1).padStart(2, '0')}</p>
-    <h3 class="cat__tit">${esc(c.titolo)}</h3>
-    <p class="cat__desc">${esc(c.descrizione)}</p>
-    <ul class="tipi" aria-label="Tipologie">${c.tipologie.map(t => `<li>${esc(t)}</li>`).join('')}${c.tipologie.length > 3 ? `<li class="tipi__piu" aria-hidden="true">+${c.tipologie.length - 3}</li>` : ''}</ul>
-    <a class="btn btn--acc btn--sm cat__btn" href="${wa(msgCategoria(s, c))}" target="_blank" rel="noopener">${ico('chat', 'ico ico--s')}Chiedi disponibilità</a>
+      ? `<a class="cat__media" href="${url}" tabindex="-1" aria-hidden="true" data-foto>${img(c.foto.file, c.foto.alt, rel, { sizes: '(min-width: 1024px) 340px, 40vw' })}</a>`
+      : `<a class="cat__media cat__media--ico" href="${url}" tabindex="-1" aria-hidden="true">${campo(s.campo, 'cat__campo')}${ico(c.icona, 'ico cat__ico')}</a>`;
+    const anteprima = c.prodotti.slice(0, 4).map(p => `<li>${cardProdotto(p, rel, 'h4')}</li>`).join('');
+    return `<section class="catb${i >= 5 ? ' cat--extra' : ''}" id="${c.slug}" data-cat aria-labelledby="cat-${c.slug}">
+  <article class="cat">
+    ${media}
+    <div class="cat__corpo">
+      <p class="cat__num">${String(i + 1).padStart(2, '0')}</p>
+      <h3 class="cat__tit" id="cat-${c.slug}"><a href="${url}">${esc(c.titolo)}</a></h3>
+      <p class="cat__desc">${esc(c.descrizione)}</p>
+      <ul class="tipi" aria-label="Tipologie">${c.tipologie.map(t => `<li>${esc(t)}</li>`).join('')}${c.tipologie.length > 3 ? `<li class="tipi__piu" aria-hidden="true">+${c.tipologie.length - 3}</li>` : ''}</ul>
+      <p class="cat__conta">${nN(n, 'prodotto', 'prodotti')}${nb ? ` · <span class="cat__bimbi">${nb} anche per bambini</span>` : ''}</p>
+      <div class="cat__az">
+        <a class="btn btn--acc btn--sm" href="${url}">Vedi tutti (${n}) ${ico('freccia', 'ico ico--s')}</a>
+        <a class="link cat__wa" href="${wa(msgCategoria(s, c))}" target="_blank" rel="noopener">Chiedi disponibilità</a>
+      </div>
+    </div>
+  </article>
+  <div class="anteprima">
+    <ul class="car-prod" aria-label="Anteprima ${esc(pulisci(c.titolo))}">${anteprima}${n > 4 ? `<li class="car-prod__altro"><a href="${url}"><span>Vedi tutti</span><b>${n}</b>${ico('freccia')}</a></li>` : ''}</ul>
   </div>
-  ${prodotti}
-</article>`;
+</section>`;
   }).join('\n');
   const altri = C.sport.filter(x => x !== s).map(x => tessera(x, rel, { sizes: '(min-width: 1024px) 22vw, 60vw' })).join('\n');
 
@@ -627,7 +704,10 @@ function paginaSport(s) {
         <p class="occhiello">${s.numero} · ${esc(s.nome)} · ${nCat} categorie</p>
         <h2 class="tit-sez" id="tit-cat" data-tit>${righe(['Cosa trovi', 'in negozio'])}</h2>
       </div>
-      <p class="sez-testa__testo">Non vendiamo online: scegli la categoria, chiedi su WhatsApp cosa c'è e passa a provarlo con noi.</p>
+      <div class="sez-testa__testo">
+        <p>Non vendiamo online: metti nella borsa quello che ti serve, ti confermiamo la disponibilità e lo ritiri in negozio.</p>
+        <p class="etichetta-esempio">${esc(CAT.etichettaEsempio)}</p>
+      </div>
     </header>
     <div class="cat-griglia" data-cat-griglia>
 ${cats}
@@ -680,6 +760,102 @@ ${altri}
     titolo: `${s.nome} a ${A.citta} – articoli e attrezzatura | ${A.nome}`,
     descrizione: `${s.nome} da ${A.nome}, ${A.citta}: ${elenco} e altro. ${nCat} categorie, consigli per scegliere e disponibilità su WhatsApp.`,
     rel, percorso: `sport/${s.slug}/`, classe: 'p-sport', stile: `--acc:${s.accento};--acc-ink:${s.testoAccento}`,
+    corpo, preload, corrente: s.slug
+  });
+}
+
+/* =====================================================================
+   PAGINA CATEGORIA  (sport/<sport>/<categoria>/index.html)
+   ===================================================================== */
+function paginaCategoria(s, c, i) {
+  const rel = '../../../';
+  const n = c.prodotti.length, nb = c.prodotti.filter(p => p.linea !== 'adulto').length;
+  const num = String(i + 1).padStart(2, '0');
+  const titolo = pulisci(c.titolo), suRichiesta = /su richiesta/i.test(c.titolo);
+  const f = c.foto && IMG[c.foto.file] ? c.foto : null;
+  const preload = f ? `<link rel="preload" as="image" href="${rel}assets/img/${f.file}-960.webp" imagesrcset="${srcset(f.file, rel)}" imagesizes="100vw" fetchpriority="high">\n` : '';
+  const media = f
+    ? img(f.file, f.alt, rel, { sizes: '100vw', lazy: false, prio: true, cls: 'hc__img' })
+    : `${campo(s.campo, 'hc__campo')}${ico(c.icona, 'ico hc__ico')}`;
+  const fasce = fascePrezzo(c.prodotti);
+  const altre = s.categorie.filter(x => x !== c).map(x => {
+    const k = s.categorie.indexOf(x);
+    return `<li><a href="${catUrl(s, x, rel)}"><span class="altre__num">${String(k + 1).padStart(2, '0')}</span><span class="altre__tit">${esc(pulisci(x.titolo))}</span><span class="altre__n">${nN(x.prodotti.length, 'prodotto', 'prodotti')}</span>${ico('freccia', 'ico altre__fr')}</a></li>`;
+  }).join('');
+
+  const corpo = `
+<section class="hc${f ? '' : ' hc--ico'}" data-hero>
+  <div class="hc__media">${media}<div class="hc__velo" aria-hidden="true"></div></div>
+  <div class="hc__in wrap">
+    <nav class="briciole" aria-label="Percorso"><ol><li><a href="${vaiHome(rel)}">Home</a></li><li><a href="${sportUrl(s, rel)}">${esc(s.nome)}</a></li><li aria-current="page">${esc(titolo)}</li></ol></nav>
+    <p class="hc__occ" data-hero-a><span class="hc__num">${s.numero}.${num}</span> ${esc(s.nome)} · ${nN(n, 'prodotto', 'prodotti')}${nb ? ` · <span class="hc__bimbi">${nb} anche per bambini</span>` : ''}</p>
+    <h1 class="hc__tit${titolo.length > 22 ? ' hc__tit--lungo' : ''}" data-tit-hero>${righe([titolo])}</h1>
+    ${suRichiesta ? '<p class="hc__nota" data-hero-a>Su richiesta: li ordiniamo per te dopo una prova in negozio.</p>' : ''}
+    <ul class="tipi tipi--scuro" aria-label="Tipologie" data-hero-a>${c.tipologie.map(t => `<li>${esc(t)}</li>`).join('')}</ul>
+    <div class="hc__az" data-hero-a>
+      <a class="btn btn--acc" href="${wa(msgCategoria(s, c))}" target="_blank" rel="noopener">${ico('chat', 'ico ico--s')}Chiedi disponibilità</a>
+      <a class="btn btn--ghost-l" href="#guida-taglie" data-guida>${ico('righello', 'ico ico--s')}Guida taglie</a>
+    </div>
+  </div>
+</section>
+
+<div class="filtri" data-filtri>
+  <div class="wrap filtri__in">
+    <button class="filtri__apri" type="button" data-filtri-apri aria-controls="filtri-pan" aria-expanded="false">${ico('filtri', 'ico ico--s')}Filtri<span class="filtri__n" data-filtri-n hidden></span></button>
+    <div class="filtri__pan" id="filtri-pan" data-filtri-pan aria-label="Filtri">
+      <div class="filtri__velo" data-filtri-chiudi></div>
+      <div class="filtri__box" tabindex="-1">
+        <div class="filtri__testa"><p class="filtri__tit">Filtri</p><button class="hdr__ico filtri__x" type="button" data-filtri-chiudi aria-label="Chiudi i filtri">${ico('chiudi')}</button></div>
+        <fieldset class="seg">
+          <legend class="seg__leg">Per chi</legend>
+          <div class="seg__op">
+            <label><input type="radio" name="linea" value="tutti" checked><span>Tutti</span></label>
+            <label><input type="radio" name="linea" value="adulto"><span>Adulto</span></label>
+            <label class="seg__bimbo"><input type="radio" name="linea" value="bambino"><span>Bambino</span></label>
+          </div>
+        </fieldset>
+        <label class="spunta"><input type="checkbox" name="negozio"><span>Solo disponibili in negozio</span></label>
+        ${fasce.length > 1 ? `<label class="filtri__campo"><span>Prezzo</span><select name="prezzo"><option value="">Tutti i prezzi</option>${fasce.map(x => `<option value="${x.a}-${x.b}">${esc(x.t)}</option>`).join('')}</select></label>` : ''}
+        <div class="filtri__piede">
+          <button class="btn btn--sec btn--sm" type="button" data-azzera>Azzera</button>
+          <button class="btn btn--pri btn--sm" type="button" data-filtri-chiudi>Mostra&nbsp;<span data-conta-btn>${nN(n, 'prodotto', 'prodotti')}</span></button>
+        </div>
+      </div>
+    </div>
+    <label class="filtri__ordina"><span class="sr-only">Ordina i prodotti</span><select name="ordina" data-ordina><option value="consigliati">Consigliati</option><option value="su">Prezzo crescente</option><option value="giu">Prezzo decrescente</option></select></label>
+    <p class="filtri__conta" aria-live="polite"><b data-n-ris>${n}</b> <span data-conta-txt>${n === 1 ? 'prodotto' : 'prodotti'}</span></p>
+  </div>
+</div>
+
+<section class="catalogo" aria-labelledby="tit-prod">
+  <div class="wrap">
+    <div class="catalogo__testa">
+      <h2 class="catalogo__tit" id="tit-prod">${esc(titolo)}: tutti i prodotti</h2>
+      <p class="etichetta-esempio">${esc(CAT.etichettaEsempio)}</p>
+    </div>
+    <ul class="griglia-prod" data-griglia>
+${c.prodotti.map((p, k) => `<li data-ord="${k}">${cardProdotto(p, rel)}</li>`).join('\n')}
+    </ul>
+    <div class="vuoto" data-vuoto hidden><p>Nessun prodotto con questi filtri.</p><button class="btn btn--sec btn--sm" type="button" data-azzera>Azzera i filtri</button></div>
+    <p class="catalogo__nota">Non vendiamo online: metti i prodotti nella borsa, ti confermiamo la disponibilità e paghi in negozio quando ritiri. Domande? <a href="${wa(msgCategoria(s, c))}" target="_blank" rel="noopener">Scrivici su WhatsApp</a>.</p>
+  </div>
+</section>
+
+<section class="sez sez--carta altre" aria-labelledby="tit-altre">
+  <div class="wrap">
+    <header class="sez-testa sez-testa--riga">
+      <div><p class="occhiello">${s.numero} · ${esc(s.nome)}</p><h2 class="tit-sez" id="tit-altre" data-tit>${righe(['Altre categorie', `di ${nomeSport(s)}`])}</h2></div>
+      <p class="sez-testa__testo">Misure tra due taglie o un regalo per un bambino? <a class="link" href="#guida-taglie" data-guida>Apri la guida taglie</a></p>
+    </header>
+    <ul class="altre__lista">${altre}</ul>
+    <p class="altre__az"><a class="btn btn--sec" href="${sportUrl(s, rel)}">Tutto il reparto ${esc(s.nome)} ${ico('freccia', 'ico ico--s')}</a></p>
+  </div>
+</section>`;
+
+  return pagina({
+    titolo: `${titolo} – ${s.nome} a ${A.citta} | ${A.nome}`,
+    descrizione: `${titolo} per ${s.nome.toLowerCase()} da ${A.nome}, ${A.citta}: ${nN(n, 'prodotto', 'prodotti')} per adulti${nb ? ' e bambini' : ''}, con taglie e disponibilità. Prenoti online e ritiri in negozio.`,
+    rel, percorso: `sport/${s.slug}/${c.slug}/`, classe: 'p-cat', stile: `--acc:${s.accento};--acc-ink:${s.testoAccento}`,
     corpo, preload, corrente: s.slug
   });
 }
@@ -758,10 +934,26 @@ function scrivi(file, contenuto) {
 }
 
 /* ---------------- esecuzione ---------------- */
+// controllo dati del catalogo: codici unici, taglie e illustrazioni esistenti
+{
+  const visti = new Set();
+  for (const s of C.sport) for (const c of s.categorie) for (const p of c.prodotti) {
+    if (visti.has(p.codice)) throw new Error('Codice prodotto ripetuto: ' + p.codice);
+    visti.add(p.codice);
+    if (!TAG[p.taglia]) throw new Error(`Taglia sconosciuta "${p.taglia}" in ${p.codice}`);
+    if (!(p.foto && p.foto.length) && !ILLUSTRAZIONI.includes(p.illustrazione)) throw new Error(`Illustrazione "${p.illustrazione}" mancante in ${p.codice}`);
+  }
+}
 scrivi('index.html', home());
 // rimuove pagine di sport non più presenti in config
 if (existsSync('sport')) for (const d of readdirSync('sport')) if (!C.sport.some(s => s.slug === d)) rmSync(join('sport', d), { recursive: true });
-for (const s of C.sport) scrivi(`sport/${s.slug}/index.html`, paginaSport(s));
+let nPagCat = 0;
+for (const s of C.sport) {
+  scrivi(`sport/${s.slug}/index.html`, paginaSport(s));
+  // pagine categoria (e pulizia delle cartelle di categorie tolte da config)
+  for (const d of readdirSync(`sport/${s.slug}`, { withFileTypes: true })) if (d.isDirectory() && !s.categorie.some(c => c.slug === d.name)) rmSync(join('sport', s.slug, d.name), { recursive: true });
+  s.categorie.forEach((c, i) => { scrivi(`sport/${s.slug}/${c.slug}/index.html`, paginaCategoria(s, c, i)); nPagCat++; });
+}
 scrivi('privacy.html', privacy());
 scrivi('404.html', pagina404());
 scrivi('assets/favicon.svg', favicon());
@@ -770,10 +962,11 @@ if (S.bozza) {
   for (const f of ['sitemap.xml', 'robots.txt']) if (existsSync(f)) rmSync(f);
 } else {
   const oggi = new Date().toISOString().slice(0, 10);
-  const urls = ['', ...C.sport.map(s => `sport/${s.slug}/`), 'privacy.html'];
+  const urls = ['', ...C.sport.flatMap(s => [`sport/${s.slug}/`, ...s.categorie.map(c => `sport/${s.slug}/${c.slug}/`)]), 'privacy.html'];
   scrivi('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(u => `  <url><loc>${S.urlBase}${u}</loc><lastmod>${oggi}</lastmod></url>`).join('\n')}\n</urlset>\n`);
   scrivi('robots.txt', `User-agent: *\nAllow: /\nSitemap: ${S.urlBase}sitemap.xml\n`);
 }
 
 const nIco = C.sport.reduce((a, s) => a + s.categorie.filter(c => !(c.foto && IMG[c.foto.file])).length, 0);
-console.log(`✔ Generate ${C.sport.length + 3} pagine (home, ${C.sport.length} sport, privacy, 404) · bozza=${S.bozza} · categorie con icona: ${nIco}`);
+const nProd = C.sport.reduce((a, s) => a + s.categorie.reduce((b, c) => b + c.prodotti.length, 0), 0);
+console.log(`✔ Generate ${C.sport.length + 3 + nPagCat} pagine (home, ${C.sport.length} sport, ${nPagCat} categorie, privacy, 404) · ${nProd} prodotti · ${ILLUSTRAZIONI.length} illustrazioni · bozza=${S.bozza} · categorie con icona: ${nIco}`);
