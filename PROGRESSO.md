@@ -102,7 +102,15 @@ Nessuna foto davvero bella e senza loghi leggibili → disegno SVG sul colore de
   - Scheda prodotto (pannello a destra / foglio dal basso): galleria con scorrimento, miniature e zoom se ci sono più foto, taglie a pulsanti, guida taglie, "Vedi in 3D" se c'è modello3d, hash #prodotto-CODICE condivisibile (anche da altre pagine e dalla ricerca), Esc, focus intrappolato e restituito.
   - Ricerca: ora trova anche i prodotti (nome o codice) e porta alle pagine categoria.
   - Corretti durante il blocco: overflow:hidden sul body rompeva la barra sticky (ora solo su html); il foglio filtri finiva sotto la barra in basso (z-index della barra sticky); "1 prodotti"; avvisi GSAP su pagine senza hero sport.
-- [ ] Blocco 3 – Borsa "Prenota e ritira" con codice, modulo, condivisione, privacy
+- [x] Blocco 3 – Borsa "Prenota e ritira" con codice, modulo, condivisione, privacy
+  - Icona borsa con contatore nell'header di ogni pagina. Pannello (destra su computer, dal basso su telefono): righe con taglia, quantità − / +, Rimuovi, totale di esempio; "Condividi la borsa", "Svuota".
+  - Salvata in localStorage dentro try/catch (se non disponibile resta in memoria nella pagina); si aggiorna anche tra schede diverse.
+  - Modulo "Verifica disponibilità in negozio": nome, telefono, quando passi (campo data + pulsanti rapidi dei prossimi 8 giorni, i giorni chiusi sono disattivati), note facoltative; errori accanto al campo; rifiuta date passate, giorni di chiusura (orari e festivi di config), oltre 7 giorni, e oggi se il negozio sta chiudendo. Riga privacy con link.
+  - Invio: codice SL-XXXX (lettere/numeri senza 0, O, 1, I) mostrato grande con "Copia"; messaggio WhatsApp (o Web3Forms se in config) con codice, articoli, codici prodotto, taglie, quantità, nome, telefono e giorno.
+  - Link condiviso #borsa=…: ricrea la borsa; se ce n'è già una chiede "Sostituisci / Aggiungi alla mia / Tieni la mia".
+  - Privacy: aggiunti i dati della richiesta "Prenota e ritira" e la nota sulla borsa salvata solo nel browser (memoria locale, non profilazione). Nient'altro cambiato.
+  - Pannelli: aria-modal, focus intrappolato e restituito, Esc, scorrimento bloccato solo su html (niente salti), velo che non fa scorrere la pagina su iPhone, niente backdrop-filter.
+  - Prova automatica (borsa.mjs, 390 e 1440): 18/18 ok.
 - [ ] Blocco 4 – "Spesso comprati insieme"
 - [ ] Blocco 5 – Guida taglie con calcolatore scarpe
 - [ ] Blocco 6 – "Vedi in 3D" (model-viewer ospitato nel sito)

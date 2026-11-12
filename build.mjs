@@ -885,6 +885,11 @@ function privacy() {
     SEDE_LEGALE: L.sedeLegale, EMAIL: L.emailPrivacy, PEC: L.pec, TELEFONO: K.telefono, TELEFONO_LINK: K.telefonoLink,
     DOMINIO: S.dominio, DATA_AGGIORNAMENTO: L.dataAggiornamento
   };
+  // borsa "Prenota e ritira": dati della richiesta e memoria locale del browser
+  m = m.replace(/(<li><strong>Dati dei contatti diretti\.<\/strong>[\s\S]*?<\/li>)/, `$1
+        <li><strong>Richiesta "${esc(C.borsa.nome)}".</strong> Se usate la borsa e il modulo "Verifica disponibilità in negozio" ci mandate: nome, numero di telefono, giorno in cui pensate di passare, eventuali note, i prodotti scelti (codice, taglia e quantità) e il codice della richiesta (per esempio ${esc(C.borsa.prefissoCodice)}-AB7K). Li usiamo solo per verificare la disponibilità e tenere da parte i prodotti; valgono la base giuridica e i tempi di conservazione delle richieste indicati sotto.</li>`);
+  m = m.replace(/(<p>Questo sito <strong>non usa cookie<\/strong>[^<]*<\/p>)/, `$1
+      <p>La borsa "${esc(C.borsa.nome)}" (i prodotti che scegliete, con taglia e quantità) è salvata <strong>solo nel vostro browser</strong>, nella sua memoria locale (localStorage). È strettamente necessaria al servizio che chiedete, non è un cookie di profilazione e non ci arriva finché non inviate la richiesta. Potete cancellarla con "Svuota" nella borsa o cancellando i dati del sito dal browser.</p>`);
   m = m.replace(/\{\{([A-Z_]+)\}\}/g, (_, k) => esc(val[k] ?? ''));
   m = m.replace(/<!--[\s\S]*?-->/g, '').replace(/\n\s*\n+/g, '\n');
   m = m.replace('<main id="contenuto" class="section privacy">', '').replace('</main>', '');

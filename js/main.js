@@ -390,6 +390,8 @@
     righello: '<path d="M3 15 15 3l6 6L9 21z"/><path d="m7 11 2 2M10 8l2 2M13 5l2 2"/>',
     cubo: '<path d="M12 3 20 7.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5 12 12l8-4.5M12 12v9"/>',
     ok: '<path d="m5 12 5 5 9-10"/>',
+    sx: '<path d="M15 5l-7 7 7 7"/>',
+    dx: '<path d="m9 5 7 7-7 7"/>',
     piu: '<path d="M12 5v14M5 12h14"/>',
     meno: '<path d="M5 12h14"/>'
   };
@@ -504,6 +506,7 @@
     P.apri = function (da) {
       if (!el.hidden) return;
       P.ritorno = da || d.activeElement;
+      if (avviso) avviso.hidden = true;
       body.appendChild(el);                       // sempre sopra agli altri pannelli
       el.hidden = false; pila.push(P); bloccaScroll(true);
       P.corpo.scrollTop = 0;
@@ -537,7 +540,7 @@
     setTimeout(function () { btn.classList.remove('is-fatto'); btn.innerHTML = prima; }, 1600);
   }
   var apriBorsa = function () {};               // sostituita dal pannello borsa
-  function linkBorsa(el) {
+  function linkApriBorsa(el) {
     var b = d.createElement('button'); b.type = 'button'; b.className = 'link-borsa'; b.textContent = 'Apri la borsa';
     b.addEventListener('click', function () { apriBorsa(b); }); el.appendChild(b);
   }
@@ -681,7 +684,7 @@
     if (agg) agg.addEventListener('click', function () {
       var sel = chips && $('input:checked', chips), t = sel ? sel.value : (tt.length === 1 ? tt[0] : '');
       if (chips && !sel) { chips.classList.add('is-err'); messaggio(msg, scegliTxt(p) + ' prima di aggiungere.', 'err'); var pr = $('input', chips); if (pr) pr.focus({ preventScroll: true }); return; }
-      if (aggiungiBorsa(p.codice, t)) { fatto(agg, 'Aggiunto alla borsa'); messaggio(msg, 'Nella borsa' + (t ? ' · ' + t : '') + '. ', 'ok'); linkBorsa(msg); aggiornaInsieme(); }
+      if (aggiungiBorsa(p.codice, t)) { fatto(agg, 'Aggiunto alla borsa'); messaggio(msg, 'Nella borsa' + (t ? ' · ' + t : '') + '. ', 'ok'); linkApriBorsa(msg); aggiornaInsieme(); }
     });
     galleriaAttiva(scheda.corpo);
     aggiornaInsieme();
@@ -722,6 +725,266 @@
   addEventListener('popstate', function () { schedaStorico = false; daHash(); });
   addEventListener('hashchange', daHash);
   if (HASH_P.test(location.hash)) daHash();
+
+  /* =====================================================================
+     BORSA "Prenota e ritira": lista, modulo, codice, condivisione
+     ===================================================================== */
+  var B = C.borsa, borsaP, vista = 'lista', bozza = { nome: '', telefono: '', quando: '', note: '' }, ultimo = null, inArrivo = null;
+  var GG = ['dom', 'lun', 'mar', 'mer', 'gio', 'ven', 'sab'];
+  var MESI = ['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto', 'settembre', 'ottobre', 'novembre', 'dicembre'];
+  var totale = function (b) { return b.reduce(function (a, x) { return a + PROD[x.c].p.prezzo * x.q; }, 0); };
+  var nProd = function (n) { return n + (n === 1 ? ' prodotto' : ' prodotti'); };
+  // date (ora italiana)
+  var isoDa = function (y, m, g) { return y + '-' + pad(m) + '-' + pad(g); };
+  function oggiRoma() { var p = partiRoma(new Date()); return { iso: isoDa(p.y, p.m, p.d), min: p.h * 60 + p.min }; }
+  function giorno(iso) { var a = iso.split('-').map(Number), t = new Date(Date.UTC(a[0], a[1] - 1, a[2])); return { y: a[0], m: a[1], d: a[2], dow: t.getUTCDay(), ms: t.getTime() }; }
+  var piuGiorni = function (iso, n) { var t = new Date(giorno(iso).ms + n * 864e5); return isoDa(t.getUTCFullYear(), t.getUTCMonth() + 1, t.getUTCDate()); };
+  var distanza = function (a, b) { return Math.round((giorno(b).ms - giorno(a).ms) / 864e5); };
+  var dataLunga = function (iso) { var g = giorno(iso); return GIORNI[g.dow] + ' ' + g.d + ' ' + MESI[g.m - 1]; };
+  var fasceDi = function (iso) { var g = giorno(iso); return fasceGiorno(g.y, g.m, g.d, g.dow); };
+  function controllaData(v) {
+    var N = B.giorniMassimi || 7, o = oggiRoma();
+    if (!v) return 'Scegli il giorno in cui pensi di passare.';
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(v)) return 'Scrivi la data nel formato giorno/mese/anno.';
+    var dd = distanza(o.iso, v);
+    if (dd < 0) return 'Questa data è già passata: scegli oggi o uno dei prossimi ' + N + ' giorni.';
+    if (dd > N) return 'Puoi scegliere al massimo i prossimi ' + N + ' giorni (fino a ' + dataLunga(piuGiorni(o.iso, N)) + ').';
+    var f = fasceDi(v);
+    if (!f.length) return dataLunga(v).replace(/^./, function (c) { return c.toUpperCase(); }) + ' il negozio è chiuso: scegli un altro giorno.';
+    if (dd === 0 && o.min >= minuti(f[f.length - 1][1]) - 30) return 'Oggi il negozio sta chiudendo: scegli un altro giorno.';
+    return '';
+  }
+  var REGOLE_B = {
+    nome: function (v) { return v.trim().length >= 2 ? '' : 'Scrivi il tuo nome.'; },
+    telefono: function (v) { return v.replace(/\D/g, '').length >= 6 ? '' : 'Scrivi un numero di telefono valido.'; },
+    quando: controllaData,
+    note: function () { return ''; }
+  };
+  // codice SL-XXXX senza 0, O, 1, I
+  function nuovoCodice() {
+    var A = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789', r = new Uint32Array(4), s = '';
+    (window.crypto || window.msCrypto).getRandomValues(r);
+    for (var i = 0; i < 4; i++) s += A[r[i] % A.length];
+    return (B.prefissoCodice || 'SL') + '-' + s;
+  }
+  function testoRichiesta(cod, v, b) {
+    return 'Ciao ' + C.attivita.nome + ', vorrei verificare la disponibilità (' + B.nome + ').\n' +
+      'Codice: ' + cod + '\nNome: ' + v.nome + '\nTelefono: ' + v.telefono + '\nPasso in negozio: ' + dataLunga(v.quando) + '\n\nProdotti:\n' +
+      b.map(function (x, i) { var p = PROD[x.c].p; return (i + 1) + ') ' + p.codice + ' · ' + p.nome + (x.t ? ' · ' + nomeTaglia(p) + ' ' + x.t : '') + ' · quantità ' + x.q; }).join('\n') +
+      '\n\nTotale di esempio: ' + euro(totale(b)) + (v.note ? '\nNote: ' + v.note : '');
+  }
+  // link per condividere la borsa: #borsa=CODICE~TAGLIA~Q!...
+  function linkBorsa(b) {
+    var h = b.map(function (x) { return [x.c, x.t, x.q].map(encodeURIComponent).join('~'); }).join('!');
+    return location.href.split('#')[0] + '#borsa=' + h;
+  }
+  function leggiLink(h) {
+    try {
+      return pulisciBorsa(h.replace(/^#borsa=/, '').split('!').filter(Boolean).map(function (v) { var a = v.split('~').map(decodeURIComponent); return { c: a[0], t: a[1] || '', q: +a[2] || 1 }; }));
+    } catch (e) { return []; }
+  }
+  function copia(testo, bt, ok) {
+    var fatto2 = function () { var p = bt.innerHTML; bt.innerHTML = icona('ok', 'ico ico--s') + (ok || 'Copiato'); setTimeout(function () { bt.innerHTML = p; }, 1800); };
+    var vecchio = function () {
+      var t = d.createElement('textarea'); t.value = testo; t.setAttribute('readonly', ''); t.style.cssText = 'position:fixed;top:0;left:0;opacity:0;font-size:16px';
+      body.appendChild(t); t.select(); var r = false; try { r = d.execCommand('copy'); } catch (e) {} body.removeChild(t);
+      if (r) fatto2(); else window.prompt('Copia questo testo:', testo);
+    };
+    if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(testo).then(fatto2, vecchio); else vecchio();
+  }
+
+  function rigaBorsa(x) {
+    var r = PROD[x.c], p = r.p, k = x.c + '|' + x.t;
+    return '<li class="bv" data-k="' + escH(k) + '" style="--acc:' + r.s.accento + '">' +
+      '<a class="bv__media" href="#prodotto-' + p.codice + '" tabindex="-1" aria-hidden="true">' + figura(p, 'bv__ill') + '</a>' +
+      '<div class="bv__info"><p class="bv__cod">' + p.codice + '</p><p class="bv__nome"><a href="#prodotto-' + p.codice + '">' + escH(p.nome) + '</a></p>' +
+      '<p class="bv__det">' + (x.t ? escH(nomeTaglia(p)) + ' <b>' + escH(x.t) + '</b>' + (tagliaBimbo(p, x.t) && p.linea !== 'adulto' ? ' · bambino' : '') + ' · ' : '') + euro(p.prezzo) + '</p></div>' +
+      '<div class="bv__az"><div class="passi" role="group" aria-label="Quantità di ' + escH(p.nome) + '">' +
+        '<button type="button" data-q="-1"' + (x.q <= 1 ? ' aria-disabled="true"' : '') + ' aria-label="Uno in meno">' + icona('meno', 'ico ico--s') + '</button>' +
+        '<output aria-live="polite">' + x.q + '</output>' +
+        '<button type="button" data-q="1"' + (x.q >= 9 ? ' aria-disabled="true"' : '') + ' aria-label="Uno in più">' + icona('piu', 'ico ico--s') + '</button></div>' +
+      '<button class="bv__togli" type="button" data-togli>Rimuovi</button></div>' +
+      '<p class="bv__tot">' + euro(p.prezzo * x.q) + '</p></li>';
+  }
+  function campoB(id, nome, etich, tipo, extra, aiuto) {
+    var v = escH(bozza[nome] || '');
+    var input = tipo === 'textarea' ? '<textarea id="' + id + '" name="' + nome + '" rows="3" maxlength="400"' + (extra || '') + '>' + v + '</textarea>'
+      : '<input id="' + id + '" name="' + nome + '" type="' + tipo + '" value="' + v + '"' + (extra || '') + '>';
+    return '<div class="campo"><label for="' + id + '">' + etich + '</label>' + input + (aiuto || '') + '<p class="campo__err" id="' + id + '-err" hidden></p></div>';
+  }
+  function chipGiorni() {
+    var o = oggiRoma(), N = B.giorniMassimi || 7, h = '';
+    for (var i = 0; i <= N; i++) {
+      var iso = piuGiorni(o.iso, i), g = giorno(iso), f = fasceDi(iso), chiuso = !f.length || (i === 0 && o.min >= minuti(f[f.length - 1][1]) - 30);
+      h += '<button type="button" class="giorni__b" data-giorno="' + iso + '"' + (chiuso ? ' disabled' : '') + ' aria-pressed="' + (bozza.quando === iso) + '" aria-label="' + dataLunga(iso) + (chiuso ? ', chiuso' : '') + '">' +
+        '<span>' + (i === 0 ? 'oggi' : i === 1 ? 'domani' : GG[g.dow]) + '</span><b>' + g.d + '</b><span>' + (chiuso ? 'chiuso' : MESI[g.m - 1].slice(0, 3)) + '</span></button>';
+    }
+    return '<div class="giorni" role="group" aria-label="Scegli velocemente il giorno">' + h + '</div>';
+  }
+  function disegnaBorsa(focusSu) {
+    if (!borsaP) return;
+    var b = leggiBorsa(), P = borsaP;
+    P.el.setAttribute('data-vista', vista);
+    if (vista === 'lista' && !b.length) {
+      P.tit.textContent = B.nome;
+      P.corpo.innerHTML = '<div class="borsa__vuota"><span class="borsa__ico">' + icona('sacchetto', 'ico') + '</span><p class="borsa__vtit">La borsa è vuota</p>' +
+        '<p>Scegli i prodotti e la taglia: ci mandi la borsa, ti diciamo cosa c\'è e lo ritiri in negozio.</p>' +
+        '<ul class="borsa__sport">' + C.sport.map(function (s) { return '<li><a class="chip" href="' + REL + 'sport/' + s.slug + '/index.html" style="--acc:' + s.accento + '">' + escH(s.nome) + '</a></li>'; }).join('') + '</ul></div>';
+      P.piede.hidden = true;
+    } else if (vista === 'lista') {
+      P.tit.textContent = B.nome + ' · ' + nProd(pezzi(b));
+      P.corpo.innerHTML = '<p class="borsa__intro">' + escH(B.testoBorsa) + '</p>' +
+        '<ul class="borsa__lista">' + b.map(rigaBorsa).join('') + '</ul>' +
+        '<div class="borsa__strumenti"><button class="link-borsa" type="button" data-condividi>Condividi la borsa</button><button class="link-borsa link-borsa--grigio" type="button" data-svuota>Svuota</button></div>' +
+        '<section class="insieme" data-borsa-ins hidden aria-labelledby="bins-tit"><h3 class="insieme__tit" id="bins-tit">Ti potrebbe servire anche</h3><div class="insieme__lista" data-insieme-lista></div></section>';
+      P.piede.hidden = false;
+      P.piede.innerHTML = '<div class="borsa__tot"><span>Totale di esempio</span><b>' + euro(totale(b)) + '</b></div><button class="btn btn--pri borsa__vai" type="button" data-vista="modulo">Verifica disponibilità in negozio ' + icona('dx', 'ico ico--s') + '</button>';
+      suggerimentiBorsa();
+    } else if (vista === 'modulo') {
+      P.tit.textContent = 'Verifica disponibilità';
+      var o = oggiRoma();
+      P.corpo.innerHTML = '<button class="link-borsa borsa__indietro" type="button" data-vista="lista">' + icona('sx', 'ico ico--s') + 'Torna alla borsa (' + nProd(pezzi(b)) + ', ' + euro(totale(b)) + ')</button>' +
+        '<h3 class="borsa__h" tabindex="-1" data-h>Dove ti rispondiamo e quando passi</h3>' +
+        '<form class="borsa__form" id="borsa-form" novalidate>' +
+        campoB('b-nome', 'nome', 'Nome', 'text', ' autocomplete="name" required') +
+        campoB('b-tel', 'telefono', 'Telefono', 'tel', ' autocomplete="tel" inputmode="tel" required') +
+        campoB('b-quando', 'quando', 'Quando pensi di passare', 'date', ' min="' + o.iso + '" max="' + piuGiorni(o.iso, B.giorniMassimi || 7) + '" required aria-describedby="b-quando-aiuto"',
+          '<p class="campo__aiuto" id="b-quando-aiuto" data-quando-aiuto>Entro ' + (B.giorniMassimi || 7) + ' giorni, nei giorni di apertura.</p>' + chipGiorni()) +
+        campoB('b-note', 'note', 'Note (facoltative)', 'textarea', ' placeholder="Es. vorrei provare anche il numero più grande"') +
+        '<p class="form__privacy">I dati inviati servono solo per rispondere alla tua richiesta. <a href="' + REL + 'privacy.html">Leggi l\'informativa privacy</a></p>' +
+        '</form><p class="borsa__esito" data-esito-b role="status"></p>';
+      P.piede.hidden = false;
+      P.piede.innerHTML = '<button class="btn btn--pri borsa__vai" type="submit" form="borsa-form">' + (C.modulo.modalita === 'web3forms' && C.modulo.web3formsAccessKey ? 'Invia la richiesta' : 'Invia la richiesta su WhatsApp') + '</button>';
+      attivaModulo();
+    } else if (vista === 'fatto' && ultimo) {
+      P.tit.textContent = 'Richiesta pronta';
+      P.corpo.innerHTML = '<div class="codice"><p class="codice__et">Il tuo codice</p><p class="codice__val" data-h tabindex="-1">' + ultimo.codice + '</p>' +
+        '<button class="btn btn--sec btn--sm" type="button" data-copia-cod>Copia</button></div>' +
+        '<p class="codice__testo">' + escH(B.testoConferma) + '</p>' +
+        (ultimo.wa ? '<p class="codice__testo">Se WhatsApp non si è aperto: <a class="link" href="' + ultimo.wa + '" target="_blank" rel="noopener">apri il messaggio</a>.</p>' : '') +
+        '<p class="codice__riep">' + escH(ultimo.riepilogo) + '</p>';
+      P.piede.hidden = false;
+      P.piede.innerHTML = '<div class="borsa__due"><button class="btn btn--sec" type="button" data-svuota-fine>Svuota la borsa</button><button class="btn btn--pri" type="button" data-pan-chiudi>Fatto</button></div>';
+    } else if (vista === 'importa' && inArrivo) {
+      P.tit.textContent = 'Borsa condivisa';
+      P.corpo.innerHTML = '<h3 class="borsa__h" tabindex="-1" data-h>Ti hanno mandato una borsa con ' + nProd(pezzi(inArrivo)) + '</h3>' +
+        '<p class="borsa__intro">Nella tua borsa ci sono già ' + nProd(pezzi(b)) + '. Cosa vuoi fare?</p>' +
+        '<ul class="borsa__lista borsa__lista--mini">' + inArrivo.map(function (x) { var p = PROD[x.c].p; return '<li>' + escH(p.nome) + (x.t ? ' · ' + escH(x.t) : '') + ' × ' + x.q + '</li>'; }).join('') + '</ul>';
+      P.piede.hidden = false;
+      P.piede.innerHTML = '<div class="borsa__tre"><button class="btn btn--pri" type="button" data-importa="sostituisci">Sostituisci la mia borsa</button><button class="btn btn--sec" type="button" data-importa="unisci">Aggiungi alla mia</button><button class="link-borsa" type="button" data-importa="no">Tieni la mia borsa</button></div>';
+    }
+    if (focusSu) {
+      var f = focusSu === 'h' ? $('[data-h]', P.corpo) : $('[data-k="' + focusSu.k.replace(/"/g, '\\"') + '"] ' + focusSu.sel, P.corpo);
+      (f || P.box).focus({ preventScroll: true });   // aria-disabled lascia il pulsante raggiungibile
+    }
+  }
+  function attivaModulo() {
+    var f = $('#borsa-form'), aiuto = $('[data-quando-aiuto]');
+    var mostraErr = function (c) {
+      var msg = REGOLE_B[c.name](c.value), e = d.getElementById(c.id + '-err');
+      c.setAttribute('aria-invalid', msg ? 'true' : 'false');
+      if (msg) c.setAttribute('aria-errormessage', c.id + '-err'); else c.removeAttribute('aria-errormessage');
+      e.textContent = msg; e.hidden = !msg;
+      return !msg;
+    };
+    var orariGiorno = function () {
+      var v = f.elements.quando.value;
+      if (v && !controllaData(v)) aiuto.textContent = dataLunga(v).replace(/^./, function (c) { return c.toUpperCase(); }) + ': aperti ' + fasceDi(v).map(function (x) { return ora(x[0]) + '–' + ora(x[1]); }).join(' e ') + '.';
+      else aiuto.textContent = 'Entro ' + (B.giorniMassimi || 7) + ' giorni, nei giorni di apertura.';
+      $$('[data-giorno]', f).forEach(function (g) { g.setAttribute('aria-pressed', g.getAttribute('data-giorno') === v ? 'true' : 'false'); });
+    };
+    $$('input, textarea', f).forEach(function (c) {
+      c.addEventListener('input', function () { bozza[c.name] = c.value; if (c.getAttribute('aria-invalid') === 'true' || c.name === 'quando') mostraErr(c); if (c.name === 'quando') orariGiorno(); });
+      c.addEventListener('blur', function () { if (c.value) mostraErr(c); });
+    });
+    f.elements.quando.addEventListener('change', function () { bozza.quando = this.value; mostraErr(this); orariGiorno(); });
+    $$('[data-giorno]', f).forEach(function (g) {
+      g.addEventListener('click', function () { var q = f.elements.quando; q.value = g.getAttribute('data-giorno'); bozza.quando = q.value; mostraErr(q); orariGiorno(); });
+    });
+    orariGiorno();
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var campi = $$('input, textarea', f), ok = campi.map(mostraErr).every(Boolean), esito = $('[data-esito-b]');
+      if (!ok) { esito.textContent = 'Controlla i campi evidenziati.'; var pr = $('[aria-invalid="true"]', f); if (pr) pr.focus({ preventScroll: true }); return; }
+      var b = leggiBorsa(); if (!b.length) { vista = 'lista'; disegnaBorsa('h'); return; }
+      var v = { nome: f.elements.nome.value.trim(), telefono: f.elements.telefono.value.trim(), quando: f.elements.quando.value, note: f.elements.note.value.trim() };
+      var cod = nuovoCodice(), testo = testoRichiesta(cod, v, b);
+      var riep = nProd(pezzi(b)) + ' · ' + euro(totale(b)) + ' (prezzo di esempio) · passi ' + dataLunga(v.quando);
+      if (C.modulo.modalita === 'web3forms' && C.modulo.web3formsAccessKey) {
+        esito.textContent = 'Invio in corso…';
+        var bt = $('.borsa__vai', borsaP.piede); bt.setAttribute('aria-disabled', 'true');
+        fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({ access_key: C.modulo.web3formsAccessKey, subject: B.nome + ' ' + cod + ' – ' + v.nome, from_name: 'Sito ' + C.attivita.nome, codice: cod, nome: v.nome, telefono: v.telefono, giorno: dataLunga(v.quando), note: v.note, message: testo }) })
+          .then(function (r) { return r.json(); })
+          .then(function (j) { if (!j.success) throw 0; ultimo = { codice: cod, riepilogo: riep, wa: '' }; vista = 'fatto'; disegnaBorsa('h'); })
+          .catch(function () { bt.removeAttribute('aria-disabled'); esito.innerHTML = 'Invio non riuscito. <a href="' + waLink(testo) + '" target="_blank" rel="noopener">Manda la richiesta su WhatsApp</a> o chiama il <a href="tel:' + C.contatti.telefonoLink + '">' + C.contatti.telefono + '</a>.'; });
+        return;
+      }
+      var url = waLink(testo);
+      ultimo = { codice: cod, riepilogo: riep, wa: url };
+      window.open(url, '_blank', 'noopener');
+      vista = 'fatto'; disegnaBorsa('h');
+    });
+  }
+  function creaBorsa() {
+    if (borsaP) return;
+    borsaP = Pannello('borsa', { cls: 'pan--borsa', onChiudi: function () { if (vista !== 'modulo') vista = 'lista'; inArrivo = null; } });
+    borsaP.el.addEventListener('click', function (e) {
+      var t = e.target.closest('button, a'); if (!t || !borsaP.el.contains(t)) return;
+      var li = t.closest('[data-k]'), b = leggiBorsa();
+      if (t.hasAttribute('data-q') && li) {
+        if (t.getAttribute('aria-disabled') === 'true') return;
+        var k = li.getAttribute('data-k');
+        b.forEach(function (x) { if (x.c + '|' + x.t === k) x.q = Math.max(1, Math.min(9, x.q + +t.getAttribute('data-q'))); });
+        salvaBorsa(b); disegnaBorsa({ k: k, sel: '[data-q="' + t.getAttribute('data-q') + '"]' });
+      } else if (t.hasAttribute('data-togli') && li) {
+        var i = $$('[data-k]', borsaP.corpo).indexOf(li), k2 = li.getAttribute('data-k');
+        salvaBorsa(b.filter(function (x) { return x.c + '|' + x.t !== k2; }));
+        var resto = leggiBorsa();
+        disegnaBorsa(resto.length ? { k: resto[Math.min(i, resto.length - 1)].c + '|' + resto[Math.min(i, resto.length - 1)].t, sel: '[data-togli]' } : 'h');
+        mostraAvviso('Prodotto tolto dalla borsa');
+      } else if (t.hasAttribute('data-vista')) {
+        vista = t.getAttribute('data-vista'); disegnaBorsa('h'); borsaP.corpo.scrollTop = 0;
+      } else if (t.hasAttribute('data-condividi')) {
+        copia(linkBorsa(b), t, 'Link copiato');
+      } else if (t.hasAttribute('data-svuota')) {
+        if (window.confirm('Vuoi svuotare la borsa?')) { salvaBorsa([]); disegnaBorsa('h'); }
+      } else if (t.hasAttribute('data-svuota-fine')) {
+        salvaBorsa([]); bozza.note = ''; vista = 'lista'; borsaP.chiudi();
+      } else if (t.hasAttribute('data-copia-cod') && ultimo) {
+        copia(ultimo.codice, t);
+      } else if (t.hasAttribute('data-importa') && inArrivo) {
+        var m = t.getAttribute('data-importa');
+        if (m === 'sostituisci') salvaBorsa(inArrivo);
+        else if (m === 'unisci') { inArrivo.forEach(function (x) { var y = b.filter(function (z) { return z.c === x.c && z.t === x.t; })[0]; if (y) y.q = Math.min(9, y.q + x.q); else b.push(x); }); salvaBorsa(b); }
+        inArrivo = null; vista = 'lista'; disegnaBorsa('h');
+      } else if (t.matches('a[href^="#prodotto-"]')) {
+        // la scheda si apre sopra la borsa (gestito dal clic globale)
+      }
+    });
+  }
+  apriBorsa = function (da) {
+    creaBorsa();
+    if (vista === 'fatto' || vista === 'importa') vista = 'lista';
+    disegnaBorsa();
+    borsaP.apri(da);
+  };
+  $$('[data-borsa-apri]').forEach(function (bt) { bt.addEventListener('click', function () { apriBorsa(bt); }); });
+  ascolta.push(function () { if (borsaP && !borsaP.el.hidden && vista === 'lista') disegnaBorsa(); });
+  // borsa ricevuta con un link
+  function daLinkBorsa() {
+    if (!/^#borsa=/.test(location.hash)) return;
+    var arrivo = leggiLink(location.hash);
+    history.replaceState(null, '', location.pathname + location.search);
+    if (!arrivo.length) { mostraAvviso('Il link della borsa non contiene prodotti disponibili.'); return; }
+    var mia = leggiBorsa();
+    creaBorsa();
+    if (!mia.length) { salvaBorsa(arrivo); vista = 'lista'; disegnaBorsa(); borsaP.apri(); mostraAvviso('Borsa ricevuta: ' + nProd(pezzi(arrivo))); }
+    else { inArrivo = arrivo; vista = 'importa'; disegnaBorsa(); borsaP.apri(); }
+  }
+  addEventListener('hashchange', daLinkBorsa);
+  daLinkBorsa();
+  var suggerimentiBorsa = function () {};       // "Ti potrebbe servire anche" (blocco 4)
 
   /* ---------------- Mappa solo al clic ---------------- */
   var mappa = $('[data-mappa]');

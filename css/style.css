@@ -946,6 +946,62 @@ img.pc__ill { width: 100%; height: 100%; object-fit: cover; }
 @media (min-width: 560px) { .ins { grid-template-columns: 64px minmax(0, 1fr) minmax(0, 220px); } .ins__az { grid-column: auto; } }
 
 .link-borsa { padding: 0; border: 0; background: none; font: inherit; color: var(--c-cobalto); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; min-height: 32px; }
+/* borsa "Prenota e ritira" */
+.pan--borsa[data-vista="modulo"] .pan__box { height: 92svh; }
+@media (min-width: 1024px) { .pan--borsa[data-vista="modulo"] .pan__box { height: auto; } }
+.borsa__intro { margin: 0 0 1rem; font-size: .9375rem; color: var(--c-a700); }
+.borsa__lista { border-top: 1px solid var(--c-ink); }
+.bv { display: grid; grid-template-columns: 72px minmax(0, 1fr) auto; grid-template-areas: "m i t" "m a a"; gap: .5rem .8rem; padding: .9rem 0; border-bottom: 1px solid var(--c-linea); }
+.bv__media { grid-area: m; display: grid; place-items: center; width: 72px; height: 72px; background: color-mix(in srgb, var(--acc) 12%, var(--c-gesso)); border-radius: var(--r1); }
+.bv__ill { width: 84%; height: auto; }
+img.bv__ill { width: 100%; height: 100%; object-fit: cover; }
+.bv__info { grid-area: i; min-width: 0; }
+.bv__cod { margin: 0; font: 600 .6875rem/1 var(--f-testo); letter-spacing: .1em; color: var(--c-a500); }
+.bv__nome { margin: .3rem 0 0; font-weight: 600; font-size: .9375rem; line-height: 1.25; }
+.bv__nome a { text-decoration: none; }
+@media (hover: hover) { .bv__nome a:hover { text-decoration: underline; } }
+.bv__det { margin: .25rem 0 0; font-size: .8125rem; color: var(--c-a700); }
+.bv__det b { color: var(--c-ink); }
+.bv__tot { grid-area: t; margin: 0; font: 800 1.2rem/1 var(--f-tit); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.bv__az { grid-area: a; display: flex; align-items: center; justify-content: space-between; gap: .75rem; }
+.passi { display: inline-flex; align-items: center; border: 1.5px solid var(--c-ink); border-radius: var(--r1); }
+.passi button { width: 44px; height: 40px; display: grid; place-items: center; padding: 0; border: 0; background: none; color: var(--c-ink); cursor: pointer; }
+.passi button[aria-disabled="true"] { color: var(--c-a300); cursor: default; }
+.passi output { min-width: 28px; text-align: center; font: 800 1.15rem/1 var(--f-tit); font-variant-numeric: tabular-nums; }
+.bv__togli { min-height: 40px; padding: 0 .2rem; border: 0; background: none; font: 600 .8125rem/1 var(--f-testo); color: var(--c-a700); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.borsa__strumenti { display: flex; justify-content: space-between; gap: 1rem; margin-top: .5rem; }
+.link-borsa--grigio { color: var(--c-a700); }
+.borsa__tot { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: .6rem; font-size: .875rem; color: var(--c-a700); }
+.borsa__tot b { font: 800 1.6rem/1 var(--f-tit); color: var(--c-ink); font-variant-numeric: tabular-nums; }
+.borsa__vai { width: 100%; min-height: 54px; white-space: normal; }
+.borsa__due { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+.borsa__tre { display: grid; gap: .5rem; }
+.borsa__tre .link-borsa { justify-self: center; min-height: 44px; }
+.borsa__vuota { padding: 2rem 0 1rem; text-align: center; }
+.borsa__ico { display: inline-grid; place-items: center; width: 72px; height: 72px; border-radius: 50%; background: var(--c-gesso); }
+.borsa__ico .ico { width: 32px; height: 32px; }
+.borsa__vtit { margin: 1rem 0 .4rem; font: 800 1.8rem/1 var(--f-tit); text-transform: uppercase; }
+.borsa__vuota > p:not(.borsa__vtit) { margin: 0 auto 1.25rem; max-width: 36ch; color: var(--c-a700); }
+.borsa__sport { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+.borsa__indietro { display: inline-flex; align-items: center; gap: .3rem; min-height: 44px; font-size: .875rem; }
+.borsa__h { margin: .5rem 0 1rem; font: 800 1.5rem/1.05 var(--f-tit); text-transform: uppercase; outline: none; }
+.borsa__form .campo input, .borsa__form .campo textarea { font-size: 1rem; }
+.borsa__esito { margin: .5rem 0 0; font-weight: 600; color: var(--c-errore); }
+.borsa__esito:empty { display: none; }
+.borsa__lista--mini { padding: .5rem 0; font-size: .9375rem; }
+.borsa__lista--mini li { padding: .4rem 0; border-bottom: 1px solid var(--c-linea); }
+.giorni { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin-top: .4rem; }
+.giorni__b { display: flex; flex-direction: column; align-items: center; gap: 2px; min-height: 60px; padding: .4rem .2rem; border: 1.5px solid var(--c-a300); border-radius: var(--r1); background: #FFFFFF; color: var(--c-ink); font: 600 .6875rem/1.1 var(--f-testo); text-transform: uppercase; letter-spacing: .06em; cursor: pointer; }
+.giorni__b b { font: 800 1.35rem/1 var(--f-tit); letter-spacing: 0; }
+.giorni__b[aria-pressed="true"] { background: var(--c-ink); color: #FFFFFF; border-color: var(--c-ink); }
+.giorni__b:disabled { background: transparent; color: var(--c-a300); border-style: dashed; cursor: not-allowed; }
+.codice { padding: 1.5rem 1rem; margin-top: .5rem; text-align: center; background: var(--c-ink); color: #FFFFFF; border-radius: var(--r2); }
+.codice__et { margin: 0; font: 600 .75rem/1 var(--f-testo); text-transform: uppercase; letter-spacing: .14em; color: var(--c-a300); }
+.codice__val { margin: .6rem 0 1rem; font: italic 800 clamp(3.2rem, 14vw, 4.5rem)/1 var(--f-tit); letter-spacing: .06em; color: #FFFFFF; outline: none; user-select: all; }
+.codice .btn--sec { border-color: #FFFFFF; color: #FFFFFF; --hv: #FFFFFF; --hv-txt: var(--c-ink); }
+.codice__testo { margin: 1.1rem 0 0; color: var(--c-a700); }
+.codice__riep { margin: 1rem 0 0; padding-top: 1rem; border-top: 1px solid var(--c-linea); font-size: .875rem; color: var(--c-a500); }
+
 /* avviso in basso */
 .avviso {
   position: fixed; left: 50%; bottom: calc(var(--barra-h) + 12px + env(safe-area-inset-bottom)); z-index: 80; width: max-content; max-width: calc(100vw - 2 * var(--gutter));
