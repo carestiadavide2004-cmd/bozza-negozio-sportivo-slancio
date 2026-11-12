@@ -1,0 +1,586 @@
+{
+ "calcio-tute-e-felpe": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.75
+ },
+ "calcio-portieri": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.7501
+ },
+ "calcio-maglie-e-divise": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.7499
+ },
+ "calcio-palloni": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.75
+ },
+ "calcio-hero-m": {
+  "misure": [
+   720,
+   1080
+  ],
+  "rapporto": 1.7782
+ },
+ "calcio-scarpe-da-calcio": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.75
+ },
+ "calcio-tessera": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 1.3335
+ },
+ "calcetto-hero-m": {
+  "misure": [
+   720,
+   1080
+  ],
+  "rapporto": 1.7776
+ },
+ "calcetto-maglie-e-kit-squadra": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.75
+ },
+ "calcetto-palloni": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.75
+ },
+ "calcetto-tessera": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 1.3332
+ },
+ "basket-hero-m": {
+  "misure": [
+   720,
+   1080
+  ],
+  "rapporto": 1.7776
+ },
+ "calcetto-hero": {
+  "misure": [
+   640,
+   1280,
+   1920,
+   2400
+  ],
+  "rapporto": 0.5626
+ },
+ "basket-hero": {
+  "misure": [
+   640,
+   1280,
+   1920,
+   2400
+  ],
+  "rapporto": 0.6522
+ },
+ "basket-scarpe": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.7499
+ },
+ "basket-canotte-e-pantaloncini": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.75
+ },
+ "calcio-hero": {
+  "misure": [
+   640,
+   1280,
+   1920,
+   2400
+  ],
+  "rapporto": 0.7143
+ },
+ "basket-tessera": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 1.3335
+ },
+ "pallavolo-scarpe": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.75
+ },
+ "basket-palloni": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.75
+ },
+ "pallavolo-ginocchiere-e-protezioni": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.7501
+ },
+ "pallavolo-hero-m": {
+  "misure": [
+   720,
+   1080
+  ],
+  "rapporto": 1.7777
+ },
+ "pallavolo-divise": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.75
+ },
+ "pallavolo-palloni": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.75
+ },
+ "pallavolo-tessera": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 1.3333
+ },
+ "tennis-hero-m": {
+  "misure": [
+   720,
+   1080
+  ],
+  "rapporto": 1.7778
+ },
+ "pallavolo-hero": {
+  "misure": [
+   640,
+   1280,
+   1920,
+   2400
+  ],
+  "rapporto": 0.6675
+ },
+ "tennis-racchette": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.75
+ },
+ "tennis-abbigliamento": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.75
+ },
+ "tennis-tessera": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 1.3334
+ },
+ "tennis-scarpe": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.75
+ },
+ "padel-hero-m": {
+  "misure": [
+   720,
+   1080
+  ],
+  "rapporto": 1.7775
+ },
+ "tennis-palline": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.75
+ },
+ "padel-abbigliamento": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.75
+ },
+ "tennis-hero": {
+  "misure": [
+   640,
+   1280,
+   1920,
+   2400
+  ],
+  "rapporto": 0.6666
+ },
+ "padel-racchette": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.75
+ },
+ "padel-tessera": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 1.3333
+ },
+ "pugilato-e-combattimento-hero-m": {
+  "misure": [
+   720,
+   1080
+  ],
+  "rapporto": 1.7778
+ },
+ "pugilato-e-combattimento-tessera": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 1.3332
+ },
+ "pugilato-e-combattimento-guantoni": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.75
+ },
+ "pugilato-e-combattimento-sacchi-e-colpitori": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.7501
+ },
+ "pugilato-e-combattimento-bende-corde-e-accessori": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.75
+ },
+ "padel-hero": {
+  "misure": [
+   640,
+   1280,
+   1920,
+   2400
+  ],
+  "rapporto": 0.7501
+ },
+ "pugilato-e-combattimento-hero": {
+  "misure": [
+   640,
+   1280,
+   1920,
+   2400
+  ],
+  "rapporto": 0.6667
+ },
+ "sci-e-snowboard-hero-m": {
+  "misure": [
+   720,
+   1080
+  ],
+  "rapporto": 1.7778
+ },
+ "sci-e-snowboard-scarponi-e-attrezzi": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.75
+ },
+ "sci-e-snowboard-caschi-e-maschere": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.7501
+ },
+ "sci-e-snowboard-giacche-e-pantaloni": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.75
+ },
+ "sci-e-snowboard-hero": {
+  "misure": [
+   640,
+   1280,
+   1920,
+   2400
+  ],
+  "rapporto": 0.6623
+ },
+ "sci-e-snowboard-tessera": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 1.3333
+ },
+ "nuoto-hero-m": {
+  "misure": [
+   720,
+   1080
+  ],
+  "rapporto": 1.7774
+ },
+ "nuoto-occhialini-e-cuffie": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.75
+ },
+ "running-hero-m": {
+  "misure": [
+   720,
+   1080
+  ],
+  "rapporto": 1.7773
+ },
+ "nuoto-tessera": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 1.3333
+ },
+ "running-scarpe-da-corsa": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.7501
+ },
+ "running-abbigliamento-tecnico": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.75
+ },
+ "fitness-e-palestra-abbigliamento": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.75
+ },
+ "running-tessera": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 1.3333
+ },
+ "nuoto-hero": {
+  "misure": [
+   640,
+   1280,
+   1920,
+   2400
+  ],
+  "rapporto": 0.7087
+ },
+ "fitness-e-palestra-hero-m": {
+  "misure": [
+   720,
+   1080
+  ],
+  "rapporto": 1.7778
+ },
+ "fitness-e-palestra-scarpe-da-training": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.75
+ },
+ "running-hero": {
+  "misure": [
+   640,
+   1280,
+   1920,
+   2400
+  ],
+  "rapporto": 0.6667
+ },
+ "fitness-e-palestra-tessera": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 1.3333
+ },
+ "fitness-e-palestra-pesi-e-attrezzi": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.75
+ },
+ "fitness-e-palestra-yoga-e-pilates": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.75
+ },
+ "fitness-e-palestra-borse-e-accessori": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.75
+ },
+ "ciclismo-abbigliamento": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.7499
+ },
+ "ciclismo-hero-m": {
+  "misure": [
+   720,
+   1080
+  ],
+  "rapporto": 1.7777
+ },
+ "fitness-e-palestra-hero": {
+  "misure": [
+   640,
+   1280,
+   1920,
+   2400
+  ],
+  "rapporto": 0.6667
+ },
+ "ciclismo-caschi": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.75
+ },
+ "ciclismo-scarpe": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 0.75
+ },
+ "ciclismo-tessera": {
+  "misure": [
+   480,
+   960,
+   1440
+  ],
+  "rapporto": 1.3333
+ },
+ "ciclismo-hero": {
+  "misure": [
+   640,
+   1280,
+   1920,
+   2400
+  ],
+  "rapporto": 0.6676
+ }
+}
