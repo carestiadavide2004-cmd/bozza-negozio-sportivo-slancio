@@ -130,7 +130,9 @@ Nessuna foto davvero bella e senza loghi leggibili → disegno SVG sul colore de
   - Da file:// il browser blocca il .glb: messaggio chiaro invece del visore.
   - CREDITI.md: modello, illustrazioni, model-viewer. ISTRUZIONI.md: catalogo aggiornato, borsa e guida, nuova sezione "Foto e 3D dei prodotti (versione per il cliente)" con nomi file, flusso admin futuro e nota Firebase Blaze.
   - Prova automatica (v3d.mjs): 7/7 ok.
-- [ ] Revisione art director (2 giri) e controllo veloce
+- [x] Revisione art director (2 giri) e controllo veloce
+  - Controllo veloce (Chromium, 390 e 1440, 49 secondi in tutto): 64 pagine categoria; Basket → Scarpe funziona da file:// e da server; filtri e ordinamento cambiano davvero i risultati; borsa 18/18 (3 prodotti di cui 1 bambino da 2 sport, resta cambiando pagina, esaurito non aggiungibile, data passata e domenica rifiutate, codice SL-XXXX, link WhatsApp completo, borsa condivisa ricreata in una pagina nuova); suggerimenti 5/5; calcolatore 15 cm → 25, 27 cm → 43; 3D 7/7 (solo dopo il clic, nessuna richiesta esterna); 26 pagine senza errori in console, senza scorrimento laterale, richieste esterne solo cdnjs, 0 cookie.
+  - Script in ~/.carestia-qa/slancio: finale.mjs, borsa.mjs, insieme.mjs, v3d.mjs, rev.mjs (schermate), peso2.mjs.
 
 ## Revisione art director – primo giro (schermate 390 / 768 / 1440)
 1. [x] Card esaurita sul telefono: "Chiedi quando arriva" tagliato a metà → testo su due righe, icona nascosta sotto 480 px.
