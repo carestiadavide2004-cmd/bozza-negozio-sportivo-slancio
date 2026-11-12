@@ -5,3 +5,4 @@ _prove/
 node_modules/
 .DS_Store
 *.log
+modelli/

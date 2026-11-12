@@ -2,17 +2,17 @@
 
 ## Stato
 - [x] Fase 1 – Direzione artistica (DESIGN.md, piano immagini, strumenti verificati)
-- [ ] Fase 2 – Blocco A: base comune (config.js, build.mjs, css, js, font, logo)
-- [ ] Fase 2 – Blocco B: home
-- [ ] Fase 2 – Blocco C: pagina sport di prova (calcio)
-- [ ] Fase 2 – Blocco D: altre 11 pagine sport, privacy, 404
+- [x] Fase 2 – Blocco A: base comune (config.js, build.mjs, css, js, font, logo, favicon, og.jpg)
+- [x] Fase 2 – Blocco B: home (video hero, tessere, perché, configuratore maglia, marchi, negozio, modulo, FAQ)
+- [x] Fase 2 – Blocco C: pagina sport di prova (calcio) – controllata a 390 e 1440
+- [x] Fase 2 – Blocco D: altre 11 pagine sport, privacy, 404 (stesso modello, generate da build.mjs)
 - [ ] Fase 3 – Revisione art director (12+ difetti, 2 giri)
 - [ ] Fase 4 – Controllo veloce e pubblicazione
 
 ## Strumenti verificati (Fase 1)
 - node v26.10.0 ✔ · ffmpeg 9.0.2 con libx264 ✔ · cwebp 1.6.0 (WebP) ✔ · Playwright Chromium in ~/.carestia-qa ✔ · gh collegato a carestiadavide2004-cmd ✔
 - Font scaricati da Fontsource (SIL OFL): Barlow Condensed 800 + 800 corsivo, Barlow 400 + 600 (90 KB in tutto).
-- Metodo foto: ricerca su pexels.com (pagine di ricerca), download dell'ORIGINALE da images.pexels.com, video da pexels.com/download/video/ID.
+- Metodo foto: elenco id dalle pagine di ricerca pexels.com (lette come testo), anteprime e download dell'ORIGINALE da images.pexels.com, video da pexels.com/download/video/ID.
 
 ## Piano immagini (ricerche Pexels)
 Per ogni sport: 1 hero orizzontale (sorgente ≥2400px), 1 tessera verticale, 1 foto per categoria. Se non c'è una foto davvero bella → icona SVG sul colore sport.
@@ -34,8 +34,24 @@ Per ogni sport: 1 hero orizzontale (sorgente ≥2400px), 1 tessera verticale, 1 
 
 Video hero home: orizzontale "athlete sprint slow motion" / verticale "soccer slow motion vertical" (azione spettacolare, niente loghi).
 
-## Categorie con icona al posto della foto
-(da compilare durante il Blocco D)
+## Categorie con icona al posto della foto (27)
+Nessuna foto davvero bella e senza loghi leggibili → disegno SVG sul colore dello sport.
+- Calcio: Pantaloncini e calzettoni · Parastinchi e protezioni · Borse e zaini
+- Calcetto: Scarpe da calcetto · Pantaloncini e calze · Parastinchi e guanti · Borse e zaini
+- Basket: Tute e felpe · Protezioni e accessori
+- Pallavolo: Borse e accessori
+- Tennis: Borse e sacche · Accessori
+- Padel: Scarpe · Palline · Borse e paletteros · Accessori
+- Pugilato: Caschetti e protezioni · Abbigliamento e scarpe
+- Sci: Strati termici · Guanti e accessori
+- Nuoto: Costumi · Accappatoi e teli · Accessori e attrezzi · Zaini e borse
+- Running: Calze e protezioni · Accessori
+- Ciclismo: Accessori
+
+## Comandi utili
+- `node build.mjs` rigenera tutte le pagine da config.js.
+- Server locale: `python3 -m http.server 8765` nella cartella del sito.
+- Script di controllo (fuori dal sito): ~/.carestia-qa/slancio/shot.mjs, strisce.sh, og.mjs.
 
 ## Difetti Fase 3
 (da compilare)
