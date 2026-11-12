@@ -1,0 +1,7 @@
+_controllo/
+_screen/
+_sorgenti/
+_prove/
+node_modules/
+.DS_Store
+*.log
