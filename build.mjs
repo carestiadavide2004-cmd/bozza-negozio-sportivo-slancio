@@ -581,7 +581,7 @@ function paginaSport(s) {
     const media = c.foto && IMG[c.foto.file]
       ? `<div class="cat__media" data-foto>${img(c.foto.file, c.foto.alt, rel, { sizes: '(min-width: 1200px) 400px, (min-width: 768px) 45vw, 40vw' })}</div>`
       : `<div class="cat__media cat__media--ico" aria-hidden="true">${campo(s.campo, 'cat__campo')}${ico(c.icona, 'ico cat__ico')}</div>`;
-    const prodotti = (c.prodotti || []).length ? `<ul class="prodotti">${c.prodotti.map(p => `<li class="prod">${p.immagine ? `<img src="${rel}${p.immagine}" alt="${esc(p.nome)}" width="480" height="480" loading="lazy" decoding="async">` : ''}<p class="prod__marchio">${esc(p.marchio || '')}</p><p class="prod__nome">${esc(p.nome)}</p>${prezzo(p)}${p.disponibilita ? `<p class="prod__disp prod__disp--${esc(p.disponibilita.replace(/\s+/g, '-'))}">${esc(C.catalogo.testoDisponibilita[p.disponibilita] || p.disponibilita)}</p>` : ''}</li>`).join('')}</ul>` : '';
+    const prodotti = (c.prodotti || []).length ? `<ul class="prodotti">${c.prodotti.map(p => `<li class="prod">${p.immagine ? `<img src="${rel}${p.immagine}" alt="${esc(p.nome)}" width="480" height="480" loading="lazy" decoding="async">` : ''}<p class="prod__marchio">${esc(p.marchio || '')}</p><p class="prod__nome">${esc(p.nome)}</p>${prezzo(p)}${p.disponibilita ? `<p class="prod__disp prod__disp--${esc(p.disponibilita.replace(/\s+/g, '-'))}">${esc(C.catalogo.disponibilita[p.disponibilita] || p.disponibilita)}</p>` : ''}</li>`).join('')}</ul>` : '';
     return `<article class="cat${i >= 5 ? ' cat--extra' : ''}" id="${c.slug}" data-cat>
   ${media}
   <div class="cat__corpo">

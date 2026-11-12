@@ -90,7 +90,11 @@ Nessuna foto davvero bella e senza loghi leggibili → disegno SVG sul colore de
 
 ## Stato
 - [x] Blocco 0 – Controllo link: tutti i link interni puntano al file (`.../index.html`), anche quelli creati da JS; verificato da file:// e da server (passo precedente, ricontrollato con grep dopo `node build.mjs`). Le pagine nuove usano gli stessi helper (`sportUrl`, `vaiHome`, `catUrl`).
-- [ ] Blocco 1 – Catalogo di esempio in config.js + illustrazioni (assets/img/prodotti.svg)
+- [x] Blocco 1 – Catalogo di esempio in config.js + illustrazioni (assets/img/prodotti.svg)
+  - 267 prodotti in 64 categorie (12 sport), codici tipo CAL-SCA-01, nessun marchio, prezzi di esempio in 3 fasce, linea adulto/bambino/entrambe, 35 tipi di taglia in catalogo.taglie (con gruppi bambino+adulto), disponibilità "in negozio" / "su ordinazione" / "esaurito", campi pronti foto: [] e modello3d: ''.
+  - Categoria "su richiesta" (Scarponi e attrezzi) con 2 prodotti; almeno 1 prodotto bambino in scarpe, abbigliamento, palloni, protezioni, caschi, costumi.
+  - Regole "insieme" per ogni categoria; testi della borsa e guida taglie in config.
+  - Sprite di 66 illustrazioni originali (50 KB) generato da _strumenti/illustrazioni.mjs; colore = currentColor. Da file:// i browser bloccano <use> verso file esterni → copia js/prodotti-svg.js caricata solo in quel caso.
 - [ ] Blocco 2 – Pagine categoria, anteprime nella pagina sport, scheda prodotto
 - [ ] Blocco 3 – Borsa "Prenota e ritira" con codice, modulo, condivisione, privacy
 - [ ] Blocco 4 – "Spesso comprati insieme"
