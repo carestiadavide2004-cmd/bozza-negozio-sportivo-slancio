@@ -1165,6 +1165,67 @@
   if (location.hash === '#guida-taglie') { history.replaceState(null, '', location.pathname + location.search); apriGuida(); }
   window.SLANCIO.numeroScarpa = numeroEU;
 
+  /* =====================================================================
+     VEDI IN 3D: <model-viewer> ospitato nel sito, caricato solo al clic
+     ===================================================================== */
+  var v3d, mvPronto = null;
+  function caricaMV() {
+    if (mvPronto) return mvPronto;
+    mvPronto = new Promise(function (ok, ko) {
+      if (window.customElements && customElements.get('model-viewer')) return ok();
+      var sc = d.createElement('script');
+      sc.src = REL + 'assets/js/vendor/model-viewer.min.js';
+      sc.onload = function () { customElements.whenDefined('model-viewer').then(ok); };
+      sc.onerror = function () { mvPronto = null; ko(); };
+      d.head.appendChild(sc);
+    });
+    return mvPronto;
+  }
+  function apri3D(cod, da) {
+    var r = PROD[cod]; if (!r || !r.p.modello3d) return;
+    var p = r.p;
+    if (!v3d) v3d = Pannello('vista-3d', { cls: 'pan--largo pan--3d', onChiudi: function () { $('.v3d__scena', v3d.corpo).innerHTML = ''; } });
+    v3d.el.style.setProperty('--acc', r.s.accento);
+    v3d.tit.textContent = 'Vedi in 3D';
+    v3d.corpo.innerHTML = '<div class="v3d"><div class="v3d__scena" data-scena><p class="v3d__stato" data-stato>Carico il modello 3D…</p></div>' +
+      '<p class="v3d__et">Anteprima 3D di esempio</p>' +
+      '<p class="v3d__nome">' + escH(p.nome) + ' <span>' + p.codice + '</span></p>' +
+      '<p class="v3d__aiuto">Trascina per ruotare · pizzica o usa la rotella per ingrandire · doppio tocco per tornare all\'inizio</p></div>';
+    v3d.piede.hidden = true;
+    v3d.apri(da);
+    var scena = $('[data-scena]', v3d.corpo), stato = $('[data-stato]', v3d.corpo);
+    if (location.protocol === 'file:') {
+      stato.innerHTML = 'Il 3D si vede aprendo il sito da internet.<br>Aprendo il file dal computer il browser blocca il caricamento del modello.';
+      return;
+    }
+    caricaMV().then(function () {
+      if (v3d.el.hidden) return;
+      var mv = d.createElement('model-viewer');
+      mv.setAttribute('src', REL + p.modello3d);
+      mv.setAttribute('alt', 'Modello 3D di esempio: ' + p.nome);
+      mv.setAttribute('camera-controls', '');
+      mv.setAttribute('touch-action', 'pan-y');
+      mv.setAttribute('interaction-prompt', 'none');
+      mv.setAttribute('shadow-intensity', '1');
+      mv.setAttribute('exposure', '1.05');
+      mv.setAttribute('min-camera-orbit', 'auto auto 40%');
+      mv.setAttribute('max-camera-orbit', 'auto auto 180%');
+      if (!ridotto.matches) { mv.setAttribute('auto-rotate', ''); mv.setAttribute('auto-rotate-delay', '0'); mv.setAttribute('rotation-per-second', '14deg'); }
+      // al primo tocco la rotazione automatica si ferma
+      var ferma = function () { mv.removeAttribute('auto-rotate'); };
+      mv.addEventListener('pointerdown', ferma, { once: true });
+      mv.addEventListener('camera-change', function (e) { if (e.detail && e.detail.source === 'user-interaction') ferma(); });
+      mv.addEventListener('dblclick', function () { mv.cameraOrbit = 'auto auto auto'; mv.fieldOfView = 'auto'; mv.jumpCameraToGoal(); });
+      mv.addEventListener('load', function () { stato.hidden = true; });
+      mv.addEventListener('error', function () { stato.hidden = false; stato.textContent = 'Il modello 3D non si è caricato. Riprova più tardi.'; });
+      scena.appendChild(mv);
+    }, function () { stato.textContent = 'Il visore 3D non si è caricato. Riprova più tardi.'; });
+  }
+  d.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-3d]'); if (!b) return;
+    apri3D(b.getAttribute('data-3d'), b);
+  });
+
   /* ---------------- Mappa solo al clic ---------------- */
   var mappa = $('[data-mappa]');
   if (mappa) $('[data-mappa-btn]', mappa).addEventListener('click', function () {

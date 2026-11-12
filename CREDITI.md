@@ -77,3 +77,21 @@ Tutte le foto e il video vengono da [Pexels](https://www.pexels.com) (licenza Pe
 og.jpg: composizione da un fotogramma del video 3192198.
 
 Categorie senza foto (disegno SVG): vedi PROGRESSO.md.
+
+## Illustrazioni dei prodotti
+
+assets/img/prodotti.svg (e la copia js/prodotti-svg.js): disegni originali fatti per questo sito con _strumenti/illustrazioni.mjs, senza marchi.
+
+## Modello 3D
+
+| File | Fonte | Licenza |
+|---|---|---|
+| assets/3d/pallone-cuoio.glb (prodotto CAL-PAL-03) | "Dirty Football" di Rohit Seervi su [Poly Haven](https://polyhaven.com/a/dirty_football) | CC0 (pubblico dominio): uso libero anche commerciale, attribuzione non obbligatoria |
+
+Convertito da glTF + texture JPG in un unico file .glb (2 MB), senza modifiche alla forma.
+
+## Software
+
+| File | Progetto | Licenza |
+|---|---|---|
+| assets/js/vendor/model-viewer.min.js | [&lt;model-viewer&gt;](https://modelviewer.dev) 4.4.0 di Google (include three.js, MIT) | Apache-2.0 / BSD-3-Clause, testo in assets/js/vendor/model-viewer-LICENSE.txt |

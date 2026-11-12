@@ -123,7 +123,13 @@ Nessuna foto davvero bella e senza loghi leggibili → disegno SVG sul colore de
   - Calcolatore: lunghezza del piede in cm → numero EU = arrotondamento di 1,5 × (cm + 1,5): 15 cm → 25, 27 cm → 43; fuori da 10–33 cm messaggio d'errore. Istruzioni per misurare, nota per corsa e bambini, tabelle numero/piede 24–35 e 36–47.
   - Avviso in alto: le misure cambiano da marca a marca e in negozio si prova tutto. Link WhatsApp per i dubbi.
   - Il pulsante "Guida taglie" compare solo nelle categorie dove serve (non per racchette, palline…).
-- [ ] Blocco 6 – "Vedi in 3D" (model-viewer ospitato nel sito)
+- [x] Blocco 6 – "Vedi in 3D" (model-viewer ospitato nel sito)
+  - Un solo modello adatto trovato con licenza libera: "Dirty Football" (Poly Haven, CC0), pallone in cuoio cucito, 2 MB, nessun marchio → prodotto CAL-PAL-03 "Pallone in cuoio cucito a mano". Un secondo modello sportivo CC0 senza marchi e di qualità non c'era: non forzato.
+  - model-viewer 4.4.0 in assets/js/vendor/ (licenza inclusa), caricato solo al clic su "Vedi in 3D": prima del clic 0 byte, dopo solo file del sito (nessuna richiesta esterna).
+  - Visore: rotazione con dito e mouse, zoom (con limiti), doppio tocco per tornare all'inizio, rotazione automatica lenta che si ferma al primo tocco, assente con movimento ridotto; sfondo scuro con riga del colore dello sport, "Anteprima 3D di esempio", chiusura con X o Esc; chiudendo il visore viene liberato.
+  - Da file:// il browser blocca il .glb: messaggio chiaro invece del visore.
+  - CREDITI.md: modello, illustrazioni, model-viewer. ISTRUZIONI.md: catalogo aggiornato, borsa e guida, nuova sezione "Foto e 3D dei prodotti (versione per il cliente)" con nomi file, flusso admin futuro e nota Firebase Blaze.
+  - Prova automatica (v3d.mjs): 7/7 ok.
 - [ ] Revisione art director (2 giri) e controllo veloce
 - [ ] Pubblicazione e verifica online
 

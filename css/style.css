@@ -1042,6 +1042,25 @@ img.bv__ill { width: 100%; height: 100%; object-fit: cover; }
 .calc__ris.is-err .calc__n, .calc__ris.is-err .calc__t { color: #FF9AA8; }
 .calc__nota { margin: .8rem 0 0; font-size: .8125rem; color: var(--c-a300); }
 
+/* visore 3D */
+.pan--3d .pan__box { height: 92svh; }
+@media (min-width: 1024px) { .pan--3d .pan__box { height: auto; } }
+.v3d { display: flex; flex-direction: column; min-height: 100%; }
+.v3d__scena {
+  position: relative; flex: 1 1 auto; min-height: min(62svh, 560px); margin: -1rem calc(var(--gutter) * -1) 0; overflow: hidden;
+  background: radial-gradient(70% 60% at 50% 45%, #2A2E36 0%, var(--c-a900) 55%, var(--c-ink) 100%);
+}
+.v3d__scena::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: var(--acc); }
+@media (min-width: 1024px) { .v3d__scena { margin: -1.5rem -2rem 0; min-height: 64vh; } }
+.v3d__scena model-viewer { position: absolute; inset: 0; width: 100%; height: 100%; --poster-color: transparent; background: transparent; outline: none; }
+.v3d__stato { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; padding: 2rem; text-align: center; color: var(--c-a300); font-size: .9375rem; }
+.v3d__stato[hidden] { display: none; }
+.v3d__et { align-self: flex-start; margin: 1rem 0 0; }
+.v3d__et { display: inline-flex; padding: .45rem .6rem; font: 600 .6875rem/1 var(--f-testo); text-transform: uppercase; letter-spacing: .14em; color: var(--c-a500); border: 1px dashed currentColor; border-radius: var(--r1); }
+.v3d__nome { margin: .75rem 0 0; font: 800 1.5rem/1 var(--f-tit); text-transform: uppercase; }
+.v3d__nome span { white-space: nowrap; margin-left: .4rem; font: 600 .75rem/1 var(--f-testo); letter-spacing: .1em; color: var(--c-a500); }
+.v3d__aiuto { margin: .5rem 0 0; font-size: .875rem; color: var(--c-a700); }
+
 /* avviso in basso */
 .avviso {
   position: fixed; left: 50%; bottom: calc(var(--barra-h) + 12px + env(safe-area-inset-bottom)); z-index: 80; width: max-content; max-width: calc(100vw - 2 * var(--gutter));
