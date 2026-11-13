@@ -1287,8 +1287,6 @@ function home() {
 
 ${nastroSport()}
 
-${fasciaForma(rel)}
-
 <section class="sez sport-scelta" id="sport" aria-labelledby="tit-sport">
   <div class="parola-g" aria-hidden="true" data-parola>SPORT</div>
   <div class="wrap">
@@ -1306,6 +1304,19 @@ ${tessere}
   </div>
 </section>
 
+${fasciaForma(rel)}
+
+${configuratore(rel)}
+
+${fasciaSquadre(rel)}
+
+<section class="marchi" aria-labelledby="tit-marchi">
+  <div class="wrap marchi__testa"><h2 class="occhiello" id="tit-marchi">Marchi trattati (esempio)</h2></div>
+  <div class="nastro nastro--marchi"><div class="nastro__traccia"><div class="nastro__gruppo">${marchi}<span class="nastro__sep" aria-hidden="true">·</span></div><div class="nastro__gruppo" aria-hidden="true">${marchi}<span class="nastro__sep">·</span></div></div></div>
+</section>
+
+${fasciaServizi(rel)}
+
 <section class="sez sez--scura perche" id="perche" aria-labelledby="tit-perche">
   <div class="parola-g parola-g--chiara" aria-hidden="true" data-parola>${esc(NOME)}</div>
   <div class="wrap">
@@ -1322,16 +1333,6 @@ ${tessere}
       <ul class="numeri__lista">${numeri}</ul>
     </div>
   </div>
-</section>
-
-${configuratore(rel)}
-
-${fasciaSquadre(rel)}
-${fasciaServizi(rel)}
-
-<section class="marchi" aria-labelledby="tit-marchi">
-  <div class="wrap marchi__testa"><h2 class="occhiello" id="tit-marchi">Marchi trattati (esempio)</h2></div>
-  <div class="nastro nastro--marchi"><div class="nastro__traccia"><div class="nastro__gruppo">${marchi}<span class="nastro__sep" aria-hidden="true">·</span></div><div class="nastro__gruppo" aria-hidden="true">${marchi}<span class="nastro__sep">·</span></div></div></div>
 </section>
 
 <section class="sez negozio" id="negozio" aria-labelledby="tit-negozio">

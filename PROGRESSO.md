@@ -6,7 +6,10 @@ Per ripartire: leggi questa checklist e riprendi dalla prima voce non spuntata. 
 - [x] 1. Frase dell'hero: "Tutto lo sport, in un solo negozio." + sottotitolo nuovo (config.js `home.heroTitolo`, `home.heroSottotitolo`)
   - La frase vecchia era anche nel motto del footer di tutte le pagine e nei dati per Google (`attivita.payoff` → frase nuova) e in og.jpg (rifatta con la frase nuova). Title, og:title e og:description non la contenevano. Nessuna traccia nel PDF del kit e nei testi.
   - 3 righe a 360, 390, 768, 1024, 1440 e 1920 px. Da 768 px il titolo è largo almeno 6,3em (la prima riga sta intera) e un po' più piccolo (6,3vw); le foto degli altri sport partono al 33% invece del 30%: controllate le 12 diapositive, il titolo non tocca più i soggetti (pallavolo e basket erano al limite).
-- [ ] 2. Ordine delle sezioni: subito sotto l'hero "Scegli il tuo sport", poi il kit
+- [x] 2. Ordine delle sezioni: subito sotto l'hero "Scegli il tuo sport", poi il kit
+  - Prima: hero → nastro sport → Il tuo kit prende forma → Scegli il tuo sport → Perché Slancio → Disegna la tua maglia → Crea il kit della squadra → Servizi e noleggio → Marchi → Il negozio → Chiedi.
+  - Ora: hero → nastro con i nomi degli sport → **Scegli il tuo sport** → Il tuo kit prende forma → Disegna la tua maglia → Crea il kit della squadra → Marchi (dopo il kit, dove si sceglie la marca) → Servizi e noleggio → Perché Slancio → Il negozio → Chiedi.
+  - Perché Slancio va prima del negozio: "Ti ascoltiamo, poi consigliamo" → "Vieni a provare" → "Dicci cosa cerchi". Le ancore (#sport, #perche, #maglia, #negozio, #chiedi) usano l'id, quindi menu e pulsanti funzionano. Animazione del kit provata nella nuova posizione (forma.mjs 390 e 1440: ok, nessun errore).
 - [ ] 3. Foto di sfondo al posto dei fondi blu e neri
 - [ ] 4. Mappa: immagine satellitare salvata nel sito
 - [ ] Controllo (art director 390/768/1440, Playwright 390/1440), build, commit, push, verifica online
