@@ -36,6 +36,7 @@ Per ripartire: leggi questa checklist, poi la prima fase non spuntata. Ogni fase
   - Privacy: ordine del kit, rosa con minori, link condiviso con la rosa, PDF locale, pagamento simulato, nomi della memoria del browser, pannello. Data aggiornata al 13/11/2026.
   - ISTRUZIONI.md (Kit Squadra, home, stato ordine, pannello admin, passaggio a Firebase, noleggio) e CREDITI.md (jsPDF MIT, GSAP).
   - CSS: tolte 40 righe del vecchio configuratore non più usate (copia in scratchpad prima di toglierle).
+  - Pubblicato (commit b9c9e1d, 13/11/2026). Online: ordine/index.html, admin.html e i nuovi file JS rispondono 200. Prova sul sito pubblicato a 390 px: sezione della home animata, banner presente, DEMO-001 "In produzione", accesso admin riuscito, nessun errore.
 
 ## Scelte di progetto (per chi riprende)
 - File nuovi: `js/listino.js` (prezzi, marche, materiali, sconti, spedizione, acconto, tempi, taglie, prezzi noleggio), `js/dati.js` (UNICO file che legge e scrive: oggi localStorage, domani Firebase), `js/maglia-svg.js` (anteprima maglia riutilizzabile), `js/forma.js` (sezione a scorrimento), `js/ordine.js` + `ordine/index.html`, `js/admin.js` + `admin.html`, `assets/js/vendor/jspdf.umd.min.js` (PDF, caricato solo al clic).
