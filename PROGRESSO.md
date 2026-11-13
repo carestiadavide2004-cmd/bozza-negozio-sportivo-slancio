@@ -1,6 +1,17 @@
 # PROGRESSO – Slancio (demo negozio sportivo)
 
-# ▶ LAVORO IN CORSO – Kit squadra completo (Fasi 0–8, iniziato il 13/11/2026)
+# ▶ LAVORO IN CORSO – Home: 4 modifiche (13/11/2026)
+Per ripartire: leggi questa checklist e riprendi dalla prima voce non spuntata. Un commit per ogni modifica.
+
+- [x] 1. Frase dell'hero: "Tutto lo sport, in un solo negozio." + sottotitolo nuovo (config.js `home.heroTitolo`, `home.heroSottotitolo`)
+  - La frase vecchia era anche nel motto del footer di tutte le pagine e nei dati per Google (`attivita.payoff` → frase nuova) e in og.jpg (rifatta con la frase nuova). Title, og:title e og:description non la contenevano. Nessuna traccia nel PDF del kit e nei testi.
+  - 3 righe a 360, 390, 768, 1024, 1440 e 1920 px. Da 768 px il titolo è largo almeno 6,3em (la prima riga sta intera) e un po' più piccolo (6,3vw); le foto degli altri sport partono al 33% invece del 30%: controllate le 12 diapositive, il titolo non tocca più i soggetti (pallavolo e basket erano al limite).
+- [ ] 2. Ordine delle sezioni: subito sotto l'hero "Scegli il tuo sport", poi il kit
+- [ ] 3. Foto di sfondo al posto dei fondi blu e neri
+- [ ] 4. Mappa: immagine satellitare salvata nel sito
+- [ ] Controllo (art director 390/768/1440, Playwright 390/1440), build, commit, push, verifica online
+
+# ✔ Kit squadra completo (Fasi 0–8, 13/11/2026)
 Per ripartire: leggi questa checklist, poi la prima fase non spuntata. Ogni fase si controlla (schermate 390/1440 + prova automatica) prima di spuntarla.
 
 ## Checklist

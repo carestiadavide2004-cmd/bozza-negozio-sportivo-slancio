@@ -14,7 +14,7 @@
     /* ---------- Attività ---------- */
     attivita: {
       nome: 'Slancio',                         // cambia qui: logo, titoli e testi si aggiornano
-      payoff: 'Ogni sport parte da uno slancio.',
+      payoff: 'Tutto lo sport, in un solo negozio.',   // motto: footer e dati per Google
       tipo: 'Negozio di articoli sportivi',
       citta: 'Pescara',
       descrizione: 'Tutto lo sport in un solo negozio a Pescara: calcio, padel, tennis, running, nuoto, sci e altri 6 sport, con persone che ti consigliano la cosa giusta.',
@@ -386,8 +386,8 @@
 
     /* ---------- Home ---------- */
     home: {
-      heroTitolo: ['Ogni sport', 'parte da uno', 'slancio.'],   // righe del titolo (entrano una per una)
-      heroSottotitolo: '12 sport, un solo negozio a Pescara. Dal primo paio di scarpe alla divisa della tua squadra.',
+      heroTitolo: ['Tutto lo sport,', 'in un solo', 'negozio.'],   // righe del titolo (entrano una per una; l'ultima è in corsivo)
+      heroSottotitolo: 'Dal calcio allo sci, dal bambino al tesserato: ti consigliamo la cosa giusta. A Pescara.',
       video: {
         computer: 'assets/video/hero-1920.mp4',
         telefono: 'assets/video/hero-1080x1920.mp4',
