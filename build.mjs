@@ -122,6 +122,16 @@ function img(file, alt, rel, { sizes = '100vw', cls = '', lazy = true, prio = fa
   const mid = m.misure[Math.min(1, m.misure.length - 1)];
   return `<img${cls ? ` class="${cls}"` : ''} src="${rel}assets/img/${file}-${mid}.webp" srcset="${srcset(file, rel)}" sizes="${sizes}" width="${w}" height="${h}" alt="${esc(alt)}"${lazy ? ' loading="lazy"' : ''} decoding="async"${prio ? ' fetchpriority="high"' : ''}${stile ? ` style="${stile}"` : ''}>`;
 }
+// foto di sfondo di una sezione (decorativa: il testo è sopra): ritaglio verticale per il telefono, velo scuro, parallax in main.js.
+// Foto preparate da _sorgenti/prepara-sfondi.mjs (sfondo-NOME e sfondo-NOME-m in assets/img).
+function sfondo(file, rel, cls = '') {
+  const m = IMG[file], mm = IMG[file + '-m']; if (!m) return '';
+  const w = m.misure[m.misure.length - 1], h = Math.round(w * m.rapporto);
+  return `<div class="sfondo${cls ? ' ' + cls : ''}" aria-hidden="true" data-sfondo>
+    <picture>${mm ? `<source media="(max-width: 767px) and (orientation: portrait)" srcset="${srcset(file + '-m', rel)}" sizes="100vw">` : ''}<img class="sfondo__img" src="${rel}assets/img/${file}-${m.misure[Math.min(1, m.misure.length - 1)]}.webp" srcset="${srcset(file, rel)}" sizes="100vw" width="${w}" height="${h}" alt="" loading="lazy" decoding="async"></picture>
+    <span class="sfondo__velo"></span>
+  </div>`;
+}
 
 /* ---------------- disegni SVG (originali) ---------------- */
 // Linee di campo: viewBox 0 0 200 300, solo tratti.
@@ -568,6 +578,7 @@ function fasciaForma(rel) {
   return `<section class="forma" id="kit-forma" aria-labelledby="tit-forma" data-forma>
   <div class="forma__pista">
     <div class="forma__palco">
+      ${sfondo('sfondo-kit-forma', rel, 'forma__sfondo')}
       <div class="wrap forma__in">
         <div class="forma__testi">
           <p class="occhiello">${esc(F.occhiello)}</p>
@@ -726,6 +737,7 @@ const kitMinimo = () => ['maglia', 'pantaloncini', 'calzettoni'].reduce((a, id) 
 function fasciaSquadre(rel) {
   const sport = C.sport.slice(0, 8).map(s => `<li>${esc(nomeCorto(s))}</li>`).join('') + '<li>e altri</li>';
   return `<section class="fascia-sq" aria-labelledby="tit-fsq">
+  ${sfondo('sfondo-kit-squadra', rel, 'fascia-sq__sfondo')}
   <div class="wrap fascia-sq__in">
     <div class="fascia-sq__testo">
       <p class="occhiello">Squadre e associazioni sportive</p>
@@ -1038,41 +1050,45 @@ function cartaSrv({ acc, accInk, foto, icona, num, tit, testo, dati, cta, href, 
     </li>`;
 }
 function fasciaServizi(rel) {
-  // prezzo "da" solo tra i kit completi (non scarponi o casco da soli)
-  const min = Math.min(...NOL.attrezzatura.filter(a => a.eta).map(a => prezzoNol(a.id)));
-  const sci = sportDa('sci-e-snowboard');
+  // in alto una fascia con la foto del laboratorio (titolo e testo), sotto le card dei servizi che salgono sopra la foto
   const carte = SRV.elenco.map((s, i) => {
     const sp = sportDa(s.sport);
     return cartaSrv({ acc: sp.accento, accInk: sp.testoAccento, foto: s.foto, icona: s.icona, num: '0' + (i + 1), tit: s.nome, rel,
       dati: `${esc(s.durata)} · <b>${euro(s.prezzo)}</b>`, cta: 'Scopri di più e prenota', href: `${rel}servizi/index.html#srv-${s.id}`,
-      sizes: '(min-width: 1100px) 20vw, (min-width: 700px) 44vw, 82vw' });
-  }).join('') + cartaSrv({ acc: sci.accento, accInk: sci.testoAccento, foto: sci.tessera, icona: 'neve', num: '05', tit: 'Noleggio sci e snowboard', rel,
-    dati: `Stagione ${stagioneTxt()} · kit da <b>${euro(min)}</b> al giorno`, cta: 'Vedi il calendario', href: `${rel}noleggio-sci/index.html`,
-    sizes: '(min-width: 1100px) 20vw, (min-width: 700px) 44vw, 82vw' });
-  return `<section class="sez fascia-srv" aria-labelledby="tit-fsrv">
-  <div class="parola-g" aria-hidden="true" data-parola>LAB</div>
-  <div class="wrap">
-    <header class="sez-testa sez-testa--riga">
-      <div><p class="occhiello">Su prenotazione · ${SRV.elenco.length} servizi e il noleggio</p><h2 class="tit-sez" id="tit-fsrv" data-tit>${righe(['Servizi e', 'noleggio'])}</h2></div>
-      <div class="sez-testa__testo">
-        <p>Incordatura, prova racchette, analisi del passo, sciolinatura e noleggio sci. Prenoti online, ti confermiamo noi: arrivi e il tuo turno è pronto.</p>
-        <p class="etichetta-esempio srv__etic">Prezzi e durate di esempio</p>
-      </div>
-    </header>
+      sizes: '(min-width: 1100px) 25vw, (min-width: 700px) 44vw, 82vw' });
+  }).join('');
+  return `<section class="fascia-srv" aria-labelledby="tit-fsrv">
+  <div class="fascia-srv__banda">
+    ${sfondo('sfondo-servizi', rel, 'fascia-srv__sfondo')}
+    <div class="wrap">
+      <header class="sez-testa sez-testa--riga">
+        <div><p class="occhiello">Su prenotazione · ${SRV.elenco.length} servizi e il noleggio</p><h2 class="tit-sez" id="tit-fsrv" data-tit>${righe(['Servizi e', 'noleggio'])}</h2></div>
+        <div class="sez-testa__testo">
+          <p>Incordatura, prova racchette, analisi del passo, sciolinatura e noleggio sci. Prenoti online, ti confermiamo noi: arrivi e il tuo turno è pronto.</p>
+          <p class="etichetta-esempio srv__etic">Prezzi e durate di esempio</p>
+        </div>
+      </header>
+    </div>
+  </div>
+  <div class="wrap fascia-srv__carte">
     <ul class="srv__griglia srv__griglia--home">${carte}</ul>
   </div>
 </section>`;
 }
-// fascia noleggio nella pagina Sci e snowboard
+// fascia noleggio con la foto delle piste: in home (dopo i servizi) e nella pagina Sci e snowboard
 function fasciaNoleggio(rel) {
-  return `<section class="fascia-nol" aria-labelledby="tit-fnol">
+  const min = Math.min(...NOL.attrezzatura.filter(a => a.eta).map(a => prezzoNol(a.id)));   // "da" solo tra i kit completi
+  const sci = sportDa('sci-e-snowboard');
+  return `<section class="fascia-nol" aria-labelledby="tit-fnol" style="--acc:${sci.accento};--acc-ink:${sci.testoAccento || '#0E0F12'}">
+  ${sfondo('sfondo-noleggio', rel, 'fascia-nol__sfondo')}
   <div class="wrap fascia-nol__in">
     <div>
       <p class="occhiello">Stagione ${stagioneTxt()}</p>
       <h2 class="tit-sez" id="tit-fnol">Noleggio sci e snowboard</h2>
       <p class="fascia-nol__testo">Kit completi per adulti e bambini, scarponi e caschi. Guardi il calendario della disponibilità, prenoti e ritiri il pomeriggio prima di partire.</p>
+      <p class="fascia-nol__prezzo">Kit da <b>${euro(min)}</b> al giorno <span class="etichetta-esempio">Prezzi di esempio</span></p>
     </div>
-    <a class="btn btn--acc btn--lg" href="${rel}noleggio-sci/index.html">Prenota il noleggio ${ico('freccia', 'ico ico--s')}</a>
+    <a class="btn btn--acc btn--lg" href="${rel}noleggio-sci/index.html">Vedi il calendario e prenota ${ico('freccia', 'ico ico--s')}</a>
   </div>
 </section>`;
 }
@@ -1316,6 +1332,7 @@ ${fasciaSquadre(rel)}
 </section>
 
 ${fasciaServizi(rel)}
+${fasciaNoleggio(rel)}
 
 <section class="sez sez--scura perche" id="perche" aria-labelledby="tit-perche">
   <div class="parola-g parola-g--chiara" aria-hidden="true" data-parola>${esc(NOME)}</div>

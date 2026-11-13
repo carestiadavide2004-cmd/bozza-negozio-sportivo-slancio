@@ -1508,6 +1508,12 @@
       gsap.fromTo(el, { xPercent: 6 }, { xPercent: -14, ease: 'none', scrollTrigger: { trigger: el.parentElement, start: 'top bottom', end: 'bottom top', scrub: .6 } });
     });
 
+    /* Foto di sfondo delle sezioni: parallax leggero (la foto è più alta del 12%, si sposta al massimo del 5%) */
+    $$('[data-sfondo]').forEach(function (el) {
+      var im = $('.sfondo__img', el), sez = el.closest('section');
+      if (im && sez) gsap.fromTo(im, { yPercent: -5 }, { yPercent: 5, ease: 'none', scrollTrigger: { trigger: sez, start: 'top bottom', end: 'bottom top', scrub: true } });
+    });
+
     /* Tessere a cascata + linee di campo */
     var tessere = $$('.tessere:not(.tessere--carosello) .tessera, .tessere--carosello .tessera');
     if (tessere.length) gsap.set(tessere, { clipPath: 'inset(100% 0% 0% 0%)' });

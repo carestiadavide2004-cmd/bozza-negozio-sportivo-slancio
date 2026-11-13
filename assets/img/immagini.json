@@ -582,5 +582,69 @@
    2400
   ],
   "rapporto": 0.6676
+ },
+ "sfondo-kit-forma": {
+  "misure": [
+   960,
+   1440,
+   1920,
+   2400
+  ],
+  "rapporto": 0.625
+ },
+ "sfondo-kit-forma-m": {
+  "misure": [
+   720,
+   1080
+  ],
+  "rapporto": 1.7778
+ },
+ "sfondo-kit-squadra": {
+  "misure": [
+   960,
+   1440,
+   1920,
+   2400
+  ],
+  "rapporto": 0.6251
+ },
+ "sfondo-kit-squadra-m": {
+  "misure": [
+   720,
+   1080
+  ],
+  "rapporto": 1.7782
+ },
+ "sfondo-servizi": {
+  "misure": [
+   960,
+   1440,
+   1920,
+   2400
+  ],
+  "rapporto": 0.625
+ },
+ "sfondo-servizi-m": {
+  "misure": [
+   720,
+   1080
+  ],
+  "rapporto": 1.7778
+ },
+ "sfondo-noleggio": {
+  "misure": [
+   960,
+   1440,
+   1920,
+   2400
+  ],
+  "rapporto": 0.625
+ },
+ "sfondo-noleggio-m": {
+  "misure": [
+   720,
+   1080
+  ],
+  "rapporto": 1.7775
  }
 }

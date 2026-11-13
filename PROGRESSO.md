@@ -10,7 +10,17 @@ Per ripartire: leggi questa checklist e riprendi dalla prima voce non spuntata. 
   - Prima: hero → nastro sport → Il tuo kit prende forma → Scegli il tuo sport → Perché Slancio → Disegna la tua maglia → Crea il kit della squadra → Servizi e noleggio → Marchi → Il negozio → Chiedi.
   - Ora: hero → nastro con i nomi degli sport → **Scegli il tuo sport** → Il tuo kit prende forma → Disegna la tua maglia → Crea il kit della squadra → Marchi (dopo il kit, dove si sceglie la marca) → Servizi e noleggio → Perché Slancio → Il negozio → Chiedi.
   - Perché Slancio va prima del negozio: "Ti ascoltiamo, poi consigliamo" → "Vieni a provare" → "Dicci cosa cerchi". Le ancore (#sport, #perche, #maglia, #negozio, #chiedi) usano l'id, quindi menu e pulsanti funzionano. Animazione del kit provata nella nuova posizione (forma.mjs 390 e 1440: ok, nessun errore).
-- [ ] 3. Foto di sfondo al posto dei fondi blu e neri
+- [x] 3. Foto di sfondo al posto dei fondi blu e neri
+  - Fatto: build.mjs `sfondo()` (foto decorativa + velo scuro, `<picture>` con ritaglio 9:16 per il telefono, srcset 960–2400, lazy), CSS `.sfondo`, parallax in main.js (`[data-sfondo]`, ±5%, solo transform, spento con "riduci movimento"). Tolti il pannello blu inclinato del kit, le celle blu dei passi e la parola "LAB". Servizi: la card del noleggio è diventata la fascia a sé; le 4 card dei servizi salgono sopra la foto.
+  - Foto: `_sorgenti/prepara-sfondi.mjs` (originali in `_sorgenti/foto-nuove`, non pubblicati). Marchi coperti: loghi sulle maglie e la scritta sulla racchetta con delogo; i loghi bianchi su scarpe e pantaloncini neri scuriti solo nei pixel chiari e senza colore (niente macchie sull'erba). CREDITI.md aggiornato.
+  - Leggibilità: veli da 0,5 a 0,92 dove sta il testo (testo bianco, AA anche sul punto più chiaro della foto); 390 e 1440 controllati, anche con "riduci movimento".
+  - Sezioni della home con fondo decorativo blu/nero o da trasformare (elenco fatto prima di cambiarle):
+    1. "Crea il kit della squadra" (Squadre e associazioni, `.fascia-sq`): fondo nero + pannello blu cobalto inclinato → foto di una squadra con le maglie blu sul campo (Pexels 262524).
+    2. "Il tuo kit prende forma" (la sezione "Crea il tuo kit" con l'animazione, `#kit-forma`): fondo chiaro, ma è la sezione kit richiesta → foto di una squadra giovanile abbracciata in cerchio con le divise a strisce (Pexels 38116595). Animazioni invariate.
+    3. "Servizi e noleggio" (`.fascia-srv`): parola gigante "LAB" in trasparenza e card scure → fascia alta con foto del laboratorio di incordatura (Pexels 38083829), card dei 4 servizi sopra.
+    4. Noleggio (era la card 05 dentro i servizi) → fascia a sé con foto di piste innevate (Pexels 30114126). Stessa fascia anche nella pagina Sci e snowboard, che aveva lo stesso fondo nero.
+    5. Mappa "Il negozio": disegno blu su nero → voce 4 (immagine satellitare).
+    - Non cambiata: "Perché Slancio" (`#perche`): fondo nero pieno, non è una sezione promozionale; tiene il ritmo scuro della pagina. Nastro con i nomi degli sport: striscia nera sottile, non è uno sfondo.
 - [ ] 4. Mappa: immagine satellitare salvata nel sito
 - [ ] Controllo (art director 390/768/1440, Playwright 390/1440), build, commit, push, verifica online
 

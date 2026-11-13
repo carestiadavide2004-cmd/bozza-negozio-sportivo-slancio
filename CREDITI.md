@@ -74,7 +74,18 @@ Tutte le foto e il video vengono da [Pexels](https://www.pexels.com) (licenza Pe
 | ciclismo-caschi-*.webp | [foto 12956080](https://www.pexels.com/photo/12956080/) |
 | ciclismo-scarpe-*.webp | [foto 5807798](https://www.pexels.com/photo/5807798/) |
 
-og.jpg: composizione da un fotogramma del video 3192198.
+### Foto di sfondo delle sezioni della home
+
+Originali da 4096 a 6000 px di larghezza, ritaglio orizzontale (computer) e verticale 9:16 (telefono), WebP in 6 misure. I piccoli marchi delle divise e delle scarpe e la scritta sulla racchetta sono stati coperti (script `_sorgenti/prepara-sfondi.mjs`).
+
+| File (assets/img/…) | Sezione | Pexels |
+|---|---|---|
+| sfondo-kit-forma-*.webp | Il tuo kit prende forma | [foto 38116595](https://www.pexels.com/photo/38116595/) |
+| sfondo-kit-squadra-*.webp | Crea il kit della squadra | [foto 262524](https://www.pexels.com/photo/262524/) |
+| sfondo-servizi-*.webp | Servizi e noleggio | [foto 38083829](https://www.pexels.com/photo/38083829/) |
+| sfondo-noleggio-*.webp | Noleggio sci e snowboard (home e pagina Sci e snowboard) | [foto 30114126](https://www.pexels.com/photo/30114126/) |
+
+og.jpg: composizione da un fotogramma del video 3192198 con la frase della hero.
 
 Categorie senza foto (disegno SVG): vedi PROGRESSO.md.
 

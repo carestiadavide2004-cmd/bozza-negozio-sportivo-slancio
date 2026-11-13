@@ -554,29 +554,36 @@ address { font-style: normal; }
   .cfg__fine .cfg__wa { grid-column: auto; } .cfg__fine .cfg__kit { grid-column: auto; }
 }
 
-/* ---------- Fascia "Squadre e associazioni" (home) ---------- */
-.fascia-sq { position: relative; overflow: clip; background: var(--c-ink); color: #FFFFFF; padding-block: clamp(3.5rem, 9vw, 6.5rem); --focus: #FFFFFF; }
-.fascia-sq::before { content: ''; position: absolute; top: 0; bottom: 0; right: -12%; width: 58%; background: var(--c-cobalto); transform: skewX(-8deg); }
-.fascia-sq__in { position: relative; display: grid; gap: 2.25rem; }
-.fascia-sq .occhiello { color: var(--c-a300); }
-.fascia-sq__lead { color: var(--c-a300); max-width: 46ch; margin: 1.1rem 0 1.6rem; }
-.fascia-sq .btn--pri { --hv: #FFFFFF; --hv-txt: var(--c-ink); background: #FFFFFF; color: var(--c-ink); }
+/* ---------- Foto di sfondo delle sezioni (build.mjs sfondo()) ----------
+   Foto decorativa sotto il testo + velo scuro sfumato (niente blur). L'immagine è più alta del 12%
+   per il parallax leggero di main.js (solo transform, spento con "riduci movimento"). */
+.sfondo { position: absolute; inset: 0; z-index: 0; overflow: hidden; background: var(--c-nero-foto); pointer-events: none; }
+.sfondo__img { position: absolute; left: 0; top: -6%; width: 100%; height: 112%; max-width: none; object-fit: cover; }
+.sfondo__velo { position: absolute; inset: 0; }
+
+/* ---------- Fascia "Squadre e associazioni" (home): foto di una squadra in campo ---------- */
+.fascia-sq { position: relative; overflow: clip; background: var(--c-nero-foto); color: #FFFFFF; padding-block: clamp(4rem, 10vw, 7.5rem); --focus: #FFFFFF; }
+.fascia-sq__sfondo .sfondo__img { object-position: 58% 55%; }
+.fascia-sq__sfondo .sfondo__velo { background: linear-gradient(180deg, rgba(5, 6, 7, .9) 0%, rgba(5, 6, 7, .74) 40%, rgba(5, 6, 7, .62) 70%, rgba(5, 6, 7, .86) 100%); }
+.fascia-sq__in { position: relative; z-index: 1; display: grid; gap: 2.25rem; }
+.fascia-sq .occhiello { color: rgba(255, 255, 255, .82); }
+.fascia-sq__lead { color: rgba(255, 255, 255, .9); max-width: 46ch; margin: 1.1rem 0 1.6rem; }
+.fascia-sq .btn--pri { --hv: #FFFFFF; --hv-txt: var(--c-ink); }
 .fascia-sq__lato { position: relative; display: grid; gap: 1.25rem; align-content: center; }
-.fascia-sq__passi { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: rgba(255, 255, 255, .22); border: 1px solid rgba(255, 255, 255, .22); }
-.fascia-sq__passi li { display: flex; align-items: baseline; gap: .6rem; padding: 1rem; background: var(--c-ink); font: 800 1.35rem/1 var(--f-tit); text-transform: uppercase; }
+.fascia-sq__passi { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: rgba(255, 255, 255, .24); border: 1px solid rgba(255, 255, 255, .24); }
+.fascia-sq__passi li { display: flex; align-items: baseline; gap: .6rem; padding: 1rem; background: rgba(5, 6, 7, .66); font: 800 1.35rem/1 var(--f-tit); text-transform: uppercase; }
 .fascia-sq__passi b { font: italic 800 2rem/1 var(--f-tit); color: var(--c-cobalto-chiaro); }
 .fascia-sq__sport { display: flex; flex-wrap: wrap; gap: 6px; }
-.fascia-sq__sport li { padding: .4rem .65rem; border: 1px solid rgba(255, 255, 255, .35); border-radius: var(--r1); font-size: .8125rem; font-weight: 600; }
+.fascia-sq__sport li { padding: .4rem .65rem; border: 1px solid rgba(255, 255, 255, .5); border-radius: var(--r1); background: rgba(5, 6, 7, .5); font-size: .8125rem; font-weight: 600; }
 .fascia-sq__prezzo { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .9rem; margin: 0; font-size: 1rem; }
 .fascia-sq__prezzo b { font: 800 2rem/1 var(--f-tit); font-variant-numeric: tabular-nums; }
 .fascia-sq .etichetta-esempio { color: #FFFFFF; }
-@media (max-width: 1023px) { .fascia-sq::before { top: auto; right: -20%; width: 140%; height: 46%; transform: skewY(-8deg); transform-origin: right bottom; } }
 @media (min-width: 1024px) {
+  .fascia-sq__sfondo .sfondo__velo { background: linear-gradient(90deg, rgba(5, 6, 7, .92) 0%, rgba(5, 6, 7, .78) 38%, rgba(5, 6, 7, .42) 68%, rgba(5, 6, 7, .38) 100%), linear-gradient(180deg, rgba(5, 6, 7, .4) 0%, rgba(5, 6, 7, 0) 28%, rgba(5, 6, 7, 0) 72%, rgba(5, 6, 7, .5) 100%); }
   .fascia-sq__in { grid-template-columns: minmax(0, 1fr) minmax(0, .9fr); gap: clamp(3rem, 6vw, 6rem); align-items: center; }
   .fascia-sq__lato { padding-left: clamp(1rem, 4vw, 4rem); }
   .fascia-sq__passi { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .fascia-sq__passi li { flex-direction: column; gap: .5rem; padding: 1.1rem; }
-  .fascia-sq__passi li { background: #1430B8; }
 }
 
 /* ---------- Pagina squadre: crea il tuo kit ---------- */
@@ -900,19 +907,26 @@ body.con-kit-mbar .bnr--fisso { display: none; }
    HOME · "Il tuo kit prende forma" (js/forma.js)
    Senza animazioni: 6 maglie ferme in fila. Con animazioni (.is-anim): scena sticky.
    ===================================================================== */
-.forma { position: relative; background: var(--c-gesso); }
-.forma__in { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.75rem; padding-block: clamp(3rem, 8vw, 5.5rem); }
+/* sfondo: foto di una squadra con le divise (build.mjs sfondo()) dentro la scena, velo scuro sfumato */
+.forma { position: relative; background: var(--c-nero-foto); color: #FFFFFF; --focus: #FFFFFF; }
+.forma__palco { position: relative; }
+.forma__sfondo .sfondo__img { object-position: 50% 42%; }
+.forma__sfondo .sfondo__velo { background: rgba(5, 6, 7, .8); }
+.forma.is-anim .forma__sfondo .sfondo__velo { background: linear-gradient(180deg, rgba(5, 6, 7, .5) 0%, rgba(5, 6, 7, .55) 38%, rgba(5, 6, 7, .88) 58%, rgba(5, 6, 7, .93) 100%); }
+.forma .occhiello { color: rgba(255, 255, 255, .82); }
+.forma .btn--pri { --hv: #FFFFFF; --hv-txt: var(--c-ink); }
+.forma__in { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.75rem; padding-block: clamp(3rem, 8vw, 5.5rem); }
 .forma__testi, .forma__maglia { min-width: 0; }
 .forma__testi .tit-sez { margin-bottom: 1.1rem; }
-.forma__passi { display: grid; margin: 0 0 1.5rem; border-top: 1px solid var(--c-linea); }
-.forma__passo { display: grid; grid-template-columns: 2.6rem minmax(0, 1fr); gap: .15rem .5rem; padding: .7rem 0; border-bottom: 1px solid var(--c-linea); }
-.forma__passo b { grid-row: span 2; font: italic 800 1.6rem/1 var(--f-tit); color: var(--c-cobalto); }
+.forma__passi { display: grid; margin: 0 0 1.5rem; border-top: 1px solid rgba(255, 255, 255, .22); }
+.forma__passo { display: grid; grid-template-columns: 2.6rem minmax(0, 1fr); gap: .15rem .5rem; padding: .7rem 0; border-bottom: 1px solid rgba(255, 255, 255, .22); }
+.forma__passo b { grid-row: span 2; font: italic 800 1.6rem/1 var(--f-tit); color: var(--c-cobalto-chiaro); }
 .forma__pt { font: 800 1.3rem/1.05 var(--f-tit); text-transform: uppercase; }
-.forma__px { font-size: .9375rem; color: var(--c-a700); max-width: 42ch; }
+.forma__px { font-size: .9375rem; color: rgba(255, 255, 255, .86); max-width: 42ch; }
 .forma__scena { display: grid; grid-auto-flow: column; grid-auto-columns: 44%; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
 .forma__scena::-webkit-scrollbar { display: none; }
 .forma__l { scroll-snap-align: start; }
-.forma__l { margin: 0; padding: .6rem .6rem .5rem; border-radius: var(--r2); background: radial-gradient(90% 70% at 50% 35%, #FFFFFF 0%, #E6E2DA 100%); }
+.forma__l { margin: 0; padding: .6rem .6rem .5rem; border-radius: var(--r2); background: radial-gradient(90% 70% at 50% 35%, #FFFFFF 0%, #E6E2DA 100%); color: var(--c-ink); }
 .forma__l svg { display: block; width: 100%; height: auto; }
 .forma__l figcaption { display: flex; justify-content: center; align-items: baseline; gap: .4rem; margin-top: .35rem; font: 600 .6875rem/1.2 var(--f-testo); text-transform: uppercase; letter-spacing: .1em; }
 .forma__l figcaption b { font: italic 800 1rem/1 var(--f-tit); color: var(--c-cobalto); letter-spacing: 0; }
@@ -939,8 +953,9 @@ body.con-kit-mbar .bnr--fisso { display: none; }
   .forma.is-anim .forma__pista { height: 380vh; }
   .forma.is-anim .forma__in { gap: 3rem; }
   .forma.is-anim .forma__maglia { order: 0; width: min(36vw, 450px, calc((100svh - var(--hdr-c, 64px) - 4rem) * .87)); }
-  .forma.is-anim .forma__passi { min-height: 0; border-top: 1px solid var(--c-linea); }
-  .forma.is-anim .forma__passo { position: static; padding: .6rem 0; border-bottom: 1px solid var(--c-linea); opacity: .35; transform: none; }
+  .forma.is-anim .forma__sfondo .sfondo__velo { background: linear-gradient(90deg, rgba(5, 6, 7, .9) 0%, rgba(5, 6, 7, .76) 38%, rgba(5, 6, 7, .5) 62%, rgba(5, 6, 7, .58) 100%); }
+  .forma.is-anim .forma__passi { min-height: 0; border-top: 1px solid rgba(255, 255, 255, .22); }
+  .forma.is-anim .forma__passo { position: static; padding: .6rem 0; border-bottom: 1px solid rgba(255, 255, 255, .22); opacity: .45; transform: none; }
   .forma.is-anim .forma__passo .forma__px { display: none; }
   .forma.is-anim .forma__passo.is-on .forma__px { display: block; }
   .forma.is-anim .forma__passo.is-on { opacity: 1; }
@@ -2041,22 +2056,37 @@ img.bv__ill { width: 100%; height: 100%; object-fit: cover; }
 /* =====================================================================
    SERVIZI SU PRENOTAZIONE e NOLEGGIO SCI
    ===================================================================== */
-/* fascia in home */
-.fascia-srv { position: relative; overflow: clip; background: var(--c-carta); }
+/* fascia in home: in alto la foto del laboratorio di incordatura con titolo e testo, sotto le 4 card che salgono sopra la foto */
+.fascia-srv { --sotto: clamp(8rem, 20vw, 12rem); position: relative; background: var(--c-carta); padding-bottom: var(--sez); }
+.fascia-srv__banda { position: relative; overflow: clip; padding: var(--sez) 0 var(--sotto); color: #FFFFFF; background: var(--c-nero-foto); --focus: #FFFFFF; }
+.fascia-srv__banda > .wrap { position: relative; z-index: 1; }
+.fascia-srv__banda .sez-testa { margin-bottom: 0; }
+.fascia-srv__banda .occhiello, .fascia-srv__banda .etichetta-esempio { color: rgba(255, 255, 255, .86); }
+.fascia-srv__banda .sez-testa__testo { color: rgba(255, 255, 255, .9); }
+.fascia-srv__sfondo .sfondo__img { object-position: 40% 50%; }
+.fascia-srv__sfondo .sfondo__velo { background: linear-gradient(180deg, rgba(5, 6, 7, .7) 0%, rgba(5, 6, 7, .6) 45%, rgba(5, 6, 7, .74) 100%); }
+@media (min-width: 900px) { .fascia-srv__sfondo .sfondo__velo { background: linear-gradient(90deg, rgba(5, 6, 7, .74) 0%, rgba(5, 6, 7, .6) 40%, rgba(5, 6, 7, .42) 54%, rgba(5, 6, 7, .6) 64%, rgba(5, 6, 7, .66) 100%), linear-gradient(180deg, rgba(5, 6, 7, .25) 0%, rgba(5, 6, 7, 0) 50%, rgba(5, 6, 7, .55) 100%); } }
+.fascia-srv__carte { position: relative; z-index: 1; margin-top: calc(var(--sotto) * -1 + 2.5rem); }
 .srv__griglia--home .srv .tessera__link, .srv__griglia--home .tessera__link { aspect-ratio: 3 / 4.2; min-height: 380px; }
 @media (min-width: 700px) and (max-width: 1099px) {
   .srv__griglia.srv__griglia--home { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 44%; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; margin-inline: calc(var(--gutter) * -1); padding: 0 var(--gutter) .6rem; scroll-padding-inline: var(--gutter); scrollbar-width: thin; }
   .srv__griglia--home .srv { scroll-snap-align: start; }
 }
-@media (min-width: 1100px) { .srv__griglia.srv__griglia--home { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; } .srv__griglia--home .srv { min-width: 0; } .srv__griglia--home .srv .tessera__link { min-height: 0; aspect-ratio: 3 / 4.6; } .srv__griglia--home .srv__tit { font-size: clamp(1.35rem, 1.7vw, 1.7rem); } }
+@media (min-width: 1100px) { .srv__griglia.srv__griglia--home { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; } .srv__griglia--home .srv { min-width: 0; } .srv__griglia--home .srv .tessera__link { min-height: 0; aspect-ratio: 3 / 4.1; } .srv__griglia--home .srv__tit { font-size: clamp(1.5rem, 1.9vw, 1.9rem); } }
 
-/* fascia noleggio nella pagina Sci e snowboard */
-.fascia-nol { padding-block: clamp(3rem, 8vw, 5rem); background: var(--c-ink); color: #FFFFFF; --focus: #FFFFFF; }
+/* fascia noleggio con la foto delle piste: in home (dopo i servizi) e nella pagina Sci e snowboard */
+.fascia-nol { position: relative; overflow: clip; padding-block: clamp(4.5rem, 11vw, 8rem); background: var(--c-nero-foto); color: #FFFFFF; --focus: #FFFFFF; }
+.fascia-nol__sfondo .sfondo__img { object-position: 30% 60%; }
+.fascia-nol__sfondo .sfondo__velo { background: linear-gradient(180deg, rgba(4, 8, 14, .84) 0%, rgba(4, 8, 14, .72) 55%, rgba(4, 8, 14, .6) 100%); }
+@media (min-width: 900px) { .fascia-nol__sfondo .sfondo__velo { background: linear-gradient(90deg, rgba(4, 8, 14, .9) 0%, rgba(4, 8, 14, .74) 38%, rgba(4, 8, 14, .22) 72%, rgba(4, 8, 14, .1) 100%); } .fascia-nol__sfondo .sfondo__img { object-position: 50% 62%; } }
 .fascia-nol .occhiello { color: var(--acc); }
-.fascia-nol__in { display: grid; gap: 1.5rem; align-items: end; }
-.fascia-nol__testo { max-width: 52ch; margin: .8rem 0 0; color: rgba(255, 255, 255, .8); }
-.fascia-nol .btn--acc { --hv: #FFFFFF; --hv-txt: var(--c-ink); justify-self: start; }
-@media (min-width: 900px) { .fascia-nol__in { grid-template-columns: 1fr auto; } }
+.fascia-nol__in { position: relative; z-index: 1; display: grid; gap: 1.6rem; justify-items: start; }
+.fascia-nol__in > div { max-width: 36rem; }
+.fascia-nol__testo { max-width: 52ch; margin: .8rem 0 0; color: rgba(255, 255, 255, .9); }
+.fascia-nol__prezzo { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .9rem; margin: 1.1rem 0 0; }
+.fascia-nol__prezzo b { font: 800 2rem/1 var(--f-tit); font-variant-numeric: tabular-nums; }
+.fascia-nol .etichetta-esempio { color: #FFFFFF; }
+.fascia-nol .btn--acc { --hv: #FFFFFF; --hv-txt: var(--c-ink); }
 
 /* schede servizi */
 /* stesse card della sezione "Scegli il tuo sport" (.tessera): foto, velo scuro, barra colore e zoom al passaggio */
