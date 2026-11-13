@@ -90,6 +90,22 @@ assets/img/prodotti.svg (e la copia js/prodotti-svg.js): disegni originali fatti
 
 Convertito da glTF + texture JPG in un unico file .glb (2 MB), senza modifiche alla forma.
 
+| assets/3d/maglia.glb (configuratore maglia) | Modello **originale** del sito, generato con `_strumenti/maglia3d.mjs` (busto, maniche e colletto, trama del tessuto disegnata dallo script) | Nessuna licenza esterna: fatto per questo sito |
+|---|---|---|
+
+Nessun modello di maglia CC0 adatto trovato (Poly Haven e ricerca web): per questo il modello è stato costruito da zero.
+assets/img/maglia-anteprima-480/960.webp: schermata del modello 3D del sito.
+
+## Font
+
+| File | Font | Licenza |
+|---|---|---|
+| fonts/graduate-latin-400-normal.woff2 | Graduate di Eduardo Tunni (da Fontsource) | SIL Open Font License 1.1, testo in fonts/graduate-OFL.txt |
+
+## Squadre e stemmi del configuratore
+
+Le 6 squadre (Maestrale Sporting, Atletico Corallo, Polisportiva Vortice, Quarzo Atletica, Libeccio United, Sciame Arancio) e i loro stemmi sono **inventati**: forme geometriche disegnate per il sito, nessun richiamo a club reali. Nomi controllati con una ricerca: nessuna squadra italiana con questi nomi (13/11/2026).
+
 ## Software
 
 | File | Progetto | Licenza |

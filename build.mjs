@@ -554,7 +554,7 @@ function paginaSquadre() {
   const accento = slug => (C.sport.find(s => s.slug === slug || s.slug.startsWith(slug + '-')) || { accento: '#B9C0CC', numero: '··', campo: '' });
   const sport = KIT.sport.map(s => {
     const sp = accento(s.id);
-    return `<label class="kit__sport" style="--acc:${sp.accento}"><input type="radio" name="sport" value="${s.id}" required><span class="kit__sport-box"><span class="kit__sport-num">${sp.numero || '··'}</span>${sp.campo ? campo(sp.campo, 'kit__sport-campo') : ''}<span class="kit__sport-nome">${esc(s.nome)}</span><span class="kit__sport-da">da ${euro(s.pacchetti[0].prezzo)}</span></span></label>`;
+    return `<label class="kit__sport" style="--acc:${sp.accento}"><input type="radio" name="sport" value="${s.id}" required><span class="kit__sport-box">${sp.campo ? campo(sp.campo, 'kit__sport-campo') : ''}<span class="kit__sport-nome">${esc(s.nome)}</span><span class="kit__sport-da">da ${euro(s.pacchetti[0].prezzo)}</span></span></label>`;
   }).join('');
   const pacchetti = KIT.sport.map(s => `<div class="kit__pacchetti" data-pacchetti="${s.id}" hidden>${s.pacchetti.map((p, i) => {
     const prima = i ? s.pacchetti[i - 1].include : [];
@@ -615,8 +615,8 @@ function paginaSquadre() {
           <fieldset class="kit__maglia" id="k-maglia" tabindex="-1"><legend>La maglia</legend>
             <label class="kit__mo"><input type="radio" name="maglia" value="configuratore" data-maglia-cfg><span class="kit__mo-box"><span class="kit__mo-tit">Quella creata nel configuratore</span><span class="kit__mo-anteprima" data-maglia-ant></span><span class="kit__mo-txt" data-maglia-txt>Non hai ancora creato una maglia.</span></span></label>
             <label class="kit__mo"><input type="radio" name="maglia" value="negozio"><span class="kit__mo-box"><span class="kit__mo-tit">La scegliamo insieme in negozio</span><span class="kit__mo-txt">Ti mostriamo modelli, tessuti e colori dal vivo.</span></span></label>
-            <a class="link-borsa kit__mo-link" href="${rel}index.html#maglia" data-maglia-link>Crea o modifica la maglia</a>
             <p class="campo__err" id="k-maglia-err" hidden></p>
+            <a class="link-borsa kit__mo-link" href="${rel}index.html#maglia" data-maglia-link>Crea o modifica la maglia</a>
           </fieldset>
           <p class="kit__taglie">${ico('taglia', 'ico ico--s')}${esc(KIT.testoTaglie)}</p>
         </fieldset>
@@ -1094,6 +1094,12 @@ function privacy() {
         <li><strong>Richiesta "${esc(C.borsa.nome)}".</strong> Se usate la borsa e il modulo "Verifica disponibilità in negozio" ci mandate: nome, numero di telefono, giorno in cui pensate di passare, eventuali note, i prodotti scelti (codice, taglia e quantità) e il codice della richiesta (per esempio ${esc(C.borsa.prefissoCodice)}-AB7K). Li usiamo solo per verificare la disponibilità e tenere da parte i prodotti; valgono la base giuridica e i tempi di conservazione delle richieste indicati sotto.</li>`);
   m = m.replace(/(<p>Questo sito <strong>non usa cookie<\/strong>[^<]*<\/p>)/, `$1
       <p>La borsa "${esc(C.borsa.nome)}" (i prodotti che scegliete, con taglia e quantità) è salvata <strong>solo nel vostro browser</strong>, nella sua memoria locale (localStorage). È strettamente necessaria al servizio che chiedete, non è un cookie di profilazione e non ci arriva finché non inviate la richiesta. Potete cancellarla con "Svuota" nella borsa o cancellando i dati del sito dal browser.</p>`);
+  // maglia personalizzata e "Crea il tuo kit" (squadre e associazioni)
+  m = m.replace(/(<li><strong>Richiesta "[^"]*"\.<\/strong>[\s\S]*?<\/li>)/, `$1
+        <li><strong>Richiesta "Crea il tuo kit" (squadre e associazioni).</strong> Ci mandate: nome della squadra o associazione, nome del referente, numero di telefono, email se volete, eventuali note, sport, pacchetto, numero di atleti adulti e bambini, le scelte su nomi, numeri e stemma e la descrizione della maglia (motivo, colori, nome e numero). Non chiediamo nomi, età o taglie dei singoli atleti: le taglie si definiscono in negozio. Usiamo questi dati solo per preparare il preventivo e organizzare la prova taglie; li conserviamo per il tempo della trattativa e, se il kit viene ordinato, per i tempi previsti dalle norme fiscali.</li>
+        <li><strong>Preventivo per la maglia.</strong> Il pulsante "Chiedi un preventivo per questa maglia" prepara un messaggio WhatsApp con motivo, colori, nome, numero e quantità indicativa: lo inviate voi, se volete.</li>`);
+  m = m.replace(/(<p>La borsa "[^"]*"[\s\S]*?<\/p>)/, `$1
+      <p>Anche la <strong>maglia personalizzata</strong> e i passi di <strong>"Crea il tuo kit"</strong> restano salvati solo nel vostro browser (localStorage), per non perdere le scelte cambiando pagina. Lo <strong>stemma che caricate</strong> nel configuratore (PNG, JPG o SVG) viene letto e mostrato solo nel vostro browser: <strong>non viene inviato</strong> né a noi né ad altri. Se volete stamparlo sulle maglie, ce lo mandate voi su WhatsApp o per email. Potete cancellare tutto svuotando i dati del sito dalle impostazioni del browser.</p>`);
   m = m.replace(/\{\{([A-Z_]+)\}\}/g, (_, k) => esc(val[k] ?? ''));
   m = m.replace(/<!--[\s\S]*?-->/g, '').replace(/\n\s*\n+/g, '\n');
   m = m.replace('<main id="contenuto" class="section privacy">', '').replace('</main>', '');
@@ -1179,4 +1185,4 @@ if (S.bozza) {
 
 const nIco = C.sport.reduce((a, s) => a + s.categorie.filter(c => !(c.foto && IMG[c.foto.file])).length, 0);
 const nProd = C.sport.reduce((a, s) => a + s.categorie.reduce((b, c) => b + c.prodotti.length, 0), 0);
-console.log(`✔ Generate ${C.sport.length + 3 + nPagCat} pagine (home, ${C.sport.length} sport, ${nPagCat} categorie, privacy, 404) · ${nProd} prodotti · ${ILLUSTRAZIONI.length} illustrazioni · bozza=${S.bozza} · categorie con icona: ${nIco}`);
+console.log(`✔ Generate ${C.sport.length + 4 + nPagCat} pagine (home, ${C.sport.length} sport, ${nPagCat} categorie, squadre, privacy, 404) · ${nProd} prodotti · ${ILLUSTRAZIONI.length} illustrazioni · bozza=${S.bozza} · categorie con icona: ${nIco}`);

@@ -167,6 +167,26 @@ Non ancora (prossimi passi): pannello admin.
 - [x] js/maglia.js: texture canvas 2048, 6 motivi, 3 colori, stemma squadra o caricato (PNG/JPG/SVG ≤ 2 MB, resta nel browser), nome ≤ 14 e numero ≤ 5 che si rimpiccioliscono, model-viewer caricato vicino alla sezione, Fronte/Retro, 2,5D di riserva (senza WebGL, errore o file://), link WhatsApp, "Usala nel kit squadra".
 - [x] js/kit.js + pagina squadre/index.html (4 passi, barra, localStorage, preventivo indicativo, codice KIT-XXXX, invio whatsapp/web3forms). Fascia in home, link in menu e footer. main.js espone gli strumenti comuni (window.SLANCIO).
 - [x] Prime schermate 390/1440: il 3D si carica e mostra D'ANGELO e 1+8 sul retro.
-- [ ] DA FARE: anteprima `assets/img/maglia-anteprima-480/960.webp` (ora dà 404: crearla da schermata del 3D con cwebp); privacy.html (stemma solo nel browser, dati referente squadra); CREDITI.md e ISTRUZIONI.md; schermate pagina squadre a ogni passo; revisione art director (≥10 difetti); controllo veloce; commit e push; verifica 200 online.
-- Difetti già notati da correggere: sul telefono i pulsanti Fronte/Retro coprono l'orlo della maglia (abbassare la maglia o alzare la camera); "Senza stemma" troppo grande; conteggio pagine nel log del build (ora 80).
-- [ ] Blocco C (servizi su prenotazione e noleggio sci): non iniziato.
+- [x] Anteprima `assets/img/maglia-anteprima-480/960.webp` (10 e 22 KB) dalla schermata del 3D a 3/4.
+- [x] privacy.html: richiesta "Crea il tuo kit" (dati del referente, niente dati dei singoli atleti), preventivo maglia via WhatsApp, maglia/kit/stemma salvati solo nel browser, stemma mai inviato. CREDITI.md (modello originale, font Graduate, squadre inventate) e ISTRUZIONI.md aggiornati.
+
+### Revisione art director (schermate 390 / 768 / 1440: configuratore fronte e retro con D'Angelo e 1+8, pagina squadre a ogni passo, fascia in home)
+1. [x] 3D: nome e numero troppo grandi, il nome finiva sulle curve dei fianchi → più piccoli e centrati, spaziatura lettere ridotta.
+2. [x] 3D: la maglia toccava i pulsanti Fronte/Retro → camera più lontana e abbassata.
+3. [x] Telefono: Fronte/Retro coprivano l'orlo → spostati in alto a sinistra, più compatti.
+4. [x] Anteprima mancante (404) → creata dal 3D.
+5. [x] 2,5D: spalle strette, maniche corte e un triangolo chiaro sulla spalla → sagoma più larga, maniche più lunghe e piene.
+6. [x] 2,5D sul telefono: maglia sotto i pulsanti → abbassata e adattata all'altezza del riquadro.
+7. [x] "Senza stemma" troppo grande rispetto al resto → testo più piccolo.
+8. [x] Fascia in home (computer): la banda blu tagliava a metà etichette e prezzo → banda allargata, tutta la colonna destra sul blu.
+9. [x] Riepilogo kit: "1459,77 €" senza punto delle migliaia → "1.459,77 €".
+10. [x] Passo 3: l'errore "Scegli come vuoi la maglia" era sotto il link, lontano dalle scelte → subito sotto le due opzioni.
+11. [x] Passo 1: numeri degli sport in ordine casuale (01, 02, 03, 04, 10, 12, 07) e ".." su "Altro sport" → tolti, restano filetto colore e linee di campo.
+12. [x] Etichetta "Prezzi di esempio…" su due righe strette sul telefono → interlinea corretta.
+13. [x] "Usala nel kit squadra" non selezionava la maglia nel kit (il segnale veniva scartato) → corretto.
+- Secondo giro: rifatte le schermate di 2,5D, 3D sul telefono e fascia: ok. Conteggio pagine nel build: 80.
+
+### Controllo veloce (Chromium, 390 e 1440, 45 s – ~/.carestia-qa/slancio/cfgcheck.mjs)
+- 3D caricato; si aggiorna cambiando colore, motivo, nome e numero (4/4); nome "D'Angelo" e numero "1+8" sulla maglia e nel link WhatsApp ("1+8" codificato %2B); stemma caricato visibile; "Usala nel kit squadra" porta la maglia nel kit; kit in 4 passi con preventivo 3.190,05 € (20 adulti + 6 bambini, Basket Pro, nomi e numeri, −10%), codice KIT-XXXX, email sbagliata segnalata, link WhatsApp completo; 2,5D funziona senza WebGL; home, squadre e privacy senza errori, senza scorrimento laterale, richieste esterne solo cdnjs, 0 cookie.
+
+- [ ] Blocco C (servizi su prenotazione e noleggio sci): da fare dopo la pubblicazione di A e B.

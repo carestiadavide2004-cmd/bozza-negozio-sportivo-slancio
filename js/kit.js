@@ -8,7 +8,9 @@
   var C = window.SITO, S = window.SLANCIO;
   var form = S && S.$('[data-kit]');
   if (!C || !S || !form || !C.kit) return;
-  var K = C.kit, d = document, $ = S.$, $$ = S.$$, escH = S.escH, euro = S.euro;
+  var K = C.kit, d = document, $ = S.$, $$ = S.$$, escH = S.escH;
+  // euro con il punto delle migliaia anche sotto 10.000 (1.459,77 €)
+  var euro = function (n) { var s = Math.abs(n).toFixed(2).split('.'); return (n < 0 ? '−' : '') + s[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ',' + s[1] + ' €'; };
   var CHIAVE = 'slancio-kit';
   var TITOLI = ['Sport', 'Pacchetto', 'Squadra', 'Riepilogo'];
   var CAMPI = ['sport', 'pacchetto', 'squadra', 'adulti', 'bambini', 'nomi', 'stemma', 'maglia', 'referente', 'telefono', 'email', 'note'];

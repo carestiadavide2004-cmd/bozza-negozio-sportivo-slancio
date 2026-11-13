@@ -434,16 +434,18 @@ address { font-style: normal; }
 .cfg__scena.is-3d .cfg__poster, .cfg__scena.is-25d .cfg__poster { opacity: 0; pointer-events: none; }
 .cfg__scena model-viewer { position: absolute; inset: 0; width: 100%; height: 100%; background: transparent; --poster-color: transparent; --progress-bar-color: var(--c-cobalto); --progress-bar-height: 3px; opacity: 0; transition: opacity .6s ease; }
 .cfg__scena.is-3d model-viewer { opacity: 1; }
-.cfg__stato { position: absolute; left: 50%; top: 12px; transform: translateX(-50%); z-index: 3; max-width: calc(100% - 24px); margin: 0; padding: .45rem .75rem; border-radius: var(--r1); background: var(--c-ink); color: #FFFFFF; font-size: .8125rem; font-weight: 600; text-align: center; }
-.cfg__viste { position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%); z-index: 3; display: flex; padding: 3px; gap: 3px; border-radius: var(--r1); background: rgba(251, 250, 247, .94); border: 1px solid var(--c-linea); }
-.cfg__viste button { min-height: 44px; min-width: 84px; padding: 0 1rem; border: 0; border-radius: var(--r1); background: transparent; cursor: pointer; font: 600 .8125rem/1 var(--f-testo); text-transform: uppercase; letter-spacing: .1em; color: var(--c-a700); }
+.cfg__stato { position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%); z-index: 3; max-width: calc(100% - 24px); margin: 0; padding: .45rem .75rem; border-radius: var(--r1); background: var(--c-ink); color: #FFFFFF; font-size: .8125rem; font-weight: 600; text-align: center; }
+.cfg__viste { position: absolute; left: 10px; top: 10px; z-index: 3; display: flex; padding: 3px; gap: 3px; border-radius: var(--r1); background: rgba(251, 250, 247, .94); border: 1px solid var(--c-linea); }
+.cfg__stemma-az .link-borsa { font-size: .875rem; min-height: 44px; }
+.cfg__viste button { min-height: 44px; min-width: 76px; padding: 0 .85rem; border: 0; border-radius: var(--r1); background: transparent; cursor: pointer; font: 600 .8125rem/1 var(--f-testo); text-transform: uppercase; letter-spacing: .1em; color: var(--c-a700); }
 .cfg__viste button[aria-pressed="true"] { background: var(--c-ink); color: #FFFFFF; }
 .cfg__sotto { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem .75rem; margin-top: .65rem; }
 .cfg__aiuto { margin: 0; font-size: .8125rem; color: var(--c-a500); }
 /* 2,5D: fronte e retro disegnati che girano in CSS 3D */
 .m25 { position: absolute; inset: 0; display: grid; place-items: center; perspective: 1500px; cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
 .m25:active { cursor: grabbing; }
-.m25__carta { position: relative; width: 74%; aspect-ratio: 640 / 700; transform-style: preserve-3d; margin-top: -4%; }
+.m25__carta { position: relative; width: 74%; aspect-ratio: 640 / 700; transform-style: preserve-3d; margin-top: 6%; }
+@media (max-width: 1023px) { .m25__carta { width: auto; height: 84%; } .cfg__viste button { min-width: 64px; padding: 0 .7rem; font-size: .75rem; } }
 .m25__carta.is-anima { transition: transform .9s var(--ease); }
 .m25__f { position: absolute; inset: 0; width: 100%; height: 100%; backface-visibility: hidden; -webkit-backface-visibility: hidden; filter: drop-shadow(0 16px 18px rgba(14, 15, 18, .22)); }
 .m25__f--retro { transform: rotateY(180deg); }
@@ -509,7 +511,7 @@ address { font-style: normal; }
 
 /* ---------- Fascia "Squadre e associazioni" (home) ---------- */
 .fascia-sq { position: relative; overflow: clip; background: var(--c-ink); color: #FFFFFF; padding-block: clamp(3.5rem, 9vw, 6.5rem); --focus: #FFFFFF; }
-.fascia-sq::before { content: ''; position: absolute; top: 0; bottom: 0; right: -30%; width: 62%; background: var(--c-cobalto); transform: skewX(-8deg); }
+.fascia-sq::before { content: ''; position: absolute; top: 0; bottom: 0; right: -12%; width: 58%; background: var(--c-cobalto); transform: skewX(-8deg); }
 .fascia-sq__in { position: relative; display: grid; gap: 2.25rem; }
 .fascia-sq .occhiello { color: var(--c-a300); }
 .fascia-sq__lead { color: var(--c-a300); max-width: 46ch; margin: 1.1rem 0 1.6rem; }
@@ -563,7 +565,7 @@ address { font-style: normal; }
 .kit__h-sport { color: var(--c-a500); }
 .kit__intro { color: var(--c-a500); margin: -.35rem 0 1.1rem; font-size: .9375rem; }
 .kit__sports { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-.kit__sport-box { position: relative; display: grid; align-content: space-between; gap: 1.6rem; min-height: 132px; height: 100%; padding: .9rem .9rem .85rem; overflow: hidden; border: 1px solid var(--c-linea); border-top: 4px solid var(--acc); border-radius: var(--r2); background: var(--c-carta); transition: border-color .2s, box-shadow .2s, background .2s; }
+.kit__sport-box { position: relative; display: grid; align-content: end; gap: .2rem; min-height: 116px; height: 100%; padding: .9rem .9rem .85rem; overflow: hidden; border: 1px solid var(--c-linea); border-top: 4px solid var(--acc); border-radius: var(--r2); background: var(--c-carta); transition: border-color .2s, box-shadow .2s, background .2s; }
 .kit__sport-num { font: italic 800 1rem/1 var(--f-tit); color: var(--c-a500); }
 .kit__sport-campo { position: absolute; right: -14px; top: 10px; width: 64px; height: auto; color: var(--acc); opacity: .55; }
 .kit__sport-nome { font: 800 1.6rem/.95 var(--f-tit); text-transform: uppercase; }
@@ -618,7 +620,7 @@ address { font-style: normal; }
 .kit__riep-maglia { display: flex; gap: .75rem; align-items: center; padding: .7rem 1rem; border-bottom: 1px solid var(--c-linea); }
 .kit__riep-maglia img { width: 64px; height: auto; flex: none; }
 .kit__riep-maglia p { margin: 0; font-size: .875rem; color: var(--c-a700); }
-.kit__etic { margin-bottom: 1.6rem; }
+.kit__etic { margin-bottom: 1.6rem; line-height: 1.35; }
 .kit__h3 { font: 800 1.6rem/1 var(--f-tit); text-transform: uppercase; margin-bottom: .9rem; }
 .kit__nav { display: flex; align-items: center; justify-content: space-between; gap: .75rem; margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--c-linea); }
 .kit__nav [data-avanti] { margin-left: auto; }

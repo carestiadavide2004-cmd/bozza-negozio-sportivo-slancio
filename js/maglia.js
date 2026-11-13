@@ -40,6 +40,7 @@
       nome: pulisciNome(s.nome), numero: pulisciNumero(s.numero), davanti: !!s.davanti,
       quantita: Math.max(1, Math.min(999, parseInt(s.quantita, 10) || M.quantitaIniziale))
     };
+    if (s.usaNelKit === true) o.usaNelKit = true;
     if (s.stemma && s.stemma.tipo === 'squadra' && squadra(s.stemma.id)) o.stemma = { tipo: 'squadra', id: s.stemma.id };
     if (s.stemma && s.stemma.tipo === 'file' && /^data:image\/(png|jpeg|webp|svg\+xml)[;,]/.test(s.stemma.dato || '')) o.stemma = { tipo: 'file', dato: s.stemma.dato, nomeFile: String(s.stemma.nomeFile || 'stemma').slice(0, 60) };
     return o;
@@ -166,7 +167,7 @@
     var col = coloriScritte(s);
     var nome = (s.nome || '').toLocaleUpperCase('it-IT'), num = s.numero || '';
     // retro: nome in alto, numero grande
-    scritta(g, nome, 1536, 440, 540, 118, 58, col, 8);
+    scritta(g, nome, 1536, 440, 540, 118, 58, col, 3);
     scritta(g, num, 1536, 990, num.length > 2 ? 560 : 440, 450, 200, col, 0);
     // fronte: stemma sul cuore (sinistra di chi indossa = destra di chi guarda) e numero piccolo
     var im = immagineStemma(s.stemma, s.__ridisegna);
@@ -191,23 +192,23 @@
     g.beginPath();
     g.moveTo(262, 58);
     g.quadraticCurveTo(320, retro ? 72 : 104, 378, 58);
-    g.quadraticCurveTo(430, 66, 472, 86);
-    g.quadraticCurveTo(470, 140, 462, 198);
-    g.quadraticCurveTo(452, 420, 466, 642);
-    g.quadraticCurveTo(320, 656, 174, 642);
-    g.quadraticCurveTo(188, 420, 178, 198);
-    g.quadraticCurveTo(170, 140, 168, 86);
-    g.quadraticCurveTo(210, 66, 262, 58);
+    g.quadraticCurveTo(440, 68, 490, 92);
+    g.quadraticCurveTo(484, 150, 472, 214);
+    g.quadraticCurveTo(458, 420, 472, 642);
+    g.quadraticCurveTo(320, 656, 168, 642);
+    g.quadraticCurveTo(182, 420, 168, 214);
+    g.quadraticCurveTo(156, 150, 150, 92);
+    g.quadraticCurveTo(200, 68, 262, 58);
     g.closePath();
   }
   function pathManica(g, dx) {   // dx = 1 destra di chi guarda, -1 sinistra
     var X = function (x) { return dx > 0 ? x : 640 - x; };
     g.beginPath();
-    g.moveTo(X(472), 86);
-    g.quadraticCurveTo(X(530), 112, X(570), 196);
-    g.lineTo(X(522), 250);
-    g.quadraticCurveTo(X(490), 214, X(462), 198);
-    g.quadraticCurveTo(X(470), 140, X(472), 86);
+    g.moveTo(X(488), 90);
+    g.quadraticCurveTo(X(556), 118, X(596), 210);
+    g.lineTo(X(540), 268);
+    g.quadraticCurveTo(X(504), 232, X(470), 216);
+    g.quadraticCurveTo(X(484), 150, X(488), 90);
     g.closePath();
   }
   function faccia(out, tela, s, retro) {
@@ -218,14 +219,15 @@
     [1, -1].forEach(function (dx) {
       var cxTex = retro ? (dx > 0 ? 768 : 1792) : (dx > 0 ? 1280 : 256);
       g.save(); pathManica(g, dx); g.clip();
-      var jx = dx > 0 ? 467 : 173, jy = 142, ex = dx > 0 ? 546 : 94, ey = 223;
+      g.fillStyle = c1; g.fillRect(0, 0, 640, 320);
+      var jx = dx > 0 ? 476 : 164, jy = 150, ex = dx > 0 ? 568 : 72, ey = 240;
       g.translate(jx, jy); g.rotate(Math.atan2(ey - jy, ex - jx) - Math.PI / 2);
-      g.drawImage(tela, cxTex - 210, MY, 420, MH, -75, -6, 150, 128);
+      g.drawImage(tela, cxTex - 230, MY, 460, MH, -95, -40, 190, 170);
       g.restore();
     });
     // busto
     g.save(); pathCorpo(g, retro); g.clip();
-    g.drawImage(tela, (retro ? 1024 : 0) + 212, 0, 600, BH, 170, 54, 300, 592);
+    g.drawImage(tela, (retro ? 1024 : 0) + 177, 0, 670, BH, 150, 54, 340, 592);
     g.restore();
 
     // ombre e luci: tutta la sagoma
@@ -236,7 +238,7 @@
     gl.addColorStop(0, 'rgba(255,255,255,.10)'); gl.addColorStop(0.45, 'rgba(255,255,255,0)'); gl.addColorStop(1, 'rgba(0,0,0,.16)');
     g.fillStyle = gl; g.fillRect(0, 0, 640, 700);
     // fianchi più scuri
-    [[174, 1], [466, -1]].forEach(function (f) {
+    [[168, 1], [472, -1]].forEach(function (f) {
       var gr = g.createLinearGradient(f[0], 0, f[0] + f[1] * 46, 0);
       gr.addColorStop(0, 'rgba(0,0,0,.26)'); gr.addColorStop(1, 'rgba(0,0,0,0)');
       g.fillStyle = gr; g.fillRect(Math.min(f[0], f[0] + f[1] * 46), 180, 46, 480);
@@ -260,15 +262,15 @@
     piega([428, 120, 390, 170, 402, 230], '#000', 0.016);
     // ombra sotto le maniche e cuciture spalla
     g.strokeStyle = 'rgba(0,0,0,.22)'; g.lineWidth = 1.4;
-    g.beginPath(); g.moveTo(472, 86); g.quadraticCurveTo(470, 140, 462, 198); g.moveTo(168, 86); g.quadraticCurveTo(170, 140, 178, 198); g.stroke();
-    [[462, 198, 522, 250], [178, 198, 118, 250]].forEach(function (a) {
+    g.beginPath(); g.moveTo(488, 90); g.quadraticCurveTo(484, 150, 470, 216); g.moveTo(152, 90); g.quadraticCurveTo(156, 150, 170, 216); g.stroke();
+    [[470, 216, 540, 268], [170, 216, 100, 268]].forEach(function (a) {
       var gr = g.createLinearGradient(a[0], a[1], a[0] + (a[2] - a[0]) * 0.3, a[1] - 30);
       gr.addColorStop(0, 'rgba(0,0,0,.25)'); gr.addColorStop(1, 'rgba(0,0,0,0)');
       g.fillStyle = gr; g.beginPath(); g.moveTo(a[0], a[1]); g.lineTo(a[2], a[3]); g.lineTo(a[2] + (a[0] < 320 ? 30 : -30), a[3] - 70); g.closePath(); g.fill();
     });
     // cuciture dell'orlo
     g.strokeStyle = 'rgba(0,0,0,.16)'; g.lineWidth = 1; g.setLineDash([4, 3]);
-    g.beginPath(); g.moveTo(178, 630); g.quadraticCurveTo(320, 643, 462, 630); g.stroke();
+    g.beginPath(); g.moveTo(172, 630); g.quadraticCurveTo(320, 643, 468, 630); g.stroke();
     g.setLineDash([]);
     g.restore();
 
@@ -287,7 +289,7 @@
       g.strokeStyle = c3; g.lineWidth = 11; g.stroke();
     }
     // apertura delle maniche: si intravede l'interno
-    [[570, 196, 522, 250], [70, 196, 118, 250]].forEach(function (a) {
+    [[596, 210, 540, 268], [44, 210, 100, 268]].forEach(function (a) {
       g.beginPath(); g.moveTo(a[0], a[1]); g.quadraticCurveTo((a[0] + a[2]) / 2 + (a[0] > 320 ? 8 : -8), (a[1] + a[3]) / 2 + 6, a[2], a[3]);
       g.strokeStyle = scurisci(c3, 0.45); g.lineWidth = 3; g.stroke();
     });
@@ -333,6 +335,7 @@
   var scena = $('[data-cfg-scena]'), stato = $('[data-cfg-stato]'), poster = $('.cfg__poster', scena);
   var linkWa = $('[data-cfg-wa]'), descr = $('[data-cfg-desc]');
   var s = leggi() || statoIniziale(), toccata = !!leggi();
+  delete s.usaNelKit;
   var tela = d.createElement('canvas'); tela.width = tela.height = W;
   var g = tela.getContext('2d');
   var modo = '', tex = null, mv = null, carta = null, facce = [];

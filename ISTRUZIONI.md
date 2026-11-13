@@ -78,6 +78,16 @@ Con più foto la scheda mostra scorrimento, miniature e zoom. Senza foto resta i
 
 Nota: per caricare i file su Firebase Storage serve il piano **Blaze** (a consumo, con carta di credito): Cloud Storage non è incluso nel piano gratuito Spark. Senza Blaze i file si possono mettere direttamente nel sito (cartelle sopra) e pubblicare con GitHub.
 
+## Maglia personalizzata e "Crea il tuo kit"
+
+- **Maglia** (home, sezione `#maglia`): dati in `config.js` → `maglia` (motivi, colori, squadre inventate con stemma SVG, limiti di nome e numero, peso massimo dello stemma). Codice in `js/maglia.js`.
+  - Il modello 3D `assets/3d/maglia.glb` si rigenera con `node _strumenti/maglia3d.mjs` (forma, pieghe, trama). La texture è disegnata nel browser in un canvas 2048×2048.
+  - Il 3D si carica solo quando la sezione sta per entrare nello schermo. Senza WebGL, se il modello non si carica o aprendo il sito dal Mac (file://) si vede la versione 2,5D disegnata.
+  - Lo stemma caricato resta nel browser: non viene mai inviato.
+  - L'anteprima `assets/img/maglia-anteprima-*.webp` è una schermata del 3D: se cambi la squadra iniziale, rifalla.
+- **Kit squadre** (`squadre/index.html`): dati in `config.js` → `kit` (pacchetti e prezzi di esempio per sport, costo di nomi/numeri e stemma, sconti quantità, sconto bambini). Codice in `js/kit.js`. Il codice richiesta è KIT-XXXX. L'invio segue `modulo.modalita` (WhatsApp o Web3Forms).
+- Per un cliente vero: cambiare prezzi e pacchetti in `config.js`, togliere le squadre inventate o sostituirle con esempi autorizzati.
+
 ## Foto
 
 - Le originali stanno in `_sorgenti/foto/` (non pubblicate). L'elenco nome → id Pexels è in `_sorgenti/scelte.txt`.
