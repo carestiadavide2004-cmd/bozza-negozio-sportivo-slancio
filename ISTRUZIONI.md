@@ -131,6 +131,30 @@ Nota: per caricare i file su Firebase Storage serve il piano **Blaze** (a consum
 - `node _sorgenti/prepara-foto.mjs` rigenera tutti i WebP (servono `ffmpeg` e `cwebp`).
 - Se una categoria non ha foto (`foto: null`) si vede un disegno con l'icona.
 
+## Mappa del negozio (immagine dal satellite)
+
+Nella sezione "Il negozio" della home la mappa è un'**immagine salvata nel sito** (`assets/img/mappa-satellite-800.webp` e `-1600.webp`), non una mappa di Google incorporata: all'apertura della pagina nessuna richiesta va a Google. Il segnaposto blu con il nome è disegnato da noi, sempre al centro dell'immagine. Tutto il riquadro apre Google Maps in una nuova scheda con `contatti.mappaRicerca`.
+
+Ora mostra Piazza della Rinascita / Corso Umberto a Pescara come **posizione di esempio**. Per il cliente vero:
+
+1. Su Google Maps cerca il negozio e copia le coordinate (clic destro sul punto esatto → il primo numero del menu, es. `42.47225, 14.20915`).
+2. Dalla cartella `~/.carestia-qa/slancio` lancia:
+   ```
+   node mappa.mjs 42.47225 14.20915 18 <cartella-di-uscita>
+   ```
+   (latitudine, longitudine, zoom: `18` = vista da isolato, `17` più larga). Lo script apre Google Maps in vista satellite con Playwright, rifiuta i cookie, nasconde pulsanti e pannelli e salva `mappa-centro.png` (1600×1000, il negozio è al centro).
+3. Guarda `mappa-centro.png`: se in mezzo compaiono le etichette di altri negozi, sposta di poco le coordinate o prova lo zoom 17.
+4. Converti in WebP nella cartella del sito:
+   ```
+   cwebp -q 72 -m 6 -metadata none mappa-centro.png -o assets/img/mappa-satellite-1600.webp
+   cwebp -q 80 -m 6 -metadata none -resize 800 500 mappa-centro.png -o assets/img/mappa-satellite-800.webp
+   ```
+   Se lo screenshot lo fai a mano: vista satellite, niente pannelli, negozio al centro, 1600×1000 px, poi gli stessi due comandi.
+5. In `config.js` → `contatti`: `mappaRicerca` con l'indirizzo vero del negozio (o il nome su Google), `mappaImmagine.esempio: false` (toglie l'etichetta "Posizione di esempio") e il testo `alt` con le vie vere.
+6. `node build.mjs`.
+
+La scritta "Immagine © Google" deve restare sull'immagine. Se manca il file `-1600.webp`, al posto dell'immagine si vede un riquadro scuro con il nome del file da aggiungere.
+
 ## Pubblicazione
 
 GitHub Pages dal ramo `main`, cartella principale. Tutti i link sono relativi, quindi il sito funziona anche in una sottocartella.
@@ -138,5 +162,5 @@ GitHub Pages dal ramo `main`, cartella principale. Tutti i link sono relativi, q
 ## Privacy
 
 `privacy.html` si genera da `modelli/privacy-modello.html` (copia locale del modello in "SITI REALI/_MODELLI/modello privacy", non pubblicata) con i dati di `config.js`.
-Il sito non usa cookie, né Google Fonts, né statistiche. La mappa Google si carica solo dopo il clic.
+Il sito non usa cookie, né Google Fonts, né statistiche. La mappa è un'immagine salvata nel sito: Google riceve dati solo se si apre il link "Apri in Google Maps".
 La borsa è salvata solo nel browser di chi visita (memoria locale): l'informativa lo spiega già.

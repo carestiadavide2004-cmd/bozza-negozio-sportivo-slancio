@@ -1391,19 +1391,7 @@
     Pannello: Pannello, apriGuida: apriGuida
   });
 
-  /* ---------------- Mappa solo al clic ---------------- */
-  var mappa = $('[data-mappa]');
-  if (mappa) $('[data-mappa-btn]', mappa).addEventListener('click', function () {
-    var area = $('[data-mappa-area]', mappa);
-    var f = d.createElement('iframe');
-    f.src = mappa.getAttribute('data-mappa-src');
-    f.title = 'Mappa: ' + C.contatti.indirizzo + ', ' + C.contatti.citta;
-    f.loading = 'lazy';
-    f.referrerPolicy = 'no-referrer-when-downgrade';
-    f.setAttribute('allowfullscreen', '');
-    area.innerHTML = '';
-    area.appendChild(f);
-  });
+  /* Mappa: è un'immagine salvata nel sito con un link a Google Maps (nessun codice, nessuna richiesta a Google) */
 
   /* =====================================================================
      BANNER "Ordina entro…" (dati da js/dati.js, si gestisce da admin.html)

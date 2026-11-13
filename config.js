@@ -44,7 +44,10 @@
       cap: '65121',
       citta: 'Pescara',
       provincia: 'PE',
-      mappaRicerca: 'Pescara centro',          // testo usato per Google Maps
+      mappaRicerca: 'Piazza della Rinascita, 65121 Pescara',   // link "Apri in Google Maps" (cliente vero: indirizzo del negozio)
+      // immagine dal satellite salvata nel sito (niente richieste a Google all'apertura). Come rifarla: ISTRUZIONI.md
+      mappaImmagine: { file: 'assets/img/mappa-satellite', larghezze: [800, 1600], esempio: true,
+        alt: 'Vista dal satellite del centro di Pescara intorno a Piazza della Rinascita e Corso Umberto, con il segnaposto del negozio al centro' },
       social: [
         { nome: 'Instagram', url: 'https://www.instagram.com/' },
         { nome: 'Facebook', url: 'https://www.facebook.com/' }

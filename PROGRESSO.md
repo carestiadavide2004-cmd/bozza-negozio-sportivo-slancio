@@ -21,7 +21,11 @@ Per ripartire: leggi questa checklist e riprendi dalla prima voce non spuntata. 
     4. Noleggio (era la card 05 dentro i servizi) → fascia a sé con foto di piste innevate (Pexels 30114126). Stessa fascia anche nella pagina Sci e snowboard, che aveva lo stesso fondo nero.
     5. Mappa "Il negozio": disegno blu su nero → voce 4 (immagine satellitare).
     - Non cambiata: "Perché Slancio" (`#perche`): fondo nero pieno, non è una sezione promozionale; tiene il ritmo scuro della pagina. Nastro con i nomi degli sport: striscia nera sottile, non è uno sfondo.
-- [ ] 4. Mappa: immagine satellitare salvata nel sito
+- [x] 4. Mappa: immagine satellitare salvata nel sito
+  - Screenshot riuscito con Playwright (`~/.carestia-qa/slancio/mappa.mjs`): Google Maps vista satellite, zoom 18, centro 42.47225, 14.20915 (Piazza della Rinascita / Corso Umberto), cookie rifiutati, pannelli nascosti, 1600×1000 in doppia densità. Salvata come `assets/img/mappa-satellite-800.webp` e `-1600.webp`.
+  - build.mjs `mappaImmagine()`: tutto il riquadro è un link a Google Maps (nuova scheda, `contatti.mappaRicerca`), segnaposto blu con "SLANCIO" disegnato da noi al centro, etichetta "Posizione di esempio", scritta "Immagine © Google". Se il file manca compare un riquadro con il nome del file da aggiungere. Dati in `config.js` → `contatti.mappaImmagine`.
+  - Tolti: disegno blu a righe, pulsante "Mostra la mappa", iframe e il suo codice in main.js. Nessuna richiesta a Google all'apertura.
+  - privacy.html: Google riceve dati solo se si apre il link. ISTRUZIONI.md: "Mappa del negozio" (come rifarla sulla posizione vera).
 - [ ] Controllo (art director 390/768/1440, Playwright 390/1440), build, commit, push, verifica online
 
 # ✔ Kit squadra completo (Fasi 0–8, 13/11/2026)

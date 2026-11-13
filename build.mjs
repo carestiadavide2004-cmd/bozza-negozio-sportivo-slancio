@@ -1239,6 +1239,30 @@ function paginaNoleggio() {
 /* =====================================================================
    HOME
    ===================================================================== */
+// Mappa del negozio: immagine dal satellite salvata nel sito (nessuna richiesta a Google all'apertura della pagina),
+// segnaposto disegnato da noi al centro, tutta l'immagine apre Google Maps in una nuova scheda.
+function mappaImmagine(rel) {
+  const M = K.mappaImmagine || {}, f = `${rel}${M.file}`, W = M.larghezze || [800, 1600];
+  if (!M.file || !existsSync(`${M.file}-${W[W.length - 1]}.webp`)) {
+    // segnaposto finché non c'è l'immagine (vedi ISTRUZIONI.md: "Mappa del negozio")
+    return `<a class="mappa mappa--vuota" href="${mappaUrl}" target="_blank" rel="noopener">
+      <span class="mappa__area"><span class="mappa__pin" aria-hidden="true"><span class="mappa__goccia">${ico('pin')}</span></span><span class="mappa__manca">[IMMAGINE DELLA MAPPA: ${esc(M.file || 'assets/img/mappa-satellite')}-1600.webp]</span></span>
+      <span class="mappa__piede"><span class="mappa__ind">${esc(indirizzoCompleto)}</span><span class="mappa__apri">Apri in Google Maps ${ico('freccia', 'ico ico--s')}</span></span>
+    </a>`;
+  }
+  return `<a class="mappa" href="${mappaUrl}" target="_blank" rel="noopener" aria-label="Apri in Google Maps: ${esc(indirizzoCompleto)} (si apre in una nuova scheda)">
+      <span class="mappa__area">
+        <img class="mappa__img" src="${f}-${W[W.length - 1]}.webp" srcset="${W.map(w => `${f}-${w}.webp ${w}w`).join(', ')}" sizes="(min-width: 1024px) 46vw, 100vw" width="1600" height="1000" alt="${esc(M.alt || '')}" loading="lazy" decoding="async">
+        <span class="mappa__pin" aria-hidden="true"><span class="mappa__goccia">${ico('pin')}</span><span class="mappa__nome">${esc(NOME)}</span></span>
+        ${M.esempio ? '<span class="etichetta-esempio mappa__esempio">Posizione di esempio</span>' : ''}
+        <span class="mappa__copy">Immagine © Google</span>
+      </span>
+      <span class="mappa__piede">
+        <span class="mappa__ind">${esc(indirizzoCompleto)}</span>
+        <span class="mappa__apri">Apri in Google Maps ${ico('freccia', 'ico ico--s')}</span>
+      </span>
+    </a>`;
+}
 function home() {
   const rel = '';
   const H = C.home, V = H.video;
@@ -1369,20 +1393,7 @@ ${fasciaNoleggio(rel)}
         <a class="btn btn--sec" href="${tel}">${ico('telefono', 'ico ico--s')}${esc(K.telefono)}</a>
       </div>
     </div>
-    <div class="mappa" data-mappa data-mappa-src="https://www.google.com/maps?q=${encodeURIComponent(K.mappaRicerca)}&amp;output=embed">
-      <div class="mappa__area" data-mappa-area>
-        <svg class="mappa__disegno" viewBox="0 0 400 300" aria-hidden="true" focusable="false" preserveAspectRatio="xMidYMid slice"><g fill="none" stroke="currentColor" stroke-width="1"><path d="M0 70h400M0 150h400M0 230h400M70 0v300M170 0v300M260 0v300M340 0v300" opacity=".35"/><path d="M0 260L400 40" stroke-width="10" opacity=".22"/><path d="M0 110c80 10 120-30 200-20s120 50 200 40" stroke-width="3" opacity=".3"/><path d="M0 285h400" stroke-width="18" opacity=".12"/></g></svg>
-        <div class="mappa__pin" aria-hidden="true">${ico('pin')}</div>
-        <div class="mappa__testo">
-          <button class="btn btn--pri btn--sm" type="button" data-mappa-btn>${ico('pin', 'ico ico--s')}Mostra la mappa</button>
-          <p class="mappa__nota">Caricando la mappa, Google riceverà alcuni dati di navigazione.</p>
-        </div>
-      </div>
-      <div class="mappa__piede">
-        <p class="mappa__ind">${esc(indirizzoCompleto)}</p>
-        <a class="link" href="${mappaUrl}" target="_blank" rel="noopener">Apri in Google Maps ${ico('freccia', 'ico ico--s')}</a>
-      </div>
-    </div>
+    ${mappaImmagine(rel)}
   </div>
 </section>
 
@@ -1678,6 +1689,10 @@ function privacy() {
   if (C.modulo.modalita === 'web3forms') tieni.add('WEB3FORMS');
   // blocchi SE / FINE
   m = m.replace(/<!-- SE: ([A-Z_0-9]+) -->([\s\S]*?)<!-- FINE: \1 -->/g, (_, nome, dentro) => tieni.has(nome) ? dentro : '');
+  // mappa: è un'immagine salvata nel sito (nessuna mappa incorporata); Google riceve dati solo se si apre il link
+  m = m.replace(/<li><strong>Google Maps<\/strong>:[\s\S]*?(<a href="https:\/\/policies\.google\.com[^>]*>Informativa di Google<\/a>\.<\/li>)/,
+    `<li><strong>Google Maps</strong>: la mappa nella pagina "Il negozio" è un'<strong>immagine salvata nel nostro sito</strong> (vista dal satellite, © Google). Nessuna mappa di Google viene caricata, quindi aprendo le nostre pagine <strong>Google non riceve alcun dato</strong>. Solo se premete la mappa o il link "Apri in Google Maps" si apre il sito di Google in una nuova scheda: da quel momento Google riceve dati di navigazione (come l'indirizzo IP) e può usare propri cookie, secondo la sua informativa. $1`);
+  m = m.replace(/<p>Solo se attivate la mappa di Google Maps,[^<]*<\/p>/, '<p>Il sito di Google Maps, che si apre solo se premete la mappa o il link "Apri in Google Maps", usa i propri cookie secondo l\'informativa di Google: non dipendono da noi.</p>');
   // campi veri del modulo
   m = m.replace(/<li><strong>Dati del modulo\.<\/strong>[^<]*<\/li>/, '<li><strong>Dati del modulo.</strong> Solo quelli che scrivete voi nel modulo "Chiedi disponibilità": nome, numero di telefono, sport e cosa cercate.</li>');
   if (C.modulo.modalita !== 'web3forms') {
