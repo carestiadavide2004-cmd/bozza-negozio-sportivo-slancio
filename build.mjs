@@ -252,8 +252,9 @@ function header(rel, corrente) {
         </div>
       </div>
       <a class="hdr__link" href="${vaiHome(rel, '#perche')}">Perché ${esc(A.nome)}</a>
-      <a class="hdr__link" href="${rel}squadre/index.html"${corrente === 'squadre' ? ' aria-current="page"' : ''}>Squadre</a>
-      <a class="hdr__link" href="${rel}servizi/index.html"${corrente === 'servizi' || corrente === 'noleggio' ? ' aria-current="page"' : ''}>Servizi</a>
+      <a class="hdr__link" href="${rel}squadre/index.html"${corrente === 'squadre' ? ' aria-current="page"' : ''}>Kit Squadra</a>
+      <a class="hdr__link" href="${rel}servizi/index.html"${corrente === 'servizi' ? ' aria-current="page"' : ''}>Servizi</a>
+      <a class="hdr__link" href="${rel}noleggio-sci/index.html"${corrente === 'noleggio' ? ' aria-current="page"' : ''}>Noleggio</a>
       <a class="hdr__link" href="${vaiHome(rel, '#negozio')}">Il negozio</a>
     </nav>
     <div class="hdr__az">
@@ -270,10 +271,10 @@ function header(rel, corrente) {
     <ul class="mm__sport">${mobile}</ul>
     <ul class="mm__link">
       <li><a href="${vaiHome(rel, '#perche')}">Perché ${esc(A.nome)}</a></li>
-      <li><a href="${rel}squadre/index.html"${corrente === 'squadre' ? ' aria-current="page"' : ''}>Squadre e associazioni</a></li>
+      <li><a href="${rel}squadre/index.html"${corrente === 'squadre' ? ' aria-current="page"' : ''}>Kit Squadra</a></li>
       <li><a href="${vaiHome(rel, '#maglia')}">Disegna la maglia</a></li>
-      <li><a href="${rel}servizi/index.html"${corrente === 'servizi' ? ' aria-current="page"' : ''}>Servizi su prenotazione</a></li>
-      <li><a href="${rel}noleggio-sci/index.html"${corrente === 'noleggio' ? ' aria-current="page"' : ''}>Noleggio sci e snowboard</a></li>
+      <li><a href="${rel}servizi/index.html"${corrente === 'servizi' ? ' aria-current="page"' : ''}>Servizi</a></li>
+      <li><a href="${rel}noleggio-sci/index.html"${corrente === 'noleggio' ? ' aria-current="page"' : ''}>Noleggio</a></li>
       <li><a href="${vaiHome(rel, '#negozio')}">Il negozio</a></li>
       <li><a href="${vaiHome(rel, '#chiedi')}">Chiedi disponibilità</a></li>
     </ul>
@@ -542,7 +543,7 @@ function fasciaSquadre(rel) {
       <p class="occhiello">Squadre e associazioni sportive</p>
       <h2 class="tit-sez" id="tit-fsq" data-tit>${righe(['Crea il kit', 'della squadra'])}</h2>
       <p class="fascia-sq__lead">Quattro passi: sport, pacchetto, squadra, riepilogo. Ricevi un preventivo indicativo e un codice richiesta; le taglie le proviamo insieme in negozio.</p>
-      <a class="btn btn--pri btn--lg" href="${rel}squadre/index.html">Crea il tuo kit ${ico('freccia', 'ico ico--s')}</a>
+      <a class="btn btn--pri btn--lg" href="${rel}squadre/index.html">Crea il kit squadra ${ico('freccia', 'ico ico--s')}</a>
     </div>
     <div class="fascia-sq__lato">
       <ol class="fascia-sq__passi">
@@ -567,11 +568,11 @@ function paginaSquadre() {
   }).join('')}</div>`).join('');
   const sconti = KIT.scontiQuantita.map(x => `da ${x.da} atleti −${x.percento}%`).join(', ');
   const corpo = `
-<section class="hk" data-parola="KIT">
+<section class="hk" data-sfondo="KIT">
   <div class="wrap hk__in">
-    <nav class="briciole" aria-label="Percorso"><ol><li><a href="${rel}index.html">Home</a></li><li aria-current="page">Squadre</li></ol></nav>
+    <nav class="briciole" aria-label="Percorso"><ol><li><a href="${rel}index.html">Home</a></li><li aria-current="page">Kit Squadra</li></ol></nav>
     <p class="occhiello">Squadre e associazioni sportive</p>
-    <h1 class="hk__tit">${righe(['Crea il', 'tuo kit'])}</h1>
+    <h1 class="hk__tit">${righe(['Crea il', 'kit squadra'])}</h1>
     <p class="hk__lead">Scegli sport e pacchetto, raccontaci la squadra: ti diamo subito un preventivo indicativo e un codice richiesta. Poi vi aspettiamo in negozio per le taglie.</p>
     <ul class="hk__punti">
       <li>${ico('squadra', 'ico ico--s')}8 sport, 3 pacchetti ciascuno</li>
@@ -603,6 +604,11 @@ function paginaSquadre() {
           <p class="kit__intro">Prezzi di esempio per atleta, maglia compresa. I kit bambino costano il ${KIT.scontoBambiniPercento}% in meno.</p>
           ${pacchetti}
           <p class="campo__err" id="kit-pac-err" data-err="pacchetto" hidden></p>
+          <div class="capi" data-capi hidden>
+            <h3 class="kit__h3">Capi e materiali</h3>
+            <p class="kit__intro">Per ogni capo scegli prima il tipo, poi il materiale. Se non sei sicuro lascia vuoto: lo decidiamo insieme in negozio.</p>
+            <div class="capi__lista" data-capi-lista></div>
+          </div>
         </fieldset>
         <fieldset class="kit__passo" data-passo="3" hidden>
           <legend class="kit__h" tabindex="-1">La vostra squadra</legend>
@@ -617,6 +623,21 @@ function paginaSquadre() {
           <fieldset class="kit__sn" id="k-stemma" tabindex="-1"><legend>Stemma della squadra <span>+${euro(KIT.personalizzazioni.stemma)} ad atleta</span></legend>
             <label class="kit__sc"><input type="radio" name="stemma" value="si"><span>Sì</span></label><label class="kit__sc"><input type="radio" name="stemma" value="no"><span>No</span></label>
             <p class="campo__err" id="k-stemma-err" hidden></p></fieldset>
+          <fieldset class="kit__sn kit__graf" id="k-grafiche" tabindex="-1"><legend>Stemma, sponsor e altre grafiche</legend>
+            <label class="kit__sc"><input type="radio" name="grafiche" value="carico"><span>Le carico adesso</span></label><label class="kit__sc"><input type="radio" name="grafiche" value="negozio"><span>Scegli in negozio</span></label>
+            <div class="carica" data-carica hidden>
+              <input class="carica__input" id="k-file" type="file" multiple accept=".png,.jpg,.jpeg,.svg,.pdf,image/png,image/jpeg,image/svg+xml,application/pdf" aria-describedby="k-file-aiuto">
+              <label class="carica__zona" for="k-file" data-zona>
+                ${ico('carica', 'ico carica__ico')}
+                <span class="carica__tit"><b>Trascina qui i file</b> o <u>clicca per sceglierli</u></span>
+                <span class="carica__info" id="k-file-aiuto">PNG, JPG, SVG o PDF · massimo ${KIT.grafiche.maxMB} MB a file · anche più file insieme</span>
+              </label>
+              <p class="carica__nota">${ico('ok', 'ico ico--s')}I file restano nel tuo browser: non li carichiamo su nessun server. Li alleghi tu alla richiesta.</p>
+              <p class="carica__avviso" data-file-avviso role="status"></p>
+              <ul class="carica__lista" data-file-lista></ul>
+            </div>
+            <p class="campo__aiuto kit__graf-neg" data-graf-neg hidden>Porta i file in negozio o mandaceli dopo: li scegliamo e sistemiamo insieme.</p>
+            <p class="campo__err" id="k-grafiche-err" hidden></p></fieldset>
           <fieldset class="kit__maglia" id="k-maglia" tabindex="-1"><legend>La maglia</legend>
             <label class="kit__mo"><input type="radio" name="maglia" value="configuratore" data-maglia-cfg><span class="kit__mo-box"><span class="kit__mo-tit">Quella creata nel configuratore</span><span class="kit__mo-anteprima" data-maglia-ant></span><span class="kit__mo-txt" data-maglia-txt>Non hai ancora creato una maglia.</span></span></label>
             <label class="kit__mo"><input type="radio" name="maglia" value="negozio"><span class="kit__mo-box"><span class="kit__mo-tit">La scegliamo insieme in negozio</span><span class="kit__mo-txt">Ti mostriamo modelli, tessuti e colori dal vivo.</span></span></label>
@@ -721,20 +742,27 @@ function fasciaNoleggio(rel) {
 const notaInvio = t => `<p class="pren__conferma">${ico('ok', 'ico ico--s')}${esc(t)}</p>`;
 function paginaServizi() {
   const rel = '../';
+  // card come le tessere sport della home: foto di sfondo, velo scuro, icona, titolo, descrizione, link
   const carte = SRV.elenco.map((s, i) => {
     const sp = sportDa(s.sport);
-    return `<li class="srv" style="--acc:${sp.accento}">
-      ${sp.campo ? campo(sp.campo, 'srv__campo') : ''}
-      <p class="srv__n">0${i + 1}</p>
-      <h3 class="srv__tit">${esc(s.nome)}</h3>
-      <p class="srv__testo">${esc(s.descrizione)}</p>
-      <dl class="srv__dati"><div><dt>Durata</dt><dd>${esc(s.durata)}</dd></div><div><dt>Prezzo</dt><dd><b>${euro(s.prezzo)}</b> · ${esc(s.notaPrezzo)}</dd></div></dl>
-      <button class="btn btn--sec btn--sm srv__btn" type="button" data-srv-scegli="${s.id}">Prenota ${ico('freccia', 'ico ico--s')}</button>
+    return `<li class="tessera srv" style="--acc:${sp.accento};--acc-ink:${sp.testoAccento || '#0E0F12'}">
+      <a class="tessera__link srv__link" href="#prenota" data-srv-scegli="${s.id}">
+        <span class="tessera__foto">${s.foto ? img(s.foto.file, s.foto.alt, rel, { sizes: '(min-width: 1100px) 25vw, (min-width: 700px) 50vw, 82vw' }) : ''}</span>
+        <span class="tessera__velo srv__velo" aria-hidden="true"></span>
+        <span class="srv__ico" aria-hidden="true">${ico(s.icona || 'consiglio')}</span>
+        <span class="tessera__num" aria-hidden="true">0${i + 1}</span>
+        <span class="srv__testi">
+          <span class="srv__tit">${esc(s.nome)}</span>
+          <span class="srv__testo">${esc(s.descrizione)}</span>
+          <span class="srv__dati">${esc(s.durata)} · <b>${euro(s.prezzo)}</b> <span>(${esc(s.notaPrezzo)})</span></span>
+          <span class="srv__cta">Scopri di più e prenota ${ico('freccia', 'ico ico--s')}</span>
+        </span>
+      </a>
     </li>`;
   }).join('');
   const scelte = SRV.elenco.map(s => `<label class="kit__mo"><input type="radio" name="servizio" value="${s.id}"><span class="kit__mo-box"><span class="kit__mo-tit">${esc(s.nome)}</span><span class="kit__mo-txt">${esc(s.durata)} · ${euro(s.prezzo)} (${esc(s.notaPrezzo)})</span></span></label>`).join('');
   const corpo = `
-<section class="hk" data-parola="SERVIZI">
+<section class="hk" data-sfondo="SERVIZI">
   <div class="wrap hk__in">
     <nav class="briciole" aria-label="Percorso"><ol><li><a href="${rel}index.html">Home</a></li><li aria-current="page">Servizi</li></ol></nav>
     <p class="occhiello">Su prenotazione</p>
@@ -745,9 +773,18 @@ function paginaServizi() {
 </section>
 
 <section class="sez srv-sez" aria-labelledby="tit-srv">
+  <div class="parola-g" aria-hidden="true" data-parola>LAB</div>
   <div class="wrap">
-    <h2 class="sr-only" id="tit-srv">I servizi</h2>
-    <p class="etichetta-esempio srv__etic">Prezzi e durate di esempio</p>
+    <header class="sez-testa sez-testa--riga">
+      <div>
+        <p class="occhiello">${SRV.elenco.length} servizi · Il laboratorio</p>
+        <h2 class="tit-sez" id="tit-srv" data-tit>${righe(['Fatti da chi', 'fa sport'])}</h2>
+      </div>
+      <div class="sez-testa__testo">
+        <p>Racchette, scarpe, sci: li sistemiamo in negozio, con calma e con gli attrezzi giusti. Scegli il servizio e prenota il tuo turno.</p>
+        <p class="etichetta-esempio srv__etic">Prezzi e durate di esempio</p>
+      </div>
+    </header>
     <ul class="srv__griglia">${carte}</ul>
   </div>
 </section>
@@ -787,7 +824,7 @@ function paginaNoleggio() {
   const tab = NOL.attrezzatura.map(a => `<li class="att"><h3 class="att__nome">${esc(a.nome)}</h3><p class="att__inc">${esc(a.include)}</p><p class="att__prezzo"><b>${euro(a.prezzoGiorno)}</b> al giorno</p></li>`).join('');
   const opz = NOL.attrezzatura.map(a => `<option value="${a.id}">${esc(a.nome)}</option>`).join('');
   const corpo = `
-<section class="hk" data-parola="NEVE" style="--acc:${sci.accento}">
+<section class="hk" data-sfondo="NEVE" style="--acc:${sci.accento}">
   <div class="wrap hk__in">
     <nav class="briciole" aria-label="Percorso"><ol><li><a href="${rel}index.html">Home</a></li><li><a href="${sportUrl(sci, rel)}">${esc(sci.nome)}</a></li><li aria-current="page">Noleggio</li></ol></nav>
     <p class="occhiello">Stagione ${stagioneTxt()}</p>
@@ -874,14 +911,31 @@ function home() {
   const preload = `<link rel="preload" as="image" href="${V.poster}-m-720.webp" imagesrcset="${V.poster}-m-720.webp 720w, ${V.poster}-m-1080.webp 1080w" imagesizes="100vw" media="(max-width: 767px) and (orientation: portrait)" fetchpriority="high">
 <link rel="preload" as="image" href="${V.poster}-1280.webp" imagesrcset="${V.poster}-1280.webp 1280w, ${V.poster}-1920.webp 1920w" imagesizes="100vw" media="(min-width: 768px), (orientation: landscape)" fetchpriority="high">
 `;
+  // loop della hero: sport 01 con il video attuale, poi gli altri sport (video se c'è, altrimenti foto con zoom lento).
+  // Le foto degli sport dopo il primo hanno solo data-src: le carica main.js (quella in corso e la successiva).
+  const P = 'assets/img/';
+  const diapo = C.sport.slice(1).map((s, i) => {
+    const f = s.hero.file, pos = s.hero.posizione || '50% 50%';
+    return `<div class="hero__slide${s.video ? '' : ' hero__slide--foto'}" data-slide="${i + 1}" data-nome="${esc(s.nome)}" data-num="${s.numero}" data-url="${sportUrl(s, rel)}" data-acc="${s.accento}" aria-hidden="true">
+      <picture>
+        <source media="(max-width: 767px) and (orientation: portrait)" data-srcset="${P}${f}-m-720.webp 720w, ${P}${f}-m-1080.webp 1080w" sizes="100vw">
+        <img class="hero__foto" data-src="${P}${f}-1280.webp" data-srcset="${P}${f}-1280.webp 1280w, ${P}${f}-1920.webp 1920w" sizes="100vw" width="1920" height="1080" alt="" decoding="async" style="object-position:${pos}">
+      </picture>${s.video ? `
+      <video class="hero__video" muted loop playsinline preload="none" tabindex="-1" data-video-d="${s.video.computer}" data-video-m="${s.video.telefono}"></video>` : ''}
+    </div>`;
+  }).join('\n    ');
+  const s0 = C.sport[0], HL = H.heroLoop || {};
   const corpo = `
-<section class="hero" data-hero>
+<section class="hero" data-hero data-hero-loop data-durata="${HL.durata || 6.2}" data-dissolvenza="${HL.dissolvenza || 1.2}">
   <div class="hero__media" data-parallax>
-    <picture>
-      <source media="(max-width: 767px) and (orientation: portrait)" srcset="${V.poster}-m-720.webp 720w, ${V.poster}-m-1080.webp 1080w" sizes="100vw">
-      <img class="hero__poster" src="${V.poster}-1280.webp" srcset="${V.poster}-1280.webp 1280w, ${V.poster}-1920.webp 1920w" sizes="100vw" width="1920" height="1080" alt="${esc(V.alt)}" fetchpriority="high" decoding="async">
-    </picture>
-    <video class="hero__video" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" data-video-d="${V.computer}" data-video-m="${V.telefono}"></video>
+    <div class="hero__slide is-attiva" data-slide="0" data-nome="${esc(s0.nome)}" data-num="${s0.numero}" data-url="${sportUrl(s0, rel)}" data-acc="${s0.accento}">
+      <picture>
+        <source media="(max-width: 767px) and (orientation: portrait)" srcset="${V.poster}-m-720.webp 720w, ${V.poster}-m-1080.webp 1080w" sizes="100vw">
+        <img class="hero__poster hero__foto" src="${V.poster}-1280.webp" srcset="${V.poster}-1280.webp 1280w, ${V.poster}-1920.webp 1920w" sizes="100vw" width="1920" height="1080" alt="${esc(V.alt)}" fetchpriority="high" decoding="async">
+      </picture>
+      <video class="hero__video" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" data-video-d="${V.computer}" data-video-m="${V.telefono}"></video>
+    </div>
+    ${diapo}
     <div class="hero__velo" aria-hidden="true"></div>
   </div>
   <div class="hero__in wrap">
@@ -893,7 +947,16 @@ function home() {
       <a class="btn btn--ghost-l btn--lg" href="${wa(K.whatsappMessaggio)}" target="_blank" rel="noopener">${ico('chat', 'ico ico--s')}Chiedi su WhatsApp</a>
     </div>
   </div>
-  <p class="hero__tabellone" aria-hidden="true"><span>01</span><span class="hero__tratto"></span><span>12</span></p>
+  <div class="hero__tab" style="--acc:${s0.accento}" data-hero-tab>
+    <a class="hero__tab-link" href="${sportUrl(s0, rel)}" data-hero-link>
+      <span class="hero__tab-num" data-hero-num>${s0.numero}</span>
+      <span class="hero__tab-barra" aria-hidden="true"><i data-hero-prog></i></span>
+      <span class="hero__tab-tot" aria-hidden="true">${C.sport[C.sport.length - 1].numero}</span>
+      <span class="hero__tab-nome"><span class="sr-only">Sport in primo piano: </span><span data-hero-nome>${esc(s0.nome)}</span></span>
+      ${ico('freccia', 'ico ico--s')}
+    </a>
+    <button class="hero__pausa" type="button" aria-pressed="false" aria-label="Ferma lo scorrimento degli sport" data-hero-pausa hidden><span aria-hidden="true"></span></button>
+  </div>
 </section>
 
 ${nastroSport()}
@@ -1295,7 +1358,7 @@ function privacy() {
         <li><strong>Richiesta di noleggio sci e snowboard.</strong> Ci mandate: giorni del noleggio, nome, numero di telefono, eventuali note e, per ogni persona, l'attrezzatura, se è adulto o bambino, <strong>altezza, numero di scarpa e livello</strong>. Altezza, numero di scarpa e livello servono <strong>solo per preparare e regolare l'attrezzatura</strong>: non chiediamo il peso, non li usiamo per altro e li cancelliamo a fine stagione. La disponibilità mostrata sul sito è di esempio e non usa i vostri dati.</li>
         <li><strong>Preventivo per la maglia.</strong> Il pulsante "Chiedi un preventivo per questa maglia" prepara un messaggio WhatsApp con motivo, colori, nome, numero e quantità indicativa: lo inviate voi, se volete.</li>`);
   m = m.replace(/(<p>La borsa "[^"]*"[\s\S]*?<\/p>)/, `$1
-      <p>Anche la <strong>maglia personalizzata</strong> e i passi di <strong>"Crea il tuo kit"</strong> restano salvati solo nel vostro browser (localStorage), per non perdere le scelte cambiando pagina. Lo <strong>stemma che caricate</strong> nel configuratore (PNG, JPG o SVG) viene letto e mostrato solo nel vostro browser: <strong>non viene inviato</strong> né a noi né ad altri. Se volete stamparlo sulle maglie, ce lo mandate voi su WhatsApp o per email. Potete cancellare tutto svuotando i dati del sito dalle impostazioni del browser.</p>`);
+      <p>Anche la <strong>maglia personalizzata</strong> e i passi di <strong>"Crea il tuo kit"</strong> restano salvati solo nel vostro browser (localStorage), per non perdere le scelte cambiando pagina. Lo <strong>stemma che caricate</strong> nel configuratore (PNG, JPG o SVG) viene letto e mostrato solo nel vostro browser: <strong>non viene inviato</strong> né a noi né ad altri. Se volete stamparlo sulle maglie, ce lo mandate voi su WhatsApp o per email. Lo stesso vale per <strong>stemma, loghi degli sponsor e grafiche</strong> che caricate in "Crea il kit squadra" (PNG, JPG, SVG o PDF): restano nella pagina aperta nel vostro browser e nella richiesta compaiono solo i nomi dei file e la posizione scelta; i file ce li allegate voi. Potete cancellare tutto svuotando i dati del sito dalle impostazioni del browser.</p>`);
   m = m.replace(/\{\{([A-Z_]+)\}\}/g, (_, k) => esc(val[k] ?? ''));
   m = m.replace(/<!--[\s\S]*?-->/g, '').replace(/\n\s*\n+/g, '\n');
   m = m.replace('<main id="contenuto" class="section privacy">', '').replace('</main>', '');

@@ -108,6 +108,7 @@
     // "Prenota" sulle schede: sceglie il servizio e porta al modulo
     d.addEventListener('click', function (e) {
       var b = e.target.closest('[data-srv-scegli]'); if (!b) return;
+      e.preventDefault();   // la card è un link a #prenota: niente salto, scorre solo se serve
       var r = $('input[name="servizio"][value="' + b.getAttribute('data-srv-scegli') + '"]', form);
       if (form.hidden) return;
       if (r) { r.checked = true; S.erroreCampo($('#s-servizio'), ''); }

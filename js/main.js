@@ -213,24 +213,108 @@
     });
   }
 
-  /* ---------------- Video hero (dopo il caricamento) ---------------- */
-  var video = $('.hero__video');
-  if (video && !ridotto.matches && !(navigator.connection && navigator.connection.saveData)) {
-    var avviaVideo = function () {
-      var tel = matchMedia('(max-width: 767px) and (orientation: portrait)').matches;
-      video.src = REL + video.getAttribute(tel ? 'data-video-m' : 'data-video-d');
-      video.muted = true;
-      video.addEventListener('playing', function () { video.classList.add('is-attivo'); }, { once: true });
-      var p = video.play(); if (p && p.catch) p.catch(function () {});
-      if ('IntersectionObserver' in window) {
-        new IntersectionObserver(function (v) {
-          if (v[0].isIntersecting) { var q = video.play(); if (q && q.catch) q.catch(function () {}); } else video.pause();
-        }, { threshold: 0.05 }).observe(video);
+  /* ---------------- Hero: loop di tutti gli sport (dopo il caricamento) ----------------
+     Sport 01 = video attuale, poi gli altri sport nell'ordine di "Scegli il tuo sport", con dissolvenza.
+     Carica solo la diapositiva in corso e la successiva; pausa con la scheda nascosta o la hero fuori schermo;
+     con prefers-reduced-motion resta la foto fissa del primo sport. */
+  var heroL = $('[data-hero-loop]');
+  if (heroL && !ridotto.matches) (function () {
+    var slides = $$('.hero__slide', heroL), N = slides.length, i = 0, prec = -1, timer = 0, partito = 0, rimasto = 0, avviato = false;
+    var DUR = (+heroL.getAttribute('data-durata') || 6.2) * 1000, FADE = (+heroL.getAttribute('data-dissolvenza') || 1.2) * 1000;
+    var leggero = !!(navigator.connection && navigator.connection.saveData);   // risparmio dati: niente video, solo foto
+    var tab = $('[data-hero-tab]'), link = $('[data-hero-link]'), num = $('[data-hero-num]'), nome = $('[data-hero-nome]'), prog = $('[data-hero-prog]'), pausaBt = $('[data-hero-pausa]');
+    var fermi = {};   // motivi di pausa: utente, scheda, fuori
+    var fermo = function () { return Object.keys(fermi).some(function (k) { return fermi[k]; }); };
+    var tel = function () { return matchMedia('(max-width: 767px) and (orientation: portrait)').matches; };
+    var vid = function (k) { return $('video', slides[k]); };
+    var gioca = function (v) { var p = v.play(); if (p && p.catch) p.catch(function () {}); };
+    heroL.style.setProperty('--fade', FADE + 'ms');
+    function carica(k) {
+      var s = slides[k];
+      $$('[data-srcset]', s).forEach(function (x) { x.srcset = x.getAttribute('data-srcset'); x.removeAttribute('data-srcset'); });
+      $$('[data-src]', s).forEach(function (x) { x.src = x.getAttribute('data-src'); x.removeAttribute('data-src'); });
+      var v = vid(k);
+      if (v && !leggero && !v.getAttribute('src')) {
+        v.muted = true; v.preload = 'auto';
+        v.addEventListener('playing', function () { v.classList.add('is-attivo'); });
+        v.src = REL + v.getAttribute(tel() ? 'data-video-m' : 'data-video-d');
       }
-    };
-    var dopo = function () { (window.requestIdleCallback || function (f) { setTimeout(f, 200); })(avviaVideo, { timeout: 1500 }); };
+    }
+    // i video che non sono né in corso, né successivi, né in dissolvenza vengono scaricati
+    function scarica(k) { var v = vid(k); if (v && v.getAttribute('src')) { v.pause(); v.removeAttribute('src'); v.load(); v.classList.remove('is-attivo'); } }
+    function durata() {
+      var v = vid(i);
+      return v && v.getAttribute('src') && isFinite(v.duration) && v.duration > 2 ? v.duration * 1000 : DUR;
+    }
+    function barra() {
+      if (!prog) return;
+      prog.style.animation = 'none'; void prog.offsetWidth;   // riparte da zero
+      prog.style.animation = 'hero-prog ' + rimasto + 'ms linear forwards';
+    }
+    function etichetta() {
+      var s = slides[i];
+      nome.textContent = s.getAttribute('data-nome'); num.textContent = s.getAttribute('data-num');
+      link.href = s.getAttribute('data-url'); tab.style.setProperty('--acc', s.getAttribute('data-acc'));
+      tab.classList.remove('is-cambio'); void tab.offsetWidth; tab.classList.add('is-cambio');
+    }
+    function avvia() {
+      clearTimeout(timer);
+      if (fermo()) return;
+      heroL.classList.remove('is-ferma');
+      partito = Date.now(); timer = setTimeout(avanti, rimasto);
+      var v = vid(i); if (v && v.getAttribute('src')) gioca(v);
+    }
+    function ferma() {
+      if (timer) { clearTimeout(timer); timer = 0; rimasto = Math.max(400, rimasto - (Date.now() - partito)); }
+      heroL.classList.add('is-ferma');
+      var v = vid(i); if (v) v.pause();
+    }
+    function mostra(k) {
+      prec = i; i = k;
+      var vecchia = slides[prec], nuova = slides[i];
+      vecchia.classList.remove('is-attiva'); vecchia.classList.add('is-uscita');
+      nuova.classList.add('is-attiva', 'is-mossa');
+      var v = vid(i); if (v && v.getAttribute('src')) { try { v.currentTime = 0; } catch (e) {} }
+      setTimeout(function () {
+        if (slides[i] === vecchia) return;
+        vecchia.classList.remove('is-uscita', 'is-mossa');
+        var vv = $('video', vecchia); if (vv) vv.pause();
+        slides.forEach(function (x, j) { if (j !== i && j !== (i + 1) % N) scarica(j); });
+      }, FADE + 100);
+      carica(i); carica((i + 1) % N);
+      etichetta();
+      rimasto = durata(); barra(); avvia();
+    }
+    function avanti() { timer = 0; mostra((i + 1) % N); }
+    function cambiaFermo(chi, si) {
+      var prima = fermo(); fermi[chi] = si;
+      if (!avviato || prima === fermo()) return;
+      if (fermo()) ferma(); else avvia();
+    }
+    function parti() {
+      if (avviato) return;
+      avviato = true;
+      slides[0].classList.add('is-mossa');
+      carica(0); carica(1 % N);
+      rimasto = durata(); barra();
+      if (fermo()) { ferma(); return; }
+      avvia();
+    }
+    if (pausaBt) {
+      pausaBt.hidden = false;
+      pausaBt.addEventListener('click', function () {
+        var si = pausaBt.getAttribute('aria-pressed') !== 'true';
+        pausaBt.setAttribute('aria-pressed', si);
+        pausaBt.setAttribute('aria-label', si ? 'Riprendi lo scorrimento degli sport' : 'Ferma lo scorrimento degli sport');
+        cambiaFermo('utente', si);
+      });
+    }
+    d.addEventListener('visibilitychange', function () { cambiaFermo('scheda', d.hidden); });
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (v) { cambiaFermo('fuori', !v[0].isIntersecting); }, { threshold: 0.05 }).observe(heroL);
+    heroL.classList.add('is-loop');
+    var dopo = function () { (window.requestIdleCallback || function (f) { setTimeout(f, 200); })(parti, { timeout: 1500 }); };
     if (d.readyState === 'complete') dopo(); else addEventListener('load', dopo, { once: true });
-  }
+  })();
 
   /* ---------------- Vedi tutti ---------------- */
   var vediSport = $('[data-vedi-tutti]');
@@ -367,9 +451,12 @@
     sx: '<path d="M15 5l-7 7 7 7"/>',
     dx: '<path d="m9 5 7 7-7 7"/>',
     piu: '<path d="M12 5v14M5 12h14"/>',
-    meno: '<path d="M5 12h14"/>'
+    meno: '<path d="M5 12h14"/>',
+    giu: '<path d="m6 9 6 6 6-6"/>',
+    taglia: '<path d="M3 8h18v8H3z"/><path d="M6 8v3M9 8v4.5M12 8v3M15 8v4.5M18 8v3"/>',
+    ritiro: '<path d="M4 9h16l-1 11H5z"/><path d="M8.5 9V7a3.5 3.5 0 0 1 7 0v2M9 14.5l2 2 4-4"/>'
   };
-  var icona = function (k, cls) { return '<svg class="' + (cls || 'ico') + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' + SVG[k] + '</svg>'; };
+  var icona = function (k, cls) { return '<svg class="' + (cls || 'ico') + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' + (SVG[k] || '') + '</svg>'; };
 
   // taglie di un prodotto divise per linea: [{ linea, valori }]
   function gruppiTaglia(p) {
@@ -1345,7 +1432,9 @@
       $$('.tessera__link').forEach(function (t) {
         var im = $('.tessera__foto', t), cp = $('.tessera__campo', t);
         var qx = gsap.quickTo(im, 'x', { duration: .6, ease: 'power3' }), qy = gsap.quickTo(im, 'y', { duration: .6, ease: 'power3' });
-        var cx = gsap.quickTo(cp, 'x', { duration: .8, ease: 'power3' }), cy = gsap.quickTo(cp, 'y', { duration: .8, ease: 'power3' });
+        // le card dei servizi non hanno le linee di campo
+        var niente = function () {};
+        var cx = cp ? gsap.quickTo(cp, 'x', { duration: .8, ease: 'power3' }) : niente, cy = cp ? gsap.quickTo(cp, 'y', { duration: .8, ease: 'power3' }) : niente;
         var muovi = function (e) {
           var r = t.getBoundingClientRect(), px = (e.clientX - r.left) / r.width - .5, py = (e.clientY - r.top) / r.height - .5;
           qx(px * -10); qy(py * -10); cx(px * 8); cy(py * 8);

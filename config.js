@@ -221,6 +221,61 @@
       personalizzazioni: { nomeNumero: 6, stemma: 3 },   // € per atleta
       scontiQuantita: [ { da: 15, percento: 5 }, { da: 25, percento: 10 } ],
       maxAtleti: 120,
+      // caricamento di stemma, sponsor e grafiche (demo: i file restano nel browser)
+      grafiche: {
+        formati: ['png', 'jpg', 'jpeg', 'svg', 'pdf'], maxMB: 10, maxFile: 12,
+        posizioni: ['Petto sinistro', 'Centro petto', 'Schiena', 'Manica', 'Pantaloncino']
+      },
+      // capi e materiali: per ogni capo del pacchetto si sceglie prima il tipo, poi il materiale.
+      // "voci" = nomi dei capi nei pacchetti qui sotto. preventivo: true = "Prezzo su preventivo" (niente prezzi inventati)
+      capi: [
+        { id: 'maglie', nome: 'Maglie gara', voci: ['Maglia da gara', 'Canotta reversibile', 'Canotta tecnica', 'Maglia a maniche corte', 'Canotta', 'Maglia tecnica', 'Maglia da riscaldamento'],
+          tipi: ['Maniche corte', 'Maniche lunghe', 'Canotta'],
+          materiali: [
+            { id: 'tecnico', nome: 'Poliestere tecnico traspirante', trama: 'tecnico', testo: 'Leggero, asciuga in fretta: va bene per quasi tutti gli sport.' },
+            { id: 'mesh', nome: 'Micro-rete (mesh)', trama: 'rete', testo: 'Piccoli fori su tutta la maglia: la più fresca per le gare d\'estate.' },
+            { id: 'interlock', nome: 'Interlock', trama: 'interlock', testo: 'Più compatto e morbido, resiste a tanti lavaggi e ai mesi freddi.' },
+            { id: 'sublimato', nome: 'Sublimato totale', trama: 'sublimato', testo: 'Grafica stampata dentro il tessuto, colori e sponsor senza limiti.', preventivo: true }
+          ] },
+        { id: 'pantaloncini', nome: 'Pantaloncini', voci: ['Pantaloncino', 'Pantaloncino con bretelle', 'Pantaloncino da ring'],
+          tipi: ['Classico', 'Aderente', 'Con bretelle'],
+          materiali: [
+            { id: 'tecnico', nome: 'Poliestere tecnico', trama: 'tecnico', testo: 'Leggero ed elastico in vita, non si appesantisce con il sudore.' },
+            { id: 'rinforzi', nome: 'Poliestere tecnico con rinforzi', trama: 'rinforzo', testo: 'Cuciture e zone di contatto rinforzate: dura di più su campi duri e sintetico.' }
+          ] },
+        { id: 'calze', nome: 'Calzettoni e calze', voci: ['Calzettoni', 'Calze tecniche'],
+          tipi: ['Calzettoni lunghi', 'Calze corte'],
+          materiali: [
+            { id: 'tecnico', nome: 'Poliestere tecnico', trama: 'tecnico', testo: 'Sottile e traspirante, tiene il piede asciutto.' },
+            { id: 'rinforzi', nome: 'Con rinforzi su tallone e punta', trama: 'rinforzo', testo: 'Spugna nei punti di attrito: meno vesciche e più durata.' }
+          ] },
+        { id: 'giubbini', nome: 'Giubbini', voci: ['Giacca antipioggia', 'Giacca antivento', 'Gilet antivento', 'Giacca invernale'],
+          tipi: ['Giubbino', 'Gilet', 'Giaccone lungo da panchina'],
+          materiali: [
+            { id: 'antipioggia', nome: 'Antipioggia leggero', trama: 'pioggia', testo: 'Si piega in tasca, ferma pioggia e vento negli allenamenti.' },
+            { id: 'softshell', nome: 'Softshell', trama: 'softshell', testo: 'Esterno antivento e interno felpato: caldo ma traspirante.', preventivo: true },
+            { id: 'piumino', nome: 'Piumino imbottito', trama: 'piumino', testo: 'Imbottitura trapuntata per la panchina d\'inverno.', preventivo: true }
+          ] },
+        { id: 'tuta-tecnica', nome: 'Tute tecniche', voci: ['Tuta'],
+          tipi: ['Giacca e pantalone'],
+          materiali: [ { id: 'elastico', nome: 'Poliestere tecnico elasticizzato', trama: 'elastico', testo: 'Segue i movimenti: per allenamento e riscaldamento.' } ] },
+        { id: 'tuta-rappresentanza', nome: 'Tute di rappresentanza', voci: ['Tuta di rappresentanza'],
+          tipi: ['Felpa full-zip con pantalone'],
+          materiali: [ { id: 'strutturato', nome: 'Tessuto strutturato', trama: 'strutturato', testo: 'Più corposo ed elegante, per trasferte e premiazioni.' } ] },
+        { id: 'allenamento', nome: 'Tute e felpe da allenamento', voci: ['Felpa da riscaldamento', 'Felpa', 'Felpa con cappuccio'],
+          tipi: ['Solo felpa', 'Felpa con pantalone affusolato'],
+          materiali: [
+            { id: 'felpa', nome: 'Felpa leggera', trama: 'felpa', testo: 'Morbida e calda, interno garzato.' },
+            { id: 'poliestere', nome: 'Poliestere', trama: 'tecnico', testo: 'Più leggero, asciuga in fretta dopo l\'allenamento.' }
+          ] },
+        { id: 'borse', nome: 'Borse e zaini', voci: ['Borsa squadra', 'Zaino', 'Borsone', 'Marsupio porta borraccia'],
+          tipi: ['Borsa', 'Borsone', 'Zaino', 'Marsupio'],
+          materiali: [
+            { id: 'p600-media', nome: 'Poliestere 600D · 40 litri', trama: 'borsa', testo: 'Resistente e lavabile, entra tutto il kit della partita.' },
+            { id: 'p600-grande', nome: 'Poliestere 600D con fondo rigido · 70 litri', trama: 'borsa', testo: 'Per le trasferte: fondo impermeabile e tasca scarpe.', preventivo: true },
+            { id: 'tela', nome: 'Tela spalmata · 25 litri', trama: 'borsa', testo: 'Compatto, impermeabile, per l\'allenamento di tutti i giorni.' }
+          ] }
+      ],
       testoTaglie: 'Le taglie le definiamo insieme in negozio: portate la squadra, proviamo tutto e prendiamo le misure.',
       sport: [
         { id: 'calcio', nome: 'Calcio', pacchetti: [
@@ -284,13 +339,18 @@
       giorniMassimi: 21,                          // si prenota al massimo 3 settimane avanti
       testoConferma: 'La prenotazione è confermata quando il negozio ti risponde.',
       elenco: [
+        // foto = immagine di sfondo della card (dalle foto del sito), icona = icona piccola (vedi ICO in build.mjs)
         { id: 'incordatura', nome: 'Incordatura racchette da tennis', sport: 'tennis', durata: 'Pronta in 24 ore', prezzo: 15, notaPrezzo: 'corda esclusa',
+          foto: { file: 'tennis-racchette', alt: 'Due racchette da tennis e una pallina sul campo verde' }, icona: 'racchetta',
           descrizione: 'Porti la racchetta, scegli corda e tensione con noi. La ritiri il giorno dopo, già pronta per giocare.' },
         { id: 'prova-racchette', nome: 'Prova racchette da padel e tennis', sport: 'padel', durata: '45 minuti', prezzo: 10, notaPrezzo: 'scalati se poi acquisti',
+          foto: { file: 'padel-racchette', alt: 'Racchetta da padel e pallina sul campo blu' }, icona: 'padel',
           descrizione: 'Provi due o tre racchette scelte per il tuo gioco, con consigli su peso, bilanciamento e forma.' },
         { id: 'analisi-passo', nome: 'Analisi del passo per la corsa', sport: 'running', durata: '30 minuti', prezzo: 25, notaPrezzo: 'gratis con l\'acquisto delle scarpe',
+          foto: { file: 'running-scarpe-da-corsa', alt: 'Runner che si allaccia la scarpa sulla pista' }, icona: 'scarpa',
           descrizione: 'Corri qualche minuto sul tapis roulant: guardiamo l\'appoggio del piede e ti consigliamo le scarpe giuste.' },
         { id: 'sciolinatura', nome: 'Sciolinatura e affilatura di sci e snowboard', sport: 'sci-e-snowboard', durata: 'Pronti in 48 ore', prezzo: 30, notaPrezzo: 'a paio di sci o tavola',
+          foto: { file: 'sci-e-snowboard-scarponi-e-attrezzi', alt: 'Sci e bastoncini piantati nella neve' }, icona: 'scarpone',
           descrizione: 'Lamine affilate e soletta sciolinata a caldo: la tavola o gli sci tornano a scorrere come nuovi.' }
       ]
     },
@@ -339,6 +399,9 @@
         poster: 'assets/video/hero-poster',     // senza estensione: -1280.webp e -1920.webp, -mobile.webp
         alt: 'Calciatore che colpisce il pallone di sera su un campo in erba sintetica'
       },
+      // loop della hero: il video qui sopra (sport 01) e poi tutti gli sport, nello stesso ordine di "Scegli il tuo sport".
+      // Uno sport con "video: { computer, telefono }" nella sua scheda usa il video; gli altri la foto hero con zoom lento.
+      heroLoop: { durata: 6.2, dissolvenza: 1.2 },   // secondi per sport (come il video attuale) e durata della dissolvenza
       numeriEsempio: [
         { valore: 12, suffisso: '', etichetta: 'sport in un solo negozio' },
         { valore: 40, suffisso: '+', etichetta: 'squadre e società seguite' },

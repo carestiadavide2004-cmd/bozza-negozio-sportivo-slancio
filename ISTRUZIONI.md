@@ -97,6 +97,19 @@ Nota: per caricare i file su Firebase Storage serve il piano **Blaze** (a consum
   - **La disponibilità è simulata** (demo): pezzi totali meno prenotazioni di esempio (`noleggio.esempio`: feriali, venerdì, weekend/feste/periodi di punta) più una piccola variazione fissa per giorno. Se un tipo è esaurito in uno dei giorni scelti la richiesta è bloccata e il sito propone il giorno (o periodo) libero più vicino.
   - **Per una disponibilità vera e condivisa** servono un database (es. Firebase Firestore) con le prenotazioni confermate e un pannello per il negozio che le inserisce o le conferma. Senza database ogni visitatore vede solo la simulazione.
 
+## Hero della home: giro di tutti gli sport
+
+- Parte dal video del calcio, poi passa agli altri 11 sport nell'ordine di `config.js` → `sport`, con dissolvenza. Durata e dissolvenza in `home.heroLoop` (`durata: 6.2`, `dissolvenza: 1.2` secondi).
+- Gli sport senza video usano la loro foto (`foto`) con uno zoom lento. Su computer la foto parte dopo la colonna del testo, sul telefono sotto il titolo, così il testo non copre il soggetto.
+- **Per aggiungere un video a uno sport:** metti in `assets/video/` la versione orizzontale (1920×1080) e quella verticale (1080×1920), stessa durata (circa 6 s), frame rate costante, e aggiungi allo sport in `config.js` `video: { computer: 'assets/video/NOME-1920.mp4', telefono: 'assets/video/NOME-1080x1920.mp4' }`. Poi `node build.mjs`.
+- Vengono caricati solo la diapositiva in corso e la successiva. Si ferma con la scheda nascosta, fuori schermo o col pulsante pausa. Con "riduci movimento" resta la foto fissa del calcio; con "risparmio dati" niente video.
+
+## Kit squadra: materiali e grafiche
+
+- **Capi e materiali** (`config.js` → `kit.capi`): per ogni gruppo di capi i `tipi` e i `materiali` (nome, una riga di descrizione, disegno `trama`). `preventivo: true` mostra "Prezzo su preventivo". `voci` collega il gruppo ai nomi dei capi dei pacchetti.
+- **Stemma, sponsor e grafiche** (`kit.grafiche`): formati, peso massimo (10 MB), numero di file e posizioni. I file restano nel browser: nella richiesta vanno nomi e posizioni, il cliente li allega in WhatsApp.
+  - **Versione per un cliente vero:** per ricevere davvero i file serve un servizio di caricamento (es. Firebase Storage o un modulo con allegati) da aggiungere anche nell'informativa privacy.
+
 ## Foto
 
 - Le originali stanno in `_sorgenti/foto/` (non pubblicate). L'elenco nome → id Pexels è in `_sorgenti/scelte.txt`.

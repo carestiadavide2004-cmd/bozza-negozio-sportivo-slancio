@@ -217,3 +217,14 @@ Non ancora (prossimi passi): pannello admin.
 - Servizi: data passata, domenica e oltre 21 giorni rifiutati; 8 e 25 dicembre chiusi; lunedì solo pomeriggio; codice SRV-XXXX; WhatsApp con servizio, giorno, fascia, nome, telefono, note.
 - Noleggio: data passata e fuori stagione rifiutate; giorno esaurito (6/12, kit sci adulto) bloccato con proposta del giorno libero più vicino (5/12) e pulsante che lo applica; codice NOL-XXXX; totale 30,00 €; WhatsApp con persone, misure, livello, ritiro e riconsegna; niente peso.
 - 5 pagine senza errori in console e senza scorrimento laterale; richieste esterne solo cdnjs; 0 cookie. Controllo A+B rifatto: tutto ok (49 s).
+
+## Blocco D – hero, menu, kit, servizi (13/11/2026)
+1. [x] Hero: video del calcio + giro degli altri 11 sport (6,2 s ciascuno, dissolvenza 1,2 s), etichetta numero/nome/link in sincronia, barra di avanzamento, pulsante pausa. Foto con zoom lento; solo diapositiva attuale e successiva caricate; pausa con scheda nascosta o hero fuori schermo; movimento ridotto = foto fissa.
+2. [x] Menu: "Noleggio" accanto a Servizi (computer e telefono); "Kit Squadra"; pulsante "Crea il kit squadra".
+3. [x] Kit passo 3: area "trascina o clicca" (PNG/JPG/SVG/PDF, max 10 MB, più file), anteprima, nome, peso, elimina, posizione per file; "Scegli in negozio" come alternativa; riepilogo "I file verranno inviati con la richiesta".
+4. [x] Kit passo 2: per ogni capo prima il tipo, poi il materiale (icona + una riga); "Prezzo su preventivo" dove serve; scelte nel riepilogo e in WhatsApp.
+5. [x] Servizi: card con foto di sfondo, sfumatura, numero, icona, testo e "Scopri di più e prenota", stesso stile delle card sport.
+- Difetti corretti nel controllo: titolo hero sopra i soggetti delle foto (foto spostate dopo il testo con sfumatura); riepilogo "rappresentan-za" spezzato; menu a 1024 px su due righe e logo schiacciato; avviso GSAP sulle card servizi (senza linee di campo).
+
+### Controllo veloce D (Chromium, 390/768/1440, 60 s – ~/.carestia-qa/slancio/hcheck.mjs)
+- Tutto ok: cambio sport e link, 3 foto su 12 caricate, un solo video della misura giusta, pausa, link del menu, file accettati/scartati, posizioni obbligatorie, riepilogo e WhatsApp, card servizi, nessuno scorrimento laterale, nessun errore in console, solo cdnjs, 0 cookie. A+B e C rifatti: ok.

@@ -43,8 +43,9 @@
         </div>
       </div>
       <a class="hdr__link" href="#perche">Perché Slancio</a>
-      <a class="hdr__link" href="squadre/index.html">Squadre</a>
+      <a class="hdr__link" href="squadre/index.html">Kit Squadra</a>
       <a class="hdr__link" href="servizi/index.html">Servizi</a>
+      <a class="hdr__link" href="noleggio-sci/index.html">Noleggio</a>
       <a class="hdr__link" href="#negozio">Il negozio</a>
     </nav>
     <div class="hdr__az">
@@ -61,10 +62,10 @@
     <ul class="mm__sport"><li><a href="sport/calcio/index.html" style="--acc:#22A45D"><span class="mm__num">01</span><span class="mm__nome">Calcio</span></a></li><li><a href="sport/calcetto/index.html" style="--acc:#14B8C8"><span class="mm__num">02</span><span class="mm__nome">Calcetto</span></a></li><li><a href="sport/basket/index.html" style="--acc:#F47B20"><span class="mm__num">03</span><span class="mm__nome">Basket</span></a></li><li><a href="sport/pallavolo/index.html" style="--acc:#FFC21A"><span class="mm__num">04</span><span class="mm__nome">Pallavolo</span></a></li><li><a href="sport/tennis/index.html" style="--acc:#C65B3A"><span class="mm__num">05</span><span class="mm__nome">Tennis</span></a></li><li><a href="sport/padel/index.html" style="--acc:#8C6CF7"><span class="mm__num">06</span><span class="mm__nome">Padel</span></a></li><li><a href="sport/pugilato-e-combattimento/index.html" style="--acc:#E0283E"><span class="mm__num">07</span><span class="mm__nome">Pugilato</span></a></li><li><a href="sport/sci-e-snowboard/index.html" style="--acc:#9ED0F5"><span class="mm__num">08</span><span class="mm__nome">Sci e snowboard</span></a></li><li><a href="sport/nuoto/index.html" style="--acc:#1F9BDB"><span class="mm__num">09</span><span class="mm__nome">Nuoto</span></a></li><li><a href="sport/running/index.html" style="--acc:#FF6B4A"><span class="mm__num">10</span><span class="mm__nome">Running</span></a></li><li><a href="sport/fitness-e-palestra/index.html" style="--acc:#B9C0CC"><span class="mm__num">11</span><span class="mm__nome">Fitness</span></a></li><li><a href="sport/ciclismo/index.html" style="--acc:#F45BA4"><span class="mm__num">12</span><span class="mm__nome">Ciclismo</span></a></li></ul>
     <ul class="mm__link">
       <li><a href="#perche">Perché Slancio</a></li>
-      <li><a href="squadre/index.html">Squadre e associazioni</a></li>
+      <li><a href="squadre/index.html">Kit Squadra</a></li>
       <li><a href="#maglia">Disegna la maglia</a></li>
-      <li><a href="servizi/index.html">Servizi su prenotazione</a></li>
-      <li><a href="noleggio-sci/index.html">Noleggio sci e snowboard</a></li>
+      <li><a href="servizi/index.html">Servizi</a></li>
+      <li><a href="noleggio-sci/index.html">Noleggio</a></li>
       <li><a href="#negozio">Il negozio</a></li>
       <li><a href="#chiedi">Chiedi disponibilità</a></li>
     </ul>
@@ -88,13 +89,81 @@
 </div>
 <main id="contenuto">
 
-<section class="hero" data-hero>
+<section class="hero" data-hero data-hero-loop data-durata="6.2" data-dissolvenza="1.2">
   <div class="hero__media" data-parallax>
-    <picture>
-      <source media="(max-width: 767px) and (orientation: portrait)" srcset="assets/video/hero-poster-m-720.webp 720w, assets/video/hero-poster-m-1080.webp 1080w" sizes="100vw">
-      <img class="hero__poster" src="assets/video/hero-poster-1280.webp" srcset="assets/video/hero-poster-1280.webp 1280w, assets/video/hero-poster-1920.webp 1920w" sizes="100vw" width="1920" height="1080" alt="Calciatore che colpisce il pallone di sera su un campo in erba sintetica" fetchpriority="high" decoding="async">
-    </picture>
-    <video class="hero__video" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" data-video-d="assets/video/hero-1920.mp4" data-video-m="assets/video/hero-1080x1920.mp4"></video>
+    <div class="hero__slide is-attiva" data-slide="0" data-nome="Calcio" data-num="01" data-url="sport/calcio/index.html" data-acc="#22A45D">
+      <picture>
+        <source media="(max-width: 767px) and (orientation: portrait)" srcset="assets/video/hero-poster-m-720.webp 720w, assets/video/hero-poster-m-1080.webp 1080w" sizes="100vw">
+        <img class="hero__poster hero__foto" src="assets/video/hero-poster-1280.webp" srcset="assets/video/hero-poster-1280.webp 1280w, assets/video/hero-poster-1920.webp 1920w" sizes="100vw" width="1920" height="1080" alt="Calciatore che colpisce il pallone di sera su un campo in erba sintetica" fetchpriority="high" decoding="async">
+      </picture>
+      <video class="hero__video" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" data-video-d="assets/video/hero-1920.mp4" data-video-m="assets/video/hero-1080x1920.mp4"></video>
+    </div>
+    <div class="hero__slide hero__slide--foto" data-slide="1" data-nome="Calcetto" data-num="02" data-url="sport/calcetto/index.html" data-acc="#14B8C8" aria-hidden="true">
+      <picture>
+        <source media="(max-width: 767px) and (orientation: portrait)" data-srcset="assets/img/calcetto-hero-m-720.webp 720w, assets/img/calcetto-hero-m-1080.webp 1080w" sizes="100vw">
+        <img class="hero__foto" data-src="assets/img/calcetto-hero-1280.webp" data-srcset="assets/img/calcetto-hero-1280.webp 1280w, assets/img/calcetto-hero-1920.webp 1920w" sizes="100vw" width="1920" height="1080" alt="" decoding="async" style="object-position:50% 50%">
+      </picture>
+    </div>
+    <div class="hero__slide hero__slide--foto" data-slide="2" data-nome="Basket" data-num="03" data-url="sport/basket/index.html" data-acc="#F47B20" aria-hidden="true">
+      <picture>
+        <source media="(max-width: 767px) and (orientation: portrait)" data-srcset="assets/img/basket-hero-m-720.webp 720w, assets/img/basket-hero-m-1080.webp 1080w" sizes="100vw">
+        <img class="hero__foto" data-src="assets/img/basket-hero-1280.webp" data-srcset="assets/img/basket-hero-1280.webp 1280w, assets/img/basket-hero-1920.webp 1920w" sizes="100vw" width="1920" height="1080" alt="" decoding="async" style="object-position:30% 50%">
+      </picture>
+    </div>
+    <div class="hero__slide hero__slide--foto" data-slide="3" data-nome="Pallavolo" data-num="04" data-url="sport/pallavolo/index.html" data-acc="#FFC21A" aria-hidden="true">
+      <picture>
+        <source media="(max-width: 767px) and (orientation: portrait)" data-srcset="assets/img/pallavolo-hero-m-720.webp 720w, assets/img/pallavolo-hero-m-1080.webp 1080w" sizes="100vw">
+        <img class="hero__foto" data-src="assets/img/pallavolo-hero-1280.webp" data-srcset="assets/img/pallavolo-hero-1280.webp 1280w, assets/img/pallavolo-hero-1920.webp 1920w" sizes="100vw" width="1920" height="1080" alt="" decoding="async" style="object-position:45% 40%">
+      </picture>
+    </div>
+    <div class="hero__slide hero__slide--foto" data-slide="4" data-nome="Tennis" data-num="05" data-url="sport/tennis/index.html" data-acc="#C65B3A" aria-hidden="true">
+      <picture>
+        <source media="(max-width: 767px) and (orientation: portrait)" data-srcset="assets/img/tennis-hero-m-720.webp 720w, assets/img/tennis-hero-m-1080.webp 1080w" sizes="100vw">
+        <img class="hero__foto" data-src="assets/img/tennis-hero-1280.webp" data-srcset="assets/img/tennis-hero-1280.webp 1280w, assets/img/tennis-hero-1920.webp 1920w" sizes="100vw" width="1920" height="1080" alt="" decoding="async" style="object-position:55% 50%">
+      </picture>
+    </div>
+    <div class="hero__slide hero__slide--foto" data-slide="5" data-nome="Padel" data-num="06" data-url="sport/padel/index.html" data-acc="#8C6CF7" aria-hidden="true">
+      <picture>
+        <source media="(max-width: 767px) and (orientation: portrait)" data-srcset="assets/img/padel-hero-m-720.webp 720w, assets/img/padel-hero-m-1080.webp 1080w" sizes="100vw">
+        <img class="hero__foto" data-src="assets/img/padel-hero-1280.webp" data-srcset="assets/img/padel-hero-1280.webp 1280w, assets/img/padel-hero-1920.webp 1920w" sizes="100vw" width="1920" height="1080" alt="" decoding="async" style="object-position:50% 50%">
+      </picture>
+    </div>
+    <div class="hero__slide hero__slide--foto" data-slide="6" data-nome="Pugilato e combattimento" data-num="07" data-url="sport/pugilato-e-combattimento/index.html" data-acc="#E0283E" aria-hidden="true">
+      <picture>
+        <source media="(max-width: 767px) and (orientation: portrait)" data-srcset="assets/img/pugilato-e-combattimento-hero-m-720.webp 720w, assets/img/pugilato-e-combattimento-hero-m-1080.webp 1080w" sizes="100vw">
+        <img class="hero__foto" data-src="assets/img/pugilato-e-combattimento-hero-1280.webp" data-srcset="assets/img/pugilato-e-combattimento-hero-1280.webp 1280w, assets/img/pugilato-e-combattimento-hero-1920.webp 1920w" sizes="100vw" width="1920" height="1080" alt="" decoding="async" style="object-position:50% 40%">
+      </picture>
+    </div>
+    <div class="hero__slide hero__slide--foto" data-slide="7" data-nome="Sci e snowboard" data-num="08" data-url="sport/sci-e-snowboard/index.html" data-acc="#9ED0F5" aria-hidden="true">
+      <picture>
+        <source media="(max-width: 767px) and (orientation: portrait)" data-srcset="assets/img/sci-e-snowboard-hero-m-720.webp 720w, assets/img/sci-e-snowboard-hero-m-1080.webp 1080w" sizes="100vw">
+        <img class="hero__foto" data-src="assets/img/sci-e-snowboard-hero-1280.webp" data-srcset="assets/img/sci-e-snowboard-hero-1280.webp 1280w, assets/img/sci-e-snowboard-hero-1920.webp 1920w" sizes="100vw" width="1920" height="1080" alt="" decoding="async" style="object-position:50% 50%">
+      </picture>
+    </div>
+    <div class="hero__slide hero__slide--foto" data-slide="8" data-nome="Nuoto" data-num="09" data-url="sport/nuoto/index.html" data-acc="#1F9BDB" aria-hidden="true">
+      <picture>
+        <source media="(max-width: 767px) and (orientation: portrait)" data-srcset="assets/img/nuoto-hero-m-720.webp 720w, assets/img/nuoto-hero-m-1080.webp 1080w" sizes="100vw">
+        <img class="hero__foto" data-src="assets/img/nuoto-hero-1280.webp" data-srcset="assets/img/nuoto-hero-1280.webp 1280w, assets/img/nuoto-hero-1920.webp 1920w" sizes="100vw" width="1920" height="1080" alt="" decoding="async" style="object-position:50% 50%">
+      </picture>
+    </div>
+    <div class="hero__slide hero__slide--foto" data-slide="9" data-nome="Running" data-num="10" data-url="sport/running/index.html" data-acc="#FF6B4A" aria-hidden="true">
+      <picture>
+        <source media="(max-width: 767px) and (orientation: portrait)" data-srcset="assets/img/running-hero-m-720.webp 720w, assets/img/running-hero-m-1080.webp 1080w" sizes="100vw">
+        <img class="hero__foto" data-src="assets/img/running-hero-1280.webp" data-srcset="assets/img/running-hero-1280.webp 1280w, assets/img/running-hero-1920.webp 1920w" sizes="100vw" width="1920" height="1080" alt="" decoding="async" style="object-position:45% 50%">
+      </picture>
+    </div>
+    <div class="hero__slide hero__slide--foto" data-slide="10" data-nome="Fitness e palestra" data-num="11" data-url="sport/fitness-e-palestra/index.html" data-acc="#B9C0CC" aria-hidden="true">
+      <picture>
+        <source media="(max-width: 767px) and (orientation: portrait)" data-srcset="assets/img/fitness-e-palestra-hero-m-720.webp 720w, assets/img/fitness-e-palestra-hero-m-1080.webp 1080w" sizes="100vw">
+        <img class="hero__foto" data-src="assets/img/fitness-e-palestra-hero-1280.webp" data-srcset="assets/img/fitness-e-palestra-hero-1280.webp 1280w, assets/img/fitness-e-palestra-hero-1920.webp 1920w" sizes="100vw" width="1920" height="1080" alt="" decoding="async" style="object-position:50% 50%">
+      </picture>
+    </div>
+    <div class="hero__slide hero__slide--foto" data-slide="11" data-nome="Ciclismo" data-num="12" data-url="sport/ciclismo/index.html" data-acc="#F45BA4" aria-hidden="true">
+      <picture>
+        <source media="(max-width: 767px) and (orientation: portrait)" data-srcset="assets/img/ciclismo-hero-m-720.webp 720w, assets/img/ciclismo-hero-m-1080.webp 1080w" sizes="100vw">
+        <img class="hero__foto" data-src="assets/img/ciclismo-hero-1280.webp" data-srcset="assets/img/ciclismo-hero-1280.webp 1280w, assets/img/ciclismo-hero-1920.webp 1920w" sizes="100vw" width="1920" height="1080" alt="" decoding="async" style="object-position:60% 50%">
+      </picture>
+    </div>
     <div class="hero__velo" aria-hidden="true"></div>
   </div>
   <div class="hero__in wrap">
@@ -106,7 +175,16 @@
       <a class="btn btn--ghost-l btn--lg" href="https://wa.me/390000000000?text=Ciao%20Slancio%2C%20vorrei%20un'informazione." target="_blank" rel="noopener"><svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5z"/><path d="M8.5 10h7M8.5 13.5h4.5"/></svg>Chiedi su WhatsApp</a>
     </div>
   </div>
-  <p class="hero__tabellone" aria-hidden="true"><span>01</span><span class="hero__tratto"></span><span>12</span></p>
+  <div class="hero__tab" style="--acc:#22A45D" data-hero-tab>
+    <a class="hero__tab-link" href="sport/calcio/index.html" data-hero-link>
+      <span class="hero__tab-num" data-hero-num>01</span>
+      <span class="hero__tab-barra" aria-hidden="true"><i data-hero-prog></i></span>
+      <span class="hero__tab-tot" aria-hidden="true">12</span>
+      <span class="hero__tab-nome"><span class="sr-only">Sport in primo piano: </span><span data-hero-nome>Calcio</span></span>
+      <svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+    </a>
+    <button class="hero__pausa" type="button" aria-pressed="false" aria-label="Ferma lo scorrimento degli sport" data-hero-pausa hidden><span aria-hidden="true"></span></button>
+  </div>
 </section>
 
 <div class="nastro nastro--sport" aria-hidden="true"><div class="nastro__traccia"><div class="nastro__gruppo"><span class="nastro__voce"><b>01</b> Calcio</span><span class="nastro__sep" aria-hidden="true">/</span><span class="nastro__voce"><b>02</b> Calcetto</span><span class="nastro__sep" aria-hidden="true">/</span><span class="nastro__voce"><b>03</b> Basket</span><span class="nastro__sep" aria-hidden="true">/</span><span class="nastro__voce"><b>04</b> Pallavolo</span><span class="nastro__sep" aria-hidden="true">/</span><span class="nastro__voce"><b>05</b> Tennis</span><span class="nastro__sep" aria-hidden="true">/</span><span class="nastro__voce"><b>06</b> Padel</span><span class="nastro__sep" aria-hidden="true">/</span><span class="nastro__voce"><b>07</b> Pugilato e combattimento</span><span class="nastro__sep" aria-hidden="true">/</span><span class="nastro__voce"><b>08</b> Sci e snowboard</span><span class="nastro__sep" aria-hidden="true">/</span><span class="nastro__voce"><b>09</b> Nuoto</span><span class="nastro__sep" aria-hidden="true">/</span><span class="nastro__voce"><b>10</b> Running</span><span class="nastro__sep" aria-hidden="true">/</span><span class="nastro__voce"><b>11</b> Fitness e palestra</span><span class="nastro__sep" aria-hidden="true">/</span><span class="nastro__voce"><b>12</b> Ciclismo</span><span class="nastro__sep">/</span></div><div class="nastro__gruppo"><span class="nastro__voce"><b>01</b> Calcio</span><span class="nastro__sep" aria-hidden="true">/</span><span class="nastro__voce"><b>02</b> Calcetto</span><span class="nastro__sep" aria-hidden="true">/</span><span class="nastro__voce"><b>03</b> Basket</span><span class="nastro__sep" aria-hidden="true">/</span><span class="nastro__voce"><b>04</b> Pallavolo</span><span class="nastro__sep" aria-hidden="true">/</span><span class="nastro__voce"><b>05</b> Tennis</span><span class="nastro__sep" aria-hidden="true">/</span><span class="nastro__voce"><b>06</b> Padel</span><span class="nastro__sep" aria-hidden="true">/</span><span class="nastro__voce"><b>07</b> Pugilato e combattimento</span><span class="nastro__sep" aria-hidden="true">/</span><span class="nastro__voce"><b>08</b> Sci e snowboard</span><span class="nastro__sep" aria-hidden="true">/</span><span class="nastro__voce"><b>09</b> Nuoto</span><span class="nastro__sep" aria-hidden="true">/</span><span class="nastro__voce"><b>10</b> Running</span><span class="nastro__sep" aria-hidden="true">/</span><span class="nastro__voce"><b>11</b> Fitness e palestra</span><span class="nastro__sep" aria-hidden="true">/</span><span class="nastro__voce"><b>12</b> Ciclismo</span><span class="nastro__sep">/</span></div></div></div>
@@ -354,7 +432,7 @@
       <p class="occhiello">Squadre e associazioni sportive</p>
       <h2 class="tit-sez" id="tit-fsq" data-tit><span class="m"><span>Crea il kit</span></span> <span class="m"><span>della squadra</span></span></h2>
       <p class="fascia-sq__lead">Quattro passi: sport, pacchetto, squadra, riepilogo. Ricevi un preventivo indicativo e un codice richiesta; le taglie le proviamo insieme in negozio.</p>
-      <a class="btn btn--pri btn--lg" href="squadre/index.html">Crea il tuo kit <svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+      <a class="btn btn--pri btn--lg" href="squadre/index.html">Crea il kit squadra <svg class="ico ico--s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
     </div>
     <div class="fascia-sq__lato">
       <ol class="fascia-sq__passi">
