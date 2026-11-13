@@ -494,6 +494,8 @@
       });
       mv.addEventListener('error', function () { if (mv) mv.remove(); mv = null; avvia25(location.protocol === 'file:' ? 'Aprendo il file dal computer il browser blocca il 3D: ecco la maglia disegnata.' : 'La maglia 3D non si è caricata: ecco la versione disegnata.'); });
       scena.insertBefore(mv, scena.firstChild);
+      // rete o scheda grafica lentissime: dopo 25 s si passa alla maglia disegnata
+      setTimeout(function () { if (modo === 'carico' && mv) { mv.remove(); mv = null; avvia25('La maglia 3D ci mette troppo: ecco la versione disegnata.'); } }, 25000);
     }, function () { avvia25('Il visore 3D non si è caricato: ecco la maglia disegnata.'); });
   }
   /* ----- 2,5D ----- */

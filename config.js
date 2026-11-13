@@ -277,6 +277,55 @@
       caschi: { colonne: ['Taglia', 'Giro testa'], righe:[['XS (bambino)', '48–52 cm'], ['S', '52–55 cm'], ['M', '55–58 cm'], ['L', '58–61 cm']], nota: 'Misura la testa con un metro da sarta, circa un dito sopra le sopracciglia, nel punto più largo. Il casco deve stare fermo senza stringere.' }
     },
 
+    /* ---------- Servizi su prenotazione (prezzi e durate DI ESEMPIO) ----------
+       la fascia oraria (mattina / pomeriggio) arriva dagli orari del negozio di quel giorno */
+    servizi: {
+      prefissoCodice: 'SRV',                      // codice richiesta: SRV-XXXX
+      giorniMassimi: 21,                          // si prenota al massimo 3 settimane avanti
+      testoConferma: 'La prenotazione è confermata quando il negozio ti risponde.',
+      elenco: [
+        { id: 'incordatura', nome: 'Incordatura racchette da tennis', sport: 'tennis', durata: 'Pronta in 24 ore', prezzo: 15, notaPrezzo: 'corda esclusa',
+          descrizione: 'Porti la racchetta, scegli corda e tensione con noi. La ritiri il giorno dopo, già pronta per giocare.' },
+        { id: 'prova-racchette', nome: 'Prova racchette da padel e tennis', sport: 'padel', durata: '45 minuti', prezzo: 10, notaPrezzo: 'scalati se poi acquisti',
+          descrizione: 'Provi due o tre racchette scelte per il tuo gioco, con consigli su peso, bilanciamento e forma.' },
+        { id: 'analisi-passo', nome: 'Analisi del passo per la corsa', sport: 'running', durata: '30 minuti', prezzo: 25, notaPrezzo: 'gratis con l\'acquisto delle scarpe',
+          descrizione: 'Corri qualche minuto sul tapis roulant: guardiamo l\'appoggio del piede e ti consigliamo le scarpe giuste.' },
+        { id: 'sciolinatura', nome: 'Sciolinatura e affilatura di sci e snowboard', sport: 'sci-e-snowboard', durata: 'Pronti in 48 ore', prezzo: 30, notaPrezzo: 'a paio di sci o tavola',
+          descrizione: 'Lamine affilate e soletta sciolinata a caldo: la tavola o gli sci tornano a scorrere come nuovi.' }
+      ]
+    },
+
+    /* ---------- Noleggio sci e snowboard ----------
+       DISPONIBILITÀ SIMULATA (demo): pezzi totali meno prenotazioni di esempio, più alte nei weekend e nelle feste.
+       Per una disponibilità vera e condivisa servono un database (Firebase) e un pannello per il negozio. */
+    noleggio: {
+      prefissoCodice: 'NOL',                      // codice richiesta: NOL-XXXX
+      stagione: { da: '12-01', a: '04-15' },      // MM-GG: dal 1 dicembre al 15 aprile
+      giorniMassimi: 14,                          // al massimo 14 giorni di noleggio
+      personeMassime: 8,
+      pochiPezzi: 2,                              // "Pochi pezzi" se ne restano 2 o meno
+      ritiro: { dalle: '15:30', alle: '19:30' },  // il pomeriggio prima del primo giorno
+      restituzione: { entro: '19:30' },           // il primo giorno di apertura dopo l'ultimo
+      testoConferma: 'La prenotazione è confermata quando il negozio ti risponde.',
+      attrezzatura: [
+        // gruppo = cosa sceglie la persona; eta = adulto / bambino (null = vale per tutti)
+        { id: 'sci-adulto', gruppo: 'Sci', eta: 'adulto', nome: 'Kit sci adulto', include: 'sci, scarponi e bastoncini', prezzoGiorno: 25, pezzi: 14 },
+        { id: 'sci-bambino', gruppo: 'Sci', eta: 'bambino', nome: 'Kit sci bambino', include: 'sci, scarponi e bastoncini', prezzoGiorno: 15, pezzi: 10 },
+        { id: 'snow-adulto', gruppo: 'Snowboard', eta: 'adulto', nome: 'Kit snowboard adulto', include: 'tavola con attacchi e scarponi', prezzoGiorno: 28, pezzi: 8 },
+        { id: 'snow-bambino', gruppo: 'Snowboard', eta: 'bambino', nome: 'Kit snowboard bambino', include: 'tavola con attacchi e scarponi', prezzoGiorno: 18, pezzi: 5 },
+        { id: 'scarponi', gruppo: 'Solo scarponi', eta: null, nome: 'Solo scarponi', include: 'da sci o da snowboard', prezzoGiorno: 9, pezzi: 12 },
+        { id: 'casco', gruppo: 'Solo casco', eta: null, nome: 'Casco', include: 'adulto o bambino', prezzoGiorno: 5, pezzi: 20 }
+      ],
+      cascoAggiuntivo: 'casco',                   // id del casco che si può aggiungere a ogni kit
+      // prenotazioni DI ESEMPIO per giorno: [lun–gio, venerdì, sabato e domenica] (+ variazione casuale fissa da 0 a 2)
+      esempio: {
+        'sci-adulto': [3, 7, 12], 'sci-bambino': [2, 5, 8], 'snow-adulto': [2, 5, 8],
+        'snow-bambino': [1, 2, 4], 'scarponi': [2, 4, 9], 'casco': [4, 8, 15]
+      },
+      // periodi di punta (MM-GG): si usano i numeri del weekend anche nei giorni feriali
+      punte: [['12-24', '01-06'], ['02-14', '02-22']]
+    },
+
     /* ---------- Marchi trattati (ESEMPIO, solo testo) ---------- */
     marchi: ['Leone 1947', 'Champion', 'Adidas', 'Nike', 'Puma', 'Joma', 'Kappa', 'Diadora', 'Macron', 'Mizuno', 'Asics', 'Wilson', 'Head', 'Babolat', 'Bullpadel', 'Everlast', 'Rossignol', 'Salomon', 'Speedo', 'Arena'],
 

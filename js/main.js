@@ -6,6 +6,10 @@
   'use strict';
   var C = window.SITO;
   if (!C) return;
+  // dissolvenza tra pagine: se il browser la salta (finestra che cambia misura) nessun errore in console
+  var vtZitto = function (e) { var t = e.viewTransition; if (t) ['ready', 'finished', 'updateCallbackDone'].forEach(function (k) { if (t[k]) t[k].catch(function () {}); }); };
+  addEventListener('pagereveal', vtZitto);
+  addEventListener('pageswap', vtZitto);
   var d = document, html = d.documentElement, body = d.body;
   var REL = body.getAttribute('data-rel') || '';
   var ridotto = matchMedia('(prefers-reduced-motion: reduce)');

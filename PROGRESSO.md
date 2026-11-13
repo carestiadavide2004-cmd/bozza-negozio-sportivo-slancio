@@ -189,4 +189,31 @@ Non ancora (prossimi passi): pannello admin.
 ### Controllo veloce (Chromium, 390 e 1440, 45 s – ~/.carestia-qa/slancio/cfgcheck.mjs)
 - 3D caricato; si aggiorna cambiando colore, motivo, nome e numero (4/4); nome "D'Angelo" e numero "1+8" sulla maglia e nel link WhatsApp ("1+8" codificato %2B); stemma caricato visibile; "Usala nel kit squadra" porta la maglia nel kit; kit in 4 passi con preventivo 3.190,05 € (20 adulti + 6 bambini, Basket Pro, nomi e numeri, −10%), codice KIT-XXXX, email sbagliata segnalata, link WhatsApp completo; 2,5D funziona senza WebGL; home, squadre e privacy senza errori, senza scorrimento laterale, richieste esterne solo cdnjs, 0 cookie.
 
-- [ ] Blocco C (servizi su prenotazione e noleggio sci): da fare dopo la pubblicazione di A e B.
+- [x] A e B pubblicati (commit 0d14e0c): home, squadre/index.html e js/kit.js rispondono 200 online.
+
+## Blocco C – Servizi su prenotazione e Noleggio sci (13/11/2026)
+
+- [x] Dati in `config.js` → `servizi` (4 servizi con descrizione, durata, prezzo di esempio) e `noleggio` (stagione 1/12–15/4, 6 attrezzature con prezzo al giorno e pezzi, ritiro 15:30–19:30 il pomeriggio prima, riconsegna entro le 19:30, prenotazioni di esempio, periodi di punta).
+- [x] `servizi/index.html`: schede (carosello sul telefono), modulo con servizio, giorno (rifiuta passati, chiusure, festivi, oltre 21 giorni), fascia mattina/pomeriggio presa dagli orari di quel giorno, nome, telefono, note. Codice SRV-XXXX, invio secondo config, "La prenotazione è confermata quando il negozio ti risponde."
+- [x] `noleggio-sci/index.html`: attrezzatura, calendario della disponibilità (Disponibile / Pochi pezzi / Esaurito, "Disponibilità di esempio"), date dal–al anche toccando il calendario, persone (cosa noleggia, adulto/bambino, altezza, scarpa, livello, casco facoltativo; niente peso), blocco se un tipo è esaurito in un giorno scelto con proposta del giorno/periodo libero più vicino, ritiro e riconsegna calcolati sugli orari, riepilogo con totale di esempio e codice NOL-XXXX.
+- [x] Fasce: "Servizi e noleggio" in home, "Noleggio sci e snowboard" nella pagina Sci e snowboard. Link in menu (Servizi), menu telefono e footer. Sitemap.
+- [x] privacy.html (dati di servizi e noleggio; altezza, scarpa e livello solo per preparare l'attrezzatura) e ISTRUZIONI.md (Agendo per il cliente vero; disponibilità vera = database Firebase + pannello negozio).
+
+### Revisione art director (390 / 768 / 1440)
+1. [x] Noleggio: il menu "Cosa noleggia" finiva fuori dal riquadro della persona (scorrimento laterale sul telefono) → titolo persona e campi sistemati.
+2. [x] Modulo servizi a 1440: titolo "Prenota il servizio" su tre righe enormi → titolo più contenuto.
+3. [x] Errore "Scegli mattina o pomeriggio" mostrato anche senza giorno → ora basta l'errore sul giorno.
+4. [x] Telefono: le 4 schede servizi una sotto l'altra allungavano troppo la pagina → carosello.
+5. [x] "Prezzo di esempio" andava a capo in ogni scheda → "Prezzo" (l'etichetta "Prezzi e durate di esempio" è sopra).
+6. [x] Fascia home: "Da 5,00 € al giorno" era il prezzo del casco → "Kit da 15,00 € al giorno".
+7. [x] Hero noleggio: frase "…primo giorno di apertura dopo" troncata → "Riconsegna entro le 19:30 del primo giorno di apertura dopo l'ultimo".
+8. [x] Noleggio: titolo e "1 · I giorni" attaccati → più spazio.
+9. [x] Persone sul telefono: altezza e scarpa uno sotto l'altro e livello su due righe → affiancati, tre pulsanti in riga.
+10. [x] Parola di sfondo della hero fissa "KIT" anche su servizi e noleggio → ora "SERVIZI" e "NEVE".
+- Secondo giro di schermate: ok.
+- Extra trovati nei controlli: avviso in console quando il browser salta la dissolvenza tra pagine (ora gestito in main.js); maglia 3D senza limite di attesa (ora dopo 25 s passa alla 2,5D).
+
+### Controllo veloce C (Chromium, 390 e 1440, 19 s – ~/.carestia-qa/slancio/ccheck.mjs)
+- Servizi: data passata, domenica e oltre 21 giorni rifiutati; 8 e 25 dicembre chiusi; lunedì solo pomeriggio; codice SRV-XXXX; WhatsApp con servizio, giorno, fascia, nome, telefono, note.
+- Noleggio: data passata e fuori stagione rifiutate; giorno esaurito (6/12, kit sci adulto) bloccato con proposta del giorno libero più vicino (5/12) e pulsante che lo applica; codice NOL-XXXX; totale 30,00 €; WhatsApp con persone, misure, livello, ritiro e riconsegna; niente peso.
+- 5 pagine senza errori in console e senza scorrimento laterale; richieste esterne solo cdnjs; 0 cookie. Controllo A+B rifatto: tutto ok (49 s).

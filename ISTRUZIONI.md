@@ -88,6 +88,15 @@ Nota: per caricare i file su Firebase Storage serve il piano **Blaze** (a consum
 - **Kit squadre** (`squadre/index.html`): dati in `config.js` → `kit` (pacchetti e prezzi di esempio per sport, costo di nomi/numeri e stemma, sconti quantità, sconto bambini). Codice in `js/kit.js`. Il codice richiesta è KIT-XXXX. L'invio segue `modulo.modalita` (WhatsApp o Web3Forms).
 - Per un cliente vero: cambiare prezzi e pacchetti in `config.js`, togliere le squadre inventate o sostituirle con esempi autorizzati.
 
+## Servizi su prenotazione e noleggio sci
+
+- **Servizi** (`servizi/index.html`): elenco, durate e prezzi di esempio in `config.js` → `servizi`. Le fasce mattina/pomeriggio arrivano dagli orari del negozio (`orari`): giorni chiusi, festivi e date passate sono rifiutati. Codice SRV-XXXX. Invio secondo `modulo.modalita`.
+  - **Versione per un cliente vero:** al posto del modulo si può usare **Agendo**, l'app di prenotazione di Davide (calendario vero con posti e conferme). Il modulo del sito resta come alternativa semplice: la prenotazione è confermata solo quando il negozio risponde.
+- **Noleggio sci** (`noleggio-sci/index.html`): attrezzatura, prezzi al giorno, pezzi, stagione (`stagione.da/a` in MM-GG), orari di ritiro e riconsegna in `config.js` → `noleggio`. Codice NOL-XXXX.
+  - Ritiro: il pomeriggio di apertura più vicino prima del primo giorno. Riconsegna: entro l'ora fissata del primo giorno di apertura dopo l'ultimo.
+  - **La disponibilità è simulata** (demo): pezzi totali meno prenotazioni di esempio (`noleggio.esempio`: feriali, venerdì, weekend/feste/periodi di punta) più una piccola variazione fissa per giorno. Se un tipo è esaurito in uno dei giorni scelti la richiesta è bloccata e il sito propone il giorno (o periodo) libero più vicino.
+  - **Per una disponibilità vera e condivisa** servono un database (es. Firebase Firestore) con le prenotazioni confermate e un pannello per il negozio che le inserisce o le conferma. Senza database ogni visitatore vede solo la simulazione.
+
 ## Foto
 
 - Le originali stanno in `_sorgenti/foto/` (non pubblicate). L'elenco nome → id Pexels è in `_sorgenti/scelte.txt`.

@@ -190,7 +190,9 @@ const ICO = {
   dx: '<path d="m9 5 7 7-7 7"/>',
   sacchetto: '<path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/>',
   filtri: '<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>',
-  righello: '<path d="M3 15 15 3l6 6L9 21z"/><path d="m7 11 2 2M10 8l2 2M13 5l2 2"/>'
+  righello: '<path d="M3 15 15 3l6 6L9 21z"/><path d="m7 11 2 2M10 8l2 2M13 5l2 2"/>',
+  piu: '<path d="M12 5v14M5 12h14"/>',
+  ok: '<circle cx="12" cy="12" r="9"/><path d="m8 12.5 2.6 2.5L16 9.5"/>'
 };
 const ico = (k, cls = 'ico') => `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${ICO[k] || ICO.borsa}</svg>`;
 
@@ -251,6 +253,7 @@ function header(rel, corrente) {
       </div>
       <a class="hdr__link" href="${vaiHome(rel, '#perche')}">Perché ${esc(A.nome)}</a>
       <a class="hdr__link" href="${rel}squadre/index.html"${corrente === 'squadre' ? ' aria-current="page"' : ''}>Squadre</a>
+      <a class="hdr__link" href="${rel}servizi/index.html"${corrente === 'servizi' || corrente === 'noleggio' ? ' aria-current="page"' : ''}>Servizi</a>
       <a class="hdr__link" href="${vaiHome(rel, '#negozio')}">Il negozio</a>
     </nav>
     <div class="hdr__az">
@@ -269,6 +272,8 @@ function header(rel, corrente) {
       <li><a href="${vaiHome(rel, '#perche')}">Perché ${esc(A.nome)}</a></li>
       <li><a href="${rel}squadre/index.html"${corrente === 'squadre' ? ' aria-current="page"' : ''}>Squadre e associazioni</a></li>
       <li><a href="${vaiHome(rel, '#maglia')}">Disegna la maglia</a></li>
+      <li><a href="${rel}servizi/index.html"${corrente === 'servizi' ? ' aria-current="page"' : ''}>Servizi su prenotazione</a></li>
+      <li><a href="${rel}noleggio-sci/index.html"${corrente === 'noleggio' ? ' aria-current="page"' : ''}>Noleggio sci e snowboard</a></li>
       <li><a href="${vaiHome(rel, '#negozio')}">Il negozio</a></li>
       <li><a href="${vaiHome(rel, '#chiedi')}">Chiedi disponibilità</a></li>
     </ul>
@@ -335,7 +340,7 @@ function footer(rel) {
         <h2 class="pie__tit">Seguici</h2>
         <ul class="pie__lista">${social}</ul>
         <h2 class="pie__tit">Info</h2>
-        <ul class="pie__lista"><li><a href="${rel}squadre/index.html">Crea il kit squadra</a></li><li><a href="${vaiHome(rel, '#maglia')}">Disegna la maglia</a></li><li><a href="#guida-taglie" data-guida>Guida taglie</a></li><li><a href="${rel}privacy.html">Privacy</a></li></ul>
+        <ul class="pie__lista"><li><a href="${rel}servizi/index.html">Servizi su prenotazione</a></li><li><a href="${rel}noleggio-sci/index.html">Noleggio sci e snowboard</a></li><li><a href="${rel}squadre/index.html">Crea il kit squadra</a></li><li><a href="${vaiHome(rel, '#maglia')}">Disegna la maglia</a></li><li><a href="#guida-taglie" data-guida>Guida taglie</a></li><li><a href="${rel}privacy.html">Privacy</a></li></ul>
       </div>
     </div>
     <div class="pie__legale">
@@ -562,7 +567,7 @@ function paginaSquadre() {
   }).join('')}</div>`).join('');
   const sconti = KIT.scontiQuantita.map(x => `da ${x.da} atleti −${x.percento}%`).join(', ');
   const corpo = `
-<section class="hk">
+<section class="hk" data-parola="KIT">
   <div class="wrap hk__in">
     <nav class="briciole" aria-label="Percorso"><ol><li><a href="${rel}index.html">Home</a></li><li aria-current="page">Squadre</li></ol></nav>
     <p class="occhiello">Squadre e associazioni sportive</p>
@@ -666,6 +671,193 @@ function paginaSquadre() {
 }
 
 /* =====================================================================
+   SERVIZI SU PRENOTAZIONE e NOLEGGIO SCI
+   ===================================================================== */
+const SRV = C.servizi, NOL = C.noleggio;
+const sportDa = slug => C.sport.find(s => s.slug === slug) || { accento: '#B9C0CC', campo: '' };
+const mmgg = v => { const [m, g] = v.split('-').map(Number); return `${g} ${['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto', 'settembre', 'ottobre', 'novembre', 'dicembre'][m - 1]}`; };
+const stagioneTxt = () => `dal ${mmgg(NOL.stagione.da)} al ${mmgg(NOL.stagione.a)}`;
+function fasciaServizi(rel) {
+  // prezzo "da" solo tra i kit completi (non scarponi o casco da soli)
+  const min = Math.min(...NOL.attrezzatura.filter(a => a.eta).map(a => a.prezzoGiorno));
+  return `<section class="fascia-srv" aria-labelledby="tit-fsrv">
+  <div class="wrap">
+    <header class="sez-testa sez-testa--riga">
+      <div><p class="occhiello">Su prenotazione</p><h2 class="tit-sez" id="tit-fsrv" data-tit>${righe(['Servizi e', 'noleggio'])}</h2></div>
+      <p class="sez-testa__testo">Prenoti online, ti confermiamo noi. Niente code: arrivi e il tuo turno è pronto.</p>
+    </header>
+    <div class="fascia-srv__griglia">
+      <a class="fsrv" href="${rel}servizi/index.html">
+        <span class="fsrv__n">${SRV.elenco.length} servizi</span>
+        <h3 class="fsrv__tit">Servizi in negozio</h3>
+        <ul class="fsrv__lista">${SRV.elenco.map(s => `<li>${esc(s.nome)}</li>`).join('')}</ul>
+        <span class="fsrv__cta">Prenota un servizio ${ico('freccia', 'ico ico--s')}</span>
+      </a>
+      <a class="fsrv fsrv--neve" href="${rel}noleggio-sci/index.html" style="--acc:${sportDa('sci-e-snowboard').accento}">
+        ${campo('sci', 'fsrv__campo')}
+        <span class="fsrv__n">Stagione ${stagioneTxt()}</span>
+        <h3 class="fsrv__tit">Noleggio sci e snowboard</h3>
+        <p class="fsrv__testo">Kit adulto e bambino, scarponi e caschi. Guardi la disponibilità sul calendario e prenoti: ritiri il pomeriggio prima.</p>
+        <span class="fsrv__prezzo">Kit da <b>${euro(min)}</b> al giorno <span class="etichetta-esempio">Prezzi di esempio</span></span>
+        <span class="fsrv__cta">Prenota il noleggio ${ico('freccia', 'ico ico--s')}</span>
+      </a>
+    </div>
+  </div>
+</section>`;
+}
+// fascia noleggio nella pagina Sci e snowboard
+function fasciaNoleggio(rel) {
+  return `<section class="fascia-nol" aria-labelledby="tit-fnol">
+  <div class="wrap fascia-nol__in">
+    <div>
+      <p class="occhiello">Stagione ${stagioneTxt()}</p>
+      <h2 class="tit-sez" id="tit-fnol">Noleggio sci e snowboard</h2>
+      <p class="fascia-nol__testo">Kit completi per adulti e bambini, scarponi e caschi. Guardi il calendario della disponibilità, prenoti e ritiri il pomeriggio prima di partire.</p>
+    </div>
+    <a class="btn btn--acc btn--lg" href="${rel}noleggio-sci/index.html">Prenota il noleggio ${ico('freccia', 'ico ico--s')}</a>
+  </div>
+</section>`;
+}
+const notaInvio = t => `<p class="pren__conferma">${ico('ok', 'ico ico--s')}${esc(t)}</p>`;
+function paginaServizi() {
+  const rel = '../';
+  const carte = SRV.elenco.map((s, i) => {
+    const sp = sportDa(s.sport);
+    return `<li class="srv" style="--acc:${sp.accento}">
+      ${sp.campo ? campo(sp.campo, 'srv__campo') : ''}
+      <p class="srv__n">0${i + 1}</p>
+      <h3 class="srv__tit">${esc(s.nome)}</h3>
+      <p class="srv__testo">${esc(s.descrizione)}</p>
+      <dl class="srv__dati"><div><dt>Durata</dt><dd>${esc(s.durata)}</dd></div><div><dt>Prezzo</dt><dd><b>${euro(s.prezzo)}</b> · ${esc(s.notaPrezzo)}</dd></div></dl>
+      <button class="btn btn--sec btn--sm srv__btn" type="button" data-srv-scegli="${s.id}">Prenota ${ico('freccia', 'ico ico--s')}</button>
+    </li>`;
+  }).join('');
+  const scelte = SRV.elenco.map(s => `<label class="kit__mo"><input type="radio" name="servizio" value="${s.id}"><span class="kit__mo-box"><span class="kit__mo-tit">${esc(s.nome)}</span><span class="kit__mo-txt">${esc(s.durata)} · ${euro(s.prezzo)} (${esc(s.notaPrezzo)})</span></span></label>`).join('');
+  const corpo = `
+<section class="hk" data-parola="SERVIZI">
+  <div class="wrap hk__in">
+    <nav class="briciole" aria-label="Percorso"><ol><li><a href="${rel}index.html">Home</a></li><li aria-current="page">Servizi</li></ol></nav>
+    <p class="occhiello">Su prenotazione</p>
+    <h1 class="hk__tit">${righe(['Servizi', 'in negozio'])}</h1>
+    <p class="hk__lead">Incordatura, prova racchette, analisi del passo, sciolinatura. Scegli giorno e fascia oraria: ti rispondiamo per confermare.</p>
+    <ul class="hk__punti"><li>${ico('orologio', 'ico ico--s')}Mattina o pomeriggio, negli orari del negozio</li><li>${ico('chat', 'ico ico--s')}Conferma su WhatsApp</li></ul>
+  </div>
+</section>
+
+<section class="sez srv-sez" aria-labelledby="tit-srv">
+  <div class="wrap">
+    <h2 class="sr-only" id="tit-srv">I servizi</h2>
+    <p class="etichetta-esempio srv__etic">Prezzi e durate di esempio</p>
+    <ul class="srv__griglia">${carte}</ul>
+  </div>
+</section>
+
+<section class="sez pren" id="prenota" aria-labelledby="tit-pren">
+  <div class="wrap pren__in">
+    <header class="pren__testa">
+      <p class="occhiello">Richiesta di prenotazione</p>
+      <h2 class="tit-sez" id="tit-pren">${righe(['Prenota il', 'servizio'])}</h2>
+      <p class="pren__lead">Ti rispondiamo negli orari di apertura. ${esc(SRV.testoConferma)}</p>
+    </header>
+    <form class="pren__form" data-srv novalidate>
+      <fieldset class="kit__maglia pren__scelte" id="s-servizio" tabindex="-1"><legend>Servizio</legend>${scelte}<p class="campo__err" id="s-servizio-err" hidden></p></fieldset>
+      <div class="campo"><label for="s-giorno">Giorno</label><input id="s-giorno" name="giorno" type="date" aria-describedby="s-giorno-aiuto"><p class="campo__err" id="s-giorno-err" hidden></p><p class="campo__aiuto" id="s-giorno-aiuto" data-giorno-aiuto>Nei prossimi ${SRV.giorniMassimi} giorni, nei giorni di apertura.</p><div class="giorni" data-giorni role="group" aria-label="Scegli velocemente il giorno"></div></div>
+      <fieldset class="kit__sn" id="s-fascia" tabindex="-1"><legend>Fascia oraria</legend><div data-fasce><p class="campo__aiuto">Scegli prima il giorno.</p></div><p class="campo__err" id="s-fascia-err" hidden></p></fieldset>
+      <div class="kit__due">
+        <div class="campo"><label for="s-nome">Nome</label><input id="s-nome" name="nome" type="text" maxlength="60" autocomplete="name"><p class="campo__err" id="s-nome-err" hidden></p></div>
+        <div class="campo"><label for="s-tel">Telefono</label><input id="s-tel" name="telefono" type="tel" inputmode="tel" maxlength="30" autocomplete="tel"><p class="campo__err" id="s-tel-err" hidden></p></div>
+      </div>
+      <div class="campo"><label for="s-note">Note (facoltative)</label><textarea id="s-note" name="note" rows="3" maxlength="400" placeholder="Es. racchetta da 300 g, tensione 23 kg"></textarea></div>
+      ${notaInvio(SRV.testoConferma)}
+      <button class="btn btn--pri btn--lg pren__invia" type="submit">${C.modulo.modalita === 'web3forms' && C.modulo.web3formsAccessKey ? 'Invia la richiesta' : 'Invia la richiesta su WhatsApp'} ${ico('chat', 'ico ico--s')}</button>
+      <p class="form__privacy">I dati inviati servono solo per rispondere alla tua richiesta. <a href="${rel}privacy.html">Leggi l'informativa privacy</a></p>
+      <p class="kit__esito" data-esito role="status"></p>
+    </form>
+    <div class="pren__fatto" data-fatto hidden></div>
+  </div>
+</section>`;
+  return pagina({
+    titolo: `Servizi su prenotazione a ${A.citta} – incordatura, analisi del passo, sciolinatura | ${A.nome}`,
+    descrizione: `Prenota un servizio da ${A.nome}, ${A.citta}: incordatura racchette, prova racchette, analisi del passo, sciolinatura e affilatura.`,
+    rel, percorso: 'servizi/', classe: 'p-servizi', corpo, corrente: 'servizi', script: ['js/prenota.js']
+  });
+}
+function paginaNoleggio() {
+  const rel = '../', sci = sportDa('sci-e-snowboard');
+  const tab = NOL.attrezzatura.map(a => `<li class="att"><h3 class="att__nome">${esc(a.nome)}</h3><p class="att__inc">${esc(a.include)}</p><p class="att__prezzo"><b>${euro(a.prezzoGiorno)}</b> al giorno</p></li>`).join('');
+  const opz = NOL.attrezzatura.map(a => `<option value="${a.id}">${esc(a.nome)}</option>`).join('');
+  const corpo = `
+<section class="hk" data-parola="NEVE" style="--acc:${sci.accento}">
+  <div class="wrap hk__in">
+    <nav class="briciole" aria-label="Percorso"><ol><li><a href="${rel}index.html">Home</a></li><li><a href="${sportUrl(sci, rel)}">${esc(sci.nome)}</a></li><li aria-current="page">Noleggio</li></ol></nav>
+    <p class="occhiello">Stagione ${stagioneTxt()}</p>
+    <h1 class="hk__tit">${righe(['Noleggio', 'sci e snowboard'])}</h1>
+    <p class="hk__lead">Scegli i giorni, guarda la disponibilità e indica per ogni persona kit, altezza, numero di scarpa e livello. Le regolazioni le facciamo noi in negozio.</p>
+    <ul class="hk__punti"><li>${ico('ritiro', 'ico ico--s')}Ritiro il pomeriggio prima (${NOL.ritiro.dalle.replace(/^0/, '')}–${NOL.ritiro.alle})</li><li>${ico('orologio', 'ico ico--s')}Riconsegna entro le ${NOL.restituzione.entro} del primo giorno di apertura dopo l'ultimo</li></ul>
+  </div>
+</section>
+
+<section class="sez att-sez" aria-labelledby="tit-att">
+  <div class="wrap">
+    <header class="sez-testa sez-testa--riga"><div><p class="occhiello">Attrezzatura</p><h2 class="tit-sez" id="tit-att">${righe(['Cosa', 'noleggiamo'])}</h2></div><p class="etichetta-esempio">Prezzi di esempio</p></header>
+    <ul class="att__griglia">${tab}</ul>
+  </div>
+</section>
+
+<section class="sez pren nol" id="prenota" aria-labelledby="tit-nol">
+  <div class="wrap">
+    <header class="pren__testa">
+      <p class="occhiello">Richiesta di noleggio</p>
+      <h2 class="tit-sez" id="tit-nol">${righe(['Prenota il', 'noleggio'])}</h2>
+    </header>
+    <form class="nol__form" data-nol novalidate>
+      <div class="nol__in">
+        <div class="nol__cal-box">
+          <div class="nol__cal-testa">
+            <h3 class="kit__h3">1 · I giorni</h3>
+            <p class="etichetta-esempio nol__etic">Disponibilità di esempio</p>
+          </div>
+          <div class="campo"><label for="n-mostra">Mostra la disponibilità di</label><select id="n-mostra" data-mostra>${opz}</select></div>
+          <div class="cal" data-cal></div>
+          <ul class="cal__legenda" aria-label="Legenda"><li><i class="is-ok"></i>Disponibile</li><li><i class="is-pochi"></i>Pochi pezzi</li><li><i class="is-esaurito"></i>Esaurito</li></ul>
+          <div class="kit__due">
+            <div class="campo"><label for="n-da">Dal</label><input id="n-da" name="da" type="date"><p class="campo__err" id="n-da-err" hidden></p></div>
+            <div class="campo"><label for="n-a">Al (compreso)</label><input id="n-a" name="a" type="date"><p class="campo__err" id="n-a-err" hidden></p></div>
+          </div>
+          <p class="nol__orari" data-orari></p>
+        </div>
+        <div class="nol__dx">
+          <h3 class="kit__h3">2 · Chi scia</h3>
+          <div data-persone></div>
+          <button class="btn btn--sec btn--sm" type="button" data-persona-piu>${ico('piu', 'ico ico--s')}Aggiungi una persona</button>
+          <p class="campo__aiuto nol__peso">Non serve il peso: altezza, numero di scarpa e livello bastano per preparare l'attrezzatura. Le regolazioni le facciamo in negozio.</p>
+          <div class="nol__disp" data-disp role="status" aria-live="polite"></div>
+          <h3 class="kit__h3">3 · Riepilogo</h3>
+          <div class="kit__riep" data-riep><div class="kit__riga"><span>Scegli i giorni e le persone</span><b></b></div></div>
+          <p class="etichetta-esempio kit__etic">Totale di esempio: il prezzo finale lo conferma il negozio</p>
+          <div class="kit__due">
+            <div class="campo"><label for="n-nome">Nome</label><input id="n-nome" name="nome" type="text" maxlength="60" autocomplete="name"><p class="campo__err" id="n-nome-err" hidden></p></div>
+            <div class="campo"><label for="n-tel">Telefono</label><input id="n-tel" name="telefono" type="tel" inputmode="tel" maxlength="30" autocomplete="tel"><p class="campo__err" id="n-tel-err" hidden></p></div>
+          </div>
+          <div class="campo"><label for="n-note">Note (facoltative)</label><textarea id="n-note" name="note" rows="3" maxlength="400" placeholder="Es. prima volta sulla neve per il bambino"></textarea></div>
+          ${notaInvio(NOL.testoConferma)}
+          <button class="btn btn--pri btn--lg pren__invia" type="submit">${C.modulo.modalita === 'web3forms' && C.modulo.web3formsAccessKey ? 'Invia la richiesta' : 'Invia la richiesta su WhatsApp'} ${ico('chat', 'ico ico--s')}</button>
+          <p class="form__privacy">I dati inviati servono solo per rispondere alla tua richiesta. <a href="${rel}privacy.html">Leggi l'informativa privacy</a></p>
+          <p class="kit__esito" data-esito role="status"></p>
+        </div>
+      </div>
+    </form>
+    <div class="pren__fatto" data-fatto hidden></div>
+  </div>
+</section>`;
+  return pagina({
+    titolo: `Noleggio sci e snowboard a ${A.citta} – kit adulto e bambino | ${A.nome}`,
+    descrizione: `Noleggio sci e snowboard da ${A.nome}, ${A.citta}: kit adulto e bambino, scarponi e caschi. Calendario della disponibilità e prenotazione online.`,
+    rel, percorso: 'noleggio-sci/', classe: 'p-noleggio', stile: `--acc:${sci.accento};--acc-ink:${sci.testoAccento}`, corpo, corrente: 'noleggio', script: ['js/prenota.js']
+  });
+}
+
+/* =====================================================================
    HOME
    ===================================================================== */
 function home() {
@@ -744,6 +936,7 @@ ${tessere}
 ${configuratore(rel)}
 
 ${fasciaSquadre(rel)}
+${fasciaServizi(rel)}
 
 <section class="marchi" aria-labelledby="tit-marchi">
   <div class="wrap marchi__testa"><h2 class="occhiello" id="tit-marchi">Marchi trattati (esempio)</h2></div>
@@ -916,6 +1109,7 @@ ${cats}
     ${nCat > 5 ? `<div class="vedi-tutti vedi-tutti--cat"><button class="btn btn--sec" type="button" data-vedi-cat aria-expanded="false">Vedi tutte le ${nCat} categorie</button></div>` : ''}
   </div>
 </section>
+${s.slug === 'sci-e-snowboard' ? fasciaNoleggio(rel) : ''}
 
 <section class="sez sez--carta consigli" aria-labelledby="tit-consigli">
   <div class="wrap consigli__in">
@@ -1097,6 +1291,8 @@ function privacy() {
   // maglia personalizzata e "Crea il tuo kit" (squadre e associazioni)
   m = m.replace(/(<li><strong>Richiesta "[^"]*"\.<\/strong>[\s\S]*?<\/li>)/, `$1
         <li><strong>Richiesta "Crea il tuo kit" (squadre e associazioni).</strong> Ci mandate: nome della squadra o associazione, nome del referente, numero di telefono, email se volete, eventuali note, sport, pacchetto, numero di atleti adulti e bambini, le scelte su nomi, numeri e stemma e la descrizione della maglia (motivo, colori, nome e numero). Non chiediamo nomi, età o taglie dei singoli atleti: le taglie si definiscono in negozio. Usiamo questi dati solo per preparare il preventivo e organizzare la prova taglie; li conserviamo per il tempo della trattativa e, se il kit viene ordinato, per i tempi previsti dalle norme fiscali.</li>
+        <li><strong>Prenotazione di un servizio</strong> (incordatura, prova racchette, analisi del passo, sciolinatura). Ci mandate: servizio scelto, giorno, fascia oraria, nome, numero di telefono ed eventuali note. Li usiamo solo per organizzare il servizio e rispondervi; li cancelliamo entro 12 mesi.</li>
+        <li><strong>Richiesta di noleggio sci e snowboard.</strong> Ci mandate: giorni del noleggio, nome, numero di telefono, eventuali note e, per ogni persona, l'attrezzatura, se è adulto o bambino, <strong>altezza, numero di scarpa e livello</strong>. Altezza, numero di scarpa e livello servono <strong>solo per preparare e regolare l'attrezzatura</strong>: non chiediamo il peso, non li usiamo per altro e li cancelliamo a fine stagione. La disponibilità mostrata sul sito è di esempio e non usa i vostri dati.</li>
         <li><strong>Preventivo per la maglia.</strong> Il pulsante "Chiedi un preventivo per questa maglia" prepara un messaggio WhatsApp con motivo, colori, nome, numero e quantità indicativa: lo inviate voi, se volete.</li>`);
   m = m.replace(/(<p>La borsa "[^"]*"[\s\S]*?<\/p>)/, `$1
       <p>Anche la <strong>maglia personalizzata</strong> e i passi di <strong>"Crea il tuo kit"</strong> restano salvati solo nel vostro browser (localStorage), per non perdere le scelte cambiando pagina. Lo <strong>stemma che caricate</strong> nel configuratore (PNG, JPG o SVG) viene letto e mostrato solo nel vostro browser: <strong>non viene inviato</strong> né a noi né ad altri. Se volete stamparlo sulle maglie, ce lo mandate voi su WhatsApp o per email. Potete cancellare tutto svuotando i dati del sito dalle impostazioni del browser.</p>`);
@@ -1170,6 +1366,8 @@ for (const s of C.sport) {
   s.categorie.forEach((c, i) => { scrivi(`sport/${s.slug}/${c.slug}/index.html`, paginaCategoria(s, c, i)); nPagCat++; });
 }
 scrivi('squadre/index.html', paginaSquadre());
+scrivi('servizi/index.html', paginaServizi());
+scrivi('noleggio-sci/index.html', paginaNoleggio());
 scrivi('privacy.html', privacy());
 scrivi('404.html', pagina404());
 scrivi('assets/favicon.svg', favicon());
@@ -1178,11 +1376,11 @@ if (S.bozza) {
   for (const f of ['sitemap.xml', 'robots.txt']) if (existsSync(f)) rmSync(f);
 } else {
   const oggi = new Date().toISOString().slice(0, 10);
-  const urls = ['', 'squadre/', ...C.sport.flatMap(s => [`sport/${s.slug}/`, ...s.categorie.map(c => `sport/${s.slug}/${c.slug}/`)]), 'privacy.html'];
+  const urls = ['', 'squadre/', 'servizi/', 'noleggio-sci/',...C.sport.flatMap(s => [`sport/${s.slug}/`, ...s.categorie.map(c => `sport/${s.slug}/${c.slug}/`)]), 'privacy.html'];
   scrivi('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(u => `  <url><loc>${S.urlBase}${u}</loc><lastmod>${oggi}</lastmod></url>`).join('\n')}\n</urlset>\n`);
   scrivi('robots.txt', `User-agent: *\nAllow: /\nSitemap: ${S.urlBase}sitemap.xml\n`);
 }
 
 const nIco = C.sport.reduce((a, s) => a + s.categorie.filter(c => !(c.foto && IMG[c.foto.file])).length, 0);
 const nProd = C.sport.reduce((a, s) => a + s.categorie.reduce((b, c) => b + c.prodotti.length, 0), 0);
-console.log(`✔ Generate ${C.sport.length + 4 + nPagCat} pagine (home, ${C.sport.length} sport, ${nPagCat} categorie, squadre, privacy, 404) · ${nProd} prodotti · ${ILLUSTRAZIONI.length} illustrazioni · bozza=${S.bozza} · categorie con icona: ${nIco}`);
+console.log(`✔ Generate ${C.sport.length + 6 + nPagCat} pagine (home, ${C.sport.length} sport, ${nPagCat} categorie, squadre, servizi, noleggio, privacy, 404) · ${nProd} prodotti · ${ILLUSTRAZIONI.length} illustrazioni · bozza=${S.bozza} · categorie con icona: ${nIco}`);
