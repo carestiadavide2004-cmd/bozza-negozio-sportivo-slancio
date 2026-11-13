@@ -111,3 +111,5 @@ Le 6 squadre (Maestrale Sporting, Atletico Corallo, Polisportiva Vortice, Quarzo
 | File | Progetto | Licenza |
 |---|---|---|
 | assets/js/vendor/model-viewer.min.js | [&lt;model-viewer&gt;](https://modelviewer.dev) 4.4.0 di Google (include three.js, MIT) | Apache-2.0 / BSD-3-Clause, testo in assets/js/vendor/model-viewer-LICENSE.txt |
+| assets/js/vendor/jspdf.umd.min.js | [jsPDF](https://github.com/parallax/jsPDF) 2.5.1 (preventivo PDF del Kit Squadra, caricato solo al clic) | MIT, testo in assets/js/vendor/jspdf-LICENSE.txt |
+| CDN cdnjs | GSAP 3 + ScrollTrigger (animazioni) | licenza standard GreenSock "no charge" |

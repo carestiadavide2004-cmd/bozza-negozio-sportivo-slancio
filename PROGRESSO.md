@@ -1,5 +1,55 @@
 # PROGRESSO – Slancio (demo negozio sportivo)
 
+# ▶ LAVORO IN CORSO – Kit squadra completo (Fasi 0–8, iniziato il 13/11/2026)
+Per ripartire: leggi questa checklist, poi la prima fase non spuntata. Ogni fase si controlla (schermate 390/1440 + prova automatica) prima di spuntarla.
+
+## Checklist
+- [x] Fase 0 – Verifica modifiche precedenti (hero loop, menu Noleggio/Kit Squadra, card servizi)
+  - Hero loop, menu e card della pagina Servizi c'erano già. Mancava la fascia "Servizi e noleggio" della home (era solo testo): ora 5 card con foto come le tessere sport (4 servizi + noleggio), carosello sul telefono; il link apre servizi/index.html#srv-ID con il servizio già scelto.
+  - js/listino.js creato (serve già alla fascia): i prezzi del noleggio ora stanno lì, non più in config.js.
+- [x] Fase 1 – Configuratore kit a 8 passi + js/listino.js (prezzi) + totale stimato sempre visibile + salvataggio nel browser
+  - squadre/index.html rifatta (build.mjs `paginaSquadre`), js/kit.js riscritto. config.js `kit`: tolti pacchetti/sport vecchi, aggiunti capi consigliati per sport, colori, stili, disegni, colli, condizioni, banner, ordine DEMO-001.
+  - Totale stimato: colonna a destra da 1100 px, barra in basso sul telefono (figlia del body, nasconde la barra Chiama/WhatsApp mentre il configuratore è in vista).
+  - Prova automatica `~/.carestia-qa/slancio/kitflow.mjs` (390 e 1440): errori sotto i campi, ripresa dopo ricarica, stemma → palette, sponsor con posizione, rosa incollata, numeri doppi, guida taglie, proposte, preventivo, link, PDF, pagamento demo. Tutto OK, nessun errore in console.
+- [x] Fase 2 – Anteprima maglia SVG riutilizzabile (fronte/retro, rotazione, "Gira", pantaloncino e calzettoni) + 6 proposte automatiche
+  - js/maglia-svg.js (`window.MagliaSVG`): svg(), pantaloncino(), calzettoni(), componente() con trascinamento e "Gira", png() per il PDF. Pagina di prova `_prove/maglia-svg.html` (non pubblicata).
+- [x] Fase 3 – Preventivo: riepilogo prezzi, consegna, link condiviso, WhatsApp, PDF, pagamento DEMO, conferma ordine, condizioni
+  - jsPDF 2.5.1 in assets/js/vendor (licenza MIT accanto), caricato solo al clic. Ordine salvato con DATI.ordini.salva (chiave slancio-dati).
+  - Il link "Stato del tuo ordine" punta a ordine/index.html?n=… (pagina della Fase 6).
+- [x] Fase 4 – Home: sezione a scorrimento "Il tuo kit prende forma" (dopo la hero)
+  - build.mjs `fasciaForma()` (dopo il nastro marchi): le 7 maglie SVG sono scritte già nella pagina (MagliaSVG eseguito in fase di build), testi in config.js `kit.forma`. js/forma.js: scena sticky + ScrollTrigger scrub (niente pin), solo transform/opacity.
+  - Riduci movimento / senza JS: 6 maglie ferme in fila (carosello sul telefono, griglia 3×2 da 700 px). Prova `~/.carestia-qa/slancio/forma.mjs`.
+- [x] Fase 5 – Guida taglie interattiva (altezza, peso, vestibilità) dal passo Rosa e dal footer, "Usa questa taglia"
+  - Nuova scheda "Divise squadra" (prima scheda) in main.js; dati da listino.js. Il footer apre la guida su questa scheda. `S.apriGuida(tab, da, { usa })`.
+- [x] Fase 6 – Pagina "Stato del tuo ordine" (linea del tempo, DEMO-001)
+  - build.mjs `paginaOrdine()` → ordine/index.html (anche nella sitemap quando il sito non è bozza). js/ordine.js: campo o `?n=`, fasi con date e note, fase attuale evidenziata, "Spedito" se la consegna è con spedizione, maglia fronte/retro, WhatsApp con il numero d'ordine. Si aggiorna da solo se l'admin cambia fase in un'altra scheda (DATI.ascolta).
+- [x] Fase 7 – Calendario noleggio: giorni liberi/occupati dal pannello, prezzi da listino.js
+  - js/prenota.js legge i giorni occupati da DATI.noleggio (partenza: config.js `noleggio.occupatiEsempio`, MM-GG). "Esaurito" → "Occupato". La simulazione dei pezzi resta solo per "Pochi pezzi". Si aggiorna da solo se l'admin cambia un giorno. Prova `~/.carestia-qa/slancio/nolcal.mjs`.
+- [x] Fase 8 – admin.html DEMO (password, banner "Ordina entro…", ordini, noleggio) + banner sul sito
+  - build.mjs `paginaAdmin()` → admin.html (pagina a sé, sempre noindex, fuori da menu e sitemap) + js/admin.js. Password demo: **slancio-demo** (in dati.js c'è solo l'impronta SHA-256; sessione in sessionStorage).
+  - Schede: Ordini (cerca, filtro fase, dettaglio con maglia, contatti, capi, rosa, cambio fase con nota, link alla pagina cliente), Banner (acceso/spento, date, data limite, testo con {data}, anteprima e stato), Noleggio (calendario per articolo, tocca = occupato/libero, ripristina esempio).
+  - Banner sul sito (main.js): conto alla rovescia, link a squadre/index.html#kit, X che lo ricorda finché non cambiano testo o data. Telefono: striscia sopra la barra in basso; computer: riquadro in basso a sinistra; compare solo dopo la prima schermata. In Kit Squadra sta dentro la pagina.
+  - Prova `~/.carestia-qa/slancio/admin.mjs` (390 e 1440): 34 controlli OK, nessun errore.
+- [x] Controllo finale (percorso completo del presidente, 390/768/1440, console, link) + privacy + istruzioni + pubblicazione
+  - kitflow.mjs (390 e 1440): percorso del presidente dal passo 1 al pagamento demo, poi l'admin cambia la fase di quell'ordine e la pagina "Stato del tuo ordine" si aggiorna. 47/45 controlli OK, nessun errore, nessun alert.
+  - admin.mjs (34 controlli), nolcal.mjs (11), forma.mjs: tutto OK. finale-kit.mjs: 8 pagine a 390/768/1440 senza errori né scorrimento laterale, richieste esterne solo cdnjs (GSAP), 0 cookie, 18 link di menu e footer → 200. Il vecchio finale.mjs (26 pagine) è OK dopo aver aggiornato 2 righe del test (la guida dal footer ora apre "Divise squadra").
+  - Privacy: ordine del kit, rosa con minori, link condiviso con la rosa, PDF locale, pagamento simulato, nomi della memoria del browser, pannello. Data aggiornata al 13/11/2026.
+  - ISTRUZIONI.md (Kit Squadra, home, stato ordine, pannello admin, passaggio a Firebase, noleggio) e CREDITI.md (jsPDF MIT, GSAP).
+  - CSS: tolte 40 righe del vecchio configuratore non più usate (copia in scratchpad prima di toglierle).
+
+## Scelte di progetto (per chi riprende)
+- File nuovi: `js/listino.js` (prezzi, marche, materiali, sconti, spedizione, acconto, tempi, taglie, prezzi noleggio), `js/dati.js` (UNICO file che legge e scrive: oggi localStorage, domani Firebase), `js/maglia-svg.js` (anteprima maglia riutilizzabile), `js/forma.js` (sezione a scorrimento), `js/ordine.js` + `ordine/index.html`, `js/admin.js` + `admin.html`, `assets/js/vendor/jspdf.umd.min.js` (PDF, caricato solo al clic).
+- `js/kit.js` riscritto (8 passi). Stato nel browser: chiave `slancio-kit2` (+ `slancio-kit2-img` per le miniature delle grafiche).
+- Ordini demo, banner e giorni occupati del noleggio: chiave `slancio-dati` (gestita solo da dati.js). DEMO-001 sempre presente.
+- La maglia 3D "Disegna la maglia" resta in home; "Usala nel kit squadra" porta colori, disegno, stemma e nome/numero nel nuovo configuratore.
+
+## Note di avanzamento
+(si aggiornano a ogni fase)
+
+---
+
+# STORICO
+
 ## Stato
 - [x] Fase 1 – Direzione artistica (DESIGN.md, piano immagini, strumenti verificati)
 - [x] Fase 2 – Blocco A: base comune (config.js, build.mjs, css, js, font, logo, favicon, og.jpg)

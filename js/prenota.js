@@ -114,6 +114,9 @@
       if (r) { r.checked = true; S.erroreCampo($('#s-servizio'), ''); }
       $('#s-servizio').focus({ preventScroll: true }); vediSe($('#prenota .pren__testa'));
     });
+    // arrivo dalla home (servizi/index.html#srv-ID): il servizio è già scelto nel modulo
+    var daHome = /^#srv-([\w-]+)$/.exec(location.hash);
+    if (daHome) { var rH = $('input[name="servizio"][value="' + daHome[1] + '"]', form); if (rH) rH.checked = true; }
     form.addEventListener('submit', function (e) {
       e.preventDefault(); esito.textContent = '';
       if (!valida()) { primoErrore(form); return; }
@@ -144,6 +147,7 @@
   if (fn) (function (form) {
     var NL = C.noleggio, ATT = NL.attrezzatura, MAXG = NL.giorniMassimi || 14, MAXP = NL.personeMassime || 8;
     var att = function (id) { return ATT.find(function (a) { return a.id === id; }); };
+    var prezzoA = function (a) { return (window.LISTINO && LISTINO.noleggio[a.id]) || 0; };   // € al giorno, da js/listino.js
     var gruppi = ATT.map(function (a) { return a.gruppo; }).filter(function (g, i, A) { return A.indexOf(g) === i; });
     var LIV = ['principiante', 'intermedio', 'esperto'];
     var ida = $('#n-da', form), ia = $('#n-a', form), mostra = $('[data-mostra]', form), cal = $('[data-cal]', form), boxP = $('[data-persone]', form), boxD = $('[data-disp]', form), esito = $('[data-esito]', form);
@@ -180,16 +184,25 @@
     var ULTIMO = (function () { var x = PRIMO; for (var i = 0; i < 300 && inStagione(S.piuGiorni(x, 1)); i++) x = S.piuGiorni(x, 1); return x; })();
     ida.min = ia.min = PRIMO; ida.max = ia.max = ULTIMO;
 
-    /* ---- disponibilità DI ESEMPIO: pezzi meno prenotazioni simulate (più alte nel weekend e nelle feste) ---- */
+    /* ---- disponibilità ----
+       Giorni OCCUPATI: li segna il negozio nel pannello admin (js/dati.js → DATI.noleggio).
+       "Pochi pezzi" è solo DI ESEMPIO: pezzi meno prenotazioni simulate (più alte nel weekend e nelle feste). */
+    var OCC = {};
+    function leggiOccupati() {
+      if (!window.DATI) return;
+      DATI.noleggio.leggi().then(function (n) { OCC = (n && n.occupati) || {}; aggiorna(); }).catch(function () {});
+    }
+    function occupato(id, iso) { return (OCC[id] || []).indexOf(iso) > -1; }
     function hash(s) { var x = 7; for (var i = 0; i < s.length; i++) x = (x * 31 + s.charCodeAt(i)) | 0; return Math.abs(x); }
     function inPunta(md) { return (NL.punte || []).some(function (p) { return p[0] <= p[1] ? md >= p[0] && md <= p[1] : md >= p[0] || md <= p[1]; }); }
     function liberi(id, iso) {
+      if (occupato(id, iso)) return 0;
       var g = S.giorno(iso), md = iso.slice(5), es = (NL.esempio || {})[id] || [0, 0, 0];
       var liv = g.dow === 0 || g.dow === 6 || inPunta(md) || (C.orari.festivi || []).indexOf(md) > -1 ? 2 : g.dow === 5 ? 1 : 0;
-      return Math.max(0, att(id).pezzi - es[liv] - hash(id + iso) % 3);
+      return Math.max(1, att(id).pezzi - es[liv] - hash(id + iso) % 3);
     }
     function stato(n) { return n <= 0 ? 'esaurito' : n <= (NL.pochiPezzi || 2) ? 'pochi' : 'ok'; }
-    var ETS = { ok: 'Disponibile', pochi: 'Pochi pezzi', esaurito: 'Esaurito' };
+    var ETS = { ok: 'Disponibile', pochi: 'Pochi pezzi', esaurito: 'Occupato' };
 
     /* ---- controlli date ---- */
     function controllaDa(v) {
@@ -240,7 +253,7 @@
           '<div class="campo"><label for="' + q + '-alt">Altezza (cm)</label><input id="' + q + '-alt" type="text" inputmode="numeric" maxlength="3" autocomplete="off" value="' + escH(p.altezza) + '" data-i="' + i + '" data-k="altezza"><p class="campo__err" id="' + q + '-alt-err" hidden></p></div>' +
           '<div class="campo"><label for="' + q + '-scarpa">Numero di scarpa</label><input id="' + q + '-scarpa" type="text" inputmode="decimal" maxlength="4" autocomplete="off" value="' + escH(p.scarpa) + '" data-i="' + i + '" data-k="scarpa"><p class="campo__err" id="' + q + '-scarpa-err" hidden></p></div></div>' +
           '<fieldset class="kit__sn" id="' + q + '-liv" tabindex="-1"><legend>Livello</legend>' + pills('livello', i, LIV, p.livello) + '<p class="campo__err" id="' + q + '-liv-err" hidden></p></fieldset>' +
-          (cas && p.gruppo !== cas.gruppo ? '<label class="nol__casco"><input type="checkbox" data-i="' + i + '" data-k="casco"' + (p.casco ? ' checked' : '') + '><span>Aggiungi il casco <small>+' + euro(cas.prezzoGiorno) + ' al giorno</small></span></label>' : '') +
+          (cas && p.gruppo !== cas.gruppo ? '<label class="nol__casco"><input type="checkbox" data-i="' + i + '" data-k="casco"' + (p.casco ? ' checked' : '') + '><span>Aggiungi il casco <small>+' + euro(prezzoA(cas)) + ' al giorno</small></span></label>' : '') +
           '</fieldset>';
       }).join('');
       $('[data-persona-piu]', form).hidden = persone.length >= MAXP;
@@ -310,10 +323,10 @@
       var righe = Object.keys(n).map(function (id) {
         var min = Infinity; for (var k = 0; k < len; k++) min = Math.min(min, liberi(id, S.piuGiorni(ida.value, k)));
         var st = min < n[id] ? 'esaurito' : stato(min - n[id] + 1);
-        return '<li class="is-' + st + '"><i></i>' + escH(att(id).nome) + ' × ' + n[id] + ' <span>' + (min < n[id] ? 'Esaurito' : ETS[st]) + '</span></li>';
+        return '<li class="is-' + st + '"><i></i>' + escH(att(id).nome) + ' × ' + n[id] + ' <span>' + (min < n[id] ? 'Occupato' : ETS[st]) + '</span></li>';
       }).join('');
       if (!buchi.length) { boxD.innerHTML = '<ul class="nol__disp-l">' + righe + '</ul>'; return ''; }
-      var b = buchi[0], msg = att(b.id).nome + ': esaurito ' + S.dataLunga(b.g) + (b.l ? ' (ne restano ' + b.l + ', ne servono ' + b.n + ')' : '') + '. Questo noleggio non si può prenotare.';
+      var b = buchi[0], msg = att(b.id).nome + (b.l ? ': ' + S.dataLunga(b.g) + ' ne restano ' + b.l + ', ne servono ' + b.n : ': occupato ' + S.dataLunga(b.g)) + '. Questo noleggio non si può prenotare.';
       proposta = piuVicino(ida.value, len, n);
       var fineP = proposta ? S.piuGiorni(proposta, len - 1) : '';
       boxD.innerHTML = '<ul class="nol__disp-l">' + righe + '</ul><div class="nol__avviso" data-esaurito><p><b>' + escH(msg) + '</b></p>' +
@@ -332,9 +345,9 @@
           '<div class="kit__riga"><span>Giorni</span><b>' + (len === 1 ? S.dataLunga(ida.value) : 'dal ' + S.dataLunga(ida.value) + ' al ' + S.dataLunga(ia.value)) + ' · ' + len + (len === 1 ? ' giorno' : ' giorni') + '</b></div>';
         persone.forEach(function (p, i) {
           var id = idDi(p); if (!id) return;
-          var a = att(id), c = p.casco && id !== NL.cascoAggiuntivo ? att(NL.cascoAggiuntivo) : null, prezzo = (a.prezzoGiorno + (c ? c.prezzoGiorno : 0)) * len;
+          var a = att(id), c = p.casco && id !== NL.cascoAggiuntivo ? att(NL.cascoAggiuntivo) : null, prezzo = (prezzoA(a) + (c ? prezzoA(c) : 0)) * len;
           tot += prezzo;
-          righe += '<div class="kit__riga"><span>' + (i + 1) + ' · ' + escH(a.nome) + (c ? ' + casco' : '') + ' · ' + len + ' × ' + euro(a.prezzoGiorno + (c ? c.prezzoGiorno : 0)) + '</span><b>' + euro(prezzo) + '</b></div>';
+          righe += '<div class="kit__riga"><span>' + (i + 1) + ' · ' + escH(a.nome) + (c ? ' + casco' : '') + ' · ' + len + ' × ' + euro(prezzoA(a) + (c ? prezzoA(c) : 0)) + '</span><b>' + euro(prezzo) + '</b></div>';
         });
         righe += '<div class="kit__riga kit__riga--tot"><span>Totale di esempio</span><b data-tot>' + euro(tot) + '</b></div>';
       } else {
@@ -345,6 +358,8 @@
       return tot;
     }
     function aggiorna() { disegnaCal(); controllaDisp(); riepilogo(); }
+    leggiOccupati();
+    if (window.DATI) DATI.ascolta(leggiOccupati);   // il pannello admin aperto in un'altra scheda
 
     /* ---- eventi ---- */
     function dateCambiate(chi) {
@@ -411,7 +426,7 @@
     form.addEventListener('submit', function (e) {
       e.preventDefault(); esito.textContent = '';
       if (!valida()) { primoErrore(form); return; }
-      if (controllaDisp()) { var av = $('[data-esaurito]', form); vediSe(av); esito.textContent = 'Un\'attrezzatura è esaurita in uno dei giorni scelti: cambia le date.'; return; }
+      if (controllaDisp()) { var av = $('[data-esaurito]', form); vediSe(av); esito.textContent = 'Un\'attrezzatura è occupata in uno dei giorni scelti: cambia le date.'; return; }
       var tot = riepilogo(), len = nGiorni(), nome = $('#n-nome').value.trim(), tel = $('#n-tel').value.trim(), note = $('#n-note').value.trim();
       var elenco = persone.map(function (p, i) {
         var a = att(idDi(p));

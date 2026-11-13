@@ -118,7 +118,7 @@
           </div>
           <div class="campo"><label for="n-mostra">Mostra la disponibilità di</label><select id="n-mostra" data-mostra><option value="sci-adulto">Kit sci adulto</option><option value="sci-bambino">Kit sci bambino</option><option value="snow-adulto">Kit snowboard adulto</option><option value="snow-bambino">Kit snowboard bambino</option><option value="scarponi">Solo scarponi</option><option value="casco">Casco</option></select></div>
           <div class="cal" data-cal></div>
-          <ul class="cal__legenda" aria-label="Legenda"><li><i class="is-ok"></i>Disponibile</li><li><i class="is-pochi"></i>Pochi pezzi</li><li><i class="is-esaurito"></i>Esaurito</li></ul>
+          <ul class="cal__legenda" aria-label="Legenda"><li><i class="is-ok"></i>Disponibile</li><li><i class="is-pochi"></i>Pochi pezzi</li><li><i class="is-esaurito"></i>Occupato</li></ul>
           <div class="kit__due">
             <div class="campo"><label for="n-da">Dal</label><input id="n-da" name="da" type="date"><p class="campo__err" id="n-da-err" hidden></p></div>
             <div class="campo"><label for="n-a">Al (compreso)</label><input id="n-a" name="a" type="date"><p class="campo__err" id="n-a-err" hidden></p></div>
@@ -178,7 +178,7 @@
         <h2 class="pie__tit">Seguici</h2>
         <ul class="pie__lista"><li><a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a></li><li><a href="https://www.facebook.com/" target="_blank" rel="noopener">Facebook</a></li></ul>
         <h2 class="pie__tit">Info</h2>
-        <ul class="pie__lista"><li><a href="../servizi/index.html">Servizi su prenotazione</a></li><li><a href="../noleggio-sci/index.html">Noleggio sci e snowboard</a></li><li><a href="../squadre/index.html">Crea il kit squadra</a></li><li><a href="../index.html#maglia">Disegna la maglia</a></li><li><a href="#guida-taglie" data-guida>Guida taglie</a></li><li><a href="../privacy.html">Privacy</a></li></ul>
+        <ul class="pie__lista"><li><a href="../servizi/index.html">Servizi su prenotazione</a></li><li><a href="../noleggio-sci/index.html">Noleggio sci e snowboard</a></li><li><a href="../squadre/index.html">Kit Squadra</a></li><li><a href="../ordine/index.html">Stato del tuo ordine</a></li><li><a href="../index.html#maglia">Disegna la maglia</a></li><li><a href="#guida-taglie" data-guida data-guida-tab="divise">Guida taglie</a></li><li><a href="../privacy.html">Privacy</a></li></ul>
       </div>
     </div>
     <div class="pie__legale">
@@ -194,6 +194,8 @@
   <a href="../index.html#negozio"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span>Dove siamo</span></a>
 </nav>
 <script src="../config.js" defer></script>
+<script src="../js/listino.js" defer></script>
+<script src="../js/dati.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
 <script src="../js/main.js" defer></script>

@@ -847,7 +847,7 @@
     var vecchio = function () {
       var t = d.createElement('textarea'); t.value = testo; t.setAttribute('readonly', ''); t.style.cssText = 'position:fixed;top:0;left:0;opacity:0;font-size:16px';
       body.appendChild(t); t.select(); var r = false; try { r = d.execCommand('copy'); } catch (e) {} body.removeChild(t);
-      if (r) fatto2(); else window.prompt('Copia questo testo:', testo);
+      if (r) fatto2(); else mostraAvviso('Non riesco a copiare da solo: tieni premuto sul testo per copiarlo. ' + (testo.length > 60 ? '' : testo));
     };
     if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(testo).then(fatto2, vecchio); else vecchio();
   }
@@ -1146,8 +1146,9 @@
   /* =====================================================================
      GUIDA TAGLIE (pannello con schede + calcolatore scarpe)
      ===================================================================== */
-  var G = C.guidaTaglie, guidaP;
+  var G = C.guidaTaglie, guidaP, usaTaglia = null, LT = window.LISTINO && window.LISTINO.taglie;
   var SCHEDE_G = [
+    { id: 'divise', nome: 'Divise squadra' },
     { id: 'scarpe', nome: 'Scarpe' },
     { id: 'abb-adulto', nome: 'Abbigliamento adulto', k: 'abbAdulto' },
     { id: 'abb-bambino', nome: 'Abbigliamento bambino', k: 'abbBambino' },
@@ -1176,6 +1177,55 @@
       '<div class="guida__due"><div><h3 class="guida__h">Bambino</h3><div class="tab-g__scorri"><table class="tab-g"><thead><tr><th scope="col">Numero</th><th scope="col">Piede</th></tr></thead><tbody>' + righe(24, 35) + '</tbody></table></div></div>' +
       '<div><h3 class="guida__h">Adulto</h3><div class="tab-g__scorri"><table class="tab-g"><thead><tr><th scope="col">Numero</th><th scope="col">Piede</th></tr></thead><tbody>' + righe(36, 47) + '</tbody></table></div></div></div>';
   }
+  /* ----- divise squadra: taglia da altezza e peso (dati in js/listino.js) ----- */
+  function schedaDivise() {
+    if (!LT) return '<p class="guida__nota">Tabella non disponibile.</p>';
+    var tab = function (l, tit) {
+      return '<div><h3 class="guida__h">' + tit + '</h3><div class="tab-g__scorri"><table class="tab-g"><thead><tr><th scope="col">Taglia</th><th scope="col">Altezza</th><th scope="col">Peso</th><th scope="col">Torace</th></tr></thead><tbody>' +
+        l.map(function (t) { return '<tr data-tg="' + escH(t.taglia) + '"><th scope="row">' + escH(t.taglia) + '</th><td>' + t.altezza[0] + '–' + t.altezza[1] + ' cm</td><td>' + t.peso[0] + '–' + t.peso[1] + ' kg</td><td>' + escH(t.torace) + ' cm</td></tr>'; }).join('') + '</tbody></table></div></div>';
+    };
+    return '<div class="calc calc--divise">' +
+      '<p class="calc__tit">Trova la taglia della divisa</p>' +
+      '<div class="calc__riga calc__riga--3">' +
+      '<div class="campo calc__campo"><label for="gd-h">Altezza (cm)</label><input id="gd-h" type="text" inputmode="numeric" autocomplete="off" placeholder="Es. 172" maxlength="3" aria-describedby="gd-ris"></div>' +
+      '<div class="campo calc__campo"><label for="gd-p">Peso (kg)</label><input id="gd-p" type="text" inputmode="numeric" autocomplete="off" placeholder="Es. 68" maxlength="3" aria-describedby="gd-ris"></div>' +
+      '<fieldset class="calc__fit"><legend>Vestibilità <span>facoltativa</span></legend>' +
+      ['regolare|Regolare', 'comoda|Comoda', 'aderente|Aderente'].map(function (x, i) { var p = x.split('|'); return '<label class="kit__sc"><input type="radio" name="gd-fit" value="' + p[0] + '"' + (i ? '' : ' checked') + '><span>' + p[1] + '</span></label>'; }).join('') + '</fieldset></div>' +
+      '<div class="calc__esito"><output class="calc__ris" id="gd-ris" for="gd-h gd-p" aria-live="polite"><span class="calc__n">–</span><span class="calc__t">Scrivi altezza e peso</span></output>' +
+      '<button class="btn btn--pri btn--sm calc__usa" type="button" data-usa-taglia hidden>Usa questa taglia</button></div>' +
+      '<p class="calc__nota">Comoda = una taglia in più. Aderente = la più piccola tra quella dell\'altezza e quella del peso.</p></div>' +
+      '<div class="guida__due">' + tab(LT.adulti, 'Adulto') + tab(LT.bambini, 'Bambino') + '</div>' +
+      '<p class="guida__nota">' + escH(LT.nota) + '</p>';
+  }
+  function tagliaDivisa(h, p, fit) {
+    var T = h < LT.bambiniSotto ? LT.bambini : LT.adulti;
+    var idx = function (v, k) {
+      var best = 0, bd = 1e9;
+      T.forEach(function (t, i) { var a = t[k][0], b = t[k][1], fuori = v < a ? a - v : v > b ? v - b : 0, x = fuori + Math.abs(v - (a + b) / 2) / 100; if (x < bd) { bd = x; best = i; } });
+      return best;
+    };
+    var ih = idx(h, 'altezza'), ip = idx(p, 'peso'), i = fit === 'aderente' ? Math.min(ih, ip) : Math.max(ih, ip);
+    if (fit === 'comoda') i = Math.min(T.length - 1, i + 1);
+    var ult = T[T.length - 1], oltre = T === LT.adulti && (h > ult.altezza[1] || p > ult.peso[1]);
+    return { t: T[i].taglia, bimbi: T === LT.bambini, oltre: oltre, diverse: ih !== ip };
+  }
+  function calcolaDivisa() {
+    var c = guidaP.corpo, h = parseInt($('#gd-h', c).value, 10), p = parseInt($('#gd-p', c).value, 10), ris = $('#gd-ris', c), usa = $('[data-usa-taglia]', c);
+    var fit = ($('input[name="gd-fit"]:checked', c) || {}).value || 'regolare', r = null, txt, n = '–', err = false;
+    if (!$('#gd-h', c).value.trim() || !$('#gd-p', c).value.trim()) txt = 'Scrivi altezza e peso';
+    else if (isNaN(h) || h < 100 || h > 215) { txt = 'Altezza tra 100 e 215 cm'; n = '!'; err = true; }
+    else if (isNaN(p) || p < 15 || p > 160) { txt = 'Peso tra 15 e 160 kg'; n = '!'; err = true; }
+    else {
+      r = tagliaDivisa(h, p, fit); n = r.t;
+      txt = 'Taglia ' + (r.bimbi ? 'bambino' : 'adulto') + ' consigliata' + (fit !== 'regolare' ? ', vestibilità ' + fit : '') +
+        (r.oltre ? ' · sei oltre la tabella: chiedici le taglie forti' : r.diverse ? ' · altezza e peso indicano taglie diverse: prova in negozio' : '');
+    }
+    $('.calc__n', ris).textContent = n; $('.calc__t', ris).textContent = txt;
+    ris.classList.toggle('is-err', err); ris.classList.toggle('is-ok', !!r);
+    $$('[data-tg]', c).forEach(function (tr) { tr.classList.toggle('is-tg', !!r && tr.getAttribute('data-tg') === r.t); });
+    usa.hidden = !(r && usaTaglia); usa.setAttribute('data-t', r ? r.t : '');
+    if (r && usaTaglia) usa.textContent = 'Usa questa taglia: ' + r.t;
+  }
   function calcola(v) {
     var cm = parseFloat(String(v).replace(',', '.'));
     if (!String(v).trim()) return { n: '–', t: 'Scrivi la misura del piede' };
@@ -1189,7 +1239,7 @@
     guidaP.tit.textContent = 'Guida taglie';
     guidaP.corpo.innerHTML = '<p class="guida__avviso">' + escH(G.avviso) + '</p>' +
       '<div class="guida__tabs" role="tablist" aria-label="Tipo di prodotto">' + SCHEDE_G.map(function (s) { return '<button type="button" role="tab" id="gt-' + s.id + '" aria-controls="gp-' + s.id + '" aria-selected="false" tabindex="-1">' + s.nome + '</button>'; }).join('') + '</div>' +
-      SCHEDE_G.map(function (s) { return '<div class="guida__pan" role="tabpanel" id="gp-' + s.id + '" aria-labelledby="gt-' + s.id + '" tabindex="0" hidden>' + (s.k ? tabellaG(G[s.k]) : schedaScarpe()) + '</div>'; }).join('');
+      SCHEDE_G.map(function (s) { return '<div class="guida__pan" role="tabpanel" id="gp-' + s.id + '" aria-labelledby="gt-' + s.id + '" tabindex="0" hidden>' + (s.k ? tabellaG(G[s.k]) : s.id === 'divise' ? schedaDivise() : schedaScarpe()) + '</div>'; }).join('');
     guidaP.piede.hidden = false;
     guidaP.piede.innerHTML = '<div class="guida__piede"><p>Tra due misure? Prova in negozio o chiedici.</p><a class="btn btn--sec btn--sm" href="' + waLink('Ciao ' + C.attivita.nome + ', ho un dubbio sulla taglia giusta.') + '" target="_blank" rel="noopener">' + icona('chat', 'ico ico--s') + 'Chiedi su WhatsApp</a></div>';
     var tabs = $$('[role="tab"]', guidaP.corpo);
@@ -1201,6 +1251,14 @@
         e.preventDefault(); j = (j + tabs.length) % tabs.length; guidaTab(tabs[j].id.slice(3)); tabs[j].focus();
       });
     });
+    if (LT) {
+      ['#gd-h', '#gd-p'].forEach(function (s) { $(s, guidaP.corpo).addEventListener('input', function () { var v = this.value.replace(/\D/g, ''); if (v !== this.value) this.value = v; calcolaDivisa(); }); });
+      $$('input[name="gd-fit"]', guidaP.corpo).forEach(function (r) { r.addEventListener('change', calcolaDivisa); });
+      $('[data-usa-taglia]', guidaP.corpo).addEventListener('click', function () {
+        var t = this.getAttribute('data-t'), f = usaTaglia; if (!t || !f) return;
+        guidaP.chiudi(); f(t);
+      });
+    }
     var cm = $('#g-cm', guidaP.corpo), ris = $('#g-ris', guidaP.corpo);
     cm.addEventListener('input', function () {
       var r = calcola(cm.value);
@@ -1210,7 +1268,7 @@
     });
   }
   function guidaTab(id) {
-    if (!SCHEDE_G.some(function (s) { return s.id === id; })) id = 'scarpe';
+    if (!SCHEDE_G.some(function (s) { return s.id === id; }) || (id === 'divise' && !LT)) id = 'scarpe';
     $$('[role="tab"]', guidaP.corpo).forEach(function (t) {
       var on = t.id === 'gt-' + id;
       t.setAttribute('aria-selected', on ? 'true' : 'false'); t.tabIndex = on ? 0 : -1;
@@ -1218,8 +1276,12 @@
     });
     $$('[role="tabpanel"]', guidaP.corpo).forEach(function (p) { p.hidden = p.id !== 'gp-' + id; });
   }
-  function apriGuida(tab, da) {
-    creaGuida(); guidaP.apri(da); guidaTab(tab || 'scarpe');   // prima visibile, poi scorre la scheda attiva in vista
+  // opz.usa(taglia): mostra "Usa questa taglia" (rosa del kit squadra)
+  function apriGuida(tab, da, opz) {
+    creaGuida();
+    usaTaglia = opz && typeof opz.usa === 'function' ? opz.usa : null;
+    guidaP.apri(da); guidaTab(tab || 'scarpe');   // prima visibile, poi scorre la scheda attiva in vista
+    if (LT) calcolaDivisa();
   }
   d.addEventListener('click', function (e) {
     var a = e.target.closest('[data-guida]'); if (!a) return;
@@ -1325,7 +1387,8 @@
   Object.assign(window.SLANCIO, {
     $: $, $$: $$, REL: REL, ridotto: ridotto, waLink: waLink, escH: escH, euro: euro, pad: pad, minuti: minuti, ora: ora,
     GIORNI: GIORNI, MESI: MESI, GG: GG, oggiRoma: oggiRoma, giorno: giorno, piuGiorni: piuGiorni, distanza: distanza, dataLunga: dataLunga, fasceDi: fasceDi,
-    codice: codiceNuovo, invia: invia, viaWeb3: viaWeb3, erroreCampo: erroreCampo, copia: copia, icona: icona, caricaMV: caricaMV, mostraAvviso: mostraAvviso
+    codice: codiceNuovo, invia: invia, viaWeb3: viaWeb3, erroreCampo: erroreCampo, copia: copia, icona: icona, caricaMV: caricaMV, mostraAvviso: mostraAvviso,
+    Pannello: Pannello, apriGuida: apriGuida
   });
 
   /* ---------------- Mappa solo al clic ---------------- */
@@ -1341,6 +1404,64 @@
     area.innerHTML = '';
     area.appendChild(f);
   });
+
+  /* =====================================================================
+     BANNER "Ordina entro…" (dati da js/dati.js, si gestisce da admin.html)
+     Telefono: striscia sopra la barra in basso. Computer: riquadro in basso a sinistra.
+     Pagina Kit Squadra: dentro [data-banner-qui], senza chiusura.
+     Chiuso con la X: resta chiuso finché il negozio non cambia testo o data limite.
+     ===================================================================== */
+  (function () {
+    var D = window.DATI; if (!D) return;
+    var qui = $('[data-banner-qui]'), el = null, tCd = 0, ultimo = '';
+    var CHIUSO = 'slancio-banner-chiuso';
+    var chiave = function (b) { return b.scadenza + '|' + b.testo; };
+    function chiuso(b) { try { return localStorage.getItem(CHIUSO) === chiave(b); } catch (e) { return false; } }
+    function fine(iso) { var p = iso.split('-'); return new Date(+p[0], +p[1] - 1, +p[2], 23, 59, 59).getTime(); }
+    function corto(iso) { var g = giorno(iso); return g.d + ' ' + MESI[g.m - 1]; }
+    function togli() { clearInterval(tCd); if (el) el.remove(); el = null; body.classList.remove('con-bnr'); }
+    function conta(b) {
+      var ms = fine(b.scadenza) - Date.now();
+      if (ms <= 0) { togli(); return; }
+      var m = Math.floor(ms / 60000), gg = Math.floor(m / 1440), h = Math.floor(m % 1440 / 60), mi = m % 60;
+      var cd = $('[data-cd]', el);
+      cd.innerHTML = (gg ? 'Mancano <b>' + gg + '</b> g ' : 'Ultimo giorno: ') + '<b>' + pad(h) + '</b> h <b>' + pad(mi) + '</b> min';
+    }
+    function mostra(b) {
+      var k = JSON.stringify(b);
+      if (k === ultimo) return;
+      ultimo = k; togli();
+      if (!D.banner.visibile(b) || (!qui && chiuso(b))) return;
+      var testo = escH(b.testo).replace('{data}', '<b>' + escH(dataLunga(b.scadenza)) + '</b>');
+      el = d.createElement(qui ? 'div' : 'aside');
+      el.className = 'bnr ' + (qui ? 'bnr--qui' : 'bnr--fisso');
+      if (qui) {
+        el.innerHTML = '<p class="bnr__t">' + testo + '</p><p class="bnr__cd" data-cd></p>';
+        qui.appendChild(el);
+      } else {
+        el.setAttribute('aria-label', 'Scadenza ordini kit squadra');
+        el.innerHTML = '<a class="bnr__corpo" href="' + REL + 'squadre/index.html#kit">' +
+          '<span class="bnr__t">' + testo + '</span>' +
+          '<span class="bnr__breve">Kit squadra: ordina entro il <b>' + escH(corto(b.scadenza)) + '</b></span>' +
+          '<span class="bnr__cd" data-cd></span>' +
+          '<span class="bnr__cta">Crea il kit squadra' + icona('dx', 'ico ico--s') + '</span></a>' +
+          '<button class="bnr__x" type="button" aria-label="Chiudi l\'avviso">' + icona('chiudi', 'ico ico--s') + '</button>';
+        body.appendChild(el); body.classList.add('con-bnr');
+        $('.bnr__x', el).addEventListener('click', function () {
+          try { localStorage.setItem(CHIUSO, chiave(b)); } catch (e) {}
+          togli();
+        });
+      }
+      conta(b); tCd = setInterval(function () { conta(b); }, 30000);
+    }
+    function leggi() { D.banner.leggi().then(mostra).then(su).catch(function () {}); }
+    // il banner fisso compare dopo la prima schermata: non copre mai la hero e i suoi bottoni
+    var tSu = 0;
+    function su() { tSu = 0; if (el && !qui) el.classList.toggle('is-su', scrollY > innerHeight * 0.6); }
+    addEventListener('scroll', function () { if (!tSu) tSu = requestAnimationFrame(su); }, { passive: true });
+    leggi();
+    D.ascolta(leggi);   // il negozio cambia il banner dal pannello in un'altra scheda
+  })();
 
   /* =====================================================================
      ANIMAZIONI (GSAP + ScrollTrigger) – solo transform, opacity, clip-path

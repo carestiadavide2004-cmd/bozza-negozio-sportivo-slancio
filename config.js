@@ -78,7 +78,7 @@
       sedeLegale: 'Via dell\'Esempio 1, 65121 Pescara (PE)',
       emailPrivacy: 'privacy@slancio.example',
       pec: '',
-      dataAggiornamento: '12 novembre 2026'
+      dataAggiornamento: '13 novembre 2026'
     },
 
     /* ---------- Modulo "Chiedi disponibilità" ----------
@@ -213,104 +213,89 @@
       ]
     },
 
-    /* ---------- Crea il tuo kit (squadre e associazioni) ----------
-       prezzi DI ESEMPIO per atleta; il preventivo definitivo lo fa il negozio */
+    /* ---------- Kit Squadra: configuratore a 8 passi ----------
+       PREZZI, MARCHE, MATERIALI, SCONTI, SPEDIZIONE, ACCONTO, TEMPI E TAGLIE: in js/listino.js
+       Qui solo testi e regole del configuratore. */
     kit: {
-      prefissoCodice: 'KIT',                      // codice richiesta: KIT-XXXX
-      scontoBambiniPercento: 15,                  // i kit bambino costano il 15% in meno
-      personalizzazioni: { nomeNumero: 6, stemma: 3 },   // € per atleta
-      scontiQuantita: [ { da: 15, percento: 5 }, { da: 25, percento: 10 } ],
-      maxAtleti: 120,
-      // caricamento di stemma, sponsor e grafiche (demo: i file restano nel browser)
+      prefissoCodice: 'KIT',                      // numero preventivo / ordine: KIT-XXXX
+      quantitaIniziale: 15,                       // pezzi proposti quando si sceglie un capo
+      maxPezzi: 300,                              // massimo per capo
+      maxRosa: 60,                                // giocatori nella rosa
+      maxNome: 14, maxNumero: 3,                  // nome e numero sul retro
+      // capi proposti quando si sceglie lo sport (id dei capi in listino.js); si possono togliere o aggiungere
+      consigliati: {
+        calcio: ['maglia', 'pantaloncini', 'calzettoni', 'rappresentanza'],
+        calcetto: ['maglia', 'pantaloncini', 'calzettoni'],
+        basket: ['maglia', 'pantaloncini', 'rappresentanza'],
+        pallavolo: ['maglia', 'pantaloncini', 'allenamento'],
+        tennis: ['maglia', 'pantaloncini', 'borsa'],
+        padel: ['maglia', 'pantaloncini', 'borsa'],
+        'pugilato-e-combattimento': ['maglia', 'pantaloncini', 'rappresentanza'],
+        'sci-e-snowboard': ['giubbino', 'tecnica'],
+        nuoto: ['rappresentanza', 'borsa'],
+        running: ['maglia', 'pantaloncini', 'giubbino'],
+        'fitness-e-palestra': ['maglia', 'allenamento'],
+        ciclismo: ['maglia', 'pantaloncini', 'giubbino']
+      },
+      canotta: ['basket', 'pugilato-e-combattimento', 'running'],   // sport con la canotta già scelta come tipo di maglia
+      // home: sezione a scorrimento "Il tuo kit prende forma" (maglia di esempio: prima squadra di "maglia.squadre")
+      forma: {
+        occhiello: 'Kit Squadra · dal bozzetto alla divisa',
+        titolo: ['Il tuo kit', 'prende forma'],
+        nome: 'Rossi', numero: '10', sponsor: 'Sponsor',
+        passi: [
+          { tit: 'La base', testo: 'Si parte da una maglia pulita, con il taglio giusto per il vostro sport.' },
+          { tit: 'I vostri colori', testo: 'Carichi lo stemma: i colori della squadra li prendiamo da lì.' },
+          { tit: 'Il disegno', testo: 'Strisce, banda, sfumato: 6 proposte pronte, scegli la vostra.' },
+          { tit: 'Lo stemma', testo: 'Sul cuore, nitido come l\'originale.' },
+          { tit: 'Gli sponsor', testo: 'Petto, schiena, manica o pantaloncino: ognuno al suo posto.' },
+          { tit: 'Nome e numero', testo: 'La rosa con nomi, numeri e taglie, contata in automatico.' }
+        ]
+      },
+      // stemma, sponsor e altre grafiche (demo: i file restano nel browser)
       grafiche: {
         formati: ['png', 'jpg', 'jpeg', 'svg', 'pdf'], maxMB: 10, maxFile: 12,
         posizioni: ['Petto sinistro', 'Centro petto', 'Schiena', 'Manica', 'Pantaloncino']
       },
-      // capi e materiali: per ogni capo del pacchetto si sceglie prima il tipo, poi il materiale.
-      // "voci" = nomi dei capi nei pacchetti qui sotto. preventivo: true = "Prezzo su preventivo" (niente prezzi inventati)
-      capi: [
-        { id: 'maglie', nome: 'Maglie gara', voci: ['Maglia da gara', 'Canotta reversibile', 'Canotta tecnica', 'Maglia a maniche corte', 'Canotta', 'Maglia tecnica', 'Maglia da riscaldamento'],
-          tipi: ['Maniche corte', 'Maniche lunghe', 'Canotta'],
-          materiali: [
-            { id: 'tecnico', nome: 'Poliestere tecnico traspirante', trama: 'tecnico', testo: 'Leggero, asciuga in fretta: va bene per quasi tutti gli sport.' },
-            { id: 'mesh', nome: 'Micro-rete (mesh)', trama: 'rete', testo: 'Piccoli fori su tutta la maglia: la più fresca per le gare d\'estate.' },
-            { id: 'interlock', nome: 'Interlock', trama: 'interlock', testo: 'Più compatto e morbido, resiste a tanti lavaggi e ai mesi freddi.' },
-            { id: 'sublimato', nome: 'Sublimato totale', trama: 'sublimato', testo: 'Grafica stampata dentro il tessuto, colori e sponsor senza limiti.', preventivo: true }
-          ] },
-        { id: 'pantaloncini', nome: 'Pantaloncini', voci: ['Pantaloncino', 'Pantaloncino con bretelle', 'Pantaloncino da ring'],
-          tipi: ['Classico', 'Aderente', 'Con bretelle'],
-          materiali: [
-            { id: 'tecnico', nome: 'Poliestere tecnico', trama: 'tecnico', testo: 'Leggero ed elastico in vita, non si appesantisce con il sudore.' },
-            { id: 'rinforzi', nome: 'Poliestere tecnico con rinforzi', trama: 'rinforzo', testo: 'Cuciture e zone di contatto rinforzate: dura di più su campi duri e sintetico.' }
-          ] },
-        { id: 'calze', nome: 'Calzettoni e calze', voci: ['Calzettoni', 'Calze tecniche'],
-          tipi: ['Calzettoni lunghi', 'Calze corte'],
-          materiali: [
-            { id: 'tecnico', nome: 'Poliestere tecnico', trama: 'tecnico', testo: 'Sottile e traspirante, tiene il piede asciutto.' },
-            { id: 'rinforzi', nome: 'Con rinforzi su tallone e punta', trama: 'rinforzo', testo: 'Spugna nei punti di attrito: meno vesciche e più durata.' }
-          ] },
-        { id: 'giubbini', nome: 'Giubbini', voci: ['Giacca antipioggia', 'Giacca antivento', 'Gilet antivento', 'Giacca invernale'],
-          tipi: ['Giubbino', 'Gilet', 'Giaccone lungo da panchina'],
-          materiali: [
-            { id: 'antipioggia', nome: 'Antipioggia leggero', trama: 'pioggia', testo: 'Si piega in tasca, ferma pioggia e vento negli allenamenti.' },
-            { id: 'softshell', nome: 'Softshell', trama: 'softshell', testo: 'Esterno antivento e interno felpato: caldo ma traspirante.', preventivo: true },
-            { id: 'piumino', nome: 'Piumino imbottito', trama: 'piumino', testo: 'Imbottitura trapuntata per la panchina d\'inverno.', preventivo: true }
-          ] },
-        { id: 'tuta-tecnica', nome: 'Tute tecniche', voci: ['Tuta'],
-          tipi: ['Giacca e pantalone'],
-          materiali: [ { id: 'elastico', nome: 'Poliestere tecnico elasticizzato', trama: 'elastico', testo: 'Segue i movimenti: per allenamento e riscaldamento.' } ] },
-        { id: 'tuta-rappresentanza', nome: 'Tute di rappresentanza', voci: ['Tuta di rappresentanza'],
-          tipi: ['Felpa full-zip con pantalone'],
-          materiali: [ { id: 'strutturato', nome: 'Tessuto strutturato', trama: 'strutturato', testo: 'Più corposo ed elegante, per trasferte e premiazioni.' } ] },
-        { id: 'allenamento', nome: 'Tute e felpe da allenamento', voci: ['Felpa da riscaldamento', 'Felpa', 'Felpa con cappuccio'],
-          tipi: ['Solo felpa', 'Felpa con pantalone affusolato'],
-          materiali: [
-            { id: 'felpa', nome: 'Felpa leggera', trama: 'felpa', testo: 'Morbida e calda, interno garzato.' },
-            { id: 'poliestere', nome: 'Poliestere', trama: 'tecnico', testo: 'Più leggero, asciuga in fretta dopo l\'allenamento.' }
-          ] },
-        { id: 'borse', nome: 'Borse e zaini', voci: ['Borsa squadra', 'Zaino', 'Borsone', 'Marsupio porta borraccia'],
-          tipi: ['Borsa', 'Borsone', 'Zaino', 'Marsupio'],
-          materiali: [
-            { id: 'p600-media', nome: 'Poliestere 600D · 40 litri', trama: 'borsa', testo: 'Resistente e lavabile, entra tutto il kit della partita.' },
-            { id: 'p600-grande', nome: 'Poliestere 600D con fondo rigido · 70 litri', trama: 'borsa', testo: 'Per le trasferte: fondo impermeabile e tasca scarpe.', preventivo: true },
-            { id: 'tela', nome: 'Tela spalmata · 25 litri', trama: 'borsa', testo: 'Compatto, impermeabile, per l\'allenamento di tutti i giorni.' }
-          ] }
+      // colori proposti per la palette della squadra
+      colori: [
+        { nome: 'Bianco', hex: '#F6F5F1' }, { nome: 'Nero', hex: '#15161B' }, { nome: 'Cobalto', hex: '#1E46F0' },
+        { nome: 'Blu notte', hex: '#1B2A5B' }, { nome: 'Azzurro', hex: '#4FA3E0' }, { nome: 'Verde', hex: '#1B7F49' },
+        { nome: 'Giallo', hex: '#FFC21A' }, { nome: 'Oro', hex: '#C9A04A' }, { nome: 'Arancio', hex: '#F47B20' },
+        { nome: 'Rosso', hex: '#D62839' }, { nome: 'Granata', hex: '#7A1F2B' }, { nome: 'Viola', hex: '#5B3FD1' }
       ],
-      testoTaglie: 'Le taglie le definiamo insieme in negozio: portate la squadra, proviamo tutto e prendiamo le misure.',
-      sport: [
-        { id: 'calcio', nome: 'Calcio', pacchetti: [
-          { id: 'base', nome: 'Base', prezzo: 39, include: ['Maglia da gara', 'Pantaloncino', 'Calzettoni'] },
-          { id: 'completo', nome: 'Completo', prezzo: 79, include: ['Maglia da gara', 'Pantaloncino', 'Calzettoni', 'Tuta di rappresentanza'] },
-          { id: 'pro', nome: 'Pro', prezzo: 129, include: ['Maglia da gara', 'Pantaloncino', 'Calzettoni', 'Tuta di rappresentanza', 'Giacca antipioggia', 'Borsa squadra'] } ] },
-        { id: 'calcetto', nome: 'Calcetto', pacchetti: [
-          { id: 'base', nome: 'Base', prezzo: 35, include: ['Maglia da gara', 'Pantaloncino', 'Calzettoni'] },
-          { id: 'completo', nome: 'Completo', prezzo: 69, include: ['Maglia da gara', 'Pantaloncino', 'Calzettoni', 'Felpa da riscaldamento'] },
-          { id: 'pro', nome: 'Pro', prezzo: 109, include: ['Maglia da gara', 'Pantaloncino', 'Calzettoni', 'Felpa da riscaldamento', 'Tuta di rappresentanza', 'Borsa squadra'] } ] },
-        { id: 'basket', nome: 'Basket', pacchetti: [
-          { id: 'base', nome: 'Base', prezzo: 45, include: ['Canotta reversibile', 'Pantaloncino'] },
-          { id: 'completo', nome: 'Completo', prezzo: 85, include: ['Canotta reversibile', 'Pantaloncino', 'Maglia da riscaldamento', 'Calze tecniche'] },
-          { id: 'pro', nome: 'Pro', prezzo: 135, include: ['Canotta reversibile', 'Pantaloncino', 'Maglia da riscaldamento', 'Calze tecniche', 'Tuta di rappresentanza', 'Zaino'] } ] },
-        { id: 'pallavolo', nome: 'Pallavolo', pacchetti: [
-          { id: 'base', nome: 'Base', prezzo: 38, include: ['Maglia da gara', 'Pantaloncino'] },
-          { id: 'completo', nome: 'Completo', prezzo: 72, include: ['Maglia da gara', 'Pantaloncino', 'Ginocchiere', 'Felpa'] },
-          { id: 'pro', nome: 'Pro', prezzo: 118, include: ['Maglia da gara', 'Pantaloncino', 'Ginocchiere', 'Felpa', 'Tuta di rappresentanza', 'Borsa squadra'] } ] },
-        { id: 'running', nome: 'Running', pacchetti: [
-          { id: 'base', nome: 'Base', prezzo: 34, include: ['Canotta tecnica', 'Pantaloncino'] },
-          { id: 'completo', nome: 'Completo', prezzo: 74, include: ['Canotta tecnica', 'Pantaloncino', 'Giacca antivento', 'Calze tecniche'] },
-          { id: 'pro', nome: 'Pro', prezzo: 119, include: ['Canotta tecnica', 'Pantaloncino', 'Giacca antivento', 'Calze tecniche', 'Tuta', 'Marsupio porta borraccia'] } ] },
-        { id: 'ciclismo', nome: 'Ciclismo', pacchetti: [
-          { id: 'base', nome: 'Base', prezzo: 79, include: ['Maglia a maniche corte', 'Pantaloncino con bretelle'] },
-          { id: 'completo', nome: 'Completo', prezzo: 139, include: ['Maglia a maniche corte', 'Pantaloncino con bretelle', 'Gilet antivento', 'Guanti estivi'] },
-          { id: 'pro', nome: 'Pro', prezzo: 219, include: ['Maglia a maniche corte', 'Pantaloncino con bretelle', 'Gilet antivento', 'Guanti estivi', 'Giacca invernale', 'Calze tecniche'] } ] },
-        { id: 'pugilato', nome: 'Pugilato', pacchetti: [
-          { id: 'base', nome: 'Base', prezzo: 39, include: ['Canotta', 'Pantaloncino da ring'] },
-          { id: 'completo', nome: 'Completo', prezzo: 89, include: ['Canotta', 'Pantaloncino da ring', 'Felpa con cappuccio', 'Bende'] },
-          { id: 'pro', nome: 'Pro', prezzo: 149, include: ['Canotta', 'Pantaloncino da ring', 'Felpa con cappuccio', 'Bende', 'Tuta di rappresentanza', 'Borsone'] } ] },
-        { id: 'altro', nome: 'Altro sport', pacchetti: [
-          { id: 'base', nome: 'Base', prezzo: 35, include: ['Maglia tecnica', 'Pantaloncino'] },
-          { id: 'completo', nome: 'Completo', prezzo: 70, include: ['Maglia tecnica', 'Pantaloncino', 'Felpa'] },
-          { id: 'pro', nome: 'Pro', prezzo: 115, include: ['Maglia tecnica', 'Pantaloncino', 'Felpa', 'Tuta di rappresentanza', 'Borsa squadra'] } ] }
-      ]
+      stili: [
+        { id: 'classico', nome: 'Classico', testo: 'Colletto e polsini a contrasto, linee pulite.' },
+        { id: 'moderno', nome: 'Moderno', testo: 'Fianchi a contrasto e cuciture in vista.' },
+        { id: 'geometrico', nome: 'Geometrico', testo: 'Trama a triangoli e un chevron sul petto.' },
+        { id: 'vintage', nome: 'Vintage', testo: 'Colori caldi, colletto doppio, effetto lana.' }
+      ],
+      disegni: [
+        { id: 'tinta', nome: 'Tinta unita' }, { id: 'strisce', nome: 'Strisce verticali' }, { id: 'diagonale', nome: 'Banda diagonale' },
+        { id: 'sfumato', nome: 'Sfumato' }, { id: 'maniche', nome: 'Maniche a contrasto' }
+      ],
+      colli: [ { id: 'girocollo', nome: 'Girocollo' }, { id: 'v', nome: 'A V' }, { id: 'polo', nome: 'Polo' } ],
+      testoTaglie: 'Nel dubbio sulla taglia proviamo tutto in negozio prima della stampa.',
+      // condizioni da accettare prima di pagare l'acconto (DEMO: testi di esempio da far verificare)
+      condizioni: [
+        'Il preventivo è indicativo: lo confermiamo dopo aver controllato grafiche, taglie e disponibilità.',
+        'Con l\'acconto confermi l\'ordine. Prima della produzione ti mandiamo la grafica da approvare.',
+        'I tempi di produzione partono dall\'approvazione della grafica.',
+        'Il saldo si paga al ritiro in negozio o alla consegna.',
+        'I prodotti personalizzati con nomi, numeri, stemmi o sponsor non sono soggetti a reso.'
+      ],
+      // banner "Ordina entro…" (si cambia dal pannello admin). Date vuote = periodo di prova calcolato da oggi.
+      // {data} nel testo diventa la data limite.
+      banner: { attivo: true, dal: '', al: '', scadenza: '', testo: 'Ordina entro il {data} per avere il kit alla prima di campionato.' },
+      // ordine di esempio sempre presente (pagina "Stato del tuo ordine" e pannello admin)
+      ordineDemo: {
+        numero: 'DEMO-001', squadra: 'ASD Maestrale Sporting', sport: 'calcio', marca: 'media', consegna: 'ritiro',
+        referente: 'Giulia Di Marco', telefono: '333 000 0000', fase: 'produzione', giorni: { ricevuto: -21, grafica: -14, produzione: -6 },
+        note: { ricevuto: 'Acconto ricevuto. Grazie!', grafica: 'Grafica approvata dal presidente.', produzione: 'Stampa nomi e numeri in corso.' },
+        capi: [ { id: 'maglia', q: 18, tipo: 'Maniche corte', mat: 'mesh' }, { id: 'pantaloncini', q: 18, tipo: 'Classico', mat: 'tecnico' }, { id: 'calzettoni', q: 18, tipo: 'Calzettoni lunghi', mat: 'tecnico' }, { id: 'rappresentanza', q: 18, tipo: 'Felpa full-zip con pantalone', mat: 'strutturato' } ],
+        design: { c1: '#1B2A5B', c2: '#F6F5F1', c3: '#C9A04A', disegno: 'strisce', collo: 'girocollo', stile: 'classico', sigla: 'MS', nome: 'Rossi', numero: '10' },
+        rosa: [ ['Rossi', '10', 'M'], ['Bianchi', '1', 'L'], ['Esposito', '4', 'M'], ['Colombo', '5', 'L'], ['Ricci', '7', 'S'], ['Marino', '8', 'M'], ['Greco', '9', 'L'], ['Bruno', '11', 'M'], ['Gallo', '6', 'XL'], ['Conti', '3', 'M'], ['De Luca', '2', 'L'], ['Mancini', '13', 'S'], ['Costa', '14', 'M'], ['Giordano', '15', 'M'], ['Rizzo', '16', 'L'], ['Lombardi', '17', 'M'], ['Moretti', '12', 'XL'], ['Barbieri', '18', 'S'] ]
+      }
     },
 
     /* ---------- Guida taglie (informazioni generali) ---------- */
@@ -369,15 +354,25 @@
       testoConferma: 'La prenotazione è confermata quando il negozio ti risponde.',
       attrezzatura: [
         // gruppo = cosa sceglie la persona; eta = adulto / bambino (null = vale per tutti)
-        { id: 'sci-adulto', gruppo: 'Sci', eta: 'adulto', nome: 'Kit sci adulto', include: 'sci, scarponi e bastoncini', prezzoGiorno: 25, pezzi: 14 },
-        { id: 'sci-bambino', gruppo: 'Sci', eta: 'bambino', nome: 'Kit sci bambino', include: 'sci, scarponi e bastoncini', prezzoGiorno: 15, pezzi: 10 },
-        { id: 'snow-adulto', gruppo: 'Snowboard', eta: 'adulto', nome: 'Kit snowboard adulto', include: 'tavola con attacchi e scarponi', prezzoGiorno: 28, pezzi: 8 },
-        { id: 'snow-bambino', gruppo: 'Snowboard', eta: 'bambino', nome: 'Kit snowboard bambino', include: 'tavola con attacchi e scarponi', prezzoGiorno: 18, pezzi: 5 },
-        { id: 'scarponi', gruppo: 'Solo scarponi', eta: null, nome: 'Solo scarponi', include: 'da sci o da snowboard', prezzoGiorno: 9, pezzi: 12 },
-        { id: 'casco', gruppo: 'Solo casco', eta: null, nome: 'Casco', include: 'adulto o bambino', prezzoGiorno: 5, pezzi: 20 }
+        // prezzi al giorno: in js/listino.js (noleggio)
+        { id: 'sci-adulto', gruppo: 'Sci', eta: 'adulto', nome: 'Kit sci adulto', include: 'sci, scarponi e bastoncini', pezzi: 14 },
+        { id: 'sci-bambino', gruppo: 'Sci', eta: 'bambino', nome: 'Kit sci bambino', include: 'sci, scarponi e bastoncini', pezzi: 10 },
+        { id: 'snow-adulto', gruppo: 'Snowboard', eta: 'adulto', nome: 'Kit snowboard adulto', include: 'tavola con attacchi e scarponi', pezzi: 8 },
+        { id: 'snow-bambino', gruppo: 'Snowboard', eta: 'bambino', nome: 'Kit snowboard bambino', include: 'tavola con attacchi e scarponi', pezzi: 5 },
+        { id: 'scarponi', gruppo: 'Solo scarponi', eta: null, nome: 'Solo scarponi', include: 'da sci o da snowboard', pezzi: 12 },
+        { id: 'casco', gruppo: 'Solo casco', eta: null, nome: 'Casco', include: 'adulto o bambino', pezzi: 20 }
       ],
       cascoAggiuntivo: 'casco',                   // id del casco che si può aggiungere a ogni kit
-      // prenotazioni DI ESEMPIO per giorno: [lun–gio, venerdì, sabato e domenica] (+ variazione casuale fissa da 0 a 2)
+      // giorni OCCUPATI di partenza (MM-GG, diventano date della stagione): poi li cambia il negozio dal pannello admin.html
+      occupatiEsempio: {
+        'sci-adulto': ['12-26', '12-27', '12-28', '12-29', '12-30', '02-14', '02-15'],
+        'sci-bambino': ['12-27', '12-28', '12-29', '01-02', '01-03'],
+        'snow-adulto': ['12-19', '12-20', '12-30', '12-31', '01-01'],
+        'snow-bambino': ['12-05', '12-06', '12-12', '12-13', '12-26', '12-27', '12-28', '01-02', '01-03'],
+        'scarponi': ['12-28', '12-29'],
+        'casco': []
+      },
+      // prenotazioni DI ESEMPIO per giorno (solo per l'avviso "Pochi pezzi"): [lun–gio, venerdì, sabato e domenica] (+ variazione casuale fissa da 0 a 2)
       esempio: {
         'sci-adulto': [3, 7, 12], 'sci-bambino': [2, 5, 8], 'snow-adulto': [2, 5, 8],
         'snow-bambino': [1, 2, 4], 'scarponi': [2, 4, 9], 'casco': [4, 8, 15]

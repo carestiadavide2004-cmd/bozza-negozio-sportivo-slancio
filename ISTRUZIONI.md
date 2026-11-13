@@ -85,8 +85,22 @@ Nota: per caricare i file su Firebase Storage serve il piano **Blaze** (a consum
   - Il 3D si carica solo quando la sezione sta per entrare nello schermo. Senza WebGL, se il modello non si carica o aprendo il sito dal Mac (file://) si vede la versione 2,5D disegnata.
   - Lo stemma caricato resta nel browser: non viene mai inviato.
   - L'anteprima `assets/img/maglia-anteprima-*.webp` è una schermata del 3D: se cambi la squadra iniziale, rifalla.
-- **Kit squadre** (`squadre/index.html`): dati in `config.js` → `kit` (pacchetti e prezzi di esempio per sport, costo di nomi/numeri e stemma, sconti quantità, sconto bambini). Codice in `js/kit.js`. Il codice richiesta è KIT-XXXX. L'invio segue `modulo.modalita` (WhatsApp o Web3Forms).
-- Per un cliente vero: cambiare prezzi e pacchetti in `config.js`, togliere le squadre inventate o sostituirle con esempi autorizzati.
+- **Kit Squadra** (`squadre/index.html`): configuratore a 8 passi (sport e capi, marca, materiali, grafiche, stile, rosa, proposte, preventivo). Codice in `js/kit.js`, numero d'ordine KIT-XXXX.
+  - **Prezzi** (capi, marche Base/Media/Premium, materiali, nome e numero, stemma, sponsor, sconti quantità, spedizione, acconto, IVA, tempi di produzione, taglie): tutti in `js/listino.js`. Testi e scelte (capi consigliati per sport, colori, stili, disegni, colli, condizioni, banner, ordine DEMO-001): `config.js` → `kit`.
+  - **Anteprima maglia** riutilizzabile: `js/maglia-svg.js` (`window.MagliaSVG`), usata da configuratore, home, pagina ordine e pannello. Pagina di prova `_prove/maglia-svg.html`.
+  - **PDF**: `assets/js/vendor/jspdf.umd.min.js`, caricato solo al clic. **Pagamento: simulato** ("Demo – nessun pagamento reale"). Per un cliente vero serve un pagamento vero (es. Stripe o PayPal) e l'ordine salvato su un database.
+  - **Link da condividere**: la configurazione (con la rosa, senza immagini) sta nell'indirizzo dopo `#kit=`.
+- **Home "Il tuo kit prende forma"** (subito dopo la hero): testi in `config.js` → `kit.forma`, maglia della prima squadra di `maglia.squadre`. Le maglie sono scritte nella pagina da `build.mjs`; `js/forma.js` le anima allo scorrimento (scena ferma con sticky, niente pin). Con "riduci movimento" si vedono 6 maglie ferme.
+- **Stato del tuo ordine** (`ordine/index.html`, `js/ordine.js`): numero d'ordine o `?n=KIT-XXXX`. DEMO-001 c'è sempre (dati in `config.js` → `kit.ordineDemo`, date calcolate da oggi).
+- Per un cliente vero: cambiare prezzi in `js/listino.js` e testi in `config.js`, togliere le squadre inventate o sostituirle con esempi autorizzati.
+
+## Pannello del negozio (admin.html) – DEMO
+
+- Indirizzo: `admin.html` (non è nel menu né nella sitemap, ha sempre `noindex`). **Password demo: `slancio-demo`.**
+- Schede: **Ordini** (elenco, dettaglio, cambio fase con nota per il cliente), **Banner** "Ordina entro…" (acceso/spento, date, data limite con conto alla rovescia, testo con `{data}`), **Noleggio** (giorni occupati per articolo).
+- **I dati sono salvati solo nel browser** (avviso giallo in cima): quello che cambi lo vedi tu, non gli altri visitatori. Le altre schede dello stesso browser si aggiornano da sole.
+- **Passaggio a Firebase**: l'unico file che legge e scrive è `js/dati.js` (banner, ordini, noleggio, accesso). In cima c'è la mappa delle raccolte Firestore; si cambia solo quel file. L'accesso passa a Firebase Authentication e va aggiunto Firebase nell'informativa privacy (blocco `FIREBASE` del modello).
+- Per cambiare la password demo: impronta SHA-256 in `js/dati.js` (`IMPRONTA`). È solo una protezione di facciata: per un negozio vero serve Firebase Authentication.
 
 ## Servizi su prenotazione e noleggio sci
 
@@ -94,8 +108,9 @@ Nota: per caricare i file su Firebase Storage serve il piano **Blaze** (a consum
   - **Versione per un cliente vero:** al posto del modulo si può usare **Agendo**, l'app di prenotazione di Davide (calendario vero con posti e conferme). Il modulo del sito resta come alternativa semplice: la prenotazione è confermata solo quando il negozio risponde.
 - **Noleggio sci** (`noleggio-sci/index.html`): attrezzatura, prezzi al giorno, pezzi, stagione (`stagione.da/a` in MM-GG), orari di ritiro e riconsegna in `config.js` → `noleggio`. Codice NOL-XXXX.
   - Ritiro: il pomeriggio di apertura più vicino prima del primo giorno. Riconsegna: entro l'ora fissata del primo giorno di apertura dopo l'ultimo.
-  - **La disponibilità è simulata** (demo): pezzi totali meno prenotazioni di esempio (`noleggio.esempio`: feriali, venerdì, weekend/feste/periodi di punta) più una piccola variazione fissa per giorno. Se un tipo è esaurito in uno dei giorni scelti la richiesta è bloccata e il sito propone il giorno (o periodo) libero più vicino.
-  - **Per una disponibilità vera e condivisa** servono un database (es. Firebase Firestore) con le prenotazioni confermate e un pannello per il negozio che le inserisce o le conferma. Senza database ogni visitatore vede solo la simulazione.
+  - **Giorni occupati**: li segna il negozio dal pannello `admin.html` (scheda Noleggio). Quelli di partenza sono in `noleggio.occupatiEsempio` (MM-GG). Se un articolo è occupato in uno dei giorni scelti la richiesta è bloccata e il sito propone il giorno (o periodo) libero più vicino.
+  - "Pochi pezzi" è solo di esempio: pezzi totali meno prenotazioni simulate (`noleggio.esempio`).
+  - **Per una disponibilità vera e condivisa** i giorni devono stare su un database (es. Firebase Firestore): basta cambiare `js/dati.js`. Oggi ogni browser vede i propri dati.
 
 ## Hero della home: giro di tutti gli sport
 
@@ -106,8 +121,8 @@ Nota: per caricare i file su Firebase Storage serve il piano **Blaze** (a consum
 
 ## Kit squadra: materiali e grafiche
 
-- **Capi e materiali** (`config.js` → `kit.capi`): per ogni gruppo di capi i `tipi` e i `materiali` (nome, una riga di descrizione, disegno `trama`). `preventivo: true` mostra "Prezzo su preventivo". `voci` collega il gruppo ai nomi dei capi dei pacchetti.
-- **Stemma, sponsor e grafiche** (`kit.grafiche`): formati, peso massimo (10 MB), numero di file e posizioni. I file restano nel browser: nella richiesta vanno nomi e posizioni, il cliente li allega in WhatsApp.
+- **Capi e materiali** (`js/listino.js` → `capi`): per ogni capo prezzi per marca, `tipi` e `materiali` con il sovrapprezzo `piu` (nome, una riga di descrizione, disegno `trama`).
+- **Stemma, sponsor e grafiche** (`config.js` → `kit.grafiche`): formati, peso massimo (10 MB), numero di file e posizioni. I file restano nel browser (dallo stemma si ricavano i colori): nel preventivo vanno nomi e posizioni, il cliente manda i file in alta qualità su WhatsApp.
   - **Versione per un cliente vero:** per ricevere davvero i file serve un servizio di caricamento (es. Firebase Storage o un modulo con allegati) da aggiungere anche nell'informativa privacy.
 
 ## Foto

@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pannello negozio (demo) | Slancio</title>
+<meta name="description" content="Pannello dimostrativo di Slancio.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0E0F12">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Slancio">
+<meta property="og:title" content="Pannello negozio (demo) | Slancio">
+<meta property="og:description" content="Pannello dimostrativo di Slancio.">
+<meta property="og:url" content="https://carestiadavide2004-cmd.github.io/bozza-negozio-sportivo-slancio/admin.html">
+<meta property="og:image" content="https://carestiadavide2004-cmd.github.io/bozza-negozio-sportivo-slancio/assets/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/barlow-condensed-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/barlow-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/style.css">
+<script>(function(d){d.documentElement.classList.add('js');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){d.documentElement.classList.add('anim');setTimeout(function(){if(!window.__anim)d.documentElement.classList.remove('anim')},2500)}})(document)</script>
+</head>
+<body class="p-admin" data-rel="">
+<a class="salta" href="#contenuto">Vai al contenuto</a>
+<p class="adm-demo" role="note"><b>Modalità demo – i dati sono salvati solo in questo browser</b></p>
+<header class="adm-hdr">
+  <div class="wrap adm-hdr__in">
+    <a class="logo" href="index.html" aria-label="Slancio – pagina principale"><svg class="logo__segno" viewBox="0 0 30 24" aria-hidden="true" focusable="false"><path d="M9 1h8L9 23H1z" fill="currentColor"/><path d="M21 1h8l-8 22h-8z" fill="var(--c-cobalto-vivo)"/></svg><span class="logo__nome">SLANCIO</span></a>
+    <span class="adm-hdr__tit">Pannello negozio</span>
+    <a class="adm-hdr__link" href="index.html">Vai al sito</a>
+    <button class="adm-hdr__link" type="button" data-esci hidden>Esci</button>
+  </div>
+</header>
+<main id="contenuto" class="adm">
+  <section class="adm-login wrap" data-login aria-labelledby="tit-login">
+    <form class="adm-box" data-login-form novalidate>
+      <h1 class="adm-h1" id="tit-login">Accedi al pannello</h1>
+      <p>Qui il negozio aggiorna gli ordini del kit squadra, il banner "Ordina entro…" e i giorni occupati del noleggio.</p>
+      <div class="campo">
+        <label for="a-pw">Password</label>
+        <input id="a-pw" type="password" autocomplete="current-password" required>
+        <p class="campo__err" id="a-pw-err" hidden></p>
+      </div>
+      <button class="btn btn--pri" type="submit">Entra</button>
+      <p class="campo__aiuto">Pannello dimostrativo: la password è nelle istruzioni del sito. Con un negozio vero l'accesso passa da un servizio sicuro (ad esempio Firebase Authentication).</p>
+    </form>
+  </section>
+
+  <div class="adm-app wrap" data-app hidden>
+    <h1 class="sr-only">Pannello negozio</h1>
+    <div class="adm-tab" role="tablist" aria-label="Sezioni del pannello">
+      <button class="adm-tab__b" type="button" role="tab" id="tb-ordini" aria-controls="t-ordini" aria-selected="true" data-tab-b="ordini">Ordini <span class="adm-tab__n" data-n-ordini></span></button>
+      <button class="adm-tab__b" type="button" role="tab" id="tb-banner" aria-controls="t-banner" aria-selected="false" tabindex="-1" data-tab-b="banner">Banner</button>
+      <button class="adm-tab__b" type="button" role="tab" id="tb-noleggio" aria-controls="t-noleggio" aria-selected="false" tabindex="-1" data-tab-b="noleggio">Noleggio</button>
+    </div>
+
+    <section class="adm-sez adm-ord" id="t-ordini" role="tabpanel" aria-labelledby="tb-ordini" data-tab="ordini">
+      <div class="adm-ord__lista">
+        <div class="adm-ord__filtri">
+          <div class="campo"><label for="o-cerca">Cerca</label><input id="o-cerca" type="search" autocomplete="off" placeholder="Numero, squadra o referente" data-o-cerca></div>
+          <div class="campo"><label for="o-filtro">Fase</label><select id="o-filtro" data-o-filtro><option value="">Tutte</option><option value="ricevuto">Ricevuto</option><option value="grafica">Grafica approvata</option><option value="produzione">In produzione</option><option value="pronto">Pronto / Spedito</option></select></div>
+        </div>
+        <ul class="adm-ord__voci" data-o-lista></ul>
+      </div>
+      <div class="adm-ord__dett" data-o-dett tabindex="-1"><p class="adm-vuoto">Scegli un ordine per vedere il dettaglio e cambiare fase.</p></div>
+    </section>
+
+    <section class="adm-sez" id="t-banner" role="tabpanel" aria-labelledby="tb-banner" data-tab="banner" hidden>
+      <form class="adm-box adm-ban" data-b-form novalidate>
+        <h2 class="adm-h2">Banner "Ordina entro…"</h2>
+        <p>Compare in basso nelle pagine del sito (in alto nella pagina Kit Squadra) con il conto alla rovescia fino alla data limite.</p>
+        <label class="adm-interr"><input type="checkbox" id="b-attivo"><span>Mostra il banner sul sito</span></label>
+        <div class="adm-tre">
+          <div class="campo"><label for="b-dal">Visibile dal</label><input id="b-dal" type="date"><p class="campo__err" id="b-dal-err" hidden></p></div>
+          <div class="campo"><label for="b-al">Visibile fino al</label><input id="b-al" type="date"><p class="campo__err" id="b-al-err" hidden></p></div>
+          <div class="campo"><label for="b-scad">Data limite per ordinare</label><input id="b-scad" type="date"><p class="campo__err" id="b-scad-err" hidden></p></div>
+        </div>
+        <div class="campo"><label for="b-testo">Testo</label><textarea id="b-testo" rows="3" maxlength="160" aria-describedby="b-testo-aiuto"></textarea><p class="campo__aiuto" id="b-testo-aiuto">Scrivi {data} dove vuoi la data limite. Massimo 160 caratteri.</p><p class="campo__err" id="b-testo-err" hidden></p></div>
+        <div class="adm-ban__ant"><p class="adm-et">Anteprima</p><div data-b-anteprima></div><p class="adm-ban__stato" data-b-stato></p></div>
+        <div class="adm-az"><button class="btn btn--pri" type="submit">Salva il banner</button><button class="btn btn--sec" type="button" data-b-base>Rimetti l'esempio</button></div>
+        <p class="adm-esito" data-b-esito role="status"></p>
+      </form>
+    </section>
+
+    <section class="adm-sez" id="t-noleggio" role="tabpanel" aria-labelledby="tb-noleggio" data-tab="noleggio" hidden>
+      <div class="adm-box adm-nol">
+        <h2 class="adm-h2">Giorni occupati del noleggio</h2>
+        <p>Tocca un giorno per segnarlo occupato o di nuovo libero. Sul sito quel giorno non si può prenotare per l'articolo scelto.</p>
+        <div class="campo"><label for="n-art">Articolo</label><select id="n-art" data-n-art><option value="sci-adulto">Kit sci adulto</option><option value="sci-bambino">Kit sci bambino</option><option value="snow-adulto">Kit snowboard adulto</option><option value="snow-bambino">Kit snowboard bambino</option><option value="scarponi">Solo scarponi</option><option value="casco">Casco</option></select></div>
+        <div class="adm-nol__cal" data-n-cal></div>
+        <ul class="cal__legenda" aria-label="Legenda"><li><i class="is-ok"></i>Libero</li><li><i class="is-esaurito"></i>Occupato</li></ul>
+        <p class="adm-nol__conto" data-n-conto role="status"></p>
+        <div class="adm-az"><button class="btn btn--sec" type="button" data-n-base>Rimetti i giorni di esempio</button></div>
+      </div>
+    </section>
+  </div>
+</main>
+<script src="config.js" defer></script>
+<script src="js/listino.js" defer></script>
+<script src="js/dati.js" defer></script>
+<script src="js/maglia-svg.js" defer></script>
+<script src="js/admin.js" defer></script>
+</body>
+</html>

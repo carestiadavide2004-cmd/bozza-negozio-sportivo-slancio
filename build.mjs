@@ -5,6 +5,7 @@
 // =====================================================================
 import { readFileSync, writeFileSync, mkdirSync, existsSync, rmSync, readdirSync } from 'node:fs';
 import { createRequire } from 'node:module';
+import vm from 'node:vm';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -12,6 +13,7 @@ const ROOT = dirname(fileURLToPath(import.meta.url));
 process.chdir(ROOT);
 const require = createRequire(import.meta.url);
 const C = require('./config.js');
+const LIST = require('./js/listino.js');           // prezzi del kit squadra e del noleggio
 const { ILLUSTRAZIONI } = await import('./_strumenti/illustrazioni.mjs');   // rigenera assets/img/prodotti.svg
 const IMG = existsSync('assets/img/immagini.json') ? JSON.parse(readFileSync('assets/img/immagini.json', 'utf8')) : {};
 const A = C.attivita, K = C.contatti, L = C.legale, S = C.sito;
@@ -192,7 +194,14 @@ const ICO = {
   filtri: '<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>',
   righello: '<path d="M3 15 15 3l6 6L9 21z"/><path d="m7 11 2 2M10 8l2 2M13 5l2 2"/>',
   piu: '<path d="M12 5v14M5 12h14"/>',
-  ok: '<circle cx="12" cy="12" r="9"/><path d="m8 12.5 2.6 2.5L16 9.5"/>'
+  ok: '<circle cx="12" cy="12" r="9"/><path d="m8 12.5 2.6 2.5L16 9.5"/>',
+  neve: '<path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9M9.5 4.5 12 7l2.5-2.5M9.5 19.5 12 17l2.5 2.5M5 11.2l1.2 3.4-3.4 1.2M19 12.8l-1.2-3.4 3.4-1.2"/>',
+  meno: '<path d="M5 12h14"/>',
+  gira: '<path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3"/><path d="M18 3v4h-4M6 21v-4h4"/>',
+  link: '<path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1 1"/><path d="M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1-1"/>',
+  scarica: '<path d="M12 3v12M7 10l5 5 5-5M4 20h16"/>',
+  pantaloncino: '<path d="M5 4h14l1.5 15-6 1.2L12 11l-2.5 9.2-6-1.2z"/><path d="M5 7h14"/>',
+  carrello: '<path d="M3 4h2.5l2 11h11l2-8H7"/><circle cx="9" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/>'
 };
 const ico = (k, cls = 'ico') => `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${ICO[k] || ICO.borsa}</svg>`;
 
@@ -341,7 +350,7 @@ function footer(rel) {
         <h2 class="pie__tit">Seguici</h2>
         <ul class="pie__lista">${social}</ul>
         <h2 class="pie__tit">Info</h2>
-        <ul class="pie__lista"><li><a href="${rel}servizi/index.html">Servizi su prenotazione</a></li><li><a href="${rel}noleggio-sci/index.html">Noleggio sci e snowboard</a></li><li><a href="${rel}squadre/index.html">Crea il kit squadra</a></li><li><a href="${vaiHome(rel, '#maglia')}">Disegna la maglia</a></li><li><a href="#guida-taglie" data-guida>Guida taglie</a></li><li><a href="${rel}privacy.html">Privacy</a></li></ul>
+        <ul class="pie__lista"><li><a href="${rel}servizi/index.html">Servizi su prenotazione</a></li><li><a href="${rel}noleggio-sci/index.html">Noleggio sci e snowboard</a></li><li><a href="${rel}squadre/index.html">Kit Squadra</a></li><li><a href="${rel}ordine/index.html">Stato del tuo ordine</a></li><li><a href="${vaiHome(rel, '#maglia')}">Disegna la maglia</a></li><li><a href="#guida-taglie" data-guida data-guida-tab="divise">Guida taglie</a></li><li><a href="${rel}privacy.html">Privacy</a></li></ul>
       </div>
     </div>
     <div class="pie__legale">
@@ -363,6 +372,8 @@ function barraMobile(rel) {
 
 function scripts(rel, { gsap = true, script = [] } = {}) {
   return `<script src="${rel}config.js" defer></script>
+<script src="${rel}js/listino.js" defer></script>
+<script src="${rel}js/dati.js" defer></script>
 ${gsap ? GSAP.map(([u, h]) => `<script src="${u}" integrity="${h}" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>`).join('\n') + '\n' : ''}<script src="${rel}js/main.js" defer></script>${script.map(s => `\n<script src="${rel}${s}" defer></script>`).join('')}`;
 }
 
@@ -534,139 +545,449 @@ function configuratore(rel) {
   </div>
 </section>`;
 }
+/* ---------------- Home: "Il tuo kit prende forma" (maglie disegnate da js/maglia-svg.js già in fase di build) ---------------- */
+function fasciaForma(rel) {
+  const F = KIT.forma, q = MG.squadre[0];
+  const sb = { window: {} };
+  vm.runInNewContext(readFileSync('js/maglia-svg.js', 'utf8'), sb);
+  const M = sb.window.MagliaSVG;
+  // id interni degli SVG con prefisso "f": non si scontrano con le anteprime create nel browser
+  const pulito = s => s.replace(/\b(mg|pt|cz)(\d+)/g, 'f$1$2').replace(' aria-hidden="true" focusable="false"', ' aria-hidden="true" focusable="false" role="presentation"');
+  const stemma = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 120" width="200" height="240">${q.stemma}</svg>`);
+  const neutra = { c1: '#E4E1D9', c2: '#D3CFC5', disegno: 'tinta', stile: 'classico', collo: 'girocollo', segnaposto: false };
+  const colori = { ...neutra, c1: q.colori[0], c2: q.colori[1], c3: q.colori[2] };
+  const disegno = { ...colori, disegno: q.motivo === 'strisce' ? 'strisce' : 'diagonale' };
+  const conStemma = { ...disegno, stemma: { src: stemma } };
+  const conSponsor = { ...conStemma, sponsor: [{ nome: F.sponsor, pos: 'Centro petto' }, { nome: F.sponsor, pos: 'Manica' }] };
+  const retro = { ...conSponsor, nome: '', numero: '' }, finale = { ...conSponsor, nome: F.nome, numero: F.numero };
+  const fasi = [[neutra, 'fronte'], [colori, 'fronte'], [disegno, 'fronte'], [conStemma, 'fronte'], [conSponsor, 'fronte'], [retro, 'retro'], [finale, 'retro']];
+  const fig = fasi.map(([d, lato], i) => {
+    const p = F.passi[i === 6 ? 5 : i];
+    return `<figure class="forma__l${lato === 'retro' ? ' forma__l--retro' : ''}" data-l="${i}"${i === 5 ? ' aria-hidden="true"' : ''}>${pulito(M.svg(d, lato))}${i === 5 ? '' : `<figcaption><b>0${i === 6 ? 6 : i + 1}</b>${esc(p.tit)}</figcaption>`}</figure>`;
+  }).join('');
+  return `<section class="forma" id="kit-forma" aria-labelledby="tit-forma" data-forma>
+  <div class="forma__pista">
+    <div class="forma__palco">
+      <div class="wrap forma__in">
+        <div class="forma__testi">
+          <p class="occhiello">${esc(F.occhiello)}</p>
+          <h2 class="tit-sez" id="tit-forma">${righe(F.titolo)}</h2>
+          <ol class="forma__passi">${F.passi.map((p, i) => `<li class="forma__passo${i ? '' : ' is-on'}"><b>0${i + 1}</b><span class="forma__pt">${esc(p.tit)}</span><span class="forma__px">${esc(p.testo)}</span></li>`).join('')}</ol>
+          <a class="btn btn--pri btn--lg forma__cta" href="${rel}squadre/index.html" data-forma-cta>Crea il kit squadra ${ico('freccia', 'ico ico--s')}</a>
+        </div>
+        <div class="forma__maglia" data-forma-maglia>
+          <div class="forma__scena" data-forma-scena>${fig}</div>
+          <span class="forma__ombra" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>`;
+}
+
+/* ---------------- Pannello admin DEMO (admin.html · js/admin.js · dati in js/dati.js) ----------------
+   Pagina a sé: niente menu del sito, mai nella sitemap, sempre noindex. */
+function paginaAdmin() {
+  const rel = '';
+  const fasi = ['ricevuto', 'grafica', 'produzione', 'pronto'];
+  const testa = head({
+    titolo: `Pannello negozio (demo) | ${A.nome}`, descrizione: `Pannello dimostrativo di ${A.nome}.`, rel, percorso: 'admin.html',
+    extraHead: S.bozza ? '' : '<meta name="robots" content="noindex, nofollow">\n'
+  });
+  return `${testa}
+<body class="p-admin" data-rel="">
+<a class="salta" href="#contenuto">Vai al contenuto</a>
+<p class="adm-demo" role="note"><b>Modalità demo – i dati sono salvati solo in questo browser</b></p>
+<header class="adm-hdr">
+  <div class="wrap adm-hdr__in">
+    ${logo(rel)}
+    <span class="adm-hdr__tit">Pannello negozio</span>
+    <a class="adm-hdr__link" href="index.html">Vai al sito</a>
+    <button class="adm-hdr__link" type="button" data-esci hidden>Esci</button>
+  </div>
+</header>
+<main id="contenuto" class="adm">
+  <section class="adm-login wrap" data-login aria-labelledby="tit-login">
+    <form class="adm-box" data-login-form novalidate>
+      <h1 class="adm-h1" id="tit-login">Accedi al pannello</h1>
+      <p>Qui il negozio aggiorna gli ordini del kit squadra, il banner "Ordina entro…" e i giorni occupati del noleggio.</p>
+      <div class="campo">
+        <label for="a-pw">Password</label>
+        <input id="a-pw" type="password" autocomplete="current-password" required>
+        <p class="campo__err" id="a-pw-err" hidden></p>
+      </div>
+      <button class="btn btn--pri" type="submit">Entra</button>
+      <p class="campo__aiuto">Pannello dimostrativo: la password è nelle istruzioni del sito. Con un negozio vero l'accesso passa da un servizio sicuro (ad esempio Firebase Authentication).</p>
+    </form>
+  </section>
+
+  <div class="adm-app wrap" data-app hidden>
+    <h1 class="sr-only">Pannello negozio</h1>
+    <div class="adm-tab" role="tablist" aria-label="Sezioni del pannello">
+      <button class="adm-tab__b" type="button" role="tab" id="tb-ordini" aria-controls="t-ordini" aria-selected="true" data-tab-b="ordini">Ordini <span class="adm-tab__n" data-n-ordini></span></button>
+      <button class="adm-tab__b" type="button" role="tab" id="tb-banner" aria-controls="t-banner" aria-selected="false" tabindex="-1" data-tab-b="banner">Banner</button>
+      <button class="adm-tab__b" type="button" role="tab" id="tb-noleggio" aria-controls="t-noleggio" aria-selected="false" tabindex="-1" data-tab-b="noleggio">Noleggio</button>
+    </div>
+
+    <section class="adm-sez adm-ord" id="t-ordini" role="tabpanel" aria-labelledby="tb-ordini" data-tab="ordini">
+      <div class="adm-ord__lista">
+        <div class="adm-ord__filtri">
+          <div class="campo"><label for="o-cerca">Cerca</label><input id="o-cerca" type="search" autocomplete="off" placeholder="Numero, squadra o referente" data-o-cerca></div>
+          <div class="campo"><label for="o-filtro">Fase</label><select id="o-filtro" data-o-filtro><option value="">Tutte</option>${fasi.map(f => `<option value="${f}">${{ ricevuto: 'Ricevuto', grafica: 'Grafica approvata', produzione: 'In produzione', pronto: 'Pronto / Spedito' }[f]}</option>`).join('')}</select></div>
+        </div>
+        <ul class="adm-ord__voci" data-o-lista></ul>
+      </div>
+      <div class="adm-ord__dett" data-o-dett tabindex="-1"><p class="adm-vuoto">Scegli un ordine per vedere il dettaglio e cambiare fase.</p></div>
+    </section>
+
+    <section class="adm-sez" id="t-banner" role="tabpanel" aria-labelledby="tb-banner" data-tab="banner" hidden>
+      <form class="adm-box adm-ban" data-b-form novalidate>
+        <h2 class="adm-h2">Banner "Ordina entro…"</h2>
+        <p>Compare in basso nelle pagine del sito (in alto nella pagina Kit Squadra) con il conto alla rovescia fino alla data limite.</p>
+        <label class="adm-interr"><input type="checkbox" id="b-attivo"><span>Mostra il banner sul sito</span></label>
+        <div class="adm-tre">
+          <div class="campo"><label for="b-dal">Visibile dal</label><input id="b-dal" type="date"><p class="campo__err" id="b-dal-err" hidden></p></div>
+          <div class="campo"><label for="b-al">Visibile fino al</label><input id="b-al" type="date"><p class="campo__err" id="b-al-err" hidden></p></div>
+          <div class="campo"><label for="b-scad">Data limite per ordinare</label><input id="b-scad" type="date"><p class="campo__err" id="b-scad-err" hidden></p></div>
+        </div>
+        <div class="campo"><label for="b-testo">Testo</label><textarea id="b-testo" rows="3" maxlength="160" aria-describedby="b-testo-aiuto"></textarea><p class="campo__aiuto" id="b-testo-aiuto">Scrivi {data} dove vuoi la data limite. Massimo 160 caratteri.</p><p class="campo__err" id="b-testo-err" hidden></p></div>
+        <div class="adm-ban__ant"><p class="adm-et">Anteprima</p><div data-b-anteprima></div><p class="adm-ban__stato" data-b-stato></p></div>
+        <div class="adm-az"><button class="btn btn--pri" type="submit">Salva il banner</button><button class="btn btn--sec" type="button" data-b-base>Rimetti l'esempio</button></div>
+        <p class="adm-esito" data-b-esito role="status"></p>
+      </form>
+    </section>
+
+    <section class="adm-sez" id="t-noleggio" role="tabpanel" aria-labelledby="tb-noleggio" data-tab="noleggio" hidden>
+      <div class="adm-box adm-nol">
+        <h2 class="adm-h2">Giorni occupati del noleggio</h2>
+        <p>Tocca un giorno per segnarlo occupato o di nuovo libero. Sul sito quel giorno non si può prenotare per l'articolo scelto.</p>
+        <div class="campo"><label for="n-art">Articolo</label><select id="n-art" data-n-art>${NOL.attrezzatura.map(a => `<option value="${a.id}">${esc(a.nome)}</option>`).join('')}</select></div>
+        <div class="adm-nol__cal" data-n-cal></div>
+        <ul class="cal__legenda" aria-label="Legenda"><li><i class="is-ok"></i>Libero</li><li><i class="is-esaurito"></i>Occupato</li></ul>
+        <p class="adm-nol__conto" data-n-conto role="status"></p>
+        <div class="adm-az"><button class="btn btn--sec" type="button" data-n-base>Rimetti i giorni di esempio</button></div>
+      </div>
+    </section>
+  </div>
+</main>
+<script src="config.js" defer></script>
+<script src="js/listino.js" defer></script>
+<script src="js/dati.js" defer></script>
+<script src="js/maglia-svg.js" defer></script>
+<script src="js/admin.js" defer></script>
+</body>
+</html>
+`;
+}
+
+/* ---------------- Stato del tuo ordine (ordine/index.html, dati da js/dati.js) ---------------- */
+function paginaOrdine() {
+  const rel = '../';
+  const corpo = `
+<section class="hk hk--ord" data-sfondo="KIT">
+  <div class="wrap hk__in">
+    <nav class="briciole" aria-label="Percorso"><ol><li><a href="${rel}index.html">Home</a></li><li><a href="${rel}squadre/index.html">Kit Squadra</a></li><li aria-current="page">Stato del tuo ordine</li></ol></nav>
+    <p class="occhiello">Kit Squadra</p>
+    <h1 class="hk__tit">${righe(['Stato del', 'tuo ordine'])}</h1>
+    <p class="hk__lead">Scrivi il numero d'ordine che trovi nella conferma e nel preventivo PDF: vedi a che punto è il vostro kit, fase per fase.</p>
+  </div>
+</section>
+
+<section class="sez ord" aria-labelledby="tit-ord">
+  <div class="wrap ord__in">
+    <form class="ord__cerca" data-ord-form novalidate>
+      <h2 class="ord__h" id="tit-ord">Cerca l'ordine</h2>
+      <div class="campo">
+        <label for="o-num">Numero d'ordine</label>
+        <div class="ord__riga">
+          <input id="o-num" name="numero" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="20" placeholder="Es. KIT-A1B2" aria-describedby="o-num-aiuto">
+          <button class="btn btn--pri" type="submit">Cerca</button>
+        </div>
+        <p class="campo__err" id="o-num-err" hidden></p>
+        <p class="campo__aiuto" id="o-num-aiuto">Per provare usa l'ordine di esempio <button class="ord__prova" type="button" data-ord-prova>DEMO-001</button></p>
+      </div>
+      <p class="form__privacy">I dati inviati servono solo per rispondere alla tua richiesta. <a href="${rel}privacy.html">Leggi l'informativa privacy</a></p>
+      <p class="etichetta-esempio">Demo – gli ordini sono salvati solo in questo browser</p>
+    </form>
+    <div class="ord__esito" data-ord-esito tabindex="-1"></div>
+  </div>
+</section>`;
+  return pagina({
+    titolo: `Stato del tuo ordine | ${A.nome}`, descrizione: `Segui il tuo kit squadra ${A.nome}: ordine ricevuto, grafica approvata, produzione, pronto per il ritiro o spedito.`,
+    rel, percorso: 'ordine/', classe: 'p-ordine', corpo, corrente: 'squadre', script: ['js/maglia-svg.js', 'js/ordine.js']
+  });
+}
+
+/* ---------------- Kit Squadra (configuratore a 8 passi, prezzi da js/listino.js) ---------------- */
+const PASSI_KIT = ['Sport e capi', 'Marca', 'Materiali', 'Grafiche', 'Stile', 'Rosa', 'Proposte', 'Preventivo'];
+const settimane = g => `${Math.round(g[0] / 5)}–${Math.round(g[1] / 5)} settimane`;
+// kit più economico: maglia, pantaloncini e calzettoni della marca base
+const kitMinimo = () => ['maglia', 'pantaloncini', 'calzettoni'].reduce((a, id) => a + LIST.capi.find(c => c.id === id).prezzi[LIST.marche[0].id], 0);
 function fasciaSquadre(rel) {
-  const sport = KIT.sport.map(s => `<li>${esc(s.nome)}</li>`).join('');
-  const min = Math.min(...KIT.sport.map(s => s.pacchetti[0].prezzo));
+  const sport = C.sport.slice(0, 8).map(s => `<li>${esc(nomeCorto(s))}</li>`).join('') + '<li>e altri</li>';
   return `<section class="fascia-sq" aria-labelledby="tit-fsq">
   <div class="wrap fascia-sq__in">
     <div class="fascia-sq__testo">
       <p class="occhiello">Squadre e associazioni sportive</p>
       <h2 class="tit-sez" id="tit-fsq" data-tit>${righe(['Crea il kit', 'della squadra'])}</h2>
-      <p class="fascia-sq__lead">Quattro passi: sport, pacchetto, squadra, riepilogo. Ricevi un preventivo indicativo e un codice richiesta; le taglie le proviamo insieme in negozio.</p>
+      <p class="fascia-sq__lead">Capi, marca, materiali, stemma e colori: il configuratore ti propone 6 maglie, conta le taglie della rosa e ti dà subito il preventivo. Acconto online, saldo al ritiro.</p>
       <a class="btn btn--pri btn--lg" href="${rel}squadre/index.html">Crea il kit squadra ${ico('freccia', 'ico ico--s')}</a>
     </div>
     <div class="fascia-sq__lato">
-      <ol class="fascia-sq__passi">
-        <li><b>01</b>Sport</li><li><b>02</b>Pacchetto</li><li><b>03</b>Squadra</li><li><b>04</b>Riepilogo</li>
-      </ol>
-      <ul class="fascia-sq__sport" aria-label="Sport disponibili">${sport}</ul>
-      <p class="fascia-sq__prezzo">Da <b>${euro(min)}</b> ad atleta <span class="etichetta-esempio">Prezzi di esempio</span></p>
+      <ol class="fascia-sq__passi">${PASSI_KIT.map((t, i) => `<li><b>0${i + 1}</b>${esc(t)}</li>`).join('')}</ol>
+      <ul class="fascia-sq__sport" aria-label="Sport">${sport}</ul>
+      <p class="fascia-sq__prezzo">Kit da <b>${euro(kitMinimo())}</b> <span class="etichetta-esempio">${esc(LIST.avviso)}</span></p>
     </div>
   </div>
 </section>`;
 }
+// area "trascina qui o clicca" per le grafiche
+function zonaCarica(id, multipli, titolo) {
+  return `<div class="carica" data-carica="${id}">
+              <input class="carica__input" id="kf-${id}" type="file"${multipli ? ' multiple' : ''} accept=".png,.jpg,.jpeg,.svg,.pdf,image/png,image/jpeg,image/svg+xml,application/pdf" aria-describedby="kf-${id}-aiuto">
+              <label class="carica__zona" for="kf-${id}" data-zona>
+                ${ico('carica', 'ico carica__ico')}
+                <span class="carica__tit"><b>${esc(titolo)}</b>: trascina qui ${multipli ? 'i file' : 'il file'} o <u>clicca per ${multipli ? 'sceglierli' : 'sceglierlo'}</u></span>
+                <span class="carica__info" id="kf-${id}-aiuto">PNG, JPG, SVG o PDF · massimo ${KIT.grafiche.maxMB} MB a file${multipli ? ' · anche più file insieme' : ''}</span>
+              </label>
+              <p class="carica__avviso" data-avviso role="status"></p>
+              <ul class="carica__lista" data-lista></ul>
+            </div>`;
+}
 function paginaSquadre() {
   const rel = '../';
-  const accento = slug => (C.sport.find(s => s.slug === slug || s.slug.startsWith(slug + '-')) || { accento: '#B9C0CC', numero: '··', campo: '' });
-  const sport = KIT.sport.map(s => {
-    const sp = accento(s.id);
-    return `<label class="kit__sport" style="--acc:${sp.accento}"><input type="radio" name="sport" value="${s.id}" required><span class="kit__sport-box">${sp.campo ? campo(sp.campo, 'kit__sport-campo') : ''}<span class="kit__sport-nome">${esc(s.nome)}</span><span class="kit__sport-da">da ${euro(s.pacchetti[0].prezzo)}</span></span></label>`;
-  }).join('');
-  const pacchetti = KIT.sport.map(s => `<div class="kit__pacchetti" data-pacchetti="${s.id}" hidden>${s.pacchetti.map((p, i) => {
-    const prima = i ? s.pacchetti[i - 1].include : [];
-    return `<label class="kit__pac${i === 1 ? ' kit__pac--consigliato' : ''}"><input type="radio" name="pacchetto" value="${p.id}"><span class="kit__pac-box">${i === 1 ? '<span class="kit__pac-badge">Il più scelto</span>' : ''}<span class="kit__pac-nome">${esc(p.nome)}</span><span class="kit__pac-prezzo"><b>${euro(p.prezzo)}</b> ad atleta</span><ul class="kit__pac-lista">${p.include.map(x => `<li${prima.includes(x) ? '' : ' class="is-nuovo"'}>${esc(x)}</li>`).join('')}</ul></span></label>`;
-  }).join('')}</div>`).join('');
-  const sconti = KIT.scontiQuantita.map(x => `da ${x.da} atleti −${x.percento}%`).join(', ');
+  const sport = C.sport.map(s => `<label class="kit__sport" style="--acc:${s.accento}"><input type="radio" name="sport" value="${s.slug}"><span class="kit__sport-box">${campo(s.campo, 'kit__sport-campo')}<span class="kit__sport-num">${s.numero}</span><span class="kit__sport-nome">${esc(nomeCorto(s))}</span></span></label>`).join('');
+  const capi = LIST.capi.map(c => `<li class="capo2" data-capo="${c.id}">
+            <label class="capo2__sc"><input type="checkbox" name="capo" value="${c.id}"><span class="capo2__box">${ico(c.icona, 'ico capo2__ico')}<span class="capo2__nome">${esc(c.nome)}</span><span class="capo2__da">da ${euro(c.prezzi[LIST.marche[0].id])}</span></span></label>
+            <div class="capo2__q">
+              <button class="capo2__pm" type="button" data-q="-1" aria-label="Un pezzo in meno: ${esc(c.nome)}">${ico('meno', 'ico ico--s')}</button>
+              <label class="sr-only" for="q-${c.id}">Quantità: ${esc(c.nome)}</label>
+              <input class="capo2__n" id="q-${c.id}" type="number" inputmode="numeric" min="1" max="${KIT.maxPezzi}" value="${KIT.quantitaIniziale}" data-q-campo="${c.id}" aria-describedby="q-${c.id}-err">
+              <button class="capo2__pm" type="button" data-q="1" aria-label="Un pezzo in più: ${esc(c.nome)}">${ico('piu', 'ico ico--s')}</button>
+            </div>
+            <p class="campo__err capo2__err" id="q-${c.id}-err" hidden></p>
+          </li>`).join('');
+  const marche = LIST.marche.map(m => `<label class="marca"><input type="radio" name="marca" value="${m.id}"><span class="marca__box">
+            <span class="marca__fascia">Fascia ${esc(m.fascia.toLowerCase())}</span>
+            <span class="marca__nome">${esc(m.nome)}</span>
+            <span class="marca__txt">${esc(m.testo)}</span>
+            <span class="marca__prezzo"><span>Il tuo kit</span><b data-marca-prezzo="${m.id}">—</b></span>
+            <span class="marca__tempi">${ico('orologio', 'ico ico--s')}Produzione in circa ${settimane(m.produzione)}</span>
+          </span></label>`).join('');
+  const opz = (nome, voci, cls) => voci.map(v => `<label class="opz__voce"><input type="radio" name="${nome}" value="${v.id}"><span class="opz__box"><span class="opz__ant" data-opz-ant="${nome}:${v.id}"></span><span class="opz__nome">${esc(v.nome)}</span>${v.testo ? `<span class="opz__txt">${esc(v.testo)}</span>` : ''}</span></label>`).join('');
+  const rapidi = KIT.colori.map(c => `<button class="palette__rapido" type="button" data-rapido="${c.hex}" style="--c:${c.hex}" title="${esc(c.nome)}"><span class="sr-only">Aggiungi ${esc(c.nome)}</span></button>`).join('');
+  const condizioni = KIT.condizioni.map(t => `<li>${esc(t)}</li>`).join('');
+  const sconti = LIST.sconti.map(x => `oltre ${x.oltre} kit −${x.percento}%`).join(', ');
   const corpo = `
 <section class="hk" data-sfondo="KIT">
   <div class="wrap hk__in">
     <nav class="briciole" aria-label="Percorso"><ol><li><a href="${rel}index.html">Home</a></li><li aria-current="page">Kit Squadra</li></ol></nav>
     <p class="occhiello">Squadre e associazioni sportive</p>
     <h1 class="hk__tit">${righe(['Crea il', 'kit squadra'])}</h1>
-    <p class="hk__lead">Scegli sport e pacchetto, raccontaci la squadra: ti diamo subito un preventivo indicativo e un codice richiesta. Poi vi aspettiamo in negozio per le taglie.</p>
+    <p class="hk__lead">Otto passi: capi e quantità, marca, materiali, stemma e sponsor, stile, rosa con le taglie. Ti proponiamo 6 maglie con i colori della squadra e il preventivo è subito pronto, anche in PDF.</p>
     <ul class="hk__punti">
-      <li>${ico('squadra', 'ico ico--s')}8 sport, 3 pacchetti ciascuno</li>
-      <li>${ico('taglia', 'ico ico--s')}Taglie provate in negozio</li>
-      <li>${ico('maglia', 'ico ico--s')}<a href="${rel}index.html#maglia">Disegna prima la maglia</a></li>
+      <li>${ico('maglia', 'ico ico--s')}6 proposte dai colori del vostro stemma</li>
+      <li>${ico('taglia', 'ico ico--s')}Rosa con taglie e numeri controllati</li>
+      <li>${ico('ok', 'ico ico--s')}Acconto ${LIST.acconto}%, saldo al ritiro</li>
     </ul>
   </div>
 </section>
 
 <section class="sez kit" id="kit" aria-labelledby="kit-tit">
   <div class="wrap">
-    <h2 class="sr-only" id="kit-tit">Crea il tuo kit in 4 passi</h2>
+    <h2 class="sr-only" id="kit-tit">Crea il kit squadra in 8 passi</h2>
     <noscript><p class="kit__nojs">Per creare il kit serve JavaScript. Puoi chiederci un preventivo su <a href="${wa('Ciao, vorrei un preventivo per il kit della mia squadra.')}">WhatsApp</a>.</p></noscript>
+    <div data-banner-qui></div>
     <div class="kit__in" data-kit-box>
       <div class="kit__testa">
         <ol class="kit__passi" data-kit-passi>
-          ${['Sport', 'Pacchetto', 'Squadra', 'Riepilogo'].map((t, i) => `<li><button type="button" data-vai="${i + 1}"${i ? ' disabled' : ' aria-current="step"'}><b>0${i + 1}</b><span>${t}</span></button></li>`).join('')}
+          ${PASSI_KIT.map((t, i) => `<li><button type="button" data-vai="${i + 1}"${i ? ' disabled' : ' aria-current="step"'}><b>0${i + 1}</b><span>${esc(t)}</span></button></li>`).join('')}
         </ol>
-        <div class="kit__barra" role="progressbar" aria-label="Avanzamento" aria-valuemin="1" aria-valuemax="4" aria-valuenow="1" aria-valuetext="Passo 1 di 4: Sport"><span data-kit-barra></span></div>
+        <div class="kit__barra" role="progressbar" aria-label="Avanzamento" aria-valuemin="1" aria-valuemax="${PASSI_KIT.length}" aria-valuenow="1" aria-valuetext="Passo 1 di ${PASSI_KIT.length}: ${PASSI_KIT[0]}"><span data-kit-barra></span></div>
+        <p class="kit__dove" data-kit-dove aria-hidden="true">Passo 1 di ${PASSI_KIT.length} · ${PASSI_KIT[0]}</p>
       </div>
+      <div class="kit__corpo">
       <form class="kit__form" data-kit novalidate>
+
         <fieldset class="kit__passo" data-passo="1">
-          <legend class="kit__h" tabindex="-1">Che sport fate?</legend>
-          <div class="kit__sports">${sport}</div>
-          <p class="campo__err" id="kit-sport-err" data-err="sport" hidden></p>
-        </fieldset>
-        <fieldset class="kit__passo" data-passo="2" hidden>
-          <legend class="kit__h" tabindex="-1">Scegli il pacchetto <span class="kit__h-sport" data-kit-sport-nome></span></legend>
-          <p class="kit__intro">Prezzi di esempio per atleta, maglia compresa. I kit bambino costano il ${KIT.scontoBambiniPercento}% in meno.</p>
-          ${pacchetti}
-          <p class="campo__err" id="kit-pac-err" data-err="pacchetto" hidden></p>
-          <div class="capi" data-capi hidden>
-            <h3 class="kit__h3">Capi e materiali</h3>
-            <p class="kit__intro">Per ogni capo scegli prima il tipo, poi il materiale. Se non sei sicuro lascia vuoto: lo decidiamo insieme in negozio.</p>
-            <div class="capi__lista" data-capi-lista></div>
-          </div>
-        </fieldset>
-        <fieldset class="kit__passo" data-passo="3" hidden>
-          <legend class="kit__h" tabindex="-1">La vostra squadra</legend>
-          <div class="campo"><label for="k-squadra">Nome della squadra o associazione</label><input id="k-squadra" name="squadra" type="text" maxlength="60" autocomplete="organization"><p class="campo__err" id="k-squadra-err" hidden></p></div>
-          <div class="kit__due">
-            <div class="campo"><label for="k-adulti">Atleti adulti</label><input id="k-adulti" name="adulti" type="number" inputmode="numeric" min="0" max="${KIT.maxAtleti}" value="0"><p class="campo__err" id="k-adulti-err" hidden></p></div>
-            <div class="campo"><label for="k-bambini">Atleti bambini</label><input id="k-bambini" name="bambini" type="number" inputmode="numeric" min="0" max="${KIT.maxAtleti}" value="0" aria-describedby="k-bambini-aiuto"><p class="campo__err" id="k-bambini-err" hidden></p><p class="campo__aiuto" id="k-bambini-aiuto">Fino a 14 anni</p></div>
-          </div>
-          <fieldset class="kit__sn" id="k-nomi" tabindex="-1"><legend>Nomi e numeri sulle maglie <span>+${euro(KIT.personalizzazioni.nomeNumero)} ad atleta</span></legend>
-            <label class="kit__sc"><input type="radio" name="nomi" value="si"><span>Sì</span></label><label class="kit__sc"><input type="radio" name="nomi" value="no"><span>No</span></label>
-            <p class="campo__err" id="k-nomi-err" hidden></p></fieldset>
-          <fieldset class="kit__sn" id="k-stemma" tabindex="-1"><legend>Stemma della squadra <span>+${euro(KIT.personalizzazioni.stemma)} ad atleta</span></legend>
-            <label class="kit__sc"><input type="radio" name="stemma" value="si"><span>Sì</span></label><label class="kit__sc"><input type="radio" name="stemma" value="no"><span>No</span></label>
-            <p class="campo__err" id="k-stemma-err" hidden></p></fieldset>
-          <fieldset class="kit__sn kit__graf" id="k-grafiche" tabindex="-1"><legend>Stemma, sponsor e altre grafiche</legend>
-            <label class="kit__sc"><input type="radio" name="grafiche" value="carico"><span>Le carico adesso</span></label><label class="kit__sc"><input type="radio" name="grafiche" value="negozio"><span>Scegli in negozio</span></label>
-            <div class="carica" data-carica hidden>
-              <input class="carica__input" id="k-file" type="file" multiple accept=".png,.jpg,.jpeg,.svg,.pdf,image/png,image/jpeg,image/svg+xml,application/pdf" aria-describedby="k-file-aiuto">
-              <label class="carica__zona" for="k-file" data-zona>
-                ${ico('carica', 'ico carica__ico')}
-                <span class="carica__tit"><b>Trascina qui i file</b> o <u>clicca per sceglierli</u></span>
-                <span class="carica__info" id="k-file-aiuto">PNG, JPG, SVG o PDF · massimo ${KIT.grafiche.maxMB} MB a file · anche più file insieme</span>
-              </label>
-              <p class="carica__nota">${ico('ok', 'ico ico--s')}I file restano nel tuo browser: non li carichiamo su nessun server. Li alleghi tu alla richiesta.</p>
-              <p class="carica__avviso" data-file-avviso role="status"></p>
-              <ul class="carica__lista" data-file-lista></ul>
-            </div>
-            <p class="campo__aiuto kit__graf-neg" data-graf-neg hidden>Porta i file in negozio o mandaceli dopo: li scegliamo e sistemiamo insieme.</p>
-            <p class="campo__err" id="k-grafiche-err" hidden></p></fieldset>
-          <fieldset class="kit__maglia" id="k-maglia" tabindex="-1"><legend>La maglia</legend>
-            <label class="kit__mo"><input type="radio" name="maglia" value="configuratore" data-maglia-cfg><span class="kit__mo-box"><span class="kit__mo-tit">Quella creata nel configuratore</span><span class="kit__mo-anteprima" data-maglia-ant></span><span class="kit__mo-txt" data-maglia-txt>Non hai ancora creato una maglia.</span></span></label>
-            <label class="kit__mo"><input type="radio" name="maglia" value="negozio"><span class="kit__mo-box"><span class="kit__mo-tit">La scegliamo insieme in negozio</span><span class="kit__mo-txt">Ti mostriamo modelli, tessuti e colori dal vivo.</span></span></label>
-            <p class="campo__err" id="k-maglia-err" hidden></p>
-            <a class="link-borsa kit__mo-link" href="${rel}index.html#maglia" data-maglia-link>Crea o modifica la maglia</a>
+          <legend class="kit__h" tabindex="-1">Squadra, sport e capi</legend>
+          <div class="campo kit__squadra"><label for="k-squadra">Nome della squadra o associazione</label><input id="k-squadra" name="squadra" type="text" maxlength="60" autocomplete="organization" aria-describedby="k-squadra-err"><p class="campo__err" id="k-squadra-err" hidden></p></div>
+          <fieldset class="kit__blocco" id="k-sport" tabindex="-1"><legend class="kit__h3">Che sport fate?</legend>
+            <div class="kit__sports">${sport}</div>
+            <p class="campo__err" id="k-sport-err" hidden></p>
           </fieldset>
-          <p class="kit__taglie">${ico('taglia', 'ico ico--s')}${esc(KIT.testoTaglie)}</p>
+          <fieldset class="kit__blocco" id="k-capi" tabindex="-1"><legend class="kit__h3">Capi del kit e quantità</legend>
+            <p class="kit__intro" data-capi-intro>Scegli lo sport: ti proponiamo i capi più usati. Puoi aggiungerne o toglierne.</p>
+            <ul class="capi2">${capi}</ul>
+            <p class="campo__err" id="k-capi-err" hidden></p>
+          </fieldset>
         </fieldset>
+
+        <fieldset class="kit__passo" data-passo="2" hidden>
+          <legend class="kit__h" tabindex="-1">Scegli la marca</legend>
+          <p class="kit__intro">Tre fasce di prezzo. Il totale stimato si aggiorna appena cambi marca.</p>
+          <div class="marche" id="k-marca" tabindex="-1">${marche}</div>
+          <p class="campo__err" id="k-marca-err" hidden></p>
+        </fieldset>
+
+        <fieldset class="kit__passo" data-passo="3" hidden>
+          <legend class="kit__h" tabindex="-1">Tipo e materiale di ogni capo</legend>
+          <p class="kit__intro">Per ogni capo scegli prima il tipo, poi il materiale. Alcuni materiali costano qualcosa in più: lo vedi accanto al nome.</p>
+          <div class="capi__lista" data-capi-lista></div>
+        </fieldset>
+
         <fieldset class="kit__passo" data-passo="4" hidden>
-          <legend class="kit__h" tabindex="-1">Riepilogo e preventivo indicativo</legend>
-          <div class="kit__riep" data-kit-riep></div>
-          <p class="etichetta-esempio kit__etic">Prezzi di esempio: il preventivo definitivo lo fa il negozio</p>
-          <h3 class="kit__h3">Chi è il referente?</h3>
-          <div class="kit__due">
-            <div class="campo"><label for="k-ref">Referente</label><input id="k-ref" name="referente" type="text" maxlength="60" autocomplete="name"><p class="campo__err" id="k-ref-err" hidden></p></div>
-            <div class="campo"><label for="k-tel">Telefono</label><input id="k-tel" name="telefono" type="tel" inputmode="tel" maxlength="30" autocomplete="tel"><p class="campo__err" id="k-tel-err" hidden></p></div>
+          <legend class="kit__h" tabindex="-1">Stemma, sponsor e grafiche</legend>
+          <p class="carica__nota">${ico('ok', 'ico ico--s')}È una demo: i file restano nel tuo browser e non vengono caricati su nessun server.</p>
+          <fieldset class="kit__blocco" id="k-stemma" tabindex="-1"><legend class="kit__h3">Stemma della squadra</legend>
+            <div class="kit__scelte"><label class="kit__sc"><input type="radio" name="stemma" value="file"><span>Lo carico adesso</span></label><label class="kit__sc"><input type="radio" name="stemma" value="negozio"><span>Scegli in negozio</span></label></div>
+            <div data-stemma-file hidden>${zonaCarica('stemma', false, 'Stemma')}</div>
+            <p class="campo__aiuto" data-stemma-neg hidden>Portalo in negozio o mandacelo dopo: lo sistemiamo noi. Intanto scegli i colori qui sotto.</p>
+            <p class="campo__err" id="k-stemma-err" hidden></p>
+          </fieldset>
+          <div class="kit__blocco palette" id="k-palette" tabindex="-1">
+            <h3 class="kit__h3">Palette della squadra</h3>
+            <p class="kit__intro" data-palette-txt>Carica lo stemma: prendiamo da lì i colori principali. Puoi sempre cambiarli a mano.</p>
+            <ul class="palette__colori" data-palette></ul>
+            <p class="palette__et">Aggiungi un colore</p>
+            <div class="palette__rapidi">${rapidi}</div>
+            <p class="campo__err" id="k-palette-err" hidden></p>
           </div>
-          <div class="campo"><label for="k-email">Email (facoltativa)</label><input id="k-email" name="email" type="email" maxlength="80" autocomplete="email"><p class="campo__err" id="k-email-err" hidden></p></div>
-          <div class="campo"><label for="k-note">Note (facoltative)</label><textarea id="k-note" name="note" rows="3" maxlength="500" placeholder="Es. ci servono per l'inizio del campionato a settembre"></textarea></div>
-          <p class="form__privacy">I dati inviati servono solo per rispondere alla tua richiesta. <a href="${rel}privacy.html">Leggi l'informativa privacy</a></p>
+          <fieldset class="kit__blocco" id="k-sponsor" tabindex="-1"><legend class="kit__h3">Sponsor <span class="kit__facolt">facoltativi</span></legend>
+            <p class="kit__intro">Per ogni logo scegli dove metterlo: petto sinistro, centro petto, schiena, manica o pantaloncino.</p>
+            ${zonaCarica('sponsor', true, 'Loghi degli sponsor')}
+            <p class="campo__err" id="k-sponsor-err" hidden></p>
+          </fieldset>
+          <fieldset class="kit__blocco" id="k-altre" tabindex="-1"><legend class="kit__h3">Altre grafiche <span class="kit__facolt">facoltative</span></legend>
+            <p class="kit__intro">Scritte, disegni o esempi di maglie che vi piacciono.</p>
+            ${zonaCarica('altre', true, 'Altre grafiche')}
+          </fieldset>
         </fieldset>
+
+        <fieldset class="kit__passo" data-passo="5" hidden>
+          <legend class="kit__h" tabindex="-1">Lo stile della maglia</legend>
+          <div class="stile2">
+            <div class="stile2__ant"><div class="stile2__palco" data-mgs-stile></div></div>
+            <div class="stile2__scelte">
+              <fieldset class="kit__blocco" id="k-stile" tabindex="-1"><legend class="kit__h3">Stile</legend><div class="opz opz--4">${opz('stile', KIT.stili)}</div><p class="campo__err" id="k-stile-err" hidden></p></fieldset>
+              <fieldset class="kit__blocco" id="k-disegno" tabindex="-1"><legend class="kit__h3">Disegno</legend><div class="opz opz--5">${opz('disegno', KIT.disegni)}</div><p class="campo__err" id="k-disegno-err" hidden></p></fieldset>
+              <fieldset class="kit__blocco" id="k-collo" tabindex="-1"><legend class="kit__h3">Collo</legend><div class="opz opz--3">${opz('collo', KIT.colli)}</div><p class="campo__err" id="k-collo-err" hidden></p></fieldset>
+              <fieldset class="kit__blocco" id="k-colori" tabindex="-1"><legend class="kit__h3">Colori dalla palette</legend>
+                <p class="colori2__et">Principale</p><div class="colori2" data-colori="col1"></div>
+                <p class="colori2__et">Secondario</p><div class="colori2" data-colori="col2"></div>
+                <p class="campo__err" id="k-colori-err" hidden></p>
+              </fieldset>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="kit__passo" data-passo="6" hidden>
+          <legend class="kit__h" tabindex="-1">La rosa: nomi, numeri e taglie</legend>
+          <p class="kit__intro">Una riga per giocatore. Il nome sul retro è facoltativo. Il primo giocatore della lista compare nell'anteprima.</p>
+          <div class="rosa" id="k-rosa" tabindex="-1">
+            <div class="rosa__intest" aria-hidden="true"><span>#</span><span>Nome sul retro</span><span>Numero</span><span>Taglia</span><span></span></div>
+            <ol class="rosa__lista" data-rosa></ol>
+            <div class="rosa__az">
+              <button class="btn btn--sec btn--sm" type="button" data-rosa-aggiungi>${ico('piu', 'ico ico--s')}Aggiungi giocatore</button>
+              <a class="link" href="#guida-taglie" data-guida data-guida-tab="divise">${ico('righello', 'ico ico--s')}Guida taglie</a>
+            </div>
+            <details class="rosa__incolla">
+              <summary>Incolla la lista da Excel</summary>
+              <div class="campo"><label for="k-incolla">Una riga per giocatore: nome, numero e taglia</label><textarea id="k-incolla" rows="5" placeholder="Rossi	10	M&#10;Bianchi	1	L&#10;Esposito	4	S" aria-describedby="k-incolla-aiuto"></textarea><p class="campo__aiuto" id="k-incolla-aiuto">Copia le colonne da Excel o Fogli Google. Vanno bene anche punto e virgola o virgole.</p></div>
+              <button class="btn btn--sec btn--sm" type="button" data-rosa-incolla>Aggiungi alla rosa</button>
+              <p class="rosa__esito" data-incolla-esito role="status"></p>
+            </details>
+            <div class="rosa__conti" data-rosa-conti aria-live="polite"></div>
+            <p class="rosa__diff" data-rosa-diff hidden></p>
+          </div>
+          <p class="campo__err" id="k-rosa-err" hidden></p>
+        </fieldset>
+
+        <fieldset class="kit__passo" data-passo="7" hidden>
+          <legend class="kit__h" tabindex="-1">Le proposte per la vostra maglia</legend>
+          <div class="prop">
+            <div class="prop__ant">
+              <div class="prop__palco" data-mgs-prop></div>
+              <p class="prop__ora" data-prop-ora></p>
+            </div>
+            <div class="prop__lato">
+              <p class="prop__intro">${ico('maglia', 'ico ico--s')}Proposte generate automaticamente dai colori della tua squadra.</p>
+              <ul class="prop__lista" id="k-prop" tabindex="-1" data-prop-lista></ul>
+              <button class="btn btn--sec btn--sm prop__rigenera" type="button" data-prop-rigenera>${ico('gira', 'ico ico--s')}Rigenera</button>
+              <p class="campo__err" id="k-prop-err" hidden></p>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="kit__passo" data-passo="8" hidden>
+          <legend class="kit__h" tabindex="-1">Preventivo e ordine</legend>
+          <div class="prev">
+            <div class="prev__ant" data-prev-ant></div>
+            <div class="prev__tab" data-prev-tab></div>
+          </div>
+          <fieldset class="kit__blocco" id="k-consegna" tabindex="-1"><legend class="kit__h3">Consegna</legend>
+            <div class="kit__scelte kit__scelte--2">
+              <label class="kit__mo"><input type="radio" name="consegna" value="ritiro"><span class="kit__mo-box"><span class="kit__mo-tit">Ritiro in negozio</span><span class="kit__mo-txt">Gratis · ${esc(K.indirizzo)}, ${esc(K.citta)}</span></span></label>
+              <label class="kit__mo"><input type="radio" name="consegna" value="spedizione"><span class="kit__mo-box"><span class="kit__mo-tit">Spedizione · ${euro(LIST.spedizione.costo)}</span><span class="kit__mo-txt">${esc(LIST.spedizione.testo)}</span></span></label>
+            </div>
+            <p class="campo__err" id="k-consegna-err" hidden></p>
+            <div class="kit__ind" data-indirizzo hidden>
+              <div class="campo"><label for="k-via">Via e numero civico</label><input id="k-via" name="via" type="text" maxlength="80" autocomplete="street-address"><p class="campo__err" id="k-via-err" hidden></p></div>
+              <div class="kit__tre">
+                <div class="campo"><label for="k-cap">CAP</label><input id="k-cap" name="cap" type="text" inputmode="numeric" maxlength="5" autocomplete="postal-code"><p class="campo__err" id="k-cap-err" hidden></p></div>
+                <div class="campo"><label for="k-citta">Città</label><input id="k-citta" name="citta" type="text" maxlength="50" autocomplete="address-level2"><p class="campo__err" id="k-citta-err" hidden></p></div>
+                <div class="campo"><label for="k-prov">Provincia</label><input id="k-prov" name="prov" type="text" maxlength="2" autocomplete="address-level1" autocapitalize="characters" placeholder="PE"><p class="campo__err" id="k-prov-err" hidden></p></div>
+              </div>
+            </div>
+          </fieldset>
+          <div class="kit__blocco">
+            <h3 class="kit__h3">Chi è il referente?</h3>
+            <div class="kit__due">
+              <div class="campo"><label for="k-ref">Nome e cognome</label><input id="k-ref" name="referente" type="text" maxlength="60" autocomplete="name"><p class="campo__err" id="k-ref-err" hidden></p></div>
+              <div class="campo"><label for="k-tel">Telefono</label><input id="k-tel" name="telefono" type="tel" inputmode="tel" maxlength="30" autocomplete="tel"><p class="campo__err" id="k-tel-err" hidden></p></div>
+            </div>
+            <div class="campo"><label for="k-email">Email (facoltativa)</label><input id="k-email" name="email" type="email" maxlength="80" autocomplete="email"><p class="campo__err" id="k-email-err" hidden></p></div>
+            <div class="campo"><label for="k-note">Note (facoltative)</label><textarea id="k-note" name="note" rows="3" maxlength="500" placeholder="Es. ci servono per la prima di campionato a settembre"></textarea></div>
+          </div>
+          <div class="kit__blocco condividi">
+            <h3 class="kit__h3">Condividi con la squadra</h3>
+            <p class="kit__intro">Il link apre questa stessa proposta (i file caricati non sono compresi).</p>
+            <div class="condividi__az">
+              <button class="btn btn--sec btn--sm" type="button" data-link>${ico('link', 'ico ico--s')}Copia il link</button>
+              <a class="btn btn--sec btn--sm" href="#" target="_blank" rel="noopener" data-wa-squadra>${ico('chat', 'ico ico--s')}Invia su WhatsApp</a>
+              <button class="btn btn--sec btn--sm" type="button" data-pdf>${ico('scarica', 'ico ico--s')}Scarica il preventivo PDF</button>
+            </div>
+            <p class="condividi__esito" data-condividi-esito role="status"></p>
+          </div>
+          <div class="kit__blocco ordina">
+            <details class="ordina__cond"><summary>Condizioni di vendita (esempio)</summary><ul>${condizioni}</ul></details>
+            <label class="spunta ordina__spunta" id="k-cond-box"><input type="checkbox" id="k-cond" name="condizioni" aria-describedby="k-cond-err"><span>Ho letto e accetto le condizioni di vendita</span></label>
+            <p class="campo__err" id="k-cond-err" hidden></p>
+            <p class="ordina__reso">${ico('taglia', 'ico ico--s')}I prodotti personalizzati non sono soggetti a reso.</p>
+            <p class="form__privacy">I dati inviati servono solo per rispondere alla tua richiesta. <a href="${rel}privacy.html">Leggi l'informativa privacy</a></p>
+            <button class="btn btn--pri btn--lg ordina__paga" type="button" data-paga>Paga l'acconto</button>
+            <p class="ordina__demo">Demo: il pagamento è simulato, nessun addebito.</p>
+          </div>
+        </fieldset>
+
         <div class="kit__fatto" data-kit-fatto hidden></div>
         <div class="kit__nav" data-kit-nav>
           <button class="btn btn--sec" type="button" data-indietro hidden>${ico('sx', 'ico ico--s')}Indietro</button>
-          <p class="kit__tot" data-kit-tot hidden></p>
           <button class="btn btn--pri" type="submit" data-avanti>Avanti ${ico('dx', 'ico ico--s')}</button>
         </div>
         <p class="kit__esito" data-kit-esito role="status"></p>
       </form>
+      <aside class="kit__lato" aria-label="Totale stimato">
+        <div class="kit__lato-in">
+          <div class="kit__mini" data-kit-mini aria-hidden="true"></div>
+          <p class="kit__lato-et">Totale stimato</p>
+          <p class="kit__lato-tot" data-tot>—</p>
+          <p class="kit__lato-sub" data-tot-sub>Scegli sport e capi per vedere il prezzo.</p>
+          <ul class="kit__lato-righe" data-tot-righe></ul>
+          <p class="etichetta-esempio">${esc(LIST.avviso)}</p>
+        </div>
+      </aside>
+      </div>
     </div>
   </div>
 </section>
@@ -674,20 +995,20 @@ function paginaSquadre() {
 <section class="sez sez--scura kit-come" aria-labelledby="tit-come">
   <div class="wrap">
     <header class="sez-testa sez-testa--riga">
-      <div><p class="occhiello">Dopo la richiesta</p><h2 class="tit-sez" id="tit-come" data-tit>${righe(['Come', 'funziona'])}</h2></div>
-      <p class="sez-testa__testo">Sconti quantità di esempio: ${esc(sconti)}.</p>
+      <div><p class="occhiello">Dopo l'ordine</p><h2 class="tit-sez" id="tit-come" data-tit>${righe(['Come', 'funziona'])}</h2></div>
+      <p class="sez-testa__testo">Sconti quantità: ${esc(sconti)}. ${esc(LIST.avviso)}.</p>
     </header>
     <ol class="kit-come__passi">
-      <li><b>01</b><h3>Vi richiamiamo</h3><p>Con il codice KIT controlliamo la richiesta e vi mandiamo il preventivo definitivo.</p></li>
-      <li><b>02</b><h3>Prova taglie</h3><p>Portate la squadra in negozio, o i genitori per i più piccoli: proviamo tutto e segniamo le taglie.</p></li>
-      <li><b>03</b><h3>Stampa e consegna</h3><p>Nomi, numeri e stemma li stampiamo noi. Vi avvisiamo quando il kit è pronto da ritirare.</p></li>
+      <li><b>01</b><h3>Acconto e grafica</h3><p>Con l'acconto del ${LIST.acconto}% confermi l'ordine. Ti mandiamo la grafica definitiva da approvare.</p></li>
+      <li><b>02</b><h3>Produzione</h3><p>Stampiamo nomi, numeri, stemma e sponsor. Segui ogni passaggio nella pagina <a class="link" href="${rel}ordine/index.html">Stato del tuo ordine</a>.</p></li>
+      <li><b>03</b><h3>Ritiro o spedizione</h3><p>Paghi il saldo al ritiro in negozio o alla consegna. Le taglie, se serve, le proviamo prima della stampa.</p></li>
     </ol>
   </div>
 </section>`;
   return pagina({
-    titolo: `Crea il tuo kit – squadre e associazioni sportive a ${A.citta} | ${A.nome}`,
-    descrizione: `Kit per squadre e associazioni sportive da ${A.nome}, ${A.citta}: scegli sport e pacchetto, ricevi un preventivo indicativo e un codice richiesta.`,
-    rel, percorso: 'squadre/', classe: 'p-squadre', corpo, corrente: 'squadre', script: ['js/maglia.js', 'js/kit.js']
+    titolo: `Kit Squadra – crea il kit della tua squadra a ${A.citta} | ${A.nome}`,
+    descrizione: `Configuratore del kit squadra di ${A.nome}, ${A.citta}: capi, marca, materiali, stemma, stile, rosa con taglie, 6 proposte di maglia e preventivo in PDF.`,
+    rel, percorso: 'squadre/', classe: 'p-squadre', corpo, corrente: 'squadre', script: ['js/maglia-svg.js', 'js/kit.js']
   });
 }
 
@@ -695,34 +1016,50 @@ function paginaSquadre() {
    SERVIZI SU PRENOTAZIONE e NOLEGGIO SCI
    ===================================================================== */
 const SRV = C.servizi, NOL = C.noleggio;
+const prezzoNol = id => LIST.noleggio[id];          // € al giorno, da js/listino.js
 const sportDa = slug => C.sport.find(s => s.slug === slug) || { accento: '#B9C0CC', campo: '' };
 const mmgg = v => { const [m, g] = v.split('-').map(Number); return `${g} ${['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto', 'settembre', 'ottobre', 'novembre', 'dicembre'][m - 1]}`; };
 const stagioneTxt = () => `dal ${mmgg(NOL.stagione.da)} al ${mmgg(NOL.stagione.a)}`;
+// card servizio come le tessere sport: foto di sfondo, velo scuro, icona, titolo, testo, link
+function cartaSrv({ acc, accInk, foto, icona, num, tit, testo, dati, cta, href, attr = '', rel, sizes }) {
+  return `<li class="tessera srv" style="--acc:${acc};--acc-ink:${accInk || '#0E0F12'}">
+      <a class="tessera__link srv__link" href="${href}"${attr}>
+        <span class="tessera__foto">${foto ? img(foto.file, foto.alt, rel, { sizes }) : ''}</span>
+        <span class="tessera__velo srv__velo" aria-hidden="true"></span>
+        <span class="srv__ico" aria-hidden="true">${ico(icona || 'consiglio')}</span>
+        <span class="tessera__num" aria-hidden="true">${num}</span>
+        <span class="srv__testi">
+          <span class="srv__tit">${esc(tit)}</span>
+          ${testo ? `<span class="srv__testo">${esc(testo)}</span>` : ''}
+          <span class="srv__dati">${dati}</span>
+          <span class="srv__cta">${esc(cta)} ${ico('freccia', 'ico ico--s')}</span>
+        </span>
+      </a>
+    </li>`;
+}
 function fasciaServizi(rel) {
   // prezzo "da" solo tra i kit completi (non scarponi o casco da soli)
-  const min = Math.min(...NOL.attrezzatura.filter(a => a.eta).map(a => a.prezzoGiorno));
-  return `<section class="fascia-srv" aria-labelledby="tit-fsrv">
+  const min = Math.min(...NOL.attrezzatura.filter(a => a.eta).map(a => prezzoNol(a.id)));
+  const sci = sportDa('sci-e-snowboard');
+  const carte = SRV.elenco.map((s, i) => {
+    const sp = sportDa(s.sport);
+    return cartaSrv({ acc: sp.accento, accInk: sp.testoAccento, foto: s.foto, icona: s.icona, num: '0' + (i + 1), tit: s.nome, rel,
+      dati: `${esc(s.durata)} · <b>${euro(s.prezzo)}</b>`, cta: 'Scopri di più e prenota', href: `${rel}servizi/index.html#srv-${s.id}`,
+      sizes: '(min-width: 1100px) 20vw, (min-width: 700px) 44vw, 82vw' });
+  }).join('') + cartaSrv({ acc: sci.accento, accInk: sci.testoAccento, foto: sci.tessera, icona: 'neve', num: '05', tit: 'Noleggio sci e snowboard', rel,
+    dati: `Stagione ${stagioneTxt()} · kit da <b>${euro(min)}</b> al giorno`, cta: 'Vedi il calendario', href: `${rel}noleggio-sci/index.html`,
+    sizes: '(min-width: 1100px) 20vw, (min-width: 700px) 44vw, 82vw' });
+  return `<section class="sez fascia-srv" aria-labelledby="tit-fsrv">
+  <div class="parola-g" aria-hidden="true" data-parola>LAB</div>
   <div class="wrap">
     <header class="sez-testa sez-testa--riga">
-      <div><p class="occhiello">Su prenotazione</p><h2 class="tit-sez" id="tit-fsrv" data-tit>${righe(['Servizi e', 'noleggio'])}</h2></div>
-      <p class="sez-testa__testo">Prenoti online, ti confermiamo noi. Niente code: arrivi e il tuo turno è pronto.</p>
+      <div><p class="occhiello">Su prenotazione · ${SRV.elenco.length} servizi e il noleggio</p><h2 class="tit-sez" id="tit-fsrv" data-tit>${righe(['Servizi e', 'noleggio'])}</h2></div>
+      <div class="sez-testa__testo">
+        <p>Incordatura, prova racchette, analisi del passo, sciolinatura e noleggio sci. Prenoti online, ti confermiamo noi: arrivi e il tuo turno è pronto.</p>
+        <p class="etichetta-esempio srv__etic">Prezzi e durate di esempio</p>
+      </div>
     </header>
-    <div class="fascia-srv__griglia">
-      <a class="fsrv" href="${rel}servizi/index.html">
-        <span class="fsrv__n">${SRV.elenco.length} servizi</span>
-        <h3 class="fsrv__tit">Servizi in negozio</h3>
-        <ul class="fsrv__lista">${SRV.elenco.map(s => `<li>${esc(s.nome)}</li>`).join('')}</ul>
-        <span class="fsrv__cta">Prenota un servizio ${ico('freccia', 'ico ico--s')}</span>
-      </a>
-      <a class="fsrv fsrv--neve" href="${rel}noleggio-sci/index.html" style="--acc:${sportDa('sci-e-snowboard').accento}">
-        ${campo('sci', 'fsrv__campo')}
-        <span class="fsrv__n">Stagione ${stagioneTxt()}</span>
-        <h3 class="fsrv__tit">Noleggio sci e snowboard</h3>
-        <p class="fsrv__testo">Kit adulto e bambino, scarponi e caschi. Guardi la disponibilità sul calendario e prenoti: ritiri il pomeriggio prima.</p>
-        <span class="fsrv__prezzo">Kit da <b>${euro(min)}</b> al giorno <span class="etichetta-esempio">Prezzi di esempio</span></span>
-        <span class="fsrv__cta">Prenota il noleggio ${ico('freccia', 'ico ico--s')}</span>
-      </a>
-    </div>
+    <ul class="srv__griglia srv__griglia--home">${carte}</ul>
   </div>
 </section>`;
 }
@@ -745,20 +1082,9 @@ function paginaServizi() {
   // card come le tessere sport della home: foto di sfondo, velo scuro, icona, titolo, descrizione, link
   const carte = SRV.elenco.map((s, i) => {
     const sp = sportDa(s.sport);
-    return `<li class="tessera srv" style="--acc:${sp.accento};--acc-ink:${sp.testoAccento || '#0E0F12'}">
-      <a class="tessera__link srv__link" href="#prenota" data-srv-scegli="${s.id}">
-        <span class="tessera__foto">${s.foto ? img(s.foto.file, s.foto.alt, rel, { sizes: '(min-width: 1100px) 25vw, (min-width: 700px) 50vw, 82vw' }) : ''}</span>
-        <span class="tessera__velo srv__velo" aria-hidden="true"></span>
-        <span class="srv__ico" aria-hidden="true">${ico(s.icona || 'consiglio')}</span>
-        <span class="tessera__num" aria-hidden="true">0${i + 1}</span>
-        <span class="srv__testi">
-          <span class="srv__tit">${esc(s.nome)}</span>
-          <span class="srv__testo">${esc(s.descrizione)}</span>
-          <span class="srv__dati">${esc(s.durata)} · <b>${euro(s.prezzo)}</b> <span>(${esc(s.notaPrezzo)})</span></span>
-          <span class="srv__cta">Scopri di più e prenota ${ico('freccia', 'ico ico--s')}</span>
-        </span>
-      </a>
-    </li>`;
+    return cartaSrv({ acc: sp.accento, accInk: sp.testoAccento, foto: s.foto, icona: s.icona, num: '0' + (i + 1), tit: s.nome, testo: s.descrizione, rel,
+      dati: `${esc(s.durata)} · <b>${euro(s.prezzo)}</b> <span>(${esc(s.notaPrezzo)})</span>`, cta: 'Scopri di più e prenota',
+      href: '#prenota', attr: ` data-srv-scegli="${s.id}" id="srv-${s.id}"`, sizes: '(min-width: 1100px) 25vw, (min-width: 700px) 50vw, 82vw' });
   }).join('');
   const scelte = SRV.elenco.map(s => `<label class="kit__mo"><input type="radio" name="servizio" value="${s.id}"><span class="kit__mo-box"><span class="kit__mo-tit">${esc(s.nome)}</span><span class="kit__mo-txt">${esc(s.durata)} · ${euro(s.prezzo)} (${esc(s.notaPrezzo)})</span></span></label>`).join('');
   const corpo = `
@@ -821,7 +1147,7 @@ function paginaServizi() {
 }
 function paginaNoleggio() {
   const rel = '../', sci = sportDa('sci-e-snowboard');
-  const tab = NOL.attrezzatura.map(a => `<li class="att"><h3 class="att__nome">${esc(a.nome)}</h3><p class="att__inc">${esc(a.include)}</p><p class="att__prezzo"><b>${euro(a.prezzoGiorno)}</b> al giorno</p></li>`).join('');
+  const tab = NOL.attrezzatura.map(a => `<li class="att"><h3 class="att__nome">${esc(a.nome)}</h3><p class="att__inc">${esc(a.include)}</p><p class="att__prezzo"><b>${euro(prezzoNol(a.id))}</b> al giorno</p></li>`).join('');
   const opz = NOL.attrezzatura.map(a => `<option value="${a.id}">${esc(a.nome)}</option>`).join('');
   const corpo = `
 <section class="hk" data-sfondo="NEVE" style="--acc:${sci.accento}">
@@ -856,7 +1182,7 @@ function paginaNoleggio() {
           </div>
           <div class="campo"><label for="n-mostra">Mostra la disponibilità di</label><select id="n-mostra" data-mostra>${opz}</select></div>
           <div class="cal" data-cal></div>
-          <ul class="cal__legenda" aria-label="Legenda"><li><i class="is-ok"></i>Disponibile</li><li><i class="is-pochi"></i>Pochi pezzi</li><li><i class="is-esaurito"></i>Esaurito</li></ul>
+          <ul class="cal__legenda" aria-label="Legenda"><li><i class="is-ok"></i>Disponibile</li><li><i class="is-pochi"></i>Pochi pezzi</li><li><i class="is-esaurito"></i>Occupato</li></ul>
           <div class="kit__due">
             <div class="campo"><label for="n-da">Dal</label><input id="n-da" name="da" type="date"><p class="campo__err" id="n-da-err" hidden></p></div>
             <div class="campo"><label for="n-a">Al (compreso)</label><input id="n-a" name="a" type="date"><p class="campo__err" id="n-a-err" hidden></p></div>
@@ -960,6 +1286,8 @@ function home() {
 </section>
 
 ${nastroSport()}
+
+${fasciaForma(rel)}
 
 <section class="sez sport-scelta" id="sport" aria-labelledby="tit-sport">
   <div class="parola-g" aria-hidden="true" data-parola>SPORT</div>
@@ -1083,7 +1411,7 @@ ${fasciaServizi(rel)}
   return pagina({
     titolo: `${A.nome} – ${A.tipo} a ${A.citta}`,
     descrizione: `${A.descrizione} Chiedi disponibilità su WhatsApp.`,
-    rel, percorso: '', classe: 'p-home', corpo, preload, extraHead: jsonLd(), script: ['js/maglia.js']
+    rel, percorso: '', classe: 'p-home', corpo, preload, extraHead: jsonLd(), script: ['js/maglia.js', 'js/forma.js']
   });
 }
 
@@ -1353,12 +1681,15 @@ function privacy() {
       <p>La borsa "${esc(C.borsa.nome)}" (i prodotti che scegliete, con taglia e quantità) è salvata <strong>solo nel vostro browser</strong>, nella sua memoria locale (localStorage). È strettamente necessaria al servizio che chiedete, non è un cookie di profilazione e non ci arriva finché non inviate la richiesta. Potete cancellarla con "Svuota" nella borsa o cancellando i dati del sito dal browser.</p>`);
   // maglia personalizzata e "Crea il tuo kit" (squadre e associazioni)
   m = m.replace(/(<li><strong>Richiesta "[^"]*"\.<\/strong>[\s\S]*?<\/li>)/, `$1
-        <li><strong>Richiesta "Crea il tuo kit" (squadre e associazioni).</strong> Ci mandate: nome della squadra o associazione, nome del referente, numero di telefono, email se volete, eventuali note, sport, pacchetto, numero di atleti adulti e bambini, le scelte su nomi, numeri e stemma e la descrizione della maglia (motivo, colori, nome e numero). Non chiediamo nomi, età o taglie dei singoli atleti: le taglie si definiscono in negozio. Usiamo questi dati solo per preparare il preventivo e organizzare la prova taglie; li conserviamo per il tempo della trattativa e, se il kit viene ordinato, per i tempi previsti dalle norme fiscali.</li>
+        <li><strong>Ordine del Kit Squadra (squadre e associazioni).</strong> Nel configuratore indicate: nome della squadra o associazione, sport, capi e quantità, marca, materiali, colori e grafica, la <strong>rosa</strong> (nome da stampare sul retro, numero e taglia di ogni atleta), la consegna (ritiro in negozio o spedizione, con l'indirizzo), nome del referente, telefono, email ed eventuali note. Nella rosa possono comparire <strong>atleti minorenni</strong>: scrivete solo quello che va stampato sulla maglia (anche solo il cognome o un soprannome) e, per i minori, fatelo con l'accordo dei genitori. Non chiediamo età, date di nascita o altri dati degli atleti. Usiamo questi dati solo per preparare il preventivo, produrre e consegnare il kit e aggiornarvi sullo stato dell'ordine; li conserviamo per il tempo della trattativa e, se il kit viene ordinato, per i tempi previsti dalle norme fiscali (di solito 10 anni per i documenti contabili; la rosa la cancelliamo entro 12 mesi dalla consegna).${S.bozza ? ' <strong>In questa versione dimostrativa ordine e pagamento sono simulati</strong>: nessun dato viene inviato a noi né ad altri, nessun pagamento è reale e l\'ordine resta salvato solo nel vostro browser.' : ''}</li>
+        <li><strong>Link da condividere, WhatsApp e PDF del Kit Squadra.</strong> "Copia il link" crea un indirizzo che contiene la configurazione del kit, <strong>compresi nomi, numeri e taglie della rosa</strong> (non le immagini caricate): chi lo riceve vede questi dati, quindi condividetelo solo con chi gestisce la squadra. Il pulsante WhatsApp prepara un messaggio che inviate voi, se volete. Il <strong>preventivo in PDF</strong> viene creato direttamente nel vostro browser e non passa da nessun server.</li>
+        <li><strong>Stato del tuo ordine.</strong> Per vedere a che punto è il kit basta il numero d'ordine. ${S.bozza ? 'Nella demo la ricerca avviene solo nel vostro browser.' : 'Il numero serve solo a trovare l\'ordine.'}</li>
         <li><strong>Prenotazione di un servizio</strong> (incordatura, prova racchette, analisi del passo, sciolinatura). Ci mandate: servizio scelto, giorno, fascia oraria, nome, numero di telefono ed eventuali note. Li usiamo solo per organizzare il servizio e rispondervi; li cancelliamo entro 12 mesi.</li>
-        <li><strong>Richiesta di noleggio sci e snowboard.</strong> Ci mandate: giorni del noleggio, nome, numero di telefono, eventuali note e, per ogni persona, l'attrezzatura, se è adulto o bambino, <strong>altezza, numero di scarpa e livello</strong>. Altezza, numero di scarpa e livello servono <strong>solo per preparare e regolare l'attrezzatura</strong>: non chiediamo il peso, non li usiamo per altro e li cancelliamo a fine stagione. La disponibilità mostrata sul sito è di esempio e non usa i vostri dati.</li>
+        <li><strong>Richiesta di noleggio sci e snowboard.</strong> Ci mandate: giorni del noleggio, nome, numero di telefono, eventuali note e, per ogni persona, l'attrezzatura, se è adulto o bambino, <strong>altezza, numero di scarpa e livello</strong>. Altezza, numero di scarpa e livello servono <strong>solo per preparare e regolare l'attrezzatura</strong>: non chiediamo il peso, non li usiamo per altro e li cancelliamo a fine stagione. I giorni occupati del calendario li segna il negozio e non contengono dati delle persone.</li>
         <li><strong>Preventivo per la maglia.</strong> Il pulsante "Chiedi un preventivo per questa maglia" prepara un messaggio WhatsApp con motivo, colori, nome, numero e quantità indicativa: lo inviate voi, se volete.</li>`);
   m = m.replace(/(<p>La borsa "[^"]*"[\s\S]*?<\/p>)/, `$1
-      <p>Anche la <strong>maglia personalizzata</strong> e i passi di <strong>"Crea il tuo kit"</strong> restano salvati solo nel vostro browser (localStorage), per non perdere le scelte cambiando pagina. Lo <strong>stemma che caricate</strong> nel configuratore (PNG, JPG o SVG) viene letto e mostrato solo nel vostro browser: <strong>non viene inviato</strong> né a noi né ad altri. Se volete stamparlo sulle maglie, ce lo mandate voi su WhatsApp o per email. Lo stesso vale per <strong>stemma, loghi degli sponsor e grafiche</strong> che caricate in "Crea il kit squadra" (PNG, JPG, SVG o PDF): restano nella pagina aperta nel vostro browser e nella richiesta compaiono solo i nomi dei file e la posizione scelta; i file ce li allegate voi. Potete cancellare tutto svuotando i dati del sito dalle impostazioni del browser.</p>`);
+      <p>Anche la <strong>maglia personalizzata</strong> e i passi del <strong>Kit Squadra</strong> restano salvati solo nel vostro browser (localStorage), per non perdere le scelte cambiando pagina. Lo <strong>stemma che caricate</strong> nel configuratore della maglia (PNG, JPG o SVG) viene letto e mostrato solo nel vostro browser: <strong>non viene inviato</strong> né a noi né ad altri. Lo stesso vale per <strong>stemma, loghi degli sponsor e grafiche</strong> che caricate nel Kit Squadra (PNG, JPG, SVG o PDF): i colori vengono ricavati nel vostro browser, una piccola miniatura resta nella sua memoria locale e nel preventivo compaiono solo i nomi dei file e la posizione scelta. Per la stampa i file in alta qualità ce li mandate voi su WhatsApp o per email.</p>
+      <p>Nomi usati nella memoria del browser (tutti tecnici, servono solo a far funzionare quello che usate): <code>slancio-maglia</code> (maglia personalizzata), <code>slancio-kit2</code> e <code>slancio-kit2-img</code> (passi del Kit Squadra e miniature delle grafiche), <code>slancio-kit2-prima</code> (copia di sicurezza del vostro kit quando aprite un link condiviso), <code>slancio-dati</code> (${S.bozza ? 'nella demo: ordini, avviso "Ordina entro…" e giorni occupati del noleggio' : 'avviso "Ordina entro…" e giorni occupati del noleggio'}), <code>slancio-banner-chiuso</code> (ricorda che avete chiuso l'avviso). Il pannello riservato al personale del negozio usa anche <code>slancio-admin</code> nella memoria di sessione, che si cancella chiudendo il browser. Potete cancellare tutto svuotando i dati del sito dalle impostazioni del browser.</p>`);
   m = m.replace(/\{\{([A-Z_]+)\}\}/g, (_, k) => esc(val[k] ?? ''));
   m = m.replace(/<!--[\s\S]*?-->/g, '').replace(/\n\s*\n+/g, '\n');
   m = m.replace('<main id="contenuto" class="section privacy">', '').replace('</main>', '');
@@ -1431,6 +1762,8 @@ for (const s of C.sport) {
 scrivi('squadre/index.html', paginaSquadre());
 scrivi('servizi/index.html', paginaServizi());
 scrivi('noleggio-sci/index.html', paginaNoleggio());
+scrivi('ordine/index.html', paginaOrdine());
+scrivi('admin.html', paginaAdmin());
 scrivi('privacy.html', privacy());
 scrivi('404.html', pagina404());
 scrivi('assets/favicon.svg', favicon());
@@ -1439,11 +1772,11 @@ if (S.bozza) {
   for (const f of ['sitemap.xml', 'robots.txt']) if (existsSync(f)) rmSync(f);
 } else {
   const oggi = new Date().toISOString().slice(0, 10);
-  const urls = ['', 'squadre/', 'servizi/', 'noleggio-sci/',...C.sport.flatMap(s => [`sport/${s.slug}/`, ...s.categorie.map(c => `sport/${s.slug}/${c.slug}/`)]), 'privacy.html'];
+  const urls = ['', 'squadre/', 'ordine/', 'servizi/', 'noleggio-sci/',...C.sport.flatMap(s => [`sport/${s.slug}/`, ...s.categorie.map(c => `sport/${s.slug}/${c.slug}/`)]), 'privacy.html'];
   scrivi('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(u => `  <url><loc>${S.urlBase}${u}</loc><lastmod>${oggi}</lastmod></url>`).join('\n')}\n</urlset>\n`);
   scrivi('robots.txt', `User-agent: *\nAllow: /\nSitemap: ${S.urlBase}sitemap.xml\n`);
 }
 
 const nIco = C.sport.reduce((a, s) => a + s.categorie.filter(c => !(c.foto && IMG[c.foto.file])).length, 0);
 const nProd = C.sport.reduce((a, s) => a + s.categorie.reduce((b, c) => b + c.prodotti.length, 0), 0);
-console.log(`✔ Generate ${C.sport.length + 6 + nPagCat} pagine (home, ${C.sport.length} sport, ${nPagCat} categorie, squadre, servizi, noleggio, privacy, 404) · ${nProd} prodotti · ${ILLUSTRAZIONI.length} illustrazioni · bozza=${S.bozza} · categorie con icona: ${nIco}`);
+console.log(`✔ Generate ${C.sport.length + 8 + nPagCat} pagine (home, ${C.sport.length} sport, ${nPagCat} categorie, squadre, stato ordine, servizi, noleggio, admin, privacy, 404) · ${nProd} prodotti · ${ILLUSTRAZIONI.length} illustrazioni · bozza=${S.bozza} · categorie con icona: ${nIco}`);
