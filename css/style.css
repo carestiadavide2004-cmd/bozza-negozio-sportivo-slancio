@@ -341,6 +341,11 @@ address { font-style: normal; }
   .hero__tab-barra { width: 72px; }
   .hero__tab-nome { font-size: 1.5rem; max-width: 18ch; }
 }
+/* tablet e telefono in orizzontale: i pulsanti e il nome dello sport non stanno sulla stessa riga → il nome va sotto i pulsanti */
+@media (min-width: 768px) and (max-width: 1099px), (orientation: landscape) and (max-width: 1099px) {
+  .hero__in { padding-bottom: calc(clamp(1rem, 4vh, 2.25rem) + 4rem); }
+  .hero__tab { left: var(--gutter); right: var(--gutter); bottom: clamp(1rem, 4vh, 2.25rem); justify-content: space-between; }
+}
 
 /* Badge Aperto/Chiuso */
 .badge-orario {

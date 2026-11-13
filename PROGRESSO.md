@@ -26,7 +26,9 @@ Per ripartire: leggi questa checklist e riprendi dalla prima voce non spuntata. 
   - build.mjs `mappaImmagine()`: tutto il riquadro è un link a Google Maps (nuova scheda, `contatti.mappaRicerca`), segnaposto blu con "SLANCIO" disegnato da noi al centro, etichetta "Posizione di esempio", scritta "Immagine © Google". Se il file manca compare un riquadro con il nome del file da aggiungere. Dati in `config.js` → `contatti.mappaImmagine`.
   - Tolti: disegno blu a righe, pulsante "Mostra la mappa", iframe e il suo codice in main.js. Nessuna richiesta a Google all'apertura.
   - privacy.html: Google riceve dati solo se si apre il link. ISTRUZIONI.md: "Mappa del negozio" (come rifarla sulla posizione vera).
-- [ ] Controllo (art director 390/768/1440, Playwright 390/1440), build, commit, push, verifica online
+- [x] Controllo (art director 390/768/1440, Playwright 390/1440), build, commit, push, verifica online
+  - Art director: hero, sport, kit, sezioni con foto e mappa guardati a 390, 768 e 1440. Difetto corretto: a 768 (e fino a 1099 px, anche telefono in orizzontale) il nome dello sport della hero ("01 — 12 CALCIO") copriva il pulsante WhatsApp → ora sta sotto i pulsanti.
+  - Playwright Chromium 390 e 1440 (`~/.carestia-qa/slancio/finale-home.mjs`): ordine hero → nastro → sport → kit-forma → maglia → kit squadra → marchi → servizi → noleggio → perché → negozio → chiedi; frase nuova presente, vecchia assente in tutto il progetto; 4 foto di sfondo caricate (misura giusta per telefono e computer); link della mappa apre Google Maps in una nuova scheda; 0 richieste esterne al caricamento, 0 cookie, 0 iframe, nessun errore in console, nessuno scorrimento laterale; ancore del menu tutte presenti.
 
 # ✔ Kit squadra completo (Fasi 0–8, 13/11/2026)
 Per ripartire: leggi questa checklist, poi la prima fase non spuntata. Ogni fase si controlla (schermate 390/1440 + prova automatica) prima di spuntarla.
